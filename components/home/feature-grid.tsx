@@ -1,4 +1,4 @@
-import { FEATURE_ICONS } from "./feature-icons";
+import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { featureIds } from "@/lib/features";
 import type { Dictionary } from "@/lib/dictionaries/en";
 

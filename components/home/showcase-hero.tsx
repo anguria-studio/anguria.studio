@@ -1,5 +1,5 @@
-import { Accented } from "./accent";
-import { AppleMark } from "./apple-mark";
+import { Accented } from "@/components/ui/accent";
+import { AppleMark } from "@/components/ui/apple-mark";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
 export function ShowcaseHero({ dict }: { dict: Dictionary }) {

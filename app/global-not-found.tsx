@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
-import { ThemeScript } from "@/components/theme-script";
+import { ThemeScript } from "@/components/layout/theme-script";
 import { site } from "@/lib/apps";
 
 /**

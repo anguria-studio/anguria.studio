@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AppIcon } from "./app-icon";
+import { AppIcon } from "@/components/apps/app-icon";
 import type { AppMeta } from "@/lib/apps";
 import type { AppCopy, Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";

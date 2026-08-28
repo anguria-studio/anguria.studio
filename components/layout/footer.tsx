@@ -1,5 +1,5 @@
-import { LanguageSwitcher } from "./language-switcher";
-import { ThemeToggle } from "./theme-toggle";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import type { AppSlug } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import type { Locale } from "@/lib/i18n";

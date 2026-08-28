@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import "../../globals.css";
-import { ThemeScript } from "@/components/theme-script";
+import { ThemeScript } from "@/components/layout/theme-script";
 import { isLocale, prefixedLocales } from "@/lib/i18n";
 
 /** Static export cannot fall back to on-demand rendering. */

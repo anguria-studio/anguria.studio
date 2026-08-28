@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DockIcon } from "./dock-icon";
+import { DockIcon } from "@/components/apps/dock-icon";
 import { appList } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";

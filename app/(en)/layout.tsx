@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import "../globals.css";
-import { ThemeScript } from "@/components/theme-script";
+import { ThemeScript } from "@/components/layout/theme-script";
 
 /**
  * Root layout #1 of 2. Serves the default locale, unprefixed: `/`, `/obolo`, …

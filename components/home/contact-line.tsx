@@ -1,4 +1,4 @@
-import { splitAccent } from "./accent";
+import { splitAccent } from "@/components/ui/accent";
 import { site } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 

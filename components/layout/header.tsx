@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowRight } from "./arrow-right";
-import { GitHubMark } from "./github-mark";
+import { ArrowRight } from "@/components/ui/arrow-right";
+import { GitHubMark } from "@/components/ui/github-mark";
 import { site } from "@/lib/apps";
 import { localePath, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries/en";

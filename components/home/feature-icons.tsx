@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { FeatureId } from "@/lib/features";
-import { GITHUB_MARK_PATH } from "./github-mark";
+import { GITHUB_MARK_PATH } from "@/components/ui/github-mark";
 
 /* Held as consts because each is drawn twice: once as the visible glyph and
    once more as a clip path or a ghost copy. */

@@ -1,11 +1,11 @@
-import { AppDock } from "./app-dock";
-import { AppShowcase } from "./app-showcase";
-import { ContactLine } from "./contact-line";
-import { FeatureGrid } from "./feature-grid";
-import { Footer } from "./footer";
-import { Header } from "./header";
-import { ShowcaseHero } from "./showcase-hero";
-import { Statement } from "./statement";
+import { AppDock } from "@/components/apps/app-dock";
+import { AppShowcase } from "@/components/apps/app-showcase";
+import { ContactLine } from "@/components/home/contact-line";
+import { FeatureGrid } from "@/components/home/feature-grid";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
+import { ShowcaseHero } from "@/components/home/showcase-hero";
+import { Statement } from "@/components/home/statement";
 import { getDictionary, type Locale } from "@/lib/i18n";
 
 /** The whole homepage, so both locale groups' page files stay one-liners. */

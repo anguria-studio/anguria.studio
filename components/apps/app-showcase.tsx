@@ -1,4 +1,4 @@
-import { AppShowcaseCard } from "./app-showcase-card";
+import { AppShowcaseCard } from "@/components/apps/app-showcase-card";
 import { appList } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import type { Locale } from "@/lib/i18n";

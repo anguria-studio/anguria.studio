@@ -1,4 +1,4 @@
-import { Accented } from "./accent";
+import { Accented } from "@/components/ui/accent";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
 export function Statement({ dict }: { dict: Dictionary }) {
