@@ -1,26 +1,537 @@
 @import "tailwindcss";
 
+/*
+ * Theme tokens. Three states, driven by `data-theme` on <html>:
+ *   (no attribute)        -> follow the OS via the media query below
+ *   [data-theme="light"]  -> light tokens (the bare :root block)
+ *   [data-theme="dark"]   -> dark tokens
+ *
+ * "System" is the ABSENCE of the attribute, which is what keeps the statically
+ * exported HTML theme-neutral, and what lets the media query track OS changes
+ * live with no JavaScript listener.
+ *
+ * Precedence:
+ *   :root                             (0,1,0)  light base
+ *   :root:not([data-theme="light"])   (0,2,0)  dark iff the OS is dark AND the
+ *                                              user has not explicitly chosen
+ *                                              light. This guard is what makes
+ *                                              "explicit light on a dark Mac"
+ *                                              actually render light.
+ *   :root[data-theme="dark"]          (0,2,0)  explicit dark, whatever the OS.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light dark;
+  --background: #faf7f5;
+  --foreground: #1d1d1f;
+  --muted: #6e6e73;
+  /* Nine levels below the background, matching its warmth. Chosen to keep
+     the STEP rather than the lightness: a same-lightness warm grey would sit
+     ~2 levels under #faf7f5 and the surface tiles would all but vanish. */
+  --surface: #f1eeec;
+  --hairline: rgb(0 0 0 / 0.08);
+  --header: rgb(250 247 245 / 0.72);
+  /* The Dock tooltip's material — the same vibrancy recipe as the header
+     (translucent tint + backdrop blur + saturate), tuned lighter and more
+     transparent because a tooltip is a smaller, more temporary surface.
+     Theme-matched rather than inverted, which is what macOS does for menus and
+     Dock labels: light glass on the light page, dark on the dark one. */
+  --glass: rgb(255 255 255 / 0.72);
+  /* The showcase glow is dark-theme only; a saturated blur over the warm
+     light background would read as a stain. */
+  --glow-opacity: 0;
+
+  /* The Dock marks are flat #CFCFCF tiles: correct against the light page, but
+     on the dark one a near-white tile is the brightest thing on the screen and
+     pulls rank on the app icons above it. Dimmed there rather than recoloured,
+     so the artwork stays one asset. */
+  --dock-icon-opacity: 1;
+
+  /* The Dock marks are two flat tones, swapped between themes: a light tile
+     with a dark mark on the light page, the reverse on the dark one. Tokens
+     rather than two copies of the artwork, since only the two fills differ. */
+  --dock-tile: #cfcfcf;
+  --dock-mark: #4d4d4d;
+
+  /* Which of the two app-icon artworks is drawn. The icons ship as a light and
+     a dark export per app — same geometry, different tile and mark — so both
+     are in the DOM and the theme picks one. A variable rather than a
+     theme-dark: variant because that variant only matches an explicit
+     data-theme="dark" and would leave everyone on system dark with the light
+     artwork on a dark page. */
+  --icon-light-display: block;
+  --icon-dark-display: none;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #171413;
+  --foreground: #f5f5f7;
+  --muted: #86868b;
+  --surface: #292625;
+  --hairline: rgb(255 255 255 / 0.12);
+  --header: rgb(23 20 19 / 0.72);
+  --glass: rgb(60 56 54 / 0.72);
+  --glow-opacity: 0.32;
+  --dock-icon-opacity: 0.55;
+  --dock-tile: #4d4d4d;
+  --dock-mark: #cfcfcf;
+  --icon-light-display: none;
+  --icon-dark-display: block;
+}
+
+/* Keep the values here in sync with :root[data-theme="dark"] above. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #171413;
+    --foreground: #f5f5f7;
+    --muted: #86868b;
+    --surface: #292625;
+    --hairline: rgb(255 255 255 / 0.12);
+    --header: rgb(23 20 19 / 0.72);
+  --glass: rgb(60 56 54 / 0.72);
+  --glow-opacity: 0.32;
+  --dock-icon-opacity: 0.55;
+  --dock-tile: #4d4d4d;
+  --dock-mark: #cfcfcf;
+  --icon-light-display: none;
+  --icon-dark-display: block;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-hairline: var(--hairline);
+  --color-header: var(--header);
+  --color-glass: var(--glass);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * "Which theme tab is lit." The theme toggle's server render is always
+ * "system" (see theme-toggle.tsx), so the selection cannot come from React
+ * state without a flash on the way through hydration — it comes from
+ * `data-theme` on <html>, which the inline script sets before paint. "System"
+ * is the ABSENCE of the attribute, which is why it needs its own variant
+ * rather than a `[data-theme=system]` selector.
+ *
+ * The ancestor half is :is(), not :where(): these have to outrank the tab's own
+ * unlit `text-muted`, which is a plain class at (0,1,0).
+ */
+@custom-variant theme-system {
+  &:is(html:not([data-theme]) *) {
+    @slot;
+  }
+}
+
+@custom-variant theme-light {
+  &:is(html[data-theme="light"] *) {
+    @slot;
+  }
+}
+
+@custom-variant theme-dark {
+  &:is(html[data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+/*
+ * The expand-on-hover showcase only makes sense with a real pointer and room to
+ * move. Everything else gets the stacked, always-visible layout. Both are
+ * defined so every differing property can be explicitly gated — never leave a
+ * conflicting value on a bare utility.
+ */
+@custom-variant desk {
+  @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
+    @slot;
+  }
+}
+
+/* Block form with @slot, not the shorthand: a comma-separated media query in
+   `@custom-variant touch (...)` gets parsed as separate selectors and emits
+   `.touch\:flex-col (hover: none)`, which is not a selector at all. */
+/*
+ * Dock magnification. The real Dock scales each icon by a continuous function
+ * of the pointer's x-distance, but with THREE icons there are only ever three
+ * states — the icon under the pointer, its neighbour, and the rest — which is
+ * expressible in plain CSS, so it is.
+ *
+ * The links are direct siblings of each other on purpose: with a wrapper
+ * element between them, "my NEXT sibling is hovered" would need a nested
+ * :has(), which is invalid CSS and silently discards the rule.
+ *
+ * `dock-after` matches inside the icon whose PREVIOUS sibling is active,
+ * `dock-before` inside the one whose NEXT sibling is. Two variants rather than
+ * one, because the neighbour also has to slide AWAY from the pointer, and that
+ * displacement is direction-dependent — it is most of what makes this read as
+ * the Dock rather than as a plain hover-scale.
+ *
+ * The ancestor half sits in :where() so these stay at plain-class specificity
+ * and never outrank the hovered icon's own group-hover rules — which matters
+ * the moment one icon is focus-visible while its neighbour is hovered.
+ */
+@custom-variant dock-after {
+  &:is(:where(.group\/dock > a:is(:hover, :focus-visible) + a) *) {
+    @slot;
+  }
+}
+
+@custom-variant dock-before {
+  &:is(:where(.group\/dock > a:has(+ a:is(:hover, :focus-visible))) *) {
+    @slot;
+  }
+}
+
+/*
+ * "Another card in this row is being hovered/focused, and it isn't mine."
+ * Drives the card text out of the way the instant a hover starts, rather than
+ * waiting for the card to narrow — otherwise you watch the text re-wrap as it
+ * collapses. The negation targets the card link (.group), not the text itself:
+ * the text blocks are absolutely-positioned strips the pointer never enters.
+ */
+@custom-variant sibling-active {
+  &:is(:where(.group\/row):has(a:is(:hover, :focus-visible)) *):is(:where(.group):not(:hover):not(:focus-visible) *) {
+    @slot;
+  }
+}
+
+@custom-variant touch {
+  @media (max-width: 47.9375rem), (hover: none), (pointer: coarse) {
+    @slot;
+  }
+}
+
+/*
+ * Height of the wallpaper layer behind the showcase row. It spans the full row
+ * (gaps included) so the desktop is one continuous image that never moves; each
+ * card just clips its own slice of it.
+ *
+ *   --wallpaper-h = row width / screenshot aspect ratio
+ *
+ * Only place the screenshot aspect appears in CSS. If the captures change shape,
+ * change 2.1333 here and nowhere else. Current shots are 2560x1200.
+ */
+:root {
+  --wallpaper-h: min(530.63px, calc((100vw - 48px) / 2.1333));
+}
+
+@theme {
+  /* The page content width. Header, showcase, feature grid, footer and the app
+     pages all sit in this, so it changes in one place. Generates `max-w-page`. */
+  --container-page: 1400px;
+
+  /* The showcase row is narrower than the rest of the page. Drives
+     --wallpaper-h above: that is (this - 48px gutters) / the shot aspect. */
+  --container-cards: 1180px;
+
+  /* The feature label's measure. Narrow on purpose: the three longer labels are
+     MEANT to break onto two lines under their icon, and text-balance only
+     chooses where a line breaks, not whether it breaks. Measured against the
+     real strings at text-2xl — "Crafted for macOS" is 193px, "Customisable"
+     143px — so 10rem wraps the three long ones and leaves the short ones be.
+     Generates `max-w-label`. */
+  --container-label: 10rem;
+
+  /* Watermelon accents. Used sparingly: one hero word, the download button, the wordmark glyph. */
+  --color-melon-300: #ff8da0;
+  --color-melon-500: #ff375f;
+  --color-melon-600: #e8324f;
+  --color-rind-500: #34c759;
+  --color-rind-600: #12924a;
+
+  --radius-card: 1.5rem;
+  /* The showcase cards are larger than the feature tiles and want a softer
+     corner. Deliberately not merged with --radius-card. */
+  --radius-showcase: 1.75rem;
+
+  /* 0.22% letter spacing, from the SF Pro Display spec. */
+  --tracking-display: 0.0022em;
+
+  /*
+   * The load choreography's only real number. Stage N starts N steps in and
+   * every stage runs five steps long, so the whole cascade re-times from here.
+   * At 190ms each stage runs 950ms and the three arrivals are far enough apart
+   * to actually register as a sequence. Shorter than ~150 and the whole cascade
+   * is over before the eye settles — it reads as the page simply appearing.
+   */
+  --stagger-step: 190ms;
+
+  /* How far each stage rises. Expressed through the spacing scale rather than
+     as a literal, because a keyframe cannot take a utility class. */
+  --rise-distance: calc(var(--spacing) * 3);
+
+  /* Decelerating hard at the end: the entrance should settle, not merely ease. */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* The sweep travels at constant speed, so its duration is literal rather
+     than a multiple of the step. */
+  --sweep-duration: 900ms;
+
+  /* Overshoot-and-settle, for the icon gestures that should "pop" rather than
+     glide: the shackle springing open, the GitHub mark landing. The second
+     control point's y > 1 is the whole trick — it carries the value past its
+     target and lets it fall back. */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /*
+   * Hover travel for the three slider handles in the Customisable icon, in that
+   * icon's own user units (CSS px inside an SVG ARE user units, so these scale
+   * with the glyph between size-14 and size-16).
+   *
+   * Off the spacing scale on purpose: they are constrained by measured artwork,
+   * not by layout rhythm. A handle is 10.58 wide and the tracks span x
+   * 32.5..77.5, so a handle CENTRE has to stay inside 37.79..72.21 or it hangs
+   * off the end of its bar. Rest centres are 43.27 / 66.71 / 43.28; these
+   * deltas land them on 65.27 / 45.71 / 58.28 — three visibly different
+   * settings, none of them at a limit.
+   */
+  --slider-shift-a: 22px;
+  --slider-shift-b: -21px;
+  --slider-shift-c: 15px;
+
+  /*
+   * How far the highlight band crosses the Swift glyph. The band starts at
+   * x -50 and the ink ends at x 66; 130 clears it at both ends with room for
+   * the -10deg skew to shift the edges. Overshooting costs nothing because the
+   * band is clipped to the glyph — off the ink it simply isn't drawn.
+   */
+  --icon-sweep-travel: 130px;
+
+  /*
+   * The hover twin of the hero's --sweep-duration gesture, sharing that token so
+   * the two read as the same idea at two scales.
+   */
+  --animate-icon-sweep: icon-sweep var(--sweep-duration) linear;
+
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/*
+ * Cards and links carry a 200ms transition for their hover states, which would
+ * otherwise cross-fade every colour through grey when the theme flips. The
+ * toggle sets this attribute for one frame so the swap is instant.
+ */
+[data-theme-switching] *,
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+  transition: none !important;
+}
+
+/*
+ * The mesh glow haloing the showcase row: four radial gradients anchored at the
+ * element's CORNERS, melted together by a heavy blur. Corners rather than one
+ * edge because the cards are opaque photographs — everything behind them is
+ * hidden, so only the bleed around the outside and through the 12px gaps ever
+ * shows, and a halo needs all four sides lit to read as one.
+ *
+ * The two melon stops are real tokens; the coral (used on the other diagonal,
+ * twice) is melon-500 rotated ~25deg toward orange and appears nowhere else, so
+ * it stays a literal here rather than becoming a token. Rind green was tried and rejected — melon and rind
+ * side by side in a blur read as Christmas.
+ *
+ * 128px is a blur radius, not spacing: no scale equivalent exists, and this is
+ * the one-off decorative geometry the no-arbitrary-values rule exempts.
+ */
+.showcase-glow {
+  background-image:
+    radial-gradient(at 0% 0%, var(--color-melon-600) 0%, transparent 50%),
+    radial-gradient(at 100% 0%, #ff7a3d 0%, transparent 50%),
+    radial-gradient(at 100% 100%, var(--color-melon-500) 0%, transparent 50%),
+    radial-gradient(at 0% 100%, #ff7a3d 0%, transparent 50%);
+  filter: blur(128px);
+  opacity: var(--glow-opacity);
+  border-radius: 9999px;
+}
+
+/*
+ * The header's bottom rule appears only once the page has scrolled. Driven by
+ * scroll position, not time, so there is nothing to gate behind
+ * prefers-reduced-motion — nothing actually moves.
+ *
+ * Longhands, not the `animation` shorthand: the shorthand resets
+ * animation-timeline. And in a browser without scroll-timeline support,
+ * `animation-duration: auto` is invalid and drops to 0s, so the animation lands
+ * instantly on its `to` keyframe and the rule is simply always visible — the
+ * intended degradation.
+ */
+@keyframes header-divide {
+  from { border-color: transparent; }
+  to   { border-color: var(--hairline); }
+}
+
+.header-divide {
+  animation-name: header-divide;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-duration: auto;
+  animation-timeline: scroll(root block);
+  animation-range: 0 24px;
+}
+
+/*
+ * Load choreography: header, then hero title, then the showcase row. Nothing
+ * below the fold participates — a load-triggered entrance finishes long before
+ * a scroll reaches it, so all it could do there is briefly withhold content.
+ *
+ * REDUCED MOTION. The invisible start state lives ONLY inside this keyframe,
+ * reached during the delay via `backwards` fill. It is deliberately NOT an
+ * `opacity-0` class in the markup. That is what lets the codebase's
+ * `motion-safe:` convention work here unchanged: it puts the whole declaration
+ * behind (prefers-reduced-motion: no-preference), so a reduced-motion reader
+ * gets no animation AND no fill, and the element renders at its ordinary
+ * resting style — visible, in place, at first paint. The inverse spelling
+ * (`opacity-0 motion-reduce:opacity-100`) makes visibility depend on an
+ * override firing, and one missed element there is a permanently blank block.
+ * This spelling cannot fail closed.
+ *
+ * `transform: translateY`, not the `translate` property: Tailwind v4 compiles
+ * translate-* utilities to `translate`, and this must never fight one.
+ */
+@keyframes enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise-distance));
+  }
+  /* No `to`. The implicit to-keyframe is the element's own computed style, so
+     the animation lands exactly on the resting design and holds nothing after
+     it — which is also why `backwards` is right here, not `both`. */
+}
+
+/*
+ * The same arrival without the rise, for elements where vertical movement reads
+ * as a glitch rather than as motion — the sticky header above all: it is a thin
+ * bar pinned to the top edge, so 12px of travel looks like a jump, not an entrance.
+ */
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@utility fade-* {
+  animation: enter-fade calc(var(--stagger-step) * 5) var(--ease-enter) backwards;
+  animation-delay: calc(var(--stagger-step) * --value(integer));
+}
+
+/* `enter-<n>` = "I am the nth thing to arrive." One integer per call site. */
+@utility enter-* {
+  animation: enter-rise calc(var(--stagger-step) * 5) var(--ease-enter) backwards;
+  animation-delay: calc(var(--stagger-step) * --value(integer));
+}
+
+/*
+ * The Swift glyph's highlight band. `transform`, not the `translate` property,
+ * for the same reason as enter-rise above: the rect carries no translate-*
+ * utility, so there is nothing here to fight.
+ */
+@keyframes icon-sweep {
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--icon-sweep-travel)); }
+}
+
+/*
+ * SVG children resolve transforms against the viewBox origin, not their own
+ * box, so a bare scale on a child pivots on the corner of the canvas and throws
+ * the shape across it. Anything inside an SVG that scales or rotates needs this;
+ * pure translations are origin-independent and deliberately go without.
+ */
+@utility fill-origin {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/*
+ * The light sweep across the accent word.
+ *
+ * `background-clip: text` requires `color: transparent`, and the Apple glyph
+ * beside the word paints with `fill: currentColor` — so clipping on the accent
+ * span itself would erase the glyph. The swept background therefore lives on an
+ * INNER span wrapping the word alone; the outer span keeps its real
+ * text-melon-500, which is what the glyph's fill-current resolves against. The
+ * glyph rejoins the gesture via .accent-sweep-glyph below rather than being
+ * excluded — it sits exactly where the sweep begins, and leaving it flat while
+ * the letters shimmer reads as a bug.
+ *
+ * Geometry: the image is 3x the box, so a third shows at a time and the
+ * highlight sits dead centre — which puts it off the box at BOTH ends of the
+ * travel. Flat melon at rest, flat melon at the finish, lit only in between.
+ * 100deg gives the band the slight slant of a real specular highlight.
+ */
+.accent-sweep {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-melon-500) 40%,
+    var(--color-melon-300) 50%,
+    var(--color-melon-500) 60%
+  );
+  background-size: 300% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes accent-sweep {
+  from { background-position: 100% 0; }
+  to   { background-position: 0% 0; }
+}
+
+/*
+ * The glyph's half: it cannot join a text clip, so it pulses its own colour,
+ * which fill-current picks up. The stops are its position in the travel — the
+ * highlight enters the word at 25%, and the glyph sits immediately left of it.
+ */
+@keyframes accent-sweep-glyph {
+  0%  { color: var(--color-melon-500); }
+  16% { color: var(--color-melon-300); }
+  34% { color: var(--color-melon-500); }
+}
+
+/*
+ * Only the animations are gated, not .accent-sweep itself: at rest the gradient
+ * is flat melon-500, so a reduced-motion reader sees a word pixel-identical to
+ * the plain text-melon-500 it replaces. Nothing to restore.
+ *
+ * `linear`, not an ease: the highlight is only on the glyphs for the middle of
+ * the travel, so easing would shape the invisible part and lurch the visible one.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .accent-sweep {
+    animation: accent-sweep var(--sweep-duration) linear backwards;
+    animation-delay: calc(var(--stagger-step) * 6);
+  }
+
+  .accent-sweep-glyph {
+    animation: accent-sweep-glyph var(--sweep-duration) linear backwards;
+    animation-delay: calc(var(--stagger-step) * 6);
+  }
+}
+
+/* Transparent text over a clipped background is the classic way to lose a
+   heading entirely in forced-colors mode. Hand the word back its real ink. */
+@media (forced-colors: active) {
+  .accent-sweep {
+    background-image: none;
+    color: CanvasText;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-melon-500);
+  color: #fff;
 }

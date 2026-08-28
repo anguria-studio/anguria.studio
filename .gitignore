@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw 2x screen captures — crop/downscale before they go in public/
+tools/shots/
+
+# Prototype screenshots — these contain real subscription/file data.
+# Delete this rule once they're re-shot with demo data.
+public/shots/
