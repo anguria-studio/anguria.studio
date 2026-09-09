@@ -4,7 +4,7 @@
  * All user-facing copy (name, tagline, description, features) lives in the
  * dictionaries so it can be translated — see lib/dictionaries/en.ts.
  */
-export const appSlugs = ["obolo", "scolo", "blatta"] as const;
+export const appSlugs = ["obolo", "scolo", "paguro"] as const;
 export type AppSlug = (typeof appSlugs)[number];
 
 export type AppMeta = {
@@ -33,10 +33,10 @@ export const apps: Record<AppSlug, AppMeta> = {
     minMacOS: "14.0",
     shot: "cleaner",
   },
-  blatta: {
-    slug: "blatta",
-    github: "https://github.com/anguria-studio/blatta",
-    download: "https://github.com/anguria-studio/blatta/releases/latest",
+  paguro: {
+    slug: "paguro",
+    github: "https://github.com/anguria-studio/Paguro",
+    download: "https://github.com/anguria-studio/Paguro/releases/latest",
     minMacOS: "14.0",
     shot: "atoll",
   },

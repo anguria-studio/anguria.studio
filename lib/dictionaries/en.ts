@@ -27,7 +27,7 @@ export const dictionary = {
   meta: {
     title: "Anguria Studio — Free, open-source apps for macOS",
     description:
-      "Three small, free, open-source utilities for your Mac: Obolo, Scolo and Blatta.",
+      "Three small, free, open-source utilities for your Mac: Obolo, Scolo and Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -98,11 +98,11 @@ export const dictionary = {
         },
       ],
     },
-    blatta: {
-      name: "Blatta",
+    paguro: {
+      name: "Paguro",
       category: "Web wrapper",
       shotAlt:
-        "The Blatta window on a Mac desktop, showing web apps grouped in a sidebar.",
+        "The Paguro window on a Mac desktop, showing web apps grouped in a sidebar.",
       tagline: "Native workspace for web apps",
       // TODO(copy)
       description:

@@ -1,6 +1,6 @@
 # anguria.studio
 
-Homepage for three free, open-source macOS utilities: **Obolo**, **Scolo** and **Blatta**.
+Homepage for three free, open-source macOS utilities: **Obolo**, **Scolo** and **Paguro**.
 
 Next.js 16 (App Router) + Tailwind CSS v4, fully statically exported. No client-side
 JavaScript beyond Next's runtime — every component is a server component.
@@ -16,8 +16,8 @@ pnpm lint
 
 English (default), Italian, French.
 
-- English is served **unprefixed**: `/`, `/obolo`, `/scolo`, `/blatta`
-- The others are **prefixed**: `/it`, `/it/obolo`, `/fr/blatta`, …
+- English is served **unprefixed**: `/`, `/obolo`, `/scolo`, `/paguro`
+- The others are **prefixed**: `/it`, `/it/obolo`, `/fr/paguro`, …
 
 Every internal link goes through `localePath(locale, slug?)` in `lib/i18n.ts`, which is
 the only place that knows about the prefix rule.

@@ -6,8 +6,8 @@ import { appMetadata } from "@/lib/metadata";
  * app/(en)/[app]/page.tsx would put two differently-named dynamic segments at
  * the same path position as (intl)/[locale], which Next rejects at build time.
  */
-export const generateMetadata = () => appMetadata("en", "blatta");
+export const generateMetadata = () => appMetadata("en", "paguro");
 
 export default function Page() {
-  return <AppPage locale="en" slug="blatta" />;
+  return <AppPage locale="en" slug="paguro" />;
 }

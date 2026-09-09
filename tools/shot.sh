@@ -60,7 +60,7 @@ done
 case "$KEY" in
   obolo)   APP="Obolo";      PREF_TITLE=""; WIN_X=274 ;;   # leftmost card — Obolo
   cleaner) APP="MacCleaner"; PREF_TITLE=""; WIN_X=580 ;;   # middle card — Scolo
-  atoll)   APP="Atoll";      PREF_TITLE=""; WIN_X=886 ;;   # rightmost card — Blatta
+  atoll)   APP="Atoll";      PREF_TITLE=""; WIN_X=886 ;;   # rightmost card — Paguro
   desktop) APP="";           PREF_TITLE=""; WIN_X=0   ;;   # wallpaper only, no window
   *) print -u2 "usage: ${0:t} {cleaner|obolo|atoll|desktop} [--windows] [--hide-icons] [--quit] [--no-restore]"; exit 1 ;;
 esac

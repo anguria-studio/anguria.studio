@@ -10,8 +10,8 @@ import type { AppSlug } from "@/lib/apps";
  * where it vanished. It takes the token like its siblings now.
  *
  * The three marks are normalised to a common size. Measured ink was 29 units
- * across for Obolo, 30 for Scolo and 26.85 for Blatta — so the first two are
- * scaled about their own centres to meet Blatta rather than the other way
+ * across for Obolo, 30 for Scolo and 26.85 for Paguro — so the first two are
+ * scaled about their own centres to meet Paguro rather than the other way
  * round, which keeps the smallest mark unscaled and its 40/99 factor exact.
  *
  * Deliberately NOT the full-colour icons that
@@ -46,10 +46,10 @@ const DOCK_MARKS: Record<AppSlug, ReactNode> = {
         </g>
     </>
   ),
-  blatta: (
+  paguro: (
     <>
         <rect width="40" height="40" rx="8" fill="var(--dock-tile)"/>
-        {/* Blatta's source is drawn in a 99-unit box, not the 40 the other two
+        {/* Paguro's source is drawn in a 99-unit box, not the 40 the other two
             share, so the mark is scaled by 40/99. Measured after the fact, that
             puts its ink at x 6.46..33.31, y 6.46..33.26 — against Obolo's
             6..35 / 6..34 and Scolo's 5..35. It reads a touch smaller than

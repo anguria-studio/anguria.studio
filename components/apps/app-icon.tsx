@@ -27,7 +27,7 @@ const PATHS: Record<AppSlug, readonly string[]> = {
     "M63.1377 18.9658C71.3621 18.9662 78.0293 25.6339 78.0293 33.8584V63.1426C78.0289 71.3667 71.3619 78.0338 63.1377 78.0342H33.8535C25.6291 78.0342 18.9613 71.367 18.9609 63.1426V33.8584C18.9609 25.6337 25.6288 18.9658 33.8535 18.9658H63.1377ZM41.1797 50.5918C38.2916 50.5918 35.9502 52.9332 35.9502 55.8213C35.9504 58.7092 38.2918 61.0498 41.1797 61.0498C44.0674 61.0496 46.408 58.709 46.4082 55.8213C46.4082 52.9333 44.0676 50.592 41.1797 50.5918ZM55.8164 50.5918C52.9283 50.5918 50.5869 52.9332 50.5869 55.8213C50.5871 58.7092 52.9285 61.0498 55.8164 61.0498C58.7042 61.0496 61.0447 58.709 61.0449 55.8213C61.0449 52.9334 58.7043 50.592 55.8164 50.5918ZM41.1797 35.9502C38.2918 35.9502 35.9504 38.2908 35.9502 41.1787C35.9502 44.0668 38.2916 46.4082 41.1797 46.4082C44.0676 46.408 46.4082 44.0667 46.4082 41.1787C46.408 38.291 44.0674 35.9504 41.1797 35.9502ZM55.8164 35.9502C52.9285 35.9502 50.5871 38.2908 50.5869 41.1787C50.5869 44.0668 52.9283 46.4082 55.8164 46.4082C58.7043 46.408 61.0449 44.0666 61.0449 41.1787C61.0447 38.291 58.7042 35.9504 55.8164 35.9502Z",
     "M63.1377 18.9658C71.3621 18.9662 78.0293 25.6339 78.0293 33.8584V63.1426C78.0289 71.3667 71.3619 78.0338 63.1377 78.0342H33.8535C25.6291 78.0342 18.9613 71.367 18.9609 63.1426V33.8584C18.9609 25.6337 25.6288 18.9658 33.8535 18.9658H63.1377ZM41.1797 50.5918C38.2916 50.5918 35.9502 52.9332 35.9502 55.8213C35.9504 58.7092 38.2918 61.0498 41.1797 61.0498C44.0674 61.0496 46.408 58.709 46.4082 55.8213C46.4082 52.9333 44.0676 50.592 41.1797 50.5918ZM55.8164 50.5918C52.9283 50.5918 50.5869 52.9332 50.5869 55.8213C50.5871 58.7092 52.9285 61.0498 55.8164 61.0498C58.7042 61.0496 61.0447 58.709 61.0449 55.8213C61.0449 52.9334 58.7043 50.592 55.8164 50.5918ZM41.1797 35.9502C38.2918 35.9502 35.9504 38.2908 35.9502 41.1787C35.9502 44.0668 38.2916 46.4082 41.1797 46.4082C44.0676 46.408 46.4082 44.0667 46.4082 41.1787C46.408 38.291 44.0674 35.9504 41.1797 35.9502ZM55.8164 35.9502C52.9285 35.9502 50.5871 38.2908 50.5869 41.1787C50.5869 44.0668 52.9283 46.4082 55.8164 46.4082C58.7043 46.408 61.0449 44.0666 61.0449 41.1787C61.0447 38.291 58.7042 35.9504 55.8164 35.9502Z",
   ],
-  blatta: [
+  paguro: [
     "M76.7219 1.2373H22.2719C10.6532 1.2373 1.23438 10.6561 1.23438 22.2748V76.7248C1.23438 88.3435 10.6532 97.7623 22.2719 97.7623H76.7219C88.3406 97.7623 97.7594 88.3435 97.7594 76.7248V22.2748C97.7594 10.6561 88.3406 1.2373 76.7219 1.2373Z",
     "M46.3633 44.3301V82.3271C29.3532 80.8759 16 66.6114 16 49.2256C16 42.1658 18.2026 35.6212 21.957 30.2393L46.3633 44.3301ZM76.4971 30.2461C80.2488 35.6269 82.4512 42.1686 82.4512 49.2256C82.4512 66.6054 69.1062 80.8656 52.1045 82.3252V44.3291L76.4971 30.2461ZM49.2256 16C58.4214 16.0001 66.744 19.7366 72.7598 25.7734L49.2324 39.3564L25.6953 25.7676C31.7108 19.7338 40.0323 16 49.2256 16Z",
     "M46.3633 44.3301V82.3271C29.3532 80.8759 16 66.6114 16 49.2256C16 42.1658 18.2026 35.6212 21.957 30.2393L46.3633 44.3301ZM76.4971 30.2461C80.2488 35.6269 82.4512 42.1686 82.4512 49.2256C82.4512 66.6054 69.1062 80.8656 52.1045 82.3252V44.3291L76.4971 30.2461ZM49.2256 16C58.4214 16.0001 66.744 19.7366 72.7598 25.7734L49.2324 39.3564L25.6953 25.7676C31.7108 19.7338 40.0323 16 49.2256 16Z",
@@ -152,53 +152,53 @@ const ICONS: Record<
       </>
     ),
   },
-  blatta: {
+  paguro: {
     viewBox: "0 0 99 99",
     defs: (
       <>
-        <linearGradient id="blatta-light-g0" x1="7.42187" y1="4.94981" x2="91.5719" y2="96.5248" gradientUnits="userSpaceOnUse">
+        <linearGradient id="paguro-light-g0" x1="7.42187" y1="4.94981" x2="91.5719" y2="96.5248" gradientUnits="userSpaceOnUse">
         <stop stopColor="#B575F2"/>
         <stop offset="1" stopColor="#7742C4"/>
         </linearGradient>
-        <linearGradient id="blatta-light-g1" x1="9" y1="2.5" x2="112.5" y2="131" gradientUnits="userSpaceOnUse">
+        <linearGradient id="paguro-light-g1" x1="9" y1="2.5" x2="112.5" y2="131" gradientUnits="userSpaceOnUse">
         <stop stopColor="#EDDAFF"/>
         <stop offset="1" stopColor="#7B59A5"/>
         </linearGradient>
-        <clipPath id="blatta-light-clip">
+        <clipPath id="paguro-light-clip">
         <rect width="99" height="99" fill="white"/>
         </clipPath>
-        <linearGradient id="blatta-dark-g0" x1="14.5482" y1="4.68462" x2="87.5275" y2="95.2797" gradientUnits="userSpaceOnUse">
+        <linearGradient id="paguro-dark-g0" x1="14.5482" y1="4.68462" x2="87.5275" y2="95.2797" gradientUnits="userSpaceOnUse">
         <stop stopColor="#313131"/>
         <stop offset="1" stopColor="#141415"/>
         </linearGradient>
-        <linearGradient id="blatta-dark-g1" x1="6.43187" y1="3.46481" x2="88.1069" y2="100.485" gradientUnits="userSpaceOnUse">
+        <linearGradient id="paguro-dark-g1" x1="6.43187" y1="3.46481" x2="88.1069" y2="100.485" gradientUnits="userSpaceOnUse">
         <stop stopColor="#292929"/>
         <stop offset="1" stopColor="#101010"/>
         </linearGradient>
-        <linearGradient id="blatta-dark-g2" x1="9" y1="7.5" x2="91" y2="104" gradientUnits="userSpaceOnUse">
+        <linearGradient id="paguro-dark-g2" x1="9" y1="7.5" x2="91" y2="104" gradientUnits="userSpaceOnUse">
         <stop stopColor="#7F49CA"/>
         <stop offset="1" stopColor="#3F2464"/>
         </linearGradient>
-        <clipPath id="blatta-dark-clip">
+        <clipPath id="paguro-dark-clip">
         <rect width="99" height="99" fill="white"/>
         </clipPath>
       </>
     ),
     light: (
       <>
-        <g clipPath="url(#blatta-light-clip)">
-        <path d={PATHS.blatta[0]} fill="url(#blatta-light-g0)" stroke="url(#blatta-light-g1)" strokeOpacity="0.7"/>
-        <path d={PATHS.blatta[1]} fill="#D9D9D9"/>
-        <path d={PATHS.blatta[1]} fill="#D9D9D9" fillOpacity="0.2"/>
+        <g clipPath="url(#paguro-light-clip)">
+        <path d={PATHS.paguro[0]} fill="url(#paguro-light-g0)" stroke="url(#paguro-light-g1)" strokeOpacity="0.7"/>
+        <path d={PATHS.paguro[1]} fill="#D9D9D9"/>
+        <path d={PATHS.paguro[1]} fill="#D9D9D9" fillOpacity="0.2"/>
         </g>
       </>
     ),
     dark: (
       <>
-        <g clipPath="url(#blatta-dark-clip)">
-        <path d={PATHS.blatta[0]} fill="url(#blatta-dark-g0)" stroke="url(#blatta-dark-g1)" strokeOpacity="0.7" strokeLinejoin="round"/>
-        <path d={PATHS.blatta[1]} fill="url(#blatta-dark-g2)"/>
-        <path d={PATHS.blatta[1]} fill="#D9D9D9" fillOpacity="0.2"/>
+        <g clipPath="url(#paguro-dark-clip)">
+        <path d={PATHS.paguro[0]} fill="url(#paguro-dark-g0)" stroke="url(#paguro-dark-g1)" strokeOpacity="0.7" strokeLinejoin="round"/>
+        <path d={PATHS.paguro[1]} fill="url(#paguro-dark-g2)"/>
+        <path d={PATHS.paguro[1]} fill="#D9D9D9" fillOpacity="0.2"/>
         </g>
       </>
     ),
