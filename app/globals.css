@@ -279,6 +279,10 @@
      target and lets it fall back. */
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  /* One accordion open or shut. Long enough to read as a movement rather than
+     a jump, short enough that opening three in a row is not a chore. */
+  --faq-duration: 320ms;
+
   /*
    * Hover travel for the three slider handles in the Customisable icon, in that
    * icon's own user units (CSS px inside an SVG ARE user units, so these scale
@@ -445,6 +449,54 @@
 @utility fill-origin {
   transform-box: fill-box;
   transform-origin: center;
+}
+
+/*
+ * The FAQ accordion.
+ *
+ * A <details> cannot be transitioned the ordinary way: the UA hides everything
+ * after the <summary> outright, so there is no box in between to animate.
+ * ::details-content is that hidden box made addressable, and interpolate-size
+ * is what allows block-size to animate TO `auto` — no answer here has a fixed
+ * height to animate to instead.
+ *
+ * interpolate-size sits on :root deliberately. It is inherited, and scoping it
+ * to .faq-item computes correctly on the pseudo-element yet still produces no
+ * transition; the property is documented as a document-level opt-in and behaves
+ * like one.
+ *
+ * content-visibility needs `allow-discrete`, or the content is dropped on the
+ * first frame of a close and the collapse plays against an empty box.
+ *
+ * A browser without ::details-content keeps the native instant toggle — the
+ * same graceful degradation .header-divide already leans on.
+ */
+:root {
+  interpolate-size: allow-keywords;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      block-size var(--faq-duration) var(--ease-enter),
+      opacity calc(var(--faq-duration) / 2) var(--ease-enter),
+      content-visibility var(--faq-duration) allow-discrete;
+  }
+
+  /* Opening: the box makes room first and the text arrives a beat later, so it
+     is never painted over an edge still in motion. Closing reverses that — the
+     text goes at half the duration, ahead of the collapse. */
+  .faq-item[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+    transition:
+      block-size var(--faq-duration) var(--ease-enter),
+      opacity var(--faq-duration) var(--ease-enter) calc(var(--faq-duration) / 4),
+      content-visibility var(--faq-duration) allow-discrete;
+  }
 }
 
 /*

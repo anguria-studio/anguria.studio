@@ -1,6 +1,6 @@
 import { AppDock } from "@/components/apps/app-dock";
 import { AppShowcase } from "@/components/apps/app-showcase";
-import { ContactLine } from "@/components/home/contact-line";
+import { ContactLine } from "@/components/layout/contact-line";
 import { FeatureGrid } from "@/components/home/feature-grid";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";

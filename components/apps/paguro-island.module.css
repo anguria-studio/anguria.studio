@@ -1,0 +1,115 @@
+/* The two six-point ears join the collapsed housing to the screen edge. */
+.silhouette { position: relative; width: min(240px, calc(100cqw - 128px)); max-width: 100%; pointer-events: auto; }
+.silhouette[data-open="true"] { width: 420px; }
+.silhouette[data-phase="preview"] { width: 360px; }
+.silhouette[data-phase="collapsed"][data-empty="true"] { width: 164px; }
+.silhouette[data-phase="collapsed"]::before, .silhouette[data-phase="collapsed"]::after { content: ""; position: absolute; top: 0; width: 6px; height: 6px; pointer-events: none; }
+.silhouette[data-phase="collapsed"]::before { left: -6px; background: radial-gradient(circle at 0 100%, transparent 6px, black 6.5px); }
+.silhouette[data-phase="collapsed"]::after { right: -6px; background: radial-gradient(circle at 100% 100%, transparent 6px, black 6.5px); }
+
+/* Match the native island at one CSS pixel per point. All geometry and local
+   type sizes come from Paguro's card/toolbar, not the marketing type scale. */
+.island {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 0 0 10px 10px;
+  color: white;
+  background: black;
+  box-shadow: 0 8px 24px rgb(0 0 0 / .16);
+  --card-fill: var(--island-card-fill);
+  --card-focus: var(--island-card-focus);
+}
+
+.island:not([data-phase="collapsed"]) {
+  border-radius: 0 0 20px 20px;
+  color: var(--color-foreground);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  backdrop-filter: blur(24px) saturate(1.3);
+}
+
+.camera {
+  position: absolute;
+  z-index: 102;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42%;
+  max-width: calc(100% - 224px);
+  height: 38px;
+  border-radius: 0 0 10px 10px;
+  background: black;
+  pointer-events: auto;
+}
+.island[data-phase="collapsed"] .camera { display: none; }
+.island[data-phase="preview"] .camera { width: 164px; max-width: calc(100% - 32px); }
+
+.toolbar { position: absolute; inset: 0 14px auto; z-index: 101; height: 38px; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
+.counter, .clear { display: flex; align-items: center; justify-content: center; gap: 6px; height: 26px; padding: 0 8px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; cursor: pointer; pointer-events: auto; }
+.island[data-open="true"] :is(.counter, .clear) { background: var(--color-glass); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.counter span { min-width: 18px; text-align: center; font-variant-numeric: tabular-nums; }
+.counter:focus-visible, .clear:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; }
+.island[data-phase="collapsed"] .toolbar { inset-inline: 0; }
+.island[data-phase="collapsed"] .counter { width: 100%; height: 38px; justify-content: flex-start; padding: 0 7px; border-radius: 0 0 10px 10px; }
+.island[data-phase="collapsed"] .counter span { display: flex; align-items: center; justify-content: center; min-width: 19px; height: 19px; padding: 0 6px; border-radius: 999px; background: rgb(255 255 255 / .18); font-size: 10px; }
+.island[data-phase="collapsed"] .counter:focus-visible { outline-offset: -3px; }
+
+/* The native compact alert has one message, with no card surface or toolbar. */
+.island[data-phase="preview"] .toolbar { inset: 38px 0 0; height: auto; }
+.preview { display: flex; align-items: center; gap: 12px; width: 100%; height: 100%; padding: 12px 16px; text-align: left; pointer-events: auto; cursor: pointer; }
+.preview > img { flex-shrink: 0; }
+.previewContent { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 3px; }
+.previewContent > * { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.previewService { font-size: 11px; line-height: 13px; font-weight: 600; color: color-mix(in srgb, var(--color-foreground) 70%, transparent); }
+.previewTitle { font-size: 13px; line-height: 16px; font-weight: 600; }
+.previewMessage { font-size: 12px; line-height: 15px; color: color-mix(in srgb, var(--color-foreground) 70%, transparent); }
+.previewCount { flex-shrink: 0; padding: 3px 7px; border-radius: 999px; font-size: 11px; line-height: 13px; font-weight: 600; font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--color-foreground) 18%, transparent); }
+.preview:focus-visible { outline: 1px solid currentColor; outline-offset: -5px; border-radius: 0 0 20px 20px; }
+
+.scroll { position: absolute; z-index: 0; inset: 0 0 8px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+.island:not([data-open="true"]) .scroll { opacity: 0; pointer-events: none; }
+.history { position: relative; }
+.row { position: absolute; left: 10px; right: 10px; height: 68px; transform-origin: center bottom; }
+.arrival { height: 100%; }
+.card { position: relative; height: 100%; border-radius: 12px; background: var(--card-fill); box-shadow: inset 0 0 0 1px var(--color-hairline); mask-size: calc(100% + 16px) calc(100% + 16px); mask-position: center; mask-repeat: no-repeat; touch-action: pan-y; }
+.card:has(:focus-visible) { background: var(--card-focus); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-foreground) 28%, transparent); }
+.body { display: flex; align-items: center; gap: 10px; width: 100%; height: 100%; padding: 7px 18px 7px 10px; text-align: left; border-radius: inherit; cursor: grab; user-select: none; -webkit-user-select: none; outline: none; }
+.body img { flex-shrink: 0; width: 30px; height: 30px; }
+.content { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 2px; font-size: 13px; line-height: 15px; }
+.metadata { display: flex; align-items: baseline; gap: 6px; font-size: 11px; line-height: 13px; color: color-mix(in srgb, var(--color-foreground) 70%, transparent); }
+.metadata strong { font-weight: 600; }
+.metadata > span { font-size: 10px; }
+.title, .message { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.title { font-weight: 500; }
+.message { color: color-mix(in srgb, var(--color-foreground) 75%, transparent); }
+.dismiss { position: absolute; top: -8px; right: -8px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; opacity: 0; cursor: pointer; outline: none; }
+.dismiss > span { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--color-surface); border: .5px solid rgb(255 255 255 / .45); box-shadow: inset 0 0 0 10px color-mix(in srgb, var(--color-foreground) 10%, transparent); }
+.card:hover .dismiss, .card:focus-within .dismiss { opacity: 1; }
+.dismiss:focus-visible > span { background: var(--color-foreground); color: var(--color-background); box-shadow: none; }
+.card[data-dragging="true"] .body { cursor: grabbing; }
+
+@media (pointer: coarse) { .dismiss { opacity: 1; } }
+@media (max-width: 479px) { .camera { width: 30%; } }
+@media (prefers-reduced-transparency: reduce) {
+  .island:not([data-phase="collapsed"]) { background: var(--color-surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .card { background: var(--color-background); }
+  .island[data-open="true"] :is(.counter, .clear) { background: var(--color-background); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) { .card { box-shadow: inset 0 0 0 1px currentColor; } }
+@media (forced-colors: active) { .card { border: 1px solid CanvasText; } .dismiss > span { background: ButtonFace; border: 1px solid ButtonText; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .silhouette { transition: width 280ms var(--ease-enter); }
+  .island { transition: height 280ms var(--ease-enter), background 180ms ease; }
+  .row { transition: top 400ms var(--ease-bounce); }
+  .arrival { animation: arrive 280ms var(--ease-enter) backwards; }
+  .previewContent { animation: fade 180ms ease backwards; }
+  .card:not([data-dragging="true"]) { transition: transform 400ms var(--ease-bounce), opacity 180ms ease; }
+  .dismiss { transition: opacity 120ms ease; }
+}
+@media (prefers-reduced-motion: reduce) { .arrival { animation: fade 180ms ease backwards; } }
+@keyframes arrive { from { opacity: 0; transform: translateY(-12px) scale(.96); } }
+@keyframes fade { from { opacity: 0; } }

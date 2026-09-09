@@ -16,6 +16,10 @@ export type AppMeta = {
   /** Basename in public/shots/. Named after the macOS app captured (Obolo,
    *  MacCleaner, Atoll), which is not the product name — see tools/shot.sh. */
   shot: string;
+  /** App Store product page. Optional: an app that has not shipped yet has no
+   *  listing, and the primary button falls back to the on-page release section
+   *  rather than pointing somewhere that does not exist. */
+  appStore?: string;
 };
 
 export const apps: Record<AppSlug, AppMeta> = {
@@ -37,7 +41,7 @@ export const apps: Record<AppSlug, AppMeta> = {
     slug: "paguro",
     github: "https://github.com/anguria-studio/Paguro",
     download: "https://github.com/anguria-studio/Paguro/releases/latest",
-    minMacOS: "14.0",
+    minMacOS: "15.0",
     shot: "atoll",
   },
 };

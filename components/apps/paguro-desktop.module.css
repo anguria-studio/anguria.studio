@@ -1,0 +1,45 @@
+/* The existing site palette, scoped to this desktop. Page/OS theme rules must
+   not change the preview or write its selection to the page's preference. */
+.desktop {
+  container-type: inline-size;
+  color-scheme: light;
+  --color-background: #faf7f5;
+  --color-foreground: #1d1d1f;
+  --color-surface: #f1eeec;
+  --color-hairline: rgb(0 0 0 / .08);
+  --color-glass: rgb(255 255 255 / .72);
+  --island-card-fill: rgb(255 255 255 / .55);
+  --island-card-focus: rgb(255 255 255 / .85);
+}
+.desktop[data-preview-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #171413;
+  --color-foreground: #f5f5f7;
+  --color-surface: #292625;
+  --color-hairline: rgb(255 255 255 / .12);
+  --color-glass: rgb(60 56 54 / .72);
+  --island-card-fill: rgb(255 255 255 / .10);
+  --island-card-focus: rgb(255 255 255 / .22);
+}
+.menuBar { position: absolute; z-index: 10; inset: 0 0 auto; height: 38px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 13px; font-weight: 600; line-height: 1; user-select: none; }
+.appMenus, .statusItems { display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+.appMenus strong { font-weight: 700; }
+.statusItems { gap: 12px; }
+.clock { display: flex; gap: 8px; font-variant-numeric: tabular-nums; min-width: 136px; justify-content: flex-end; }
+.compactDate { display: none; }
+.themeToggle { display: flex; color: white; }
+.themeToggle button { position: relative; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; opacity: .65; }
+.themeToggle button[aria-pressed="true"], .themeToggle button:hover { opacity: 1; }
+.themeToggle button[aria-pressed="true"]::after { content: ""; position: absolute; bottom: 1px; width: 8px; height: 2px; border-radius: 1px; background: currentColor; }
+.themeToggle button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+
+/* Use a short numeric date on narrow desktops so the controls stay clear of the
+   expanded island. The complete local date remains in the clock's label. */
+@container (max-width: 850px) {
+  .menuBar { padding-inline: 12px; }
+  .date { display: none; }
+  .compactDate { display: inline; }
+  .clock { min-width: 80px; gap: 6px; }
+  .statusItems { gap: 6px; }
+  .themeToggle button { width: 24px; }
+}

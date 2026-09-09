@@ -1,3 +1,4 @@
+import { PaguroCredit, PaguroDetail, PaguroHeader } from "@/components/apps/paguro-detail";
 import { AppDetail } from "@/components/apps/app-detail";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -15,16 +16,25 @@ export async function AppPage({
 
   return (
     <>
-      <Header locale={locale} dict={dict} />
+      {slug === "paguro" ? <PaguroHeader locale={locale} dict={dict} /> : <Header locale={locale} dict={dict} />}
       <main>
-        <AppDetail
-          locale={locale}
-          meta={apps[slug]}
-          copy={dict.apps[slug]}
-          dict={dict}
-        />
+        {slug === "paguro" ? (
+          <PaguroDetail dict={dict} locale={locale} />
+        ) : (
+          <AppDetail
+            locale={locale}
+            meta={apps[slug]}
+            copy={dict.apps[slug]}
+            dict={dict}
+          />
+        )}
       </main>
-      <Footer locale={locale} dict={dict} slug={slug} />
+      <Footer
+        locale={locale}
+        dict={dict}
+        slug={slug}
+        note={slug === "paguro" ? <PaguroCredit dict={dict} /> : undefined}
+      />
     </>
   );
 }

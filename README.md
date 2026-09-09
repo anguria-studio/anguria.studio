@@ -2,8 +2,9 @@
 
 Homepage for three free, open-source macOS utilities: **Obolo**, **Scolo** and **Paguro**.
 
-Next.js 16 (App Router) + Tailwind CSS v4, fully statically exported. No client-side
-JavaScript beyond Next's runtime — every component is a server component.
+Next.js 16 (App Router) + Tailwind CSS v4, fully statically exported. Most markup
+uses server components. The theme selector and Paguro's notification and layout
+preview use small client components.
 
 ```bash
 pnpm install
@@ -14,7 +15,7 @@ pnpm lint
 
 ## Languages
 
-English (default), Italian, French.
+English (default), Italian, French, and Spanish.
 
 - English is served **unprefixed**: `/`, `/obolo`, `/scolo`, `/paguro`
 - The others are **prefixed**: `/it`, `/it/obolo`, `/fr/paguro`, …
@@ -40,7 +41,7 @@ Pieces:
 |---|---|
 | `app/globals.css` | The three token blocks. The dark media query is guarded with `:root:not([data-theme="light"])` so an explicit light choice wins on a dark Mac. |
 | `components/theme-script.tsx` | ~200-byte inline script that stamps the attribute before first paint. Must be in `<head>` of **all three** root documents (both layouts and `global-not-found.tsx`) — there is no shared layout to put it in. |
-| `components/theme-toggle.tsx` | The site's only client component. |
+| `components/layout/theme-toggle.tsx` | The client component for selecting the theme. |
 
 The toggle's first client render is always `"system"` so it matches the server exactly; the stored
 value is read via `useSyncExternalStore`. The visible icon is *not* driven by that state — all three
@@ -56,16 +57,93 @@ block — they are duplicated on purpose and must stay in sync.
 | Path | What |
 |---|---|
 | `lib/dictionaries/en.ts` | **All English copy.** The source language, and the source of the `Dictionary` type. |
-| `lib/dictionaries/{it,fr}.ts` | Translations, typed against `en.ts` — a missing key is a compile error. |
+| `lib/dictionaries/{it,fr,es}.ts` | Translations, typed against `en.ts` — a missing key is a compile error. |
 | `lib/apps.ts` | Per-app non-translatable data: GitHub/download URLs, icon gradient, minimum macOS. |
 | `lib/i18n.ts` | Locale list, `localePath()`, dictionary loading. |
 | `lib/metadata.ts` | Titles, descriptions, canonical + hreflang, Open Graph. |
 | `components/` | All markup. Components never contain copy — they read it from the dictionary. |
 
 To change what an app says, edit its entry in `lib/dictionaries/en.ts` and mirror it in
-`it.ts` / `fr.ts`. Nothing else contains app copy.
+`it.ts` / `fr.ts` / `es.ts`. Nothing else contains app copy.
 
 Unwritten copy is marked in the source: `grep -rn "TODO(copy)" lib/dictionaries`
+
+## Paguro landing page
+
+`components/apps/paguro-detail.tsx` renders the product navigation, feature copy,
+questions, and release section in all four languages. Other app pages retain their
+shared header and detail layout.
+
+`components/apps/paguro-hero.tsx` is a client component. On desktop, its three service buttons
+add sample notifications to a local island preview with no history cap.
+`paguro-island.tsx` renders three full cards and a folded pile. Scroll to read the
+rest. It uses the native app's 68-point cards, 8-point gaps, corner dismiss controls,
+and stop-line geometry, ported in `lib/paguro-island.ts`. Covered cards are masked
+before drawing the front glass, so their text does not bleed through it.
+
+New samples show only the latest message and total count in a 360 × 120-point
+compact preview for four seconds. The preview uses the native 34-point service
+icon, 12-point gap, and 16-point horizontal padding below the camera housing.
+Another arrival replaces the preview and restarts its timer. It does not open
+the stack unless the visitor is already hovering or using the island keyboard controls.
+Hover, or Enter on the preview/notch button, opens the full stack. Leaving it
+collapses it after 180 ms; an active drag or keyboard focus holds it open.
+Leaving the stack returns to the collapsed notch without replaying the preview.
+Each arrival cancels any pending collapse from an earlier hover or focus exit.
+The closed notch does not queue collapse timers. The reducer in
+`lib/paguro-island.ts` also ignores timers from older arrivals and prevents the
+preview timer from closing the expanded stack.
+Drag a card right to dismiss it (25% of its width, or 400 points/second after the
+8-point gesture threshold). A short or leftward drag springs back. Vertical touch
+gestures and trackpad wheels scroll. Dismissal slides and fades the card out, then
+the remaining cards move into place. Clear All uses the same exit animation.
+
+Tab and arrow keys reveal the focused card above the fold. Delete dismisses it and
+focus moves to the next card, or the previous card at the end. Escape collapses
+the island. Keyboard interaction keeps it open until focus leaves or Escape is
+pressed. An empty list collapses. Sample messages are announced politely.
+The preview does not request system notification permissions or contact any service.
+Reloading the page resets it.
+
+The layout selector switches between two real, signed-out Paguro layouts, captured
+at the same size in both appearances. It does not simulate a working web app. Captures and bundled service
+marks live in `public/paguro/`; see [asset notes](content/paguro-assets.md).
+
+Copy lives in the `paguroHero` and `paguroPage` dictionary sections. The page uses
+the homepage's existing type scale, colours, spacing, and surface tokens.
+`paguro-hero.module.css` adds scoped entrance motion. `paguro-island.module.css`
+contains the native preview's geometry and type sizes, using the site's neutral
+theme colours for its glass surfaces. Reduce Motion removes spring and scale
+effects; Reduce Transparency uses solid surfaces. There are no looping animations,
+new fonts, or animation dependencies. Run the presentation, layout, and gesture regression checks
+with `node --test tests/paguro-island.test.mjs`.
+
+The collapsed notch is a solid black housing with concave top corners and a
+small count badge on the left. It has no bell or app label in this state; an
+empty history leaves a smaller, blank 164-point housing. A count widens it to
+240 points; the expanded stack keeps its 420-point width.
+
+The white sun/moon control sits in the menu bar, immediately before the date,
+and changes only the preview. Its active icon has a small underline.
+Its local state defaults to dark and does not read or write the page theme or
+local storage. The island palette and full/compact app captures change together.
+`paguro-desktop.module.css` scopes the existing site palette to this preview.
+The footer's page theme control is still separate.
+
+`paguro-menu-bar.tsx` has no background or blur. It uses white, heavier text,
+with the Apple mark and Paguro on the left and the theme control and clock on
+the right. Its
+clock uses the viewer's current date and local timezone, formats it for the page
+language, and refreshes at each minute boundary and on return to the tab. Static
+HTML does not contain a build-time date. Narrow desktops use a short numeric date to
+keep the controls clear of the expanded island.
+
+Below the existing `desk` breakpoint (48rem, hover, and a fine pointer), the hero
+shows a static app screenshot. Service buttons, the island, theme control, menu
+bar, and layout switcher are hidden. Touch devices also use the still image.
+
+The release section says that the first public release is coming soon. Replace
+that message with verified download and App Store links when releases are live.
 
 ## Brand assets
 
@@ -106,10 +184,10 @@ render inside. It is exported to `out/404.html`.
 ## Adding an app
 
 1. Add the slug to `appSlugs` and an entry to `apps` in `lib/apps.ts`.
-2. Add its copy to all three dictionaries.
+2. Add its copy to all four dictionaries.
 3. Create `app/(en)/<slug>/page.tsx` (copy an existing one — it is 8 lines).
 
-`/it/<slug>` and `/fr/<slug>`, the sitemap and the hreflang tags all follow automatically.
+`/it/<slug>`, `/fr/<slug>`, and `/es/<slug>`, the sitemap and the hreflang tags all follow automatically.
 
 ## Deploying
 

@@ -1,0 +1,28 @@
+/* Choreography only. Layout, type, colours, and surfaces use the site tokens. */
+@media (prefers-reduced-motion: no-preference) {
+  .gather {
+    animation: gather calc(var(--stagger-step) * 5) var(--ease-enter) both;
+    animation-delay: calc(var(--stagger-step) * 2);
+  }
+
+  .gather:first-child { --travel: calc(var(--spacing) * -12); --tilt: -16deg; }
+  .gather:nth-child(2) { --travel: 0px; --tilt: 8deg; }
+  .gather:last-child { --travel: calc(var(--spacing) * 12); --tilt: 16deg; }
+
+  .window {
+    animation: settle calc(var(--stagger-step) * 5) var(--ease-enter) both;
+    animation-delay: calc(var(--stagger-step) * 3);
+  }
+
+}
+
+@keyframes gather {
+  from { opacity: 0; transform: translate(var(--travel), calc(var(--spacing) * 5)) rotate(var(--tilt)); }
+  to { opacity: 1; transform: translate(0, 0) rotate(0); }
+}
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(calc(var(--spacing) * 8)) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
