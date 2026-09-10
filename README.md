@@ -44,3 +44,7 @@ through it.
 ## Contact
 
 hello@anguria.studio
+
+## Licence
+
+MIT; see [LICENSE](LICENSE).
