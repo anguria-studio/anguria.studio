@@ -196,6 +196,10 @@ App Store Connect and the app's settings.
   row beside the Chorus credit. Not from the home or other app footers — there is
   no site-wide policy yet, and a global link to a Paguro-only document would
   misstate its scope.
+- Wears Paguro's header and footer (`PaguroHeader subpage`, `PaguroFooterNote
+  privacyLink={false}`): the header is the app page's, download pills included,
+  except that the wordmark links up to the app page; the footer keeps the Chorus
+  credit without linking the policy to itself.
 
 Run the structural checks (block parity across locales, URLs, date formatting) with
 `node --test tests/paguro-privacy.test.mjs`.

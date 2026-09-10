@@ -13,7 +13,28 @@ import type { FeatureId } from "@/lib/features";
 const featureIcons: FeatureId[] = ["custom", "privacy", "source"];
 const linkStyle = "rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500";
 
-export function PaguroHeader({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function PaguroHeader({
+  locale,
+  dict,
+  subpage = false,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  /** True on a page below /paguro (the privacy policy). The wordmark then
+   *  links up to the app page instead of to a hero that is not there. Nothing
+   *  else changes: the pills stay, so the header reads the same on every
+   *  Paguro page. */
+  subpage?: boolean;
+}) {
+  const wordmark = `inline-flex items-center gap-2 rounded-lg text-2xl font-bold tracking-tight ${linkStyle}`;
+  const icon = (
+    <span aria-hidden="true" className="size-9 shrink-0">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/paguro/app-icon-light.png" alt="" width={256} height={256} className="size-full [display:var(--icon-light-display)]" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/paguro/app-icon-dark.png" alt="" width={256} height={256} className="size-full [display:var(--icon-dark-display)]" />
+    </span>
+  );
   return (
     <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
       {/* The header's load animation sits on this inner row, not on <header>,
@@ -21,15 +42,17 @@ export function PaguroHeader({ locale, dict }: { locale: Locale; dict: Dictionar
           fade on the hero title's beat rather than a rise of its own, for the
           reasons spelled out in components/layout/header.tsx. */}
       <nav aria-label={dict.paguroPage.nav} className="mx-auto flex h-20 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
-        <a href="#paguro" className={`inline-flex items-center gap-2 rounded-lg text-2xl font-bold tracking-tight ${linkStyle}`}>
-          <span aria-hidden="true" className="size-9 shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/paguro/app-icon-light.png" alt="" width={256} height={256} className="size-full [display:var(--icon-light-display)]" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/paguro/app-icon-dark.png" alt="" width={256} height={256} className="size-full [display:var(--icon-dark-display)]" />
-          </span>
-          {dict.apps.paguro.name}
-        </a>
+        {subpage ? (
+          <Link href={localePath(locale, "paguro")} className={wordmark}>
+            {icon}
+            {dict.apps.paguro.name}
+          </Link>
+        ) : (
+          <a href="#paguro" className={wordmark}>
+            {icon}
+            {dict.apps.paguro.name}
+          </a>
+        )}
         <div className="flex items-center gap-4 text-sm font-medium sm:gap-6">
           <Link href={localePath(locale)} className={`inline-flex items-center gap-2 text-muted transition hover:text-foreground ${linkStyle}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -38,9 +61,10 @@ export function PaguroHeader({ locale, dict }: { locale: Locale; dict: Dictionar
             <span className="sr-only sm:hidden">{dict.paguroHero.back}</span>
           </Link>
           {/* No pills on a phone: two h-11 pills plus the wordmark and the back
-              link do not fit that header, and below desk the hero carries the
-              pair anyway. The wrapper owns the display so it cannot race the
-              hardcoded `flex` inside PaguroActions. */}
+              link do not fit that header. On the app page the hero carries the
+              pair below desk; on the privacy subpage the wordmark leads to that
+              hero. The wrapper owns the display so it cannot race the hardcoded
+              `flex` inside PaguroActions. */}
           <div className="hidden sm:block">
             <PaguroActions copy={dict.paguroPage} meta={apps.paguro} />
           </div>
@@ -111,15 +135,28 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
 }
 
 /** Paguro is a fork, and says so; its privacy policy sits beside the credit because
- *  the footer is generic and this is the only app that has either. app-page.tsx
- *  passes this in for this one slug. */
-export function PaguroFooterNote({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+ *  the footer is generic and this is the only app that has either. The policy
+ *  page itself passes `privacyLink={false}`: a footer link to the page it is on
+ *  would go nowhere, and the credit alone is the right line there. */
+export function PaguroFooterNote({
+  dict,
+  locale,
+  privacyLink = true,
+}: {
+  dict: Dictionary;
+  locale: Locale;
+  privacyLink?: boolean;
+}) {
   const link = "underline decoration-hairline underline-offset-4 transition hover:text-foreground";
   return (
     <>
       <a href="https://github.com/nicojan/Chorus" target="_blank" rel="noreferrer" className={link}>{dict.paguroPage.credits}</a>
-      <span aria-hidden="true"> · </span>
-      <Link href={localePath(locale, paguroPrivacyPath)} className={link}>{dict.paguroPrivacy.link}</Link>
+      {privacyLink ? (
+        <>
+          <span aria-hidden="true"> · </span>
+          <Link href={localePath(locale, paguroPrivacyPath)} className={link}>{dict.paguroPrivacy.link}</Link>
+        </>
+      ) : null}
     </>
   );
 }
