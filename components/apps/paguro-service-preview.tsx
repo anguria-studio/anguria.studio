@@ -60,7 +60,7 @@ export function PaguroServicePreview({ layout, onLayoutChange, theme, copy, onUn
         const showing = scheme === theme && arrangement === layout;
         return (
           // eslint-disable-next-line @next/next/no-img-element
-          <img key={`${arrangement}-${scheme}`} src={`/shots/paguro-overlay/${arrangement}-${scheme}.png`} alt={showing ? copy.captureAlt : ""} width={2880} height={1800} draggable={false}
+          <img key={`${arrangement}-${scheme}`} src={`/shots/paguro-overlay/${arrangement}-${scheme}.webp`} alt={showing ? copy.captureAlt : ""} width={2880} height={1800} draggable={false}
             fetchPriority={scheme === theme ? "high" : "low"} onError={onUnavailable}
             className={styles.screenshot} style={{ opacity: showing ? 1 : 0 }} />
         );

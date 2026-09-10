@@ -130,12 +130,13 @@ cancels the hint; controls already explored are not prompted again.
 Hints stop offscreen or in a hidden tab and respect Reduce Motion. Their history
 survives preview theme changes and resets on a fresh page visit.
 
-The prototype originals live under ignored `public/shots/paguro-overlay/` because
-they contain personal chat details. Replace them with demo content before publishing.
-If they are absent, the preview falls back to the earlier signed-out captures in
-`public/paguro/`. The light preview and mobile still continue using those earlier
-captures. See [asset notes](content/paguro-assets.md) for the file mapping and geometry.
-Run the dock geometry checks with `node --test tests/paguro-service-preview.test.mjs`.
+The four captures show mock chat content composited in Figma and ship as WebP
+from `public/shots/paguro-overlay/`; their lossless PNG sources sit beside them,
+ignored by git. If a capture fails to load, the preview falls back to the earlier
+signed-out captures in `public/paguro/`, which mobile uses regardless. See
+[asset notes](content/paguro-assets.md) for the encoder settings, file mapping
+and geometry. Run the dock geometry checks with
+`node --test tests/paguro-service-preview.test.mjs`.
 
 Copy lives in the `paguroHero` and `paguroPage` dictionary sections. The page uses
 the homepage's existing type scale, colours, spacing, and surface tokens.
