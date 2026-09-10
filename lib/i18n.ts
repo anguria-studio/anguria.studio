@@ -1,3 +1,4 @@
+import type { PagePath } from "./apps";
 import type { Dictionary } from "./dictionaries/en";
 
 export const locales = ["en", "it", "fr", "es"] as const;
@@ -20,12 +21,13 @@ export function isLocale(value: string): value is Locale {
 }
 
 /**
- * The default locale is served unprefixed (`/`, `/obolo`); the others are
- * prefixed (`/it`, `/it/obolo`). Keep every href in the site going through here.
+ * The default locale is served unprefixed (`/`, `/obolo`, `/paguro/privacy`);
+ * the others are prefixed (`/it`, `/it/obolo`, `/it/paguro/privacy`). Keep
+ * every href in the site going through here.
  */
-export function localePath(locale: Locale, slug?: string): string {
+export function localePath(locale: Locale, path?: PagePath): string {
   const base = locale === defaultLocale ? "" : `/${locale}`;
-  return slug ? `${base}/${slug}` : base || "/";
+  return path ? `${base}/${path}` : base || "/";
 }
 
 const dictionaries: Record<Locale, () => Promise<{ dictionary: Dictionary }>> = {

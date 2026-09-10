@@ -48,6 +48,17 @@ export const apps: Record<AppSlug, AppMeta> = {
 
 export const appList = appSlugs.map((slug) => apps[slug]);
 
+/** Locale-relative path of Paguro's privacy policy; nested under the app page it describes. */
+export const paguroPrivacyPath = "paguro/privacy" as const;
+
+/**
+ * Every page below the home page, as a locale-relative path with no leading
+ * slash. Hrefs, canonical, hreflang and the sitemap are all typed against this,
+ * so a page cannot be linked to without also being exported.
+ */
+export const pagePaths = [...appSlugs, paguroPrivacyPath] as const;
+export type PagePath = (typeof pagePaths)[number];
+
 export const site = {
   name: "Anguria Studio",
   domain: "anguria.studio",

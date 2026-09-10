@@ -20,7 +20,7 @@ English (default), Italian, French, and Spanish.
 - English is served **unprefixed**: `/`, `/obolo`, `/scolo`, `/paguro`
 - The others are **prefixed**: `/it`, `/it/obolo`, `/fr/paguro`, …
 
-Every internal link goes through `localePath(locale, slug?)` in `lib/i18n.ts`, which is
+Every internal link goes through `localePath(locale, path?)` in `lib/i18n.ts`, which is
 the only place that knows about the prefix rule.
 
 ## Theme
@@ -58,9 +58,11 @@ block — they are duplicated on purpose and must stay in sync.
 |---|---|
 | `lib/dictionaries/en.ts` | **All English copy.** The source language, and the source of the `Dictionary` type. |
 | `lib/dictionaries/{it,fr,es}.ts` | Translations, typed against `en.ts` — a missing key is a compile error. |
-| `lib/apps.ts` | Per-app non-translatable data: GitHub/download URLs, icon gradient, minimum macOS. |
+| `lib/apps.ts` | Per-app non-translatable data: GitHub/download URLs, icon gradient, minimum macOS. Also `pagePaths` / `PagePath`, the typed list of every non-home page. |
 | `lib/i18n.ts` | Locale list, `localePath()`, dictionary loading. |
 | `lib/metadata.ts` | Titles, descriptions, canonical + hreflang, Open Graph. |
+| `lib/privacy/paguro-policy.ts` | Policy schema, section ids, `paguroPrivacyEffective`, the date formatter and the per-locale loader. |
+| `lib/privacy/paguro/{en,it,fr,es}.ts` | The policy text itself, one `policy` export per locale, typed against the schema — a missing section is a compile error. |
 | `components/` | All markup. Components never contain copy — they read it from the dictionary. |
 
 To change what an app says, edit its entry in `lib/dictionaries/en.ts` and mirror it in
@@ -170,6 +172,33 @@ bar, and sidebar toggle are hidden. Touch devices also use the still image.
 
 The release section says that the first public release is coming soon. Replace
 that message with verified download and App Store links when releases are live.
+
+## Paguro privacy policy
+
+Published at `/paguro/privacy/`, `/it/paguro/privacy/`, `/fr/paguro/privacy/` and
+`/es/paguro/privacy/` — each canonical, with hreflang across all four plus
+`x-default`. It is deliberately **indexable**: this is the URL that goes into
+App Store Connect and the app's settings.
+
+- The text is data, not markup: `lib/privacy/paguro/en.ts` is the source of truth,
+  `it.ts` / `fr.ts` / `es.ts` are translations. `components/privacy/policy-article.tsx`
+  renders it into real headings, paragraphs and links — no markdown, no
+  `dangerouslySetInnerHTML`.
+- Sections are keyed by id (`local`, `network`, `permissions`, `export`, `updates`,
+  `contact`) and those ids are the `<h2>` anchors, so `#contact` is the same deep
+  link in every language.
+- **Change the effective date in one place:** `paguroPrivacyEffective` in
+  `lib/privacy/paguro-policy.ts`. Every locale formats it itself, and the sitemap
+  uses it as the policy's `lastmod`.
+- The contact address comes from `site.email` via a `{ kind: "email" }` run; the
+  policy text never spells it out.
+- Linked from the Paguro page twice: under the three features, and in the footer
+  row beside the Chorus credit. Not from the home or other app footers — there is
+  no site-wide policy yet, and a global link to a Paguro-only document would
+  misstate its scope.
+
+Run the structural checks (block parity across locales, URLs, date formatting) with
+`node --test tests/paguro-privacy.test.mjs`.
 
 ## Brand assets
 

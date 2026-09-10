@@ -6,7 +6,7 @@ import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { PaguroActions } from "@/components/apps/paguro-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
-import { apps } from "@/lib/apps";
+import { apps, paguroPrivacyPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import type { FeatureId } from "@/lib/features";
 
@@ -86,6 +86,13 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
           })}
         </ul>
 
+        {/* The third feature is the privacy claim; this line is its receipt. */}
+        <p className="mt-10 text-center text-sm text-muted">
+          <Link href={localePath(locale, paguroPrivacyPath)} className="underline decoration-hairline underline-offset-4 transition hover:text-foreground">
+            {dict.paguroPrivacy.read}
+          </Link>
+        </p>
+
         <div className="mt-24 text-center sm:mt-40">
           <h2 className="text-xl font-semibold tracking-tight text-balance sm:text-3xl">{copy.story.services}</h2>
           <PaguroServiceStrip />
@@ -103,17 +110,16 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
   );
 }
 
-/** Paguro is a fork, and says so. Lives here rather than in the footer because
- *  the footer is generic; app-page.tsx passes this in for this one slug. */
-export function PaguroCredit({ dict }: { dict: Dictionary }) {
+/** Paguro is a fork, and says so; its privacy policy sits beside the credit because
+ *  the footer is generic and this is the only app that has either. app-page.tsx
+ *  passes this in for this one slug. */
+export function PaguroFooterNote({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+  const link = "underline decoration-hairline underline-offset-4 transition hover:text-foreground";
   return (
-    <a
-      href="https://github.com/nicojan/Chorus"
-      target="_blank"
-      rel="noreferrer"
-      className="underline decoration-hairline underline-offset-4 transition hover:text-foreground"
-    >
-      {dict.paguroPage.credits}
-    </a>
+    <>
+      <a href="https://github.com/nicojan/Chorus" target="_blank" rel="noreferrer" className={link}>{dict.paguroPage.credits}</a>
+      <span aria-hidden="true"> · </span>
+      <Link href={localePath(locale, paguroPrivacyPath)} className={link}>{dict.paguroPrivacy.link}</Link>
+    </>
   );
 }

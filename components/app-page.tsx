@@ -1,4 +1,4 @@
-import { PaguroCredit, PaguroDetail, PaguroHeader } from "@/components/apps/paguro-detail";
+import { PaguroDetail, PaguroFooterNote, PaguroHeader } from "@/components/apps/paguro-detail";
 import { AppDetail } from "@/components/apps/app-detail";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -32,8 +32,8 @@ export async function AppPage({
       <Footer
         locale={locale}
         dict={dict}
-        slug={slug}
-        note={slug === "paguro" ? <PaguroCredit dict={dict} /> : undefined}
+        path={slug}
+        note={slug === "paguro" ? <PaguroFooterNote dict={dict} locale={locale} /> : undefined}
       />
     </>
   );

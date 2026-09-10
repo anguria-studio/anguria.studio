@@ -1,9 +1,9 @@
 import Link from "next/link";
-import type { AppSlug } from "@/lib/apps";
+import type { PagePath } from "@/lib/apps";
 import { locales, localePath, type Locale } from "@/lib/i18n";
 
 /**
- * Never parses the current URL: each page already knows its own (locale, slug)
+ * Never parses the current URL: each page already knows its own (locale, path)
  * and localePath() knows that the default locale is unprefixed.
  *
  * Switching to or from `en` crosses root layouts, so it is a full page load
@@ -12,10 +12,10 @@ import { locales, localePath, type Locale } from "@/lib/i18n";
  */
 export function LanguageSwitcher({
   locale,
-  slug,
+  path,
 }: {
   locale: Locale;
-  slug?: AppSlug;
+  path?: PagePath;
 }) {
   return (
     <nav aria-label="Language" className="flex items-center gap-0.5">
@@ -24,7 +24,7 @@ export function LanguageSwitcher({
         return (
           <Link
             key={l}
-            href={localePath(l, slug)}
+            href={localePath(l, path)}
             hrefLang={l}
             aria-current={current ? "true" : undefined}
             className={`rounded-full px-2 py-1 text-xs font-medium tracking-wide transition ${

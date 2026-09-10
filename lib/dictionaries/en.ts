@@ -293,6 +293,17 @@ export const dictionary = {
     }
   },
 
+  paguroPrivacy: {
+    /** Link label wherever the policy is linked from: the Paguro page footer. */
+    link: "Privacy policy",
+    /** The line under the Paguro page's three features; the third is the privacy claim, this is its receipt. */
+    read: "Read the Paguro privacy policy",
+    /** The back link at the top of the policy. */
+    back: "Back to Paguro",
+    /** `{date}` is replaced with the localized effective date at render time. */
+    effective: "Effective {date}",
+  },
+
   appPage: {
     download: "Download for macOS",
     /** `{version}` is replaced with the app's `minMacOS` at render time. */

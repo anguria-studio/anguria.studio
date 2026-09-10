@@ -265,6 +265,13 @@ export const dictionary: Dictionary = {
     }
   },
 
+  paguroPrivacy: {
+    link: "Informativa sulla privacy",
+    read: "Leggi l’informativa sulla privacy di Paguro",
+    back: "Torna a Paguro",
+    effective: "In vigore dal {date}",
+  },
+
   appPage: {
     download: "Scarica per macOS",
     requirements:
