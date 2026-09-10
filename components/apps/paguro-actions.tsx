@@ -44,9 +44,11 @@ function Pill({
   label: string;
   icon: React.ReactNode;
 }) {
-  // Until an App Store listing exists the primary pill falls back to the same
-  // GitHub release page as the secondary one — there is no longer an on-page
-  // release section to point at. Setting meta.appStore splits them again.
+  // Until `apps.paguro.appStore` is set, the primary pill's href falls back to
+  // the same GitHub release page as the secondary one — even though its label
+  // already names the App Store. That mismatch is deliberate: the labels ship
+  // first and the URL follows when the listing goes live. Setting meta.appStore
+  // splits the two destinations again.
   // An in-page anchor must not open in a new tab; the rest are external.
   const external = href.startsWith("http");
   return (
@@ -76,13 +78,13 @@ export function PaguroActions({
       <Pill
         href={meta.appStore ?? meta.download}
         tone="solid"
-        label={copy.get}
+        label={copy.appStore}
         icon={<AppleMark className={`size-4 ${SWAP}`} />}
       />
       <Pill
         href={meta.download}
         tone="subtle"
-        label={copy.source}
+        label={copy.github}
         icon={<GitHubMark className={`size-4 ${SWAP}`} />}
       />
     </div>

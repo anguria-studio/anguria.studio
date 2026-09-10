@@ -207,7 +207,7 @@ export const dictionary: Dictionary = {
   paguroPage: {
     nav: "Descubre Paguro",
     faqLabel: "Preguntas",
-    get: "Obtener Paguro",
+    appStore: "Descárgalo en el App Store",
     faqTitle: "Algunas cosas que conviene saber.",
     faq: [
       {
@@ -236,10 +236,10 @@ export const dictionary: Dictionary = {
       }
     ],
     releaseTitle: "Siéntete como en casa.",
-    releaseBody: "Gratis y de código abierto. Para tu Mac.",
+    releaseBody: "Gratis y de código abierto.",
     releaseStatus: "La primera versión pública llegará pronto.",
     contact: "Haz una pregunta",
-    source: "Ver en GitHub",
+    github: "Descárgalo desde GitHub",
     credits: "Un fork gratuito y open source de Chorus, creado por Nico Jan.",
     requirements: "macOS 15 o posterior · Apple silicon e Intel",
     requirementsQuestion: "¿Qué Macs son compatibles?",
