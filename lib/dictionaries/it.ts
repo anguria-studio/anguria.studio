@@ -259,8 +259,7 @@ export const dictionary: Dictionary = {
           title: "Nessun account in più. Nessuna telemetria.",
           body: "Configurazione e sessioni di accesso restano sul Mac. Nessun account Paguro, sincronizzazione cloud o telemetria dell’app. I servizi che usi si collegano direttamente ai loro fornitori."
         }
-      ],
-      trademarks: "Nomi e loghi dei servizi appartengono ai rispettivi proprietari."
+      ]
     }
   },
 

@@ -128,12 +128,11 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
   );
 }
 
-/** Paguro is a fork, and says so; its privacy policy sits beside the credit because
- *  the footer is generic and this is the only app that has either. The policy
- *  page itself passes `privacyLink={false}`: a footer link to the page it is on
- *  would go nowhere, and the credit alone is the right line there. The trademark
- *  line and the copyright sit under the credit on both pages: the footer is where
- *  the fine print lives. */
+/** Paguro is a fork, and says so; its copyright and its privacy policy share the
+ *  second row because the footer is generic and this is the only app that has
+ *  either. The policy page itself passes `privacyLink={false}`: a footer link to
+ *  the page it is on would go nowhere, so there the second row is the copyright
+ *  alone. Two rows on both pages: the footer is where the fine print lives. */
 export function PaguroFooterNote({
   dict,
   locale,
@@ -148,6 +147,9 @@ export function PaguroFooterNote({
     <>
       <p>
         <a href="https://github.com/nicojan/Chorus" target="_blank" rel="noreferrer" className={link}>{dict.paguroPage.credits}</a>
+      </p>
+      <p>
+        {dict.footer.copyright}
         {privacyLink ? (
           <>
             <span aria-hidden="true"> · </span>
@@ -155,8 +157,6 @@ export function PaguroFooterNote({
           </>
         ) : null}
       </p>
-      <p>{dict.paguroPage.story.trademarks}</p>
-      <p>{dict.footer.copyright}</p>
     </>
   );
 }

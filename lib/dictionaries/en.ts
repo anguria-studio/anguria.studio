@@ -287,10 +287,7 @@ export const dictionary = {
           title: "No extra account. No telemetry.",
           body: "Your setup and login sessions stay on your Mac. No Paguro account, cloud sync, or app telemetry. The services you use connect directly to their providers."
         }
-      ],
-      /** Fine print for the service strip's logos. Rendered in the Paguro footer,
-       *  where fine print lives, rather than under the strip it refers to. */
-      trademarks: "Service names and logos belong to their respective owners."
+      ]
     }
   },
 

@@ -192,14 +192,14 @@ App Store Connect and the app's settings.
   uses it as the policy's `lastmod`.
 - The contact address comes from `site.email` via a `{ kind: "email" }` run; the
   policy text never spells it out.
-- Linked from the Paguro page twice: under the three features, and in the footer
-  row beside the Chorus credit. Not from the home or other app footers — there is
+- Linked from the Paguro page twice: under the three features, and in the footer,
+  on the copyright row. Not from the home or other app footers — there is
   no site-wide policy yet, and a global link to a Paguro-only document would
   misstate its scope.
 - Wears Paguro's header and footer (`PaguroHeader subpage`, `PaguroFooterNote
   privacyLink={false}`): the header is the app page's, download pills included,
   except that the wordmark links up to the app page; the footer keeps the Chorus
-  credit without linking the policy to itself.
+  credit and the copyright without linking the policy to itself.
 
 Run the structural checks (block parity across locales, URLs, date formatting) with
 `node --test tests/paguro-privacy.test.mjs`.

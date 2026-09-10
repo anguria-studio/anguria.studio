@@ -260,8 +260,7 @@ export const dictionary: Dictionary = {
           title: "Sin otra cuenta. Sin telemetría.",
           body: "Tu configuración y tus sesiones permanecen en tu Mac. Sin cuenta de Paguro, sincronización en la nube ni telemetría de la app. Los servicios que usas se conectan directamente con sus proveedores."
         }
-      ],
-      trademarks: "Los nombres y logotipos de los servicios pertenecen a sus respectivos propietarios."
+      ]
     }
   },
 
