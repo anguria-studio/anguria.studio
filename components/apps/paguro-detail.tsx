@@ -4,17 +4,12 @@ import { ContactLine } from "@/components/layout/contact-line";
 import { localePath, type Locale } from "@/lib/i18n";
 import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { PaguroActions } from "@/components/apps/paguro-actions";
-import { ArrowRight } from "@/components/ui/arrow-right";
+import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
 import { apps } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import type { FeatureId } from "@/lib/features";
 
 const featureIcons: FeatureId[] = ["custom", "privacy", "source"];
-const familiarServices = [
-  ["gmail", "Gmail"], ["chatgpt", "ChatGPT"], ["slack", "Slack"],
-  ["notion", "Notion"], ["whatsapp", "WhatsApp"], ["claude", "Claude"],
-  ["google-calendar", "Google Calendar"], ["discord", "Discord"],
-];
 const linkStyle = "rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500";
 
 export function PaguroHeader({ locale, dict }: { locale: Locale; dict: Dictionary }) {
@@ -37,10 +32,13 @@ export function PaguroHeader({ locale, dict }: { locale: Locale; dict: Dictionar
             <span className="hidden sm:inline">{dict.paguroHero.back}</span>
             <span className="sr-only sm:hidden">{dict.paguroHero.back}</span>
           </Link>
-          {/* Secondary pill hides below sm: two h-11 pills plus the wordmark
-              and the back link do not fit a phone header, and the primary
-              action is the one that must survive. */}
-          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} secondaryClassName="hidden sm:inline-flex" />
+          {/* No pills on a phone: two h-11 pills plus the wordmark and the back
+              link do not fit that header, and below desk the hero carries the
+              pair anyway. The wrapper owns the display so it cannot race the
+              hardcoded `flex` inside PaguroActions. */}
+          <div className="hidden sm:block">
+            <PaguroActions copy={dict.paguroPage} meta={apps.paguro} />
+          </div>
         </div>
       </nav>
     </header>
@@ -60,18 +58,22 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
     <>
       <PaguroHero copy={dict.paguroHero} page={copy} locale={locale} />
 
-      <section id="features" className="mx-auto max-w-cards scroll-mt-24 px-6 pt-6 pb-20 sm:pt-10 sm:pb-28">
+      <section id="features" className="mx-auto max-w-cards scroll-mt-24 px-6 pt-16 pb-20 sm:pt-24 sm:pb-32">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-4xl">{copy.story.title}</h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted text-pretty">{copy.story.body}</p>
         </div>
 
-        <ul className="mt-14 grid gap-10 md:grid-cols-3">
+        <ul className="mt-16 grid gap-10 sm:mt-20 md:grid-cols-3">
           {copy.story.features.map((feature, index) => {
             const icon = FEATURE_ICONS[featureIcons[index]];
+            // Same two-layer hover as the homepage grid: this file owns the
+            // shared lift/scale/accent on the svg box, each icon's own gesture
+            // keys off group/feature from inside. None of these three is
+            // `glass`, so all take the accent shift.
             return (
-              <li key={feature.title} className="border-t border-hairline pt-8">
-                {index === 2 ? <ArrowRight className="mb-6 size-8" /> : <svg viewBox={icon.viewBox} aria-hidden="true" className="mb-6 size-8 fill-current">{icon.node}</svg>}
+              <li key={feature.title} className="group/feature border-t border-hairline pt-8">
+                <svg viewBox={icon.viewBox} aria-hidden="true" className="mb-6 size-8 fill-current motion-safe:transition motion-safe:duration-300 motion-safe:group-hover/feature:-translate-y-1 motion-safe:group-hover/feature:scale-105 transition-colors group-hover/feature:text-melon-500">{icon.node}</svg>
                 <h3 className="text-2xl font-semibold tracking-tight text-balance">{feature.title}</h3>
                 <p className="mt-4 text-base leading-relaxed text-muted text-pretty">{feature.body}</p>
               </li>
@@ -79,23 +81,15 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
           })}
         </ul>
 
-        <div className="mt-20 text-center sm:mt-28">
-          <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-4xl">{copy.story.services}</h2>
-          <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-5 sm:gap-7">
-            {familiarServices.map(([slug, name]) => (
-              <li key={slug} title={name} className="flex size-14 items-center justify-center rounded-2xl border border-hairline bg-white sm:size-16">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/paguro/services/${slug}.svg`} alt={name} width={40} height={40} loading="lazy" className={`size-8 sm:size-10 ${slug === "chatgpt" ? "invert" : ""}`} />
-              </li>
-            ))}
-          </ul>
+        <div className="mt-24 text-center sm:mt-40">
+          <h2 className="text-xl font-semibold tracking-tight text-balance sm:text-3xl">{copy.story.services}</h2>
+          <PaguroServiceStrip />
           <p className="mt-6 text-base text-muted">{copy.story.serviceNote}</p>
-          <p className="mt-3 text-sm text-muted">{copy.story.trademarks}</p>
         </div>
       </section>
 
-      <section id="questions" className="mx-auto max-w-3xl scroll-mt-24 px-6 pb-20 sm:pb-28">
-        <h2 className="mb-10 text-center text-2xl font-semibold tracking-tight sm:text-4xl">{copy.faqTitle}</h2>
+      <section id="questions" className="mx-auto max-w-3xl scroll-mt-24 px-6 pb-20 sm:pb-32">
+        <h2 className="mb-10 text-center text-xl font-semibold tracking-tight sm:text-3xl">{copy.faqTitle}</h2>
         <div className="border-t border-hairline">
           {faq.map((item) => <details key={item.question} className="faq-item group border-b border-hairline">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">

@@ -122,6 +122,14 @@ export const dictionary: Dictionary = {
     dockLabel: "Le nostre app",
   },
   paguroHero: {
+    serviceOverlay: {
+      services: "Servizi in anteprima",
+      personal: "Personale",
+      work: "Lavoro",
+      expand: "Espandi la barra laterale",
+      collapse: "Comprimi la barra laterale",
+      captureAlt: "Paguro con WhatsApp aperto e la finestra traslucida originale sulla scrivania.",
+    },
     previewTheme: "Aspetto dell’anteprima",
     previewLight: "Anteprima chiara",
     previewDark: "Anteprima scura",
@@ -149,8 +157,6 @@ export const dictionary: Dictionary = {
     layoutLabel: "Confronta le disposizioni",
     captureAlt: "Paguro con spazi Personal e Work e ChatGPT aperto, senza accesso.",
     compactAlt: "Paguro con barra compatta dei servizi e ChatGPT aperto, senza accesso.",
-    captureNote: "Una sola app. Più spazio per tutto.",
-    demoNote: "Inviane qualcuna. Passa sul notch per vederle tutte.",
     slackTitle: "Studio",
     slackMessage: "I design sono pronti.",
     whatsappTitle: "La compagnia della pizza",
@@ -182,6 +188,10 @@ export const dictionary: Dictionary = {
         answer: "No. Ogni account ha una sessione locale. L’esportazione trasferisce la configurazione, non cookie o sessioni: accedi separatamente su ogni Mac."
       },
       {
+        question: "I servizi ibernati inviano ancora notifiche?",
+        answer: "I servizi completamente ibernati interrompono l’attività web in tempo reale, quindi le nuove notifiche potrebbero non arrivare finché non li riapri. Tieni attivi messaggistica ed email se ti servono notifiche in tempo reale. Puoi configurare l’ibernazione per ogni servizio."
+      },
+      {
         question: "Cosa succede se chiudo la finestra?",
         answer: "Paguro resta nella barra dei menu. I servizi possono continuare a funzionare e mostrare notifiche. Comando-Q chiude l’app e interrompe ogni attività."
       }
@@ -209,8 +219,8 @@ export const dictionary: Dictionary = {
           body: "Blocca Paguro con Touch ID o la password del Mac. Servizi e nuove notifiche restano nascosti fino al tuo ritorno."
         },
         {
-          title: "Nuovo Mac. Stessa casa.",
-          body: "Porta con te spazi, servizi e preferenze. Esporta la configurazione e importala su un altro Mac; lì accedi di nuovo ai servizi."
+          title: "Nessun account in più. Nessuna telemetria.",
+          body: "Configurazione e sessioni di accesso restano sul Mac. Nessun account Paguro, sincronizzazione cloud o telemetria dell’app. I servizi che usi si collegano direttamente ai loro fornitori."
         }
       ],
       trademarks: "Nomi e loghi dei servizi appartengono ai rispettivi proprietari."

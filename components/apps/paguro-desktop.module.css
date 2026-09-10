@@ -43,3 +43,7 @@
   .statusItems { gap: 6px; }
   .themeToggle button { width: 24px; }
 }
+
+/* All capture layers share the script's 1440 × 900-point desktop. */
+.stage { aspect-ratio: 1440 / 900; }
+.legacyWindow { position: absolute; left: 11.8055556%; top: 11.1111111%; width: 76.3888889%; }

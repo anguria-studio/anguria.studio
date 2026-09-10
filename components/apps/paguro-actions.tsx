@@ -5,8 +5,10 @@ import type { AppMeta } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
 /**
- * The page's two calls to action, used in both the sticky header and the hero
- * so the pair can never drift apart.
+ * The page's two calls to action, always rendered as a pair so they can never
+ * drift apart. The sticky header shows them from `sm` up; the hero shows them
+ * below `desk`, where it has no interactive demo to act as its call to action.
+ * Phones therefore get exactly one copy, the hero's.
  *
  * The hover is the homepage GitHub pill's, reproduced exactly: the row slides
  * left by icon + gap (24px), landing the label's left edge on 20px — the same
@@ -36,13 +38,11 @@ function Pill({
   tone,
   label,
   icon,
-  className = "",
 }: {
   href: string;
   tone: "solid" | "subtle";
   label: string;
   icon: React.ReactNode;
-  className?: string;
 }) {
   // Until an App Store listing exists the primary pill falls back to the same
   // GitHub release page as the secondary one — there is no longer an on-page
@@ -53,7 +53,7 @@ function Pill({
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-      className={`${PILL} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"} ${className}`}
+      className={`${PILL} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"}`}
     >
       {icon}
       <span className={LABEL}>{label}</span>
@@ -66,14 +66,10 @@ export function PaguroActions({
   copy,
   meta,
   className = "",
-  secondaryClassName = "",
 }: {
   copy: Dictionary["paguroPage"];
   meta: AppMeta;
   className?: string;
-  /** Lets the header hide the secondary pill on narrow screens without
-   *  changing what the hero shows. */
-  secondaryClassName?: string;
 }) {
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
@@ -88,7 +84,6 @@ export function PaguroActions({
         tone="subtle"
         label={copy.source}
         icon={<GitHubMark className={`size-4 ${SWAP}`} />}
-        className={secondaryClassName}
       />
     </div>
   );

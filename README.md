@@ -71,8 +71,14 @@ Unwritten copy is marked in the source: `grep -rn "TODO(copy)" lib/dictionaries`
 ## Paguro landing page
 
 `components/apps/paguro-detail.tsx` renders the product navigation, feature copy,
-questions, and release section in all four languages. Other app pages retain their
+questions, and contact line in all four languages. Other app pages retain their
 shared header and detail layout.
+
+The three feature blocks cover accounts and workspaces, app lock, and local setup
+without Paguro accounts or app telemetry. The privacy copy distinguishes Paguro
+from the websites it loads. The FAQ explains the notification tradeoff of full
+hibernation.
+Comparative speed, memory, and battery claims require measured results.
 
 `components/apps/paguro-hero.tsx` is a client component. On desktop, its three service buttons
 add sample notifications to a local island preview with no history cap.
@@ -105,17 +111,37 @@ pressed. An empty list collapses. Sample messages are announced politely.
 The preview does not request system notification permissions or contact any service.
 Reloading the page resets it.
 
-The layout selector switches between two real, signed-out Paguro layouts, captured
-at the same size in both appearances. It does not simulate a working web app. Captures and bundled service
-marks live in `public/paguro/`; see [asset notes](content/paguro-assets.md).
+The dark desktop preview now tries a local service-overlay experiment using two
+full-screen captures with an empty sidebar. Service icons, workspace labels, and
+the sidebar toggle are placed in the capture's original coordinates and scale
+with it. The collapsed rail starts at the top, magnifies downward on hover, and
+reveals service names. Clicking an icon does not hold magnification after hover
+ends. Tab and arrow keys also reveal names. WhatsApp remains the photographed service;
+service-content switching is not part of this first pass. The sidebar toggle inside
+the preview switches layouts; there are no separate layout tabs below the image.
+
+Unused controls offer hints after four visible, idle seconds: the sidebar
+toggle grows to 1.75×, holds while it shakes, then settles back over 1.7 seconds;
+the compact rail instead demonstrates a top-to-bottom magnification sweep.
+After each animation, another four quiet seconds starts the next cue. Interaction
+cancels the hint; controls already explored are not prompted again.
+Hints stop offscreen or in a hidden tab and respect Reduce Motion. Their history
+survives preview theme changes and resets on a fresh page visit.
+
+The prototype originals live under ignored `public/shots/paguro-overlay/` because
+they contain personal chat details. Replace them with demo content before publishing.
+If they are absent, the preview falls back to the earlier signed-out captures in
+`public/paguro/`. The light preview and mobile still continue using those earlier
+captures. See [asset notes](content/paguro-assets.md) for the file mapping and geometry.
+Run the dock geometry checks with `node --test tests/paguro-service-preview.test.mjs`.
 
 Copy lives in the `paguroHero` and `paguroPage` dictionary sections. The page uses
 the homepage's existing type scale, colours, spacing, and surface tokens.
 `paguro-hero.module.css` adds scoped entrance motion. `paguro-island.module.css`
 contains the native preview's geometry and type sizes, using the site's neutral
 theme colours for its glass surfaces. Reduce Motion removes spring and scale
-effects; Reduce Transparency uses solid surfaces. There are no looping animations,
-new fonts, or animation dependencies. Run the presentation, layout, and gesture regression checks
+effects; Reduce Transparency uses solid surfaces. There are no new fonts or
+animation dependencies. Run the presentation, layout, and gesture regression checks
 with `node --test tests/paguro-island.test.mjs`.
 
 The collapsed notch is a solid black housing with concave top corners and a
@@ -140,7 +166,7 @@ keep the controls clear of the expanded island.
 
 Below the existing `desk` breakpoint (48rem, hover, and a fine pointer), the hero
 shows a static app screenshot. Service buttons, the island, theme control, menu
-bar, and layout switcher are hidden. Touch devices also use the still image.
+bar, and sidebar toggle are hidden. Touch devices also use the still image.
 
 The release section says that the first public release is coming soon. Replace
 that message with verified download and App Store links when releases are live.

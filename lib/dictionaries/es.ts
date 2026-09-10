@@ -123,6 +123,14 @@ export const dictionary: Dictionary = {
     dockLabel: "Nuestras apps",
   },
   paguroHero: {
+    serviceOverlay: {
+      services: "Servicios de vista previa",
+      personal: "Personal",
+      work: "Trabajo",
+      expand: "Expandir la barra lateral",
+      collapse: "Contraer la barra lateral",
+      captureAlt: "Paguro con WhatsApp abierto y su ventana translúcida original sobre el escritorio.",
+    },
     previewTheme: "Apariencia de la vista previa",
     previewLight: "Vista previa clara",
     previewDark: "Vista previa oscura",
@@ -150,8 +158,6 @@ export const dictionary: Dictionary = {
     layoutLabel: "Comparar diseños",
     captureAlt: "Paguro con espacios Personal y Work y ChatGPT abierto, sin iniciar sesión.",
     compactAlt: "Paguro con su barra de servicios compacta y ChatGPT abierto, sin iniciar sesión.",
-    captureNote: "Una sola app. Un poco más de espacio para todo.",
-    demoNote: "Envía unas cuantas. Pasa el cursor por el notch para verlas todas.",
     slackTitle: "Estudio",
     slackMessage: "Los diseños están listos.",
     whatsappTitle: "El grupo de la cena",
@@ -183,6 +189,10 @@ export const dictionary: Dictionary = {
         answer: "No. Cada cuenta tiene su sesión local. La exportación transfiere la configuración, no las cookies ni las sesiones: inicia sesión en cada Mac."
       },
       {
+        question: "¿Los servicios hibernados siguen enviando notificaciones?",
+        answer: "Los servicios completamente hibernados detienen su actividad web en directo, así que las nuevas notificaciones pueden no llegar hasta que los abras de nuevo. Mantén activos el correo y la mensajería si necesitas notificaciones en tiempo real. Puedes configurar la hibernación para cada servicio."
+      },
+      {
         question: "¿Qué pasa al cerrar la ventana?",
         answer: "Paguro sigue en la barra de menús. Los servicios pueden continuar activos y mostrar notificaciones. Comando-Q cierra la app y detiene su actividad."
       }
@@ -210,8 +220,8 @@ export const dictionary: Dictionary = {
           body: "Bloquea Paguro con Touch ID o la contraseña de tu Mac. Tus servicios y nuevas notificaciones permanecen ocultos hasta que vuelvas."
         },
         {
-          title: "Mac nuevo. Mismo hogar.",
-          body: "Llévate tus espacios, servicios y preferencias. Exporta tu configuración a otro Mac y vuelve a iniciar sesión en tus servicios."
+          title: "Sin otra cuenta. Sin telemetría.",
+          body: "Tu configuración y tus sesiones permanecen en tu Mac. Sin cuenta de Paguro, sincronización en la nube ni telemetría de la app. Los servicios que usas se conectan directamente con sus proveedores."
         }
       ],
       trademarks: "Los nombres y logotipos de los servicios pertenecen a sus respectivos propietarios."

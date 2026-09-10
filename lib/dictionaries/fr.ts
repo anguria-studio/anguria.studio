@@ -122,6 +122,14 @@ export const dictionary: Dictionary = {
     dockLabel: "Nos applications",
   },
   paguroHero: {
+    serviceOverlay: {
+      services: "Services en aperçu",
+      personal: "Personnel",
+      work: "Travail",
+      expand: "Développer la barre latérale",
+      collapse: "Réduire la barre latérale",
+      captureAlt: "Paguro avec WhatsApp ouvert et sa fenêtre translucide originale sur le bureau.",
+    },
     previewTheme: "Apparence de l’aperçu",
     previewLight: "Aperçu clair",
     previewDark: "Aperçu sombre",
@@ -149,8 +157,6 @@ export const dictionary: Dictionary = {
     layoutLabel: "Comparer les dispositions",
     captureAlt: "Paguro avec les espaces Personal et Work et ChatGPT ouvert, sans connexion.",
     compactAlt: "Paguro avec sa barre de services compacte et ChatGPT ouvert, sans connexion.",
-    captureNote: "Une seule app. Un peu plus de place pour tout.",
-    demoNote: "Envoyez-en quelques-unes. Survolez l’encoche pour toutes les voir.",
     slackTitle: "Studio",
     slackMessage: "Les maquettes sont prêtes.",
     whatsappTitle: "La bande du dîner",
@@ -182,6 +188,10 @@ export const dictionary: Dictionary = {
         answer: "Non. Chaque compte a sa session locale. L’export transfère la configuration, sans cookies ni sessions : connectez-vous sur chaque Mac."
       },
       {
+        question: "Les services en veille envoient-ils encore des notifications ?",
+        answer: "Les services entièrement mis en veille arrêtent leur activité web en direct. Les nouvelles notifications peuvent donc attendre leur réouverture. Gardez vos messageries et e-mails actifs si vous avez besoin de notifications en temps réel. La mise en veille se règle pour chaque service."
+      },
+      {
         question: "Que se passe-t-il si je ferme la fenêtre ?",
         answer: "Paguro reste dans la barre des menus. Les services peuvent continuer à fonctionner et à envoyer des notifications. Commande-Q quitte l’app et arrête son activité."
       }
@@ -209,8 +219,8 @@ export const dictionary: Dictionary = {
           body: "Verrouillez Paguro avec Touch ID ou le mot de passe du Mac. Vos services et nouvelles notifications restent masqués jusqu’à votre retour."
         },
         {
-          title: "Nouveau Mac. Même chez-soi.",
-          body: "Emportez vos espaces, services et préférences. Exportez votre configuration vers un autre Mac, puis reconnectez-vous à vos services."
+          title: "Aucun compte en plus. Aucune télémétrie.",
+          body: "Votre configuration et vos sessions restent sur votre Mac. Aucun compte Paguro, aucune synchronisation cloud ni télémétrie de l’app. Vos services se connectent directement à leurs fournisseurs."
         }
       ],
       trademarks: "Les noms et logos des services appartiennent à leurs propriétaires respectifs."

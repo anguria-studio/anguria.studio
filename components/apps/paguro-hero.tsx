@@ -7,10 +7,12 @@ import { apps } from "@/lib/apps";
 import styles from "./paguro-hero.module.css";
 import { PaguroIsland } from "./paguro-island";
 import { PaguroMenuBar } from "./paguro-menu-bar";
+import { PaguroServicePreview } from "./paguro-service-preview";
 import desktopStyles from "./paguro-desktop.module.css";
 import type { Locale } from "@/lib/i18n";
 import { initialIslandState, islandReducer, serviceNames } from "@/lib/paguro-island";
 import type { DemoService as Service } from "@/lib/paguro-island";
+import { createPreviewHintHistory } from "@/lib/paguro-preview-hints";
 
 type HeroCopy = Dictionary["paguroHero"];
 
@@ -27,8 +29,15 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("dark");
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
   const [layout, setLayout] = useState<"sidebar" | "compact">("sidebar");
+  const [overlayAvailable, setOverlayAvailable] = useState(true);
   const [announcement, setAnnouncement] = useState({ id: 0, message: "" });
   const nextID = useRef(0);
+  const previewHintHistory = useRef(createPreviewHintHistory());
+
+  function changeLayout(next: "sidebar" | "compact") {
+    previewHintHistory.current.toggleUsed = true;
+    setLayout(next);
+  }
 
   function announce(message: string) {
     // Replacing the child also announces consecutive samples with identical text.
@@ -49,21 +58,24 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   }
 
   return (
-    <section id="paguro" className="scroll-mt-24 pb-16 sm:pb-24">
-      <div className="mx-auto max-w-4xl px-6 pt-10 text-center sm:pt-12">
+    <section id="paguro" className="scroll-mt-24 pb-20 sm:pb-24">
+      <div className="mx-auto max-w-4xl px-6 pt-16 text-center sm:pt-24">
         <h1 className="text-4xl leading-none font-bold tracking-tight text-balance sm:text-7xl motion-safe:enter-1">
           {copy.title}{" "}<br className="lg:hidden" /><span className="text-melon-500">{copy.accent}</span>
         </h1>
         {/* One paragraph, not two: both sentences are the same thought and the
             user wants them to run on. max-w-2xl so the pair still balances onto
             two lines rather than four. */}
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted text-balance">{copy.intro} {page.releaseBody}</p>
-        <PaguroActions copy={page} meta={apps.paguro} className="mt-8 justify-center" />
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted text-balance motion-safe:enter-2">{copy.intro} {page.releaseBody}</p>
+        {/* Below desk the demo row does not render, so the pills are the hero's
+            only call to action. Above it the demo is the call to action, and the
+            sticky header still carries the pills. */}
+        <PaguroActions copy={page} meta={apps.paguro} className="mt-8 justify-center desk:hidden motion-safe:enter-3" />
       </div>
 
       <div className="mx-auto mt-10 max-w-cards px-4 sm:mt-12 sm:px-6">
         <div className="mb-7 hidden items-center justify-center gap-8 desk:flex">
-          <div className="text-center sm:text-right">
+          <div className="text-center sm:text-right motion-safe:enter-3">
             <p className="text-base font-semibold">{copy.tryLabel}</p>
             <p className="mt-1 text-sm text-muted">{copy.tryHint}</p>
           </div>
@@ -81,8 +93,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>
         </div>
 
-        <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block`}>
-          {/* A real desktop capture, with the unmodified app-window captures above it. */}
+        <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${desktopStyles.stage} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block`}>
+          {/* The full-screen dark captures preserve the app’s original glass. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/paguro/desktop.jpg" alt="" width={2560} height={1200} className="absolute inset-0 size-full object-cover" />
 
@@ -92,21 +104,25 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} />
           </div>
 
-          <div className={`${styles.window} relative mx-auto max-w-5xl px-4 pt-24 pb-5 sm:px-8 sm:pb-10`}>
-            <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">
-              {([
-                ["dark", "sidebar", "workspace.png"], ["dark", "compact", "compact.png"],
-                ["light", "sidebar", "workspace-light.png"], ["light", "compact", "compact-light.png"],
-              ] as const).map(([theme, arrangement, file], index) => {
-                const active = theme === previewTheme && arrangement === layout;
-                return (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img key={file} src={`/paguro/${file}`} alt={active ? (layout === "sidebar" ? copy.captureAlt : copy.compactAlt) : ""} width={1100} height={700} fetchPriority={index === 0 ? "high" : "auto"}
-                    className={`${index === 0 ? "" : "absolute inset-0"} h-auto w-full ${active ? "opacity-100" : "opacity-0"}`} />
-                );
-              })}
+          {previewTheme === "dark" && overlayAvailable ? (
+            <PaguroServicePreview layout={layout} onLayoutChange={changeLayout} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} />
+          ) : (
+            <div className={desktopStyles.legacyWindow}>
+              <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">
+                {([
+                  ["dark", "sidebar", "workspace.png"], ["dark", "compact", "compact.png"],
+                  ["light", "sidebar", "workspace-light.png"], ["light", "compact", "compact-light.png"],
+                ] as const).map(([theme, arrangement, file], index) => {
+                  const active = theme === previewTheme && arrangement === layout;
+                  return (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={file} src={`/paguro/${file}`} alt={active ? (layout === "sidebar" ? copy.captureAlt : copy.compactAlt) : ""} width={1100} height={700}
+                      className={`${index === 0 ? "" : "absolute inset-0"} h-auto w-full ${active ? "opacity-100" : "opacity-0"}`} />
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="relative isolate overflow-hidden rounded-showcase bg-surface px-4 py-8 desk:hidden">
@@ -117,12 +133,6 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           <img src="/paguro/workspace.png" alt={copy.captureAlt} width={1100} height={700} className="relative h-auto w-full rounded-xl shadow-xl" />
         </div>
 
-        <div className="mt-6 flex flex-col items-center justify-between gap-5 md:flex-row">
-          <div className="min-w-0 text-center md:text-left"><p className="text-base font-medium">{copy.captureNote}</p><p className="mt-1 hidden text-sm text-muted desk:block">{copy.demoNote}</p></div>
-          <div role="group" aria-label={copy.layoutLabel} className="hidden w-full max-w-md shrink-0 gap-1 rounded-full bg-surface p-1 desk:flex md:w-auto">
-            {(["sidebar", "compact"] as const).map((option) => <button key={option} aria-pressed={layout === option} onClick={() => setLayout(option)} className={`flex-1 cursor-pointer rounded-full px-4 py-2 text-sm font-medium text-balance transition ${layout === option ? "bg-background text-foreground shadow-sm" : "text-muted hover:text-foreground"} ${focus}`}>{copy[option]}</button>)}
-          </div>
-        </div>
         <p role="status" aria-live="polite" aria-atomic="true" className="sr-only hidden desk:block"><span key={announcement.id}>{announcement.message}</span></p>
       </div>
     </section>

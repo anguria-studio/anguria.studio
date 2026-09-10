@@ -1,0 +1,39 @@
+/* Native screenshot geometry only. Every point scales with the same canvas;
+   the site's typography, colors, and spacing outside this preview are unchanged. */
+.capture { position: absolute; inset: 0; container-type: inline-size; color: var(--color-foreground); }
+.screenshot { position: absolute; inset: 0; width: 100%; height: 100%; user-select: none; pointer-events: none; }
+.services { margin: 0; padding: 0; list-style: none; }
+.hintRegion { position: absolute; pointer-events: none; }
+.service, .workspace, .layoutToggle, .divider { position: absolute; }
+.service, .workspace, .layoutToggle, .divider { --point: calc(100cqw / 1440); }
+.service { display: flex; align-items: center; gap: calc(8 * var(--point)); padding-inline: calc(8 * var(--point)); border-radius: calc(6 * var(--point)); outline: none; user-select: none; }
+.service[aria-current] { background: var(--island-card-focus); }
+.service:hover { background: var(--island-card-fill); z-index: 2; }
+.service:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; z-index: 3; }
+.mark { display: block; flex: 0 0 auto; width: calc(22 * var(--point)); height: calc(22 * var(--point)); }
+.mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.label { font-size: calc(13 * var(--point)); font-weight: 500; line-height: 1; white-space: nowrap; }
+.workspace { display: flex; align-items: center; gap: calc(8 * var(--point)); padding-inline: calc(8 * var(--point)); font-size: calc(12 * var(--point)); font-weight: 600; opacity: .7; }
+.workspaceChevron { display: grid; place-items: center; flex: 0 0 calc(22 * var(--point)); }
+.workspaceChevron svg { width: calc(12 * var(--point)); height: calc(12 * var(--point)); }
+.layoutToggle { display: grid; place-items: center; padding: calc(3 * var(--point)); border-radius: calc(6 * var(--point)); opacity: .8; cursor: pointer; }
+.layoutToggle:hover { background: var(--island-card-fill); opacity: 1; }
+.layoutToggle:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.layoutToggle svg { width: 100%; height: 100%; }
+.divider { background: var(--color-hairline); transform: translateY(calc(var(--icon-offset) * var(--point))); }
+.capture[data-layout="compact"] .service { padding: calc(7 * var(--point)); transform: translateY(calc(var(--icon-offset) * var(--point))); }
+.capture[data-layout="compact"] .mark { transform: scale(var(--icon-scale)); transform-origin: left center; }
+.capture[data-layout="compact"] .service[data-magnified="true"] { background: transparent; }
+.tooltip { position: absolute; left: calc((7 + 22 * var(--icon-scale) + 12) * var(--point)); top: 50%; transform: translateY(-50%); padding: calc(5 * var(--point)) calc(10 * var(--point)); border: 1px solid var(--color-hairline); border-radius: calc(8 * var(--point)); background: var(--color-glass); backdrop-filter: blur(16px) saturate(1.5); font-size: calc(13 * var(--point)); font-weight: 500; line-height: 1.3; white-space: nowrap; opacity: 0; pointer-events: none; }
+.service:hover .tooltip, .service:focus-visible .tooltip { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .service, .mark, .divider { transition: transform 160ms var(--ease-enter); }
+  .tooltip { transition: opacity 120ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .capture[data-layout="compact"] .service, .capture[data-layout="compact"] .mark, .divider { transform: none; }
+  .tooltip { left: calc(48 * var(--point)); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .tooltip { background: var(--color-background); backdrop-filter: none; }
+}

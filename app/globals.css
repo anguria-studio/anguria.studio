@@ -262,6 +262,16 @@
    */
   --stagger-step: 190ms;
 
+  /*
+   * The gap between one service tile's lift and the next one's, in the strip's
+   * scroll-in wave. A third of --stagger-step, and deliberately so: that step
+   * paces three page-sized arrivals, this one paces eight tiles inside a single
+   * arrival, and at 190ms apart eight of them would be a parade rather than a
+   * ripple. At 60ms the last tile starts 420ms in — the whole row is in motion
+   * at once, which is what makes it read as one gesture crossing the strip.
+   */
+  --wave-step: 60ms;
+
   /* How far each stage rises. Expressed through the spacing scale rather than
      as a literal, because a keyframe cannot take a utility class. */
   --rise-distance: calc(var(--spacing) * 3);
@@ -280,8 +290,11 @@
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* One accordion open or shut. Long enough to read as a movement rather than
-     a jump, short enough that opening three in a row is not a chore. */
-  --faq-duration: 320ms;
+     a jump, short enough that opening three in a row is not a chore.
+     Every other timing in the accordion is derived from this one — the text
+     fades over half of it when closing and over all of it, a quarter-step late,
+     when opening — so changing this number re-times the whole gesture. */
+  --faq-duration: 480ms;
 
   /*
    * Hover travel for the three slider handles in the Customisable icon, in that
@@ -380,7 +393,8 @@
 }
 
 /*
- * Load choreography: header, then hero title, then the showcase row. Nothing
+ * Load choreography: header, then hero title, then subtitle, then the showcase
+ * row (its label and tiles together). Nothing
  * below the fold participates — a load-triggered entrance finishes long before
  * a scroll reaches it, so all it could do there is briefly withhold content.
  *

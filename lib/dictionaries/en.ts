@@ -149,6 +149,14 @@ export const dictionary = {
     dockLabel: "Our apps",
   },
   paguroHero: {
+    serviceOverlay: {
+      services: "Preview services",
+      personal: "Personal",
+      work: "Work",
+      expand: "Expand sidebar",
+      collapse: "Collapse sidebar",
+      captureAlt: "Paguro with WhatsApp open and its original translucent window over the desktop.",
+    },
     previewTheme: "Preview appearance",
     previewLight: "Light preview",
     previewDark: "Dark preview",
@@ -176,8 +184,6 @@ export const dictionary = {
     layoutLabel: "Compare app layouts",
     captureAlt: "Paguro with Personal and Work workspaces and ChatGPT open, signed out.",
     compactAlt: "Paguro with its compact service rail and ChatGPT open, signed out.",
-    captureNote: "One app. A little more room for everything.",
-    demoNote: "Send a few. Hover the notch to see them all.",
     slackTitle: "Studio",
     slackMessage: "The designs are ready.",
     whatsappTitle: "The dinner crew",
@@ -209,6 +215,10 @@ export const dictionary = {
         answer: "No. Each account has its own local session. Configuration export moves your setup, not cookies or login sessions, so you sign in separately on each Mac."
       },
       {
+        question: "Do sleeping services still send notifications?",
+        answer: "Fully hibernated services stop their live web activity, so new notifications may not arrive until you open them again. Keep messaging and email services awake if you need live notifications. You can set hibernation separately for each service."
+      },
+      {
         question: "What happens when I close the window?",
         answer: "Closing the window keeps Paguro available in the menu bar. Services can continue running and showing notifications. Command-Q quits the app and stops its activity."
       }
@@ -236,8 +246,8 @@ export const dictionary = {
           body: "Lock Paguro with Touch ID or your Mac password. Your services and new notifications stay out of view until you return."
         },
         {
-          title: "New Mac. Same home.",
-          body: "Take your workspaces, services, and preferences with you. Export your setup and import it on another Mac; sign in separately there."
+          title: "No extra account. No telemetry.",
+          body: "Your setup and login sessions stay on your Mac. No Paguro account, cloud sync, or app telemetry. The services you use connect directly to their providers."
         }
       ],
       trademarks: "Service names and logos belong to their respective owners."

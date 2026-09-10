@@ -1,0 +1,32 @@
+/* Choreography only. Layout, type, colours, and surfaces use the site tokens. */
+
+/*
+ * The wave. Gated on no-preference as well as on the observer that sets
+ * `data-wave`, so the animation fails closed even if the attribute somehow
+ * lands: the resting design is the un-animated one.
+ *
+ * `both` fill with an explicit `to` at rest: backwards fill holds each tile at
+ * rest through its delay, forwards fill holds it at rest afterwards. Nothing is
+ * withheld and nothing is left displaced.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .strip[data-wave] > li {
+    animation: wave calc(var(--stagger-step) * 3) var(--ease-bounce) both;
+    /* Each tile's distance from the tile the wave started on comes in as --i
+     * (a circular offset, not the index), so the ripple re-times from one token
+     * wherever it was launched. */
+    animation-delay: calc(var(--wave-step) * var(--i));
+  }
+}
+
+/*
+ * Rest -> the hover pose -> rest. `transform`, not the `translate` and `rotate`
+ * properties, precisely because the tiles carry translate and rotate hover
+ * utilities: Tailwind v4 compiles those to the individual properties, so the two
+ * compose and a hover mid-wave rides the ripple instead of fighting it.
+ */
+@keyframes wave {
+  from { transform: none; }
+  40% { transform: translateY(calc(var(--spacing) * -1)) rotate(-6deg); }
+  to { transform: none; }
+}
