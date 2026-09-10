@@ -403,8 +403,11 @@
 }
 
 /*
- * Load choreography: header, then hero title, then subtitle, then the showcase
- * row (its label and tiles together). Nothing
+ * Load choreography: the header and the hero title start together, then the
+ * subtitle, then the showcase row (its label and tiles together). The header
+ * does not lead — on its own at first paint it only flickers — so it shares the
+ * title's beat, then settles a beat ahead of it: an even fade over a shorter
+ * run, done before the title finishes rising. Nothing
  * below the fold participates — a load-triggered entrance finishes long before
  * a scroll reaches it, so all it could do there is briefly withhold content.
  *
@@ -443,8 +446,19 @@
   }
 }
 
+/*
+ * Softer than `enter-*`, and deliberately not on `--ease-enter`. That curve
+ * decelerates so hard that an opacity-only stage is effectively over in ~200ms
+ * of its run, which on a thin bar that is the only thing painted on screen
+ * reads as a flicker rather than an arrival. `ease-in-out` spreads the change
+ * across the whole run instead: it holds the row near-invisible through the
+ * first beat and eases out at the end. That symmetry is also why the duration
+ * is a step SHORTER than `enter-*` rather than longer — an even fade uses all
+ * of its time, so matching the rise's length here just reads as sluggish. A
+ * rise does not need any of this; the travel itself carries the eye.
+ */
 @utility fade-* {
-  animation: enter-fade calc(var(--stagger-step) * 5) var(--ease-enter) backwards;
+  animation: enter-fade calc(var(--stagger-step) * 4) ease-in-out backwards;
   animation-delay: calc(var(--stagger-step) * --value(integer));
 }
 

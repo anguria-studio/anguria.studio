@@ -16,7 +16,11 @@ const linkStyle = "rounded-full focus-visible:outline-2 focus-visible:outline-of
 export function PaguroHeader({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
-      <nav aria-label={dict.paguroPage.nav} className="mx-auto flex h-20 max-w-page items-center justify-between gap-4 px-6">
+      {/* The header's load animation sits on this inner row, not on <header>,
+          because header-divide owns that element's animation — and it is an even
+          fade on the hero title's beat rather than a rise of its own, for the
+          reasons spelled out in components/layout/header.tsx. */}
+      <nav aria-label={dict.paguroPage.nav} className="mx-auto flex h-20 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
         <a href="#paguro" className={`inline-flex items-center gap-2 rounded-lg text-2xl font-bold tracking-tight ${linkStyle}`}>
           <span aria-hidden="true" className="size-9 shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}

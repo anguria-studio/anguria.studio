@@ -8,14 +8,16 @@ import type { Dictionary } from "@/lib/dictionaries/en";
 export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
-      {/* Stage 0 of the load cascade sits here rather than on <header>:
+      {/* The header's load animation sits here rather than on <header>:
           header-divide already owns that element's animation-name, and a second
           animation rule would replace it, silently killing the scroll-driven
           bottom rule. Visually identical — at scroll 0 the header's own paint is
           a tint of the page background and a transparent border.
-          `fade-0`, not `enter-0`: the rise the other stages use reads as a
-          glitch on a bar pinned to the top edge. */}
-      <div className="mx-auto flex h-20 max-w-page items-center justify-between px-6 motion-safe:fade-0">
+          `fade-1`, not `enter-1`: the rise the other stages use reads as a
+          glitch on a bar pinned to the top edge. Stage 1, not 0, so the row
+          arrives on the hero title's beat instead of popping alone at first
+          paint, and settles just before the title finishes. */}
+      <div className="mx-auto flex h-20 max-w-page items-center justify-between px-6 motion-safe:fade-1">
         <Link
           href={localePath(locale)}
           className="flex items-center gap-3 text-2xl font-bold tracking-tight"
