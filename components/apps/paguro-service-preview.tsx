@@ -2,7 +2,7 @@
 
 import { useRef, useState, type CSSProperties, type PointerEvent, type RefObject } from "react";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { captureSize, dockTransforms, railDividerY, railServices, type PreviewLayout } from "@/lib/paguro-service-preview";
+import { captureSize, dockTransforms, railDividerY, railServices, type PreviewLayout, type PreviewTheme } from "@/lib/paguro-service-preview";
 import styles from "./paguro-service-preview.module.css";
 import { usePaguroPreviewHints } from "./use-paguro-preview-hints";
 import type { PreviewHintHistory } from "@/lib/paguro-preview-hints";
@@ -22,9 +22,10 @@ function WorkspaceHeading({ name, y }: { name: string; y: number }) {
   </div>;
 }
 
-export function PaguroServicePreview({ layout, onLayoutChange, copy, onUnavailable, hintHistory }: {
+export function PaguroServicePreview({ layout, onLayoutChange, theme, copy, onUnavailable, hintHistory }: {
   layout: PreviewLayout;
   onLayoutChange: (layout: PreviewLayout) => void;
+  theme: PreviewTheme;
   copy: PreviewCopy;
   onUnavailable: () => void;
   hintHistory: RefObject<PreviewHintHistory>;
@@ -50,12 +51,20 @@ export function PaguroServicePreview({ layout, onLayoutChange, copy, onUnavailab
   }
 
   return (
-    <div ref={captureRef} className={styles.capture} data-layout={layout} data-hint={hint ?? undefined} onPointerMove={trackPointer} onPointerLeave={() => setPointerY(null)}>
-      {(["sidebar", "compact"] as const).map((arrangement) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img key={arrangement} src={`/shots/paguro-overlay/${arrangement}-dark.png`} alt={layout === arrangement ? copy.captureAlt : ""} width={2880} height={1800} draggable={false} onError={onUnavailable}
-          className={styles.screenshot} style={{ opacity: layout === arrangement ? 1 : 0 }} />
-      ))}
+    <div ref={captureRef} className={styles.capture} data-layout={layout} data-theme={theme} data-hint={hint ?? undefined} onPointerMove={trackPointer} onPointerLeave={() => setPointerY(null)}>
+      {/* All four captures stay mounted so both the layout toggle and the menu
+          bar's theme switch cross-fade rather than waiting on a fetch. The
+          scheme the visitor is not looking at loads at low priority, keeping
+          it off the critical path. */}
+      {(["dark", "light"] as const).flatMap((scheme) => (["sidebar", "compact"] as const).map((arrangement) => {
+        const showing = scheme === theme && arrangement === layout;
+        return (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img key={`${arrangement}-${scheme}`} src={`/shots/paguro-overlay/${arrangement}-${scheme}.png`} alt={showing ? copy.captureAlt : ""} width={2880} height={1800} draggable={false}
+            fetchPriority={scheme === theme ? "high" : "low"} onError={onUnavailable}
+            className={styles.screenshot} style={{ opacity: showing ? 1 : 0 }} />
+        );
+      }))}
 
       <button ref={toggleRef} type="button" className={styles.layoutToggle} style={frame(compact ? 270 : 360, 114, 24, 24)}
         aria-label={compact ? copy.expand : copy.collapse} onClick={() => { setPointerY(null); setKeyboardFocused(null); onLayoutChange(compact ? "sidebar" : "compact"); }}>
@@ -76,7 +85,7 @@ export function PaguroServicePreview({ layout, onLayoutChange, copy, onUnavailab
           const centerY = compact ? service.compactY : service.sidebarY;
           return <li key={service.id} tabIndex={0} aria-label={`${service.name}, ${copy[service.workspace]}`} aria-current={service.id === "whatsapp" ? "true" : undefined}
             className={styles.service} data-service={service.id} data-magnified={scale > 1.01}
-            style={{ ...frame(compact ? 182 : 188, centerY - (compact ? 18 : 15), compact ? 36 : 196, compact ? 36 : 30), "--icon-scale": scale, "--icon-offset": offset } as CSSProperties}
+            style={{ ...frame(compact ? 183 : 188, centerY - (compact ? 18 : 15), compact ? 36 : 196, compact ? 36 : 30), "--icon-scale": scale, "--icon-offset": offset } as CSSProperties}
             // Pointer focus must not keep the dock enlarged after hover ends.
             onPointerDown={() => setKeyboardFocused(null)}
             onFocus={(event) => setKeyboardFocused(event.currentTarget.matches(":focus-visible") ? index : null)}

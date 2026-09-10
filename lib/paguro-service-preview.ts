@@ -1,4 +1,5 @@
 export type PreviewLayout = "sidebar" | "compact";
+export type PreviewTheme = "dark" | "light";
 
 // Coordinates use the capture script's 1440 × 900-point desktop, not pixels.
 export const captureSize = { width: 1440, height: 900 };

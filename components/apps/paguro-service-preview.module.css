@@ -12,6 +12,10 @@
 .service:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; z-index: 3; }
 .mark { display: block; flex: 0 0 auto; width: calc(22 * var(--point)); height: calc(22 * var(--point)); }
 .mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
+/* The ChatGPT mark is drawn in solid white for the dark rail it usually sits
+   on, and would disappear against the light one. The art is monochrome, so
+   inverting it is exactly the black mark rather than an approximation. */
+.capture[data-theme="light"] .service[data-service="chatgpt"] .mark img { filter: invert(1); }
 .label { font-size: calc(13 * var(--point)); font-weight: 500; line-height: 1; white-space: nowrap; }
 .workspace { display: flex; align-items: center; gap: calc(8 * var(--point)); padding-inline: calc(8 * var(--point)); font-size: calc(12 * var(--point)); font-weight: 600; opacity: .7; }
 .workspaceChevron { display: grid; place-items: center; flex: 0 0 calc(22 * var(--point)); }

@@ -109,8 +109,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} />
           </div>
 
-          {previewTheme === "dark" && overlayAvailable ? (
-            <PaguroServicePreview layout={layout} onLayoutChange={changeLayout} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} />
+          {overlayAvailable ? (
+            <PaguroServicePreview layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} />
           ) : (
             <div className={desktopStyles.legacyWindow}>
               <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">
