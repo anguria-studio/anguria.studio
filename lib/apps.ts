@@ -17,8 +17,8 @@ export type AppMeta = {
    *  MacCleaner, Atoll), which is not the product name — see tools/shot.sh. */
   shot: string;
   /** App Store product page. Optional: an app that has not shipped yet has no
-   *  listing, and the primary button falls back to the on-page release section
-   *  rather than pointing somewhere that does not exist. */
+   *  listing, and PaguroActions leaves the App Store pill out rather than point
+   *  it somewhere that does not exist. Setting this one field is the switch. */
   appStore?: string;
 };
 

@@ -55,9 +55,9 @@ export function PaguroHeader({
         )}
         {/* No "All apps" link while `/` redirects to this page (see
             vercel.json): it would only bounce the visitor straight back here.
-            It returns with the redirects' removal. No pills on a phone: two
-            h-11 pills plus the wordmark do not fit that header. On the app page
-            the hero carries the pair below desk; on the privacy subpage the
+            It returns with the redirects' removal. No pills on a phone: h-11
+            pills beside the wordmark do not fit that header. On the app page
+            the hero carries them below desk; on the privacy subpage the
             wordmark leads to that hero. The wrapper owns the display so it
             cannot race the hardcoded `flex` inside PaguroActions. */}
         <div className="hidden sm:block">

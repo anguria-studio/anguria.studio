@@ -5,10 +5,17 @@ import type { AppMeta } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
 /**
- * The page's two calls to action, always rendered as a pair so they can never
+ * The page's calls to action. The GitHub pill is always here; the App Store
+ * pill joins it only once `meta.appStore` is set, because a pill that says
+ * "App Store" and opens GitHub is a promise the page cannot keep. Both are
+ * rendered by this one component so the header's copy and the hero's can never
  * drift apart. The sticky header shows them from `sm` up; the hero shows them
  * below `desk`, where it has no interactive demo to act as its call to action.
  * Phones therefore get exactly one copy, the hero's.
+ *
+ * Alone, the GitHub pill takes the solid tone: subtle was only ever the second
+ * of a pair, and below `desk` this pill is the only way into the app. Setting
+ * `apps.paguro.appStore` brings the pair, and its hierarchy, back in one move.
  *
  * The hover is the homepage GitHub pill's, reproduced exactly: the row slides
  * left by icon + gap (24px), landing the label's left edge on 20px — the same
@@ -44,11 +51,6 @@ function Pill({
   label: string;
   icon: React.ReactNode;
 }) {
-  // Until `apps.paguro.appStore` is set, the primary pill's href falls back to
-  // the same GitHub release page as the secondary one — even though its label
-  // already names the App Store. That mismatch is deliberate: the labels ship
-  // first and the URL follows when the listing goes live. Setting meta.appStore
-  // splits the two destinations again.
   // An in-page anchor must not open in a new tab; the rest are external.
   const external = href.startsWith("http");
   return (
@@ -75,15 +77,17 @@ export function PaguroActions({
 }) {
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      <Pill
-        href={meta.appStore ?? meta.download}
-        tone="solid"
-        label={copy.appStore}
-        icon={<AppleMark className={`size-4 ${SWAP}`} />}
-      />
+      {meta.appStore ? (
+        <Pill
+          href={meta.appStore}
+          tone="solid"
+          label={copy.appStore}
+          icon={<AppleMark className={`size-4 ${SWAP}`} />}
+        />
+      ) : null}
       <Pill
         href={meta.download}
-        tone="subtle"
+        tone={meta.appStore ? "subtle" : "solid"}
         label={copy.github}
         icon={<GitHubMark className={`size-4 ${SWAP}`} />}
       />
