@@ -64,7 +64,7 @@ block — they are duplicated on purpose and must stay in sync.
 | `lib/privacy/paguro-policy.ts` | Policy schema, section ids, `paguroPrivacyEffective`, the date formatter and the per-locale loader. |
 | `lib/privacy/paguro/{en,it,fr,es}.ts` | The policy text itself, one `policy` export per locale, typed against the schema — a missing section is a compile error. |
 | `components/` | All markup. Components never contain copy — they read it from the dictionary. |
-| `content/github-org-profile/` | The org profile shown at github.com/anguria-studio: `README.md` plus its `media/`. Copy the directory verbatim to `profile/` in a **public** repo named `.github` under the org; a private one renders nothing. The WebPs come from `public/paguro/workspace{,-light}.png` via `cwebp -z 9`. |
+| `anguria-studio/.github` | Not in this repo. The org profile shown at github.com/anguria-studio lives and is edited there, as `profile/README.md` plus its `media/`; it renders only because that repo is **public**, a private one shows nothing. Its screenshots are lossless WebP of `public/paguro/workspace{,-light}.png` via `cwebp -z 9`. |
 
 To change what an app says, edit its entry in `lib/dictionaries/en.ts` and mirror it in
 `it.ts` / `fr.ts` / `es.ts`. Nothing else contains app copy.
