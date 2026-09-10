@@ -4,6 +4,7 @@ import { ContactLine } from "@/components/layout/contact-line";
 import { localePath, type Locale } from "@/lib/i18n";
 import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { PaguroActions } from "@/components/apps/paguro-actions";
+import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
 import { apps } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
@@ -90,14 +91,7 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
 
       <section id="questions" className="mx-auto max-w-3xl scroll-mt-24 px-6 pb-20 sm:pb-32">
         <h2 className="mb-10 text-center text-xl font-semibold tracking-tight sm:text-3xl">{copy.faqTitle}</h2>
-        <div className="border-t border-hairline">
-          {faq.map((item) => <details key={item.question} className="faq-item group border-b border-hairline">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
-              {item.question}<span aria-hidden="true" className="shrink-0 text-2xl font-normal text-muted group-open:rotate-45 motion-safe:transition-transform">+</span>
-            </summary>
-            <p className="pb-6 pr-6 text-base leading-relaxed text-muted">{item.answer}</p>
-          </details>)}
-        </div>
+        <PaguroFaq faq={faq} />
       </section>
 
       <ContactLine dict={dict} />

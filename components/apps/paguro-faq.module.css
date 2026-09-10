@@ -1,0 +1,56 @@
+/* Choreography only. Layout, type, colours, and surfaces use the site tokens. */
+
+/*
+ * The FAQ rows drop into place as they come into view.
+ *
+ * Gated on no-preference as well as on the observer that sets `data-arrive`, so
+ * both halves fail closed: a reduced-motion reader gets no declaration at all —
+ * neither the blank nor the animation — and every row paints at rest. Same for
+ * a reader with no JS or no IntersectionObserver, who never gets the attribute.
+ * The invisible start state lives ONLY here and in the keyframe below — never as
+ * an `opacity-0` class — for exactly the reason enter-rise spells out in
+ * globals.css.
+ *
+ * `backwards` is what holds a later row invisible through its delay. No
+ * forwards half is wanted: the keyframe has no `to`, so it lands on the row's
+ * own resting style and leaves nothing behind it.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  /* A row the observer has seen but not yet let in, held blank so its arrival
+   * can be triggered from INSIDE the viewport without the reader first catching
+   * it at rest. Only the observer sets this, and only after its reduced-motion
+   * check has passed, so nothing is ever hidden that cannot be un-hidden. */
+  .row[data-arrive="pending"] {
+    opacity: 0;
+  }
+
+  .row[data-arrive="arrived"] {
+    /* Five steps, the same 950ms as the page's own enter-* entrances: an 80px
+     * row travelling this far needs to be watchable, not flicked. */
+    animation: arrive calc(var(--stagger-step) * 5) var(--ease-enter) backwards;
+    /* --i is the row's place in the batch it arrived with, not its index in the
+     * list, so a row that appears alone starts immediately. Half a step (95ms)
+     * rather than the strip's --wave-step: 60ms is a ripple across eight small
+     * tiles, and reads as a stutter across seven full-width rows. */
+    animation-delay: calc(var(--stagger-step) / 2 * var(--i));
+    /* The pivot is the row's left end, so the gesture reads as a page settling
+     * onto a spine rather than a box spinning about its middle. */
+    transform-origin: left center;
+  }
+}
+
+/*
+ * A positive angle rotates clockwise (CSS y grows downward), and with the origin
+ * on the left end that puts the RIGHT end low — the row starts tipped downwards
+ * and swings level, which is the hero tiles' tilt turned upright.
+ *
+ * No `to`: the implicit one is the row's own computed style, so it lands exactly
+ * on the resting design. `transform`, not the `translate`/`rotate` properties,
+ * to stay out of the way of the utilities Tailwind compiles to those.
+ */
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise-distance)) rotate(var(--faq-tilt));
+  }
+}

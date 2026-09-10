@@ -297,6 +297,16 @@
   --faq-duration: 480ms;
 
   /*
+   * How far a FAQ row is tipped when it arrives, pivoted on its left end so the
+   * right end starts low and swings level — the hero tiles' tilt, turned
+   * upright. An order of magnitude under their 8–16deg because the lever is ten
+   * times longer: a row is ~750px wide at max-w-3xl, so 2.5deg already drops its
+   * right end ~33px. At the tiles' angles the same row would be thrown clear of
+   * the column.
+   */
+  --faq-tilt: 2.5deg;
+
+  /*
    * Hover travel for the three slider handles in the Customisable icon, in that
    * icon's own user units (CSS px inside an SVG ARE user units, so these scale
    * with the glyph between size-14 and size-16).
