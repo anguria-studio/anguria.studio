@@ -13,6 +13,7 @@ import type { Locale } from "@/lib/i18n";
 import { initialIslandState, islandReducer, serviceNames } from "@/lib/paguro-island";
 import type { DemoService as Service } from "@/lib/paguro-island";
 import { createPreviewHintHistory } from "@/lib/paguro-preview-hints";
+import { createSampleDecks, drawSample } from "@/lib/paguro-samples";
 
 type HeroCopy = Dictionary["paguroHero"];
 
@@ -33,6 +34,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const [announcement, setAnnouncement] = useState({ id: 0, message: "" });
   const nextID = useRef(0);
   const previewHintHistory = useRef(createPreviewHintHistory());
+  const decks = useRef(createSampleDecks());
 
   function changeLayout(next: "sidebar" | "compact") {
     previewHintHistory.current.toggleUsed = true;
@@ -45,8 +47,11 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   }
 
   function send(service: Service) {
-    const title = copy[`${service}Title`];
-    const message = copy[`${service}Message`];
+    // One card per click, drawn from the service's shuffle bag so every sample
+    // shows up before any of them comes round again.
+    const { deck, index } = drawSample(decks.current[service], copy.samples[service].length);
+    decks.current[service] = deck;
+    const { title, message } = copy.samples[service][index];
     const notification = { id: ++nextID.current, service, title, message };
     dispatch({ type: "receive", notification });
     announce(copy.sent.replace("{service}", serviceNames[service]).replace("{message}", message));
