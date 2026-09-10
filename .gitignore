@@ -46,3 +46,7 @@ tools/shots/
 # Overlay captures ship as WebP (encoder settings in content/paguro-assets.md).
 # The lossless PNG sources beside them are 2.9 MB working files: keep them out.
 public/shots/paguro-overlay/*.png
+
+# Maintainer notes: the long-form README the public one replaced. Kept out
+# of the repo on purpose, since the repo is public.
+/NOTES.md
