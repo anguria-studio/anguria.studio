@@ -94,11 +94,30 @@ export function usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history,
       if (eligibleHint()) timer = setTimeout(play, hintIdleDelay);
     }
 
+    // Only reaching a control counts. Pointer movement, scrolling and typing
+    // elsewhere on the page leave the cue running: a hint is here to be seen
+    // by someone who has not found the control yet, and that person is usually
+    // moving the mouse or scrolling while they look.
     function activity(event: Event) {
-      if (event.target instanceof Node && toggle!.contains(event.target)) history.current.toggleUsed = true;
+      let used = false;
+      if (event.target instanceof Node && toggle!.contains(event.target)) {
+        history.current.toggleUsed = true;
+        used = true;
+      }
       if (layout === "compact" && event.target instanceof Element && event.target.closest("[data-service]") && capture!.contains(event.target)) {
         history.current.dockUsed = true;
+        used = true;
       }
+      if (!used) return;
+      stop();
+      arm();
+    }
+
+    // Focus moving into or out of the demo changes whether a keyboard user is
+    // working in it, which `eligibleHint` reads. Focus elsewhere on the page
+    // does not, so it must not disturb a running cue.
+    function focusChanged(event: Event) {
+      if (event.target instanceof Node && !capture!.contains(event.target)) return;
       stop();
       arm();
     }
@@ -119,14 +138,16 @@ export function usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history,
     observer.observe(toggle);
     observer.observe(dock);
 
-    const events = ["pointermove", "pointerdown", "keydown", "focusin", "focusout", "wheel", "scroll"];
+    const events = ["pointermove", "pointerdown", "keydown"];
     for (const event of events) window.addEventListener(event, activity, { passive: true, capture: true });
+    for (const event of ["focusin", "focusout"]) window.addEventListener(event, focusChanged, { passive: true, capture: true });
     document.addEventListener("visibilitychange", visibilityChanged);
     motion.addEventListener("change", visibilityChanged);
 
     return () => {
       observer.disconnect();
       for (const event of events) window.removeEventListener(event, activity, true);
+      for (const event of ["focusin", "focusout"]) window.removeEventListener(event, focusChanged, true);
       document.removeEventListener("visibilitychange", visibilityChanged);
       motion.removeEventListener("change", visibilityChanged);
       stop();
