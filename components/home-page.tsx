@@ -23,7 +23,7 @@ export async function HomePage({ locale }: { locale: Locale }) {
         <AppDock locale={locale} dict={dict} />
         <ContactLine dict={dict} />
       </main>
-      <Footer locale={locale} dict={dict} />
+      <Footer locale={locale} dict={dict} note={dict.footer.rights} />
     </>
   );
 }
