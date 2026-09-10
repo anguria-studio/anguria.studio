@@ -53,21 +53,15 @@ export function PaguroHeader({
             {dict.apps.paguro.name}
           </a>
         )}
-        <div className="flex items-center gap-4 text-sm font-medium sm:gap-6">
-          <Link href={localePath(locale)} className={`inline-flex items-center gap-2 text-muted transition hover:text-foreground ${linkStyle}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/mark.png" alt="" width={24} height={24} className="size-6" />
-            <span className="hidden sm:inline">{dict.paguroHero.back}</span>
-            <span className="sr-only sm:hidden">{dict.paguroHero.back}</span>
-          </Link>
-          {/* No pills on a phone: two h-11 pills plus the wordmark and the back
-              link do not fit that header. On the app page the hero carries the
-              pair below desk; on the privacy subpage the wordmark leads to that
-              hero. The wrapper owns the display so it cannot race the hardcoded
-              `flex` inside PaguroActions. */}
-          <div className="hidden sm:block">
-            <PaguroActions copy={dict.paguroPage} meta={apps.paguro} />
-          </div>
+        {/* No "All apps" link while `/` redirects to this page (see
+            vercel.json): it would only bounce the visitor straight back here.
+            It returns with the redirects' removal. No pills on a phone: two
+            h-11 pills plus the wordmark do not fit that header. On the app page
+            the hero carries the pair below desk; on the privacy subpage the
+            wordmark leads to that hero. The wrapper owns the display so it
+            cannot race the hardcoded `flex` inside PaguroActions. */}
+        <div className="hidden sm:block">
+          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} />
         </div>
       </nav>
     </header>
@@ -137,7 +131,9 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
 /** Paguro is a fork, and says so; its privacy policy sits beside the credit because
  *  the footer is generic and this is the only app that has either. The policy
  *  page itself passes `privacyLink={false}`: a footer link to the page it is on
- *  would go nowhere, and the credit alone is the right line there. */
+ *  would go nowhere, and the credit alone is the right line there. The trademark
+ *  line and the copyright sit under the credit on both pages: the footer is where
+ *  the fine print lives. */
 export function PaguroFooterNote({
   dict,
   locale,
@@ -150,13 +146,17 @@ export function PaguroFooterNote({
   const link = "underline decoration-hairline underline-offset-4 transition hover:text-foreground";
   return (
     <>
-      <a href="https://github.com/nicojan/Chorus" target="_blank" rel="noreferrer" className={link}>{dict.paguroPage.credits}</a>
-      {privacyLink ? (
-        <>
-          <span aria-hidden="true"> · </span>
-          <Link href={localePath(locale, paguroPrivacyPath)} className={link}>{dict.paguroPrivacy.link}</Link>
-        </>
-      ) : null}
+      <p>
+        <a href="https://github.com/nicojan/Chorus" target="_blank" rel="noreferrer" className={link}>{dict.paguroPage.credits}</a>
+        {privacyLink ? (
+          <>
+            <span aria-hidden="true"> · </span>
+            <Link href={localePath(locale, paguroPrivacyPath)} className={link}>{dict.paguroPrivacy.link}</Link>
+          </>
+        ) : null}
+      </p>
+      <p>{dict.paguroPage.story.trademarks}</p>
+      <p>{dict.footer.copyright}</p>
     </>
   );
 }

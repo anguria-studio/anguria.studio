@@ -14,9 +14,11 @@ export function Footer({
   locale: Locale;
   dict: Dictionary;
   path?: PagePath;
-  /** An extra line above the footer row, for a page that has something to
-   *  credit. Passed in rather than derived from `slug`, so this stays a
-   *  generic footer that knows nothing about any particular app. */
+  /** What the page wants in the footer row: the home page's one-line rights
+   *  note, or an app page's stack of `<p>`s (credit, attribution, copyright).
+   *  A bare string gets its own `<p>`. Passed in rather than derived from `slug`,
+   *  so this stays a generic footer that knows nothing about any
+   *  particular app. */
   note?: ReactNode;
 }) {
   return (
@@ -32,7 +34,11 @@ export function Footer({
           <ThemeToggle labels={dict.themeToggle} />
         </div>
 
-        {note ? <p className="text-center sm:text-left">{note}</p> : null}
+        {note ? (
+          <div className="flex flex-col gap-1 text-center text-pretty sm:text-left">
+            {typeof note === "string" ? <p>{note}</p> : note}
+          </div>
+        ) : null}
       </div>
     </footer>
   );

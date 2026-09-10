@@ -201,7 +201,6 @@ export const dictionary: Dictionary = {
         { title: "Une petite escapade", message: "Voyagez léger. Il fait chaud." },
       ],
     },
-    back: "Toutes les apps"
   },
   paguroPage: {
     nav: "Découvrir Paguro",
@@ -287,5 +286,6 @@ export const dictionary: Dictionary = {
   },
   footer: {
     rights: "Gratuit et open source, pour toujours.",
+    copyright: "© 2026 Anguria Studio",
   },
 };

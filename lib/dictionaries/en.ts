@@ -229,7 +229,6 @@ export const dictionary = {
         { title: "A little getaway", message: "Pack light. It’s warm there." },
       ],
     },
-    back: "All apps"
   },
   paguroPage: {
     nav: "Explore Paguro",
@@ -289,6 +288,8 @@ export const dictionary = {
           body: "Your setup and login sessions stay on your Mac. No Paguro account, cloud sync, or app telemetry. The services you use connect directly to their providers."
         }
       ],
+      /** Fine print for the service strip's logos. Rendered in the Paguro footer,
+       *  where fine print lives, rather than under the strip it refers to. */
       trademarks: "Service names and logos belong to their respective owners."
     }
   },
@@ -321,6 +322,10 @@ export const dictionary = {
   },
   footer: {
     rights: "Free and open source, forever.",
+    /** Year of first publication, hardcoded on purpose: a copyright year names
+     *  when the work was published and does not tick — and a static export would
+     *  only bake in the last build's year anyway. Widen to a range by hand. */
+    copyright: "© 2026 Anguria Studio",
   },
 };
 

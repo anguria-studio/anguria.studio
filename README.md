@@ -260,3 +260,14 @@ serves at `/obolo/` without rewrite rules, and `404.html` is picked up automatic
 
 Set the real domain in `site.url` (`lib/apps.ts`) — it is what canonical, hreflang and
 `sitemap.xml` are built from.
+
+### Vercel and the temporary Paguro-only launch
+
+`vercel.json` holds host-level redirects (Next's `redirects` are unsupported under
+`output: "export"`): `/`, `/obolo` and `/scolo` — and their `/it`, `/fr`, `/es`
+variants, with and without trailing slash — answer 307 to the locale's Paguro page
+while Paguro is the only shipped app. They are temporary on purpose: browsers and
+search engines do not cache a 307, so restoring the routes is deleting the rules.
+`app/sitemap.ts` lists only the served pages for the same reason; the 404 page and
+the Paguro header link straight to `/paguro/` instead of `/`. All four are
+reverted together.
