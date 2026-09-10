@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type PointerEvent, type RefObject } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type RefObject } from "react";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { captureSize, dockTransforms, railDividerY, railServices, type PreviewLayout, type PreviewTheme } from "@/lib/paguro-service-preview";
+import { captureSize, dockTransforms, hasServicePreview, previewServices, serviceCapture, railDividerY, railServices, type PreviewService, type PreviewLayout, type PreviewTheme } from "@/lib/paguro-service-preview";
 import styles from "./paguro-service-preview.module.css";
 import { usePaguroPreviewHints } from "./use-paguro-preview-hints";
 import type { PreviewHintHistory } from "@/lib/paguro-preview-hints";
+import type { DemoNotification } from "@/lib/paguro-island";
 
 type PreviewCopy = Dictionary["paguroHero"]["serviceOverlay"];
 
@@ -22,19 +23,44 @@ function WorkspaceHeading({ name, y }: { name: string; y: number }) {
   </div>;
 }
 
-export function PaguroServicePreview({ layout, onLayoutChange, theme, copy, onUnavailable, hintHistory }: {
+export function PaguroServicePreview({ layout: requestedLayout, onLayoutChange, theme: requestedTheme, copy, onUnavailable, hintHistory, notifications, onServiceSelect }: {
   layout: PreviewLayout;
   onLayoutChange: (layout: PreviewLayout) => void;
   theme: PreviewTheme;
   copy: PreviewCopy;
   onUnavailable: () => void;
   hintHistory: RefObject<PreviewHintHistory>;
+  notifications: readonly DemoNotification[];
+  onServiceSelect: (service: PreviewService) => void;
 }) {
   const captureRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dockRef = useRef<HTMLDivElement>(null);
   const [pointerY, setPointerY] = useState<number | null>(null);
   const [keyboardFocused, setKeyboardFocused] = useState<number | null>(null);
+  const [requestedService, setRequestedService] = useState<PreviewService>("claude");
+  const [displayed, setDisplayed] = useState({ service: requestedService, layout: requestedLayout, theme: requestedTheme });
+  const { service: selectedService, layout, theme } = displayed;
+
+  useEffect(() => {
+    let cancelled = false;
+    const image = new Image();
+    image.src = serviceCapture(requestedService, requestedLayout, requestedTheme);
+    // Keep the previous capture and its controls aligned until the next one
+    // is decoded. Cancelling also prevents an older request winning a race.
+    image.decode().then(() => {
+      if (!cancelled) setDisplayed({ service: requestedService, layout: requestedLayout, theme: requestedTheme });
+    }).catch(() => {
+      // A failed background capture must not remove the working preview.
+    });
+    return () => { cancelled = true; };
+  }, [requestedService, requestedLayout, requestedTheme]);
+
+  function selectService(service: string) {
+    if (!hasServicePreview(service)) return;
+    setRequestedService(service);
+    onServiceSelect(service);
+  }
   const { hint, demoPointerY } = usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history: hintHistory, layout });
   const compact = layout === "compact";
   const transforms = dockTransforms(compact ? pointerY ?? (keyboardFocused === null ? demoPointerY : railServices[keyboardFocused].compactY) : null);
@@ -52,19 +78,18 @@ export function PaguroServicePreview({ layout, onLayoutChange, theme, copy, onUn
 
   return (
     <div ref={captureRef} className={styles.capture} data-layout={layout} data-theme={theme} data-hint={hint ?? undefined} onPointerMove={trackPointer} onPointerLeave={() => setPointerY(null)}>
-      {/* All four captures stay mounted so both the layout toggle and the menu
-          bar's theme switch cross-fade rather than waiting on a fetch. The
-          scheme the visitor is not looking at loads at low priority, keeping
-          it off the critical path. */}
-      {(["dark", "light"] as const).flatMap((scheme) => (["sidebar", "compact"] as const).map((arrangement) => {
-        const showing = scheme === theme && arrangement === layout;
+      {/* Preload every service at low priority; only the requested capture
+          takes priority. Mounted layers also remain ready for repeat visits. */}
+      {previewServices.flatMap((service) => (["dark", "light"] as const).flatMap((scheme) => (["sidebar", "compact"] as const).map((arrangement) => {
+        const showing = service === selectedService && scheme === theme && arrangement === layout;
         return (
           // eslint-disable-next-line @next/next/no-img-element
-          <img key={`${arrangement}-${scheme}`} src={`/shots/paguro-overlay/${arrangement}-${scheme}.webp`} alt={showing ? copy.captureAlt : ""} width={2880} height={1800} draggable={false}
-            fetchPriority={scheme === theme ? "high" : "low"} onError={onUnavailable}
+          <img key={`${service}-${arrangement}-${scheme}`} src={serviceCapture(service, arrangement, scheme)} alt={showing ? `${railServices.find((entry) => entry.id === service)?.name} — ${copy.captureAlt}` : ""} width={2880} height={1800} draggable={false}
+            loading="eager" decoding="async"
+            fetchPriority={service === requestedService && scheme === requestedTheme && arrangement === requestedLayout ? "high" : "low"} onError={showing ? onUnavailable : undefined}
             className={styles.screenshot} style={{ opacity: showing ? 1 : 0 }} />
         );
-      }))}
+      })))}
 
       <button ref={toggleRef} type="button" className={styles.layoutToggle} style={frame(compact ? 270 : 360, 114, 24, 24)}
         aria-label={compact ? copy.expand : copy.collapse} onClick={() => { setPointerY(null); setKeyboardFocused(null); onLayoutChange(compact ? "sidebar" : "compact"); }}>
@@ -83,14 +108,20 @@ export function PaguroServicePreview({ layout, onLayoutChange, theme, copy, onUn
         {railServices.map((service, index) => {
           const { scale, offset } = transforms[index];
           const centerY = compact ? service.compactY : service.sidebarY;
-          return <li key={service.id} tabIndex={0} aria-label={`${service.name}, ${copy[service.workspace]}`} aria-current={service.id === "whatsapp" ? "true" : undefined}
+          return <li key={service.id} role="button" tabIndex={0} aria-label={`${service.name}, ${copy[service.workspace]}`} aria-current={service.id === selectedService ? "true" : undefined}
             className={styles.service} data-service={service.id} data-magnified={scale > 1.01}
             style={{ ...frame(compact ? 183 : 188, centerY - (compact ? 18 : 15), compact ? 36 : 196, compact ? 36 : 30), "--icon-scale": scale, "--icon-offset": offset } as CSSProperties}
             // Pointer focus must not keep the dock enlarged after hover ends.
             onPointerDown={() => setKeyboardFocused(null)}
+            onClick={() => selectService(service.id)}
             onFocus={(event) => setKeyboardFocused(event.currentTarget.matches(":focus-visible") ? index : null)}
             onBlur={() => setKeyboardFocused(null)}
             onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectService(service.id);
+                return;
+              }
               const direction = event.key === "ArrowDown" ? 1 : event.key === "ArrowUp" ? -1 : 0;
               if (!direction) return;
               event.preventDefault();
@@ -102,6 +133,7 @@ export function PaguroServicePreview({ layout, onLayoutChange, theme, copy, onUn
             <span className={styles.mark}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/paguro/services/${service.id}.svg`} alt="" width={22} height={22} draggable={false} />
+              {notifications.some((notification) => notification.service === service.id) && <span className={styles.notificationDot} aria-hidden="true" />}
             </span>
             <span className={compact ? styles.tooltip : styles.label} aria-hidden="true">{service.name}</span>
           </li>;

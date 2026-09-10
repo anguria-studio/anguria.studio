@@ -62,6 +62,11 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
     announce(all ? copy.cleared : copy.removed);
   }
 
+  function clearServiceNotifications(service: string) {
+    const ids = island.notifications.filter((notification) => notification.service === service).map(({ id }) => id);
+    if (ids.length > 0) remove(ids, ids.length === island.notifications.length);
+  }
+
   return (
     <section id="paguro" className="scroll-mt-24 pb-20 sm:pb-24">
       <div className="mx-auto max-w-4xl px-6 pt-16 text-center sm:pt-24">
@@ -110,7 +115,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>
 
           {overlayAvailable ? (
-            <PaguroServicePreview layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} />
+            <PaguroServicePreview layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
           ) : (
             <div className={desktopStyles.legacyWindow}>
               <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">

@@ -1,6 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { dockTransforms, railDividerY, railServices } from "../lib/paguro-service-preview.ts";
+import { existsSync } from "node:fs";
+import { dockTransforms, hasServicePreview, previewServices, serviceCapture, railDividerY, railServices } from "../lib/paguro-service-preview.ts";
+
+test("every selectable service has both themes and layouts on disk", () => {
+  for (const service of previewServices) {
+    assert.ok(railServices.some(({ id }) => id === service));
+    for (const theme of ["dark", "light"]) for (const layout of ["sidebar", "compact"]) {
+      assert.ok(existsSync(new URL(`../public${serviceCapture(service, layout, theme)}`, import.meta.url)));
+    }
+  }
+  assert.equal(hasServicePreview("slack"), false);
+  assert.equal(hasServicePreview("notion"), false);
+  assert.equal(hasServicePreview("unknown"), false);
+});
 
 test("leaving the dock restores the photographed rail's resting geometry", () => {
   for (const pointer of [null, NaN, Infinity, -Infinity]) {
