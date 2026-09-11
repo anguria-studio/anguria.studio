@@ -72,12 +72,20 @@ export async function appMetadata(
   const copy = dict.apps[slug];
   const title = slug === "paguro" ? dict.paguroPage.seoTitle : `${copy.name} — ${copy.tagline}`;
   const description = copy.description;
+  const images = slug === "paguro" ? [{
+    url: `${site.url}/paguro/og-image.png`,
+    width: 2400,
+    height: 1260,
+    type: "image/png",
+    alt: copy.shotAlt,
+  }] : undefined;
 
   return {
     title,
     description,
     alternates: alternates(locale, slug),
-    openGraph: openGraph(locale, title, description, slug),
+    openGraph: { ...openGraph(locale, title, description, slug), ...(images ? { images } : {}) },
+    ...(images ? { twitter: { card: "summary_large_image" as const, title, description, images } } : {}),
   };
 }
 

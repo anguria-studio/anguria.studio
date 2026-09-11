@@ -128,7 +128,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>
         </div>
 
-        <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${desktopStyles.stage} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block`}>
+        <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${desktopStyles.stage} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block motion-safe:fade-3`}>
           {showDesktopPreview && <>
           {/* The full-screen dark captures preserve the app’s original glass. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -162,7 +162,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </>}
         </div>
 
-        <div className="relative aspect-[2880/1740] overflow-hidden rounded-showcase bg-surface desk:hidden">
+        <div className="relative aspect-[2880/1740] overflow-hidden rounded-showcase bg-surface desk:hidden motion-safe:fade-3">
           {/* Crop the top 60 source pixels to hide the macOS menu bar. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/paguro/mobile-workspace.webp" alt={copy.mobileCaptureAlt} width={2880} height={1800} className="absolute inset-x-0 bottom-0 h-auto w-full" />

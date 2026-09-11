@@ -104,13 +104,6 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
           })}
         </ul>
 
-        {/* The third feature is the privacy claim; this line is its receipt. */}
-        <p className="mt-10 text-center text-sm text-muted">
-          <Link href={localePath(locale, paguroPrivacyPath)} className="underline decoration-hairline underline-offset-4 transition hover:text-foreground">
-            {dict.paguroPrivacy.read}
-          </Link>
-        </p>
-
         <div className="mt-24 text-center sm:mt-40">
           <h2 className="text-xl font-semibold tracking-tight text-balance sm:text-3xl">{copy.story.services}</h2>
           <PaguroServiceStrip />
