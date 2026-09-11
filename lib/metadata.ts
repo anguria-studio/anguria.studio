@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { paguroPrivacyPath, site, type AppSlug, type PagePath } from "./apps";
 import {
   defaultLocale,
@@ -8,6 +8,21 @@ import {
   type Locale,
 } from "./i18n";
 import { getPaguroPrivacyPolicy } from "./privacy/paguro-policy";
+
+export const siteMetadata: Metadata = {
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [{ url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" }],
+    apple: "/apple-icon.png",
+  },
+};
+
+export const siteViewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf7f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#171413" },
+  ],
+};
 
 const OG_LOCALE: Record<Locale, string> = {
   en: "en_US",
@@ -73,10 +88,10 @@ export async function appMetadata(
   const title = slug === "paguro" ? dict.paguroPage.seoTitle : `${copy.name} — ${copy.tagline}`;
   const description = copy.description;
   const images = slug === "paguro" ? [{
-    url: `${site.url}/paguro/og-image.png`,
-    width: 2400,
-    height: 1260,
-    type: "image/png",
+    url: `${site.url}/paguro/og-image.jpg`,
+    width: 1200,
+    height: 630,
+    type: "image/jpeg",
     alt: copy.shotAlt,
   }] : undefined;
 
@@ -85,7 +100,7 @@ export async function appMetadata(
     description,
     alternates: alternates(locale, slug),
     openGraph: { ...openGraph(locale, title, description, slug), ...(images ? { images } : {}) },
-    ...(images ? { twitter: { card: "summary_large_image" as const, title, description, images } } : {}),
+    ...(images ? { twitter: { card: "summary_large_image" as const, title, description, images: images.map(({ url, alt }) => ({ url, alt })) } } : {}),
   };
 }
 

@@ -1,0 +1,10 @@
+{
+  "name": "Anguria Studio",
+  "short_name": "Anguria Studio",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#faf7f5",
+  "theme_color": "#faf7f5",
+  "icons": [{ "src": "/icon.png", "sizes": "128x128", "type": "image/png" }]
+}

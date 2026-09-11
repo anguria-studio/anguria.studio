@@ -1,3 +1,4 @@
+export { siteMetadata as metadata, siteViewport as viewport } from "@/lib/metadata";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import "../../globals.css";

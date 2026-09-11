@@ -1,3 +1,4 @@
+export { siteMetadata as metadata, siteViewport as viewport } from "@/lib/metadata";
 import type { ReactNode } from "react";
 import "../globals.css";
 import { ThemeScript } from "@/components/layout/theme-script";
