@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type RefObject } from "react";
+import { flushSync } from "react-dom";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { captureSize, dockTransforms, hasServicePreview, previewServices, serviceCapture, railDividerY, railServices, type PreviewService, type PreviewLayout, type PreviewTheme } from "@/lib/paguro-service-preview";
 import styles from "./paguro-service-preview.module.css";
@@ -44,12 +45,16 @@ export function PaguroServicePreview({ layout: requestedLayout, onLayoutChange, 
 
   useEffect(() => {
     let cancelled = false;
-    const image = new Image();
-    image.src = serviceCapture(requestedService, requestedLayout, requestedTheme);
-    // Keep the previous capture and its controls aligned until the next one
-    // is decoded. Cancelling also prevents an older request winning a race.
+    const src = serviceCapture(requestedService, requestedLayout, requestedTheme);
+    const image = captureRef.current?.querySelector<HTMLImageElement>(`img[src="${src}"]`);
+    if (!image) return;
+    // Decode the mounted layer itself: decoding a detached Image does not
+    // guarantee that an async-decoded DOM image is ready to paint.
     image.decode().then(() => {
-      if (!cancelled) setDisplayed({ service: requestedService, layout: requestedLayout, theme: requestedTheme });
+      if (cancelled) return;
+      // Commit within the decoded frame, keeping the old capture and controls
+      // visible until the replacement can be painted together.
+      flushSync(() => setDisplayed({ service: requestedService, layout: requestedLayout, theme: requestedTheme }));
     }).catch(() => {
       // A failed background capture must not remove the working preview.
     });
@@ -82,10 +87,11 @@ export function PaguroServicePreview({ layout: requestedLayout, onLayoutChange, 
           takes priority. Mounted layers also remain ready for repeat visits. */}
       {previewServices.flatMap((service) => (["dark", "light"] as const).flatMap((scheme) => (["sidebar", "compact"] as const).map((arrangement) => {
         const showing = service === selectedService && scheme === theme && arrangement === layout;
+        const src = serviceCapture(service, arrangement, scheme);
         return (
           // eslint-disable-next-line @next/next/no-img-element
-          <img key={`${service}-${arrangement}-${scheme}`} src={serviceCapture(service, arrangement, scheme)} alt={showing ? `${railServices.find((entry) => entry.id === service)?.name} — ${copy.captureAlt}` : ""} width={2880} height={1800} draggable={false}
-            loading="eager" decoding="async"
+          <img key={`${service}-${arrangement}-${scheme}`} src={src} alt={showing ? `${railServices.find((entry) => entry.id === service)?.name} — ${copy.captureAlt}` : ""} width={2880} height={1800} draggable={false}
+            loading="eager" decoding="sync"
             fetchPriority={service === requestedService && scheme === requestedTheme && arrangement === requestedLayout ? "high" : "low"} onError={showing ? onUnavailable : undefined}
             className={styles.screenshot} style={{ opacity: showing ? 1 : 0 }} />
         );
