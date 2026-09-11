@@ -158,6 +158,7 @@ export const dictionary = {
       captureAlt: "Paguro with WhatsApp open and its original translucent window over the desktop.",
     },
     previewTheme: "Preview appearance",
+    previewSystem: "System preview",
     previewLight: "Light preview",
     previewDark: "Dark preview",
 

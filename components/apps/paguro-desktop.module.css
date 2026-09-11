@@ -21,27 +21,30 @@
   --island-card-fill: rgb(255 255 255 / .10);
   --island-card-focus: rgb(255 255 255 / .22);
 }
-.menuBar { position: absolute; z-index: 10; inset: 0 0 auto; height: 38px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 13px; font-weight: 600; line-height: 1; user-select: none; }
+.menuBar { position: absolute; z-index: 10; inset: 0 0 auto; height: 38px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 15px; font-weight: 600; line-height: 1; user-select: none; }
 .appMenus, .statusItems { display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+.appMenus > svg { width: 20px; height: 20px; flex-shrink: 0; }
 .appMenus strong { font-weight: 700; }
 .statusItems { gap: 12px; }
-.clock { display: flex; gap: 8px; font-variant-numeric: tabular-nums; min-width: 136px; justify-content: flex-end; }
+.clock { display: flex; gap: 10px; font-variant-numeric: tabular-nums; min-width: 156px; justify-content: flex-end; }
 .compactDate { display: none; }
-.themeToggle { display: flex; color: white; }
-.themeToggle button { position: relative; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; opacity: .65; }
-.themeToggle button[aria-pressed="true"], .themeToggle button:hover { opacity: 1; }
-.themeToggle button[aria-pressed="true"]::after { content: ""; position: absolute; bottom: 1px; width: 8px; height: 2px; border-radius: 1px; background: currentColor; }
+.themeToggle { display: flex; align-items: center; gap: 2px; padding: 2px; border-radius: 9999px; background: rgb(255 255 255 / .05); color: white; }
+.themeToggle button { display: grid; place-items: center; padding: 6px; border-radius: 9999px; cursor: pointer; color: rgb(255 255 255 / .65); }
+.themeToggle button:hover { color: white; }
+.themeToggle button[aria-pressed="true"] { background: rgb(255 255 255 / .1); color: white; }
 .themeToggle button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+@media (prefers-reduced-motion: no-preference) {
+  .themeToggle button { transition: color 150ms, background-color 150ms; }
+}
 
 /* Use a short numeric date on narrow desktops so the controls stay clear of the
    expanded island. The complete local date remains in the clock's label. */
-@container (max-width: 850px) {
+@container (max-width: 1000px) {
   .menuBar { padding-inline: 12px; }
   .date { display: none; }
   .compactDate { display: inline; }
   .clock { min-width: 80px; gap: 6px; }
   .statusItems { gap: 6px; }
-  .themeToggle button { width: 24px; }
 }
 
 /* All capture layers share the script's 1440 × 900-point desktop. */

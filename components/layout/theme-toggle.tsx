@@ -161,7 +161,7 @@ const SVG_PROPS = {
 };
 
 /** Display: the conventional "match the OS" glyph. */
-function SystemIcon() {
+export function SystemIcon() {
   return (
     <svg {...SVG_PROPS} className="size-4">
       <rect x="1.75" y="2.75" width="12.5" height="9" rx="1.5" />
@@ -170,7 +170,7 @@ function SystemIcon() {
   );
 }
 
-function SunIcon() {
+export function SunIcon() {
   return (
     <svg {...SVG_PROPS} className="size-4">
       <circle cx="8" cy="8" r="3.25" />
@@ -179,7 +179,7 @@ function SunIcon() {
   );
 }
 
-function MoonIcon() {
+export function MoonIcon() {
   return (
     <svg {...SVG_PROPS} className="size-4">
       <path d="M13.5 9.4A5.75 5.75 0 0 1 6.6 2.5a5.75 5.75 0 1 0 6.9 6.9z" />

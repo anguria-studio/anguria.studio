@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useRef, useState } from "react";
+import { useReducer, useRef, useState, useSyncExternalStore } from "react";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { PaguroActions } from "@/components/apps/paguro-actions";
 import { apps } from "@/lib/apps";
@@ -15,6 +15,17 @@ import type { DemoService as Service } from "@/lib/paguro-island";
 import { createPreviewHintHistory } from "@/lib/paguro-preview-hints";
 import { createSampleDecks, drawSample } from "@/lib/paguro-samples";
 
+import type { ThemePref } from "@/components/layout/theme-toggle";
+
+function subscribeToSystemTheme(update: () => void) {
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  media.addEventListener("change", update);
+  return () => media.removeEventListener("change", update);
+}
+
+const readSystemTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+const serverSystemTheme = () => "dark" as const;
+
 type HeroCopy = Dictionary["paguroHero"];
 
 const services: Service[] = ["slack", "whatsapp", "gmail"];
@@ -27,7 +38,9 @@ function ServiceIcon({ service, className }: { service: Service; className: stri
 }
 
 export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dictionary["paguroPage"]; locale: Locale }) {
-  const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("dark");
+  const [previewThemePref, setPreviewThemePref] = useState<ThemePref>("dark");
+  const systemTheme = useSyncExternalStore(subscribeToSystemTheme, readSystemTheme, serverSystemTheme);
+  const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
   const [layout, setLayout] = useState<"sidebar" | "compact">("sidebar");
   const [overlayAvailable, setOverlayAvailable] = useState(true);
@@ -108,7 +121,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/paguro/desktop.jpg" alt="" width={2560} height={1200} className="absolute inset-0 size-full object-cover" />
 
-          <PaguroMenuBar copy={copy} locale={locale} theme={previewTheme} onThemeChange={setPreviewTheme} />
+          <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} />

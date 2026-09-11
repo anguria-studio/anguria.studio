@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { SystemIcon, SunIcon, MoonIcon, type ThemePref } from "@/components/layout/theme-toggle";
 import { AppleMark } from "@/components/ui/apple-mark";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import type { Locale } from "@/lib/i18n";
@@ -36,13 +37,11 @@ function MenuClock({ locale }: { locale: Locale }) {
   return <time className={styles.clock} dateTime={now?.toISOString()} aria-label={`${date} ${time}`}><span className={styles.date}>{date}</span><span className={styles.compactDate}>{compactDate}</span><span>{time || "\u00a0"}</span></time>;
 }
 
-const iconProps = { viewBox: "0 0 20 20", width: 16, height: 16, fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-
 export function PaguroMenuBar({ copy, locale, theme, onThemeChange }: {
   copy: Dictionary["paguroHero"];
   locale: Locale;
-  theme: "light" | "dark";
-  onThemeChange: (theme: "light" | "dark") => void;
+  theme: ThemePref;
+  onThemeChange: (theme: ThemePref) => void;
 }) {
   return (
     <div className={styles.menuBar}>
@@ -57,15 +56,18 @@ export function PaguroMenuBar({ copy, locale, theme, onThemeChange }: {
   );
 }
 
-function PreviewThemeToggle({ theme, onChange, copy }: { theme: "light" | "dark"; onChange: (theme: "light" | "dark") => void; copy: Dictionary["paguroHero"] }) {
+function PreviewThemeToggle({ theme, onChange, copy }: { theme: ThemePref; onChange: (theme: ThemePref) => void; copy: Dictionary["paguroHero"] }) {
   return (
     <div role="group" aria-label={copy.previewTheme} className={styles.themeToggle}>
-      <button type="button" aria-label={copy.previewLight} title={copy.previewLight} aria-pressed={theme === "light"} onClick={() => onChange("light")}>
-        <svg {...iconProps} viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.25" /><path d="M8 1v1.5M8 13.5V15M15 8h-1.5M2.5 8H1M12.95 3.05l-1.06 1.06M4.11 11.89l-1.06 1.06M12.95 12.95l-1.06-1.06M4.11 4.11L3.05 3.05" /></svg>
-      </button>
-      <button type="button" aria-label={copy.previewDark} title={copy.previewDark} aria-pressed={theme === "dark"} onClick={() => onChange("dark")}>
-        <svg {...iconProps} viewBox="0 0 16 16"><path d="M13.5 9.4A5.75 5.75 0 0 1 6.6 2.5a5.75 5.75 0 1 0 6.9 6.9z" /></svg>
-      </button>
+      {([
+        ["system", copy.previewSystem, SystemIcon],
+        ["light", copy.previewLight, SunIcon],
+        ["dark", copy.previewDark, MoonIcon],
+      ] as const).map(([value, label, Icon]) => (
+        <button key={value} type="button" aria-label={label} title={label} aria-pressed={theme === value} onClick={() => onChange(value)}>
+          <Icon />
+        </button>
+      ))}
     </div>
   );
 }
