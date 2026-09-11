@@ -123,7 +123,7 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
         <PaguroFaq faq={faq} />
       </section>
 
-      <ContactLine dict={dict} />
+      <ContactLine dict={dict} issuesUrl={`${apps.paguro.github}/issues`} />
     </>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { ThemeScript } from "@/components/layout/theme-script";
+import { WebAnalytics } from "@/components/layout/web-analytics";
 import { site } from "@/lib/apps";
 import { localePath } from "@/lib/i18n";
 
@@ -37,6 +38,7 @@ export default function GlobalNotFound() {
         >
           Back to {site.domain}
         </Link>
+        <WebAnalytics />
       </body>
     </html>
   );

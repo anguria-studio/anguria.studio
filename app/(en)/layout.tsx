@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import "../globals.css";
 import { ThemeScript } from "@/components/layout/theme-script";
+import { WebAnalytics } from "@/components/layout/web-analytics";
 
 /**
  * Root layout #1 of 2. Serves the default locale, unprefixed: `/`, `/obolo`, …
@@ -14,7 +15,7 @@ export default function EnglishRootLayout({ children }: { children: ReactNode })
       <head>
         <ThemeScript />
       </head>
-      <body>{children}</body>
+      <body>{children}<WebAnalytics /></body>
     </html>
   );
 }

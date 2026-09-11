@@ -5,17 +5,8 @@ import type { AppMeta } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
 /**
- * The page's calls to action. The GitHub pill is always here; the App Store
- * pill joins it only once `meta.appStore` is set, because a pill that says
- * "App Store" and opens GitHub is a promise the page cannot keep. Both are
- * rendered by this one component so the header's copy and the hero's can never
- * drift apart. The sticky header shows them from `sm` up; the hero shows them
- * below `desk`, where it has no interactive demo to act as its call to action.
- * Phones therefore get exactly one copy, the hero's.
- *
- * Alone, the GitHub pill takes the solid tone: subtle was only ever the second
- * of a pair, and below `desk` this pill is the only way into the app. Setting
- * `apps.paguro.appStore` brings the pair, and its hierarchy, back in one move.
+ * Shared header and hero actions: direct macOS download plus GitHub.
+ * Setting meta.appStore replaces the download with the App Store action.
  *
  * The hover is the homepage GitHub pill's, reproduced exactly: the row slides
  * left by icon + gap (24px), landing the label's left edge on 20px — the same
@@ -45,17 +36,20 @@ function Pill({
   tone,
   label,
   icon,
+  download = false,
 }: {
   href: string;
   tone: "solid" | "subtle";
   label: string;
   icon: React.ReactNode;
+  download?: boolean;
 }) {
-  // An in-page anchor must not open in a new tab; the rest are external.
-  const external = href.startsWith("http");
+  // Downloads use the current tab; external product/source pages open separately.
+  const external = !download && href.startsWith("http");
   return (
     <a
       href={href}
+      download={download || undefined}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
       className={`${PILL} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"}`}
     >
@@ -84,10 +78,18 @@ export function PaguroActions({
           label={copy.appStore}
           icon={<AppleMark className={`size-4 ${SWAP}`} />}
         />
-      ) : null}
+      ) : (
+        <Pill
+          href={meta.download}
+          tone="solid"
+          label={copy.download}
+          download
+          icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={`size-4 ${SWAP}`}><path d="M12 3v12m-5-5 5 5 5-5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4" /></svg>}
+        />
+      )}
       <Pill
-        href={meta.download}
-        tone={meta.appStore ? "subtle" : "solid"}
+        href={meta.github}
+        tone="subtle"
         label={copy.github}
         icon={<GitHubMark className={`size-4 ${SWAP}`} />}
       />

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import "../../globals.css";
 import { ThemeScript } from "@/components/layout/theme-script";
+import { WebAnalytics } from "@/components/layout/web-analytics";
 import { isLocale, prefixedLocales } from "@/lib/i18n";
 
 /** Static export cannot fall back to on-demand rendering. */
@@ -33,7 +34,7 @@ export default async function IntlRootLayout({
       <head>
         <ThemeScript />
       </head>
-      <body>{children}</body>
+      <body>{children}<WebAnalytics /></body>
     </html>
   );
 }

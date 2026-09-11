@@ -8,7 +8,7 @@ import type { Dictionary } from "@/lib/dictionaries/en";
  * would read wrong in at least one of them; two independent sentences let each
  * locale place its own link wherever its grammar wants it.
  */
-export function ContactLine({ dict }: { dict: Dictionary }) {
+export function ContactLine({ dict, issuesUrl = site.github }: { dict: Dictionary; issuesUrl?: string }) {
   const issues = splitAccent(dict.contact.issues, dict.contact.issuesLink);
   const email = splitAccent(dict.contact.email, "{email}");
   // A drawn bar rather than text-decoration: CSS underlines have square ends and
@@ -23,7 +23,7 @@ export function ContactLine({ dict }: { dict: Dictionary }) {
     <section className="mx-auto max-w-page px-6 pb-0 text-center text-sm text-muted">
       <p>
         {issues.before}
-        <a href={site.github} target="_blank" rel="noreferrer" className={link}>
+        <a href={issuesUrl} target="_blank" rel="noreferrer" className={link}>
           {issues.match}
         </a>
         {issues.after} {email.before}

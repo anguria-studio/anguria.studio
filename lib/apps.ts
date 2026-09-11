@@ -17,8 +17,7 @@ export type AppMeta = {
    *  MacCleaner, Atoll), which is not the product name — see tools/shot.sh. */
   shot: string;
   /** App Store product page. Optional: an app that has not shipped yet has no
-   *  listing, and PaguroActions leaves the App Store pill out rather than point
-   *  it somewhere that does not exist. Setting this one field is the switch. */
+   *  listing. Setting this field replaces Paguro’s direct download action. */
   appStore?: string;
 };
 
@@ -40,7 +39,8 @@ export const apps: Record<AppSlug, AppMeta> = {
   paguro: {
     slug: "paguro",
     github: "https://github.com/anguria-studio/Paguro",
-    download: "https://github.com/anguria-studio/Paguro/releases/latest",
+    // The release asset includes its version; update this URL with each release.
+    download: "https://github.com/anguria-studio/Paguro/releases/download/v1.0.2/Paguro-1.0.2-7.dmg",
     minMacOS: "15.0",
     shot: "atoll",
   },
