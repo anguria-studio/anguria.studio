@@ -26,6 +26,17 @@ function subscribeToSystemTheme(update: () => void) {
 const readSystemTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 const serverSystemTheme = () => "dark" as const;
 
+// Keep this in sync with the `desk` variant in app/globals.css. CSS hiding
+// alone does not prevent eager images from downloading on mobile.
+const desktopPreviewQuery = "(min-width: 48rem) and (hover: hover) and (pointer: fine)";
+function subscribeToDesktopPreview(update: () => void) {
+  const media = window.matchMedia(desktopPreviewQuery);
+  media.addEventListener("change", update);
+  return () => media.removeEventListener("change", update);
+}
+const readDesktopPreview = () => window.matchMedia(desktopPreviewQuery).matches;
+const serverDesktopPreview = () => false;
+
 type HeroCopy = Dictionary["paguroHero"];
 
 const services: Service[] = ["slack", "whatsapp", "gmail"];
@@ -38,6 +49,7 @@ function ServiceIcon({ service, className }: { service: Service; className: stri
 }
 
 export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dictionary["paguroPage"]; locale: Locale }) {
+  const showDesktopPreview = useSyncExternalStore(subscribeToDesktopPreview, readDesktopPreview, serverDesktopPreview);
   const [previewThemePref, setPreviewThemePref] = useState<ThemePref>("dark");
   const systemTheme = useSyncExternalStore(subscribeToSystemTheme, readSystemTheme, serverSystemTheme);
   const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
@@ -81,8 +93,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   }
 
   return (
-    <section id="paguro" className="scroll-mt-24 pb-20 sm:pb-24">
-      <div className="mx-auto max-w-4xl px-6 pt-16 text-center sm:pt-24">
+    <section id="paguro" className="scroll-mt-24 pb-6 sm:pb-24">
+      <div className="mx-auto max-w-4xl px-6 pt-8 text-center sm:pt-24">
         <h1 className="text-4xl leading-none font-bold tracking-tight text-balance sm:text-7xl motion-safe:enter-1">
           {copy.title}{" "}<br className="lg:hidden" /><span className="text-melon-500">{copy.accent}</span>
         </h1>
@@ -117,6 +129,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
         </div>
 
         <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${desktopStyles.stage} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block`}>
+          {showDesktopPreview && <>
           {/* The full-screen dark captures preserve the app’s original glass. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/paguro/desktop.jpg" alt="" width={2560} height={1200} className="absolute inset-0 size-full object-cover" />
@@ -146,14 +159,13 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
               </div>
             </div>
           )}
+          </>}
         </div>
 
-        <div className="relative isolate overflow-hidden rounded-showcase bg-surface px-4 py-8 desk:hidden">
-          {/* A still image on small screens and touch devices. */}
+        <div className="relative aspect-[2880/1740] overflow-hidden rounded-showcase bg-surface desk:hidden">
+          {/* Crop the top 60 source pixels to hide the macOS menu bar. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/desktop.jpg" alt="" width={2560} height={1200} className="absolute inset-0 size-full object-cover" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/workspace.png" alt={copy.captureAlt} width={1100} height={700} className="relative h-auto w-full rounded-xl shadow-xl" />
+          <img src="/paguro/mobile-workspace.webp" alt={copy.mobileCaptureAlt} width={2880} height={1800} className="absolute inset-x-0 bottom-0 h-auto w-full" />
         </div>
 
         <p role="status" aria-live="polite" aria-atomic="true" className="sr-only hidden desk:block"><span key={announcement.id}>{announcement.message}</span></p>

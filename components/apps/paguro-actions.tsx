@@ -23,7 +23,7 @@ import type { Dictionary } from "@/lib/dictionaries/en";
  * motion gets an instant swap rather than no swap at all.
  */
 const PILL =
-  "group relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full px-5 text-base font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40";
+  "group relative h-11 items-center gap-2 overflow-hidden rounded-full px-5 text-base font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40";
 const SWAP =
   "motion-safe:transition motion-safe:duration-200 motion-safe:ease-out group-hover:-translate-x-6 group-focus-visible:-translate-x-6 group-hover:opacity-0 group-focus-visible:opacity-0";
 const LABEL =
@@ -51,7 +51,7 @@ function Pill({
       href={href}
       download={download || undefined}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-      className={`${PILL} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"}`}
+      className={`${PILL} ${download ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"}`}
     >
       {icon}
       <span className={LABEL}>{label}</span>

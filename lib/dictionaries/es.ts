@@ -123,6 +123,7 @@ export const dictionary: Dictionary = {
     dockLabel: "Nuestras apps",
   },
   paguroHero: {
+    mobileCaptureAlt: "Paguro en el escritorio del Mac, con Claude abierto y las apps web agrupadas en los espacios Personal y Work.",
     serviceOverlay: {
       services: "Servicios de vista previa",
       personal: "Personal",
@@ -205,6 +206,7 @@ export const dictionary: Dictionary = {
     },
   },
   paguroPage: {
+    seoTitle: "Paguro — Espacio de trabajo gratuito para apps web en Mac",
     nav: "Descubre Paguro",
     faqLabel: "Preguntas",
     appStore: "Descárgalo en el App Store",

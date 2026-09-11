@@ -70,7 +70,7 @@ export async function appMetadata(
 ): Promise<Metadata> {
   const dict = await getDictionary(locale);
   const copy = dict.apps[slug];
-  const title = `${copy.name} — ${copy.tagline}`;
+  const title = slug === "paguro" ? dict.paguroPage.seoTitle : `${copy.name} — ${copy.tagline}`;
   const description = copy.description;
 
   return {
