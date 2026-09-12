@@ -241,7 +241,7 @@ export const dictionary: Dictionary = {
     releaseStatus: "La prima versione pubblica è in arrivo.",
     contact: "Fai una domanda",
     github: "Vedi su GitHub",
-    download: "Scarica per macOS",
+    download: "Scarica l’app",
     credits: "Un fork gratuito e open source di Chorus, creato da Nico Jan.",
     requirements: "macOS 15 o successivo · Apple silicon e Intel",
     requirementsQuestion: "Quali Mac sono supportati?",
