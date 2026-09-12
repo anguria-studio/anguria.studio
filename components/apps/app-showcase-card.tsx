@@ -50,7 +50,7 @@ export function AppShowcaseCard({
       className={
         "group relative desk:static block rounded-showcase ring-1 ring-black/10 " +
         "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 " +
-        "touch:aspect-[16/10] " +
+        "touch:aspect-[16/10] touch:overflow-hidden " +
         "desk:h-full desk:basis-0 desk:grow desk:hover:grow-[7] desk:hover:delay-150 desk:group-hover/row:delay-150 desk:focus-visible:grow-[7] " +
         "motion-safe:transition-[flex-grow] motion-safe:duration-500 motion-safe:ease-out"
       }
@@ -101,7 +101,7 @@ export function AppShowcaseCard({
             height={1200}
             decoding="async"
             fetchPriority="low"
-            className={`${LAYER} touch:opacity-100 desk:opacity-0 desk:group-hover:opacity-100 desk:group-hover:delay-300 desk:group-focus-visible:opacity-100`}
+            className={`${LAYER} touch:hidden desk:opacity-0 desk:group-hover:opacity-100 desk:group-hover:delay-300 desk:group-focus-visible:opacity-100`}
           />
         </div>
 
@@ -118,7 +118,10 @@ export function AppShowcaseCard({
 
           {/* Title + subtitle, top-aligned. */}
           <div className="absolute inset-x-0 top-0 flex items-start gap-3 p-5">
-            <AppIcon meta={meta} size="md" />
+            {meta.slug === "paguro" ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src="/paguro/app-icon-light.png" alt="" width={256} height={256} className="size-14 shrink-0" />
+            ) : <AppIcon meta={meta} size="md" />}
             <div className="min-w-0 desk:w-84 desk:sibling-active:-translate-y-1 motion-safe:transition motion-safe:duration-200 desk:motion-safe:delay-500 desk:sibling-active:opacity-0 desk:sibling-active:duration-75 desk:sibling-active:delay-150 desk:group-hover/row:delay-200 desk:group-focus-within/row:delay-100">
               <p
                 className={`${DISPLAY} text-xl leading-7 font-bold text-white`}

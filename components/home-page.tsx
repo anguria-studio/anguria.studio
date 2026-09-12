@@ -1,5 +1,6 @@
 import { AppDock } from "@/components/apps/app-dock";
 import { AppShowcase } from "@/components/apps/app-showcase";
+import { DesktopShowcase } from "@/components/home/desktop-showcase";
 import { ContactLine } from "@/components/layout/contact-line";
 import { FeatureGrid } from "@/components/home/feature-grid";
 import { Footer } from "@/components/layout/footer";
@@ -17,7 +18,12 @@ export async function HomePage({ locale }: { locale: Locale }) {
       <Header locale={locale} dict={dict} />
       <main>
         <ShowcaseHero dict={dict} />
-        <AppShowcase locale={locale} dict={dict} />
+        <div className="hidden desk:block">
+          <DesktopShowcase locale={locale} dict={dict} />
+        </div>
+        <div className="desk:hidden">
+          <AppShowcase locale={locale} dict={dict} />
+        </div>
         <Statement dict={dict} />
         <FeatureGrid dict={dict} />
         <AppDock locale={locale} dict={dict} />

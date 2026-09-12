@@ -47,6 +47,7 @@ export const apps: Record<AppSlug, AppMeta> = {
 };
 
 export const appList = appSlugs.map((slug) => apps[slug]);
+export const dockAppList = [apps.paguro, apps.obolo, apps.scolo];
 
 /** Locale-relative path of Paguro's privacy policy; nested under the app page it describes. */
 export const paguroPrivacyPath = "paguro/privacy" as const;

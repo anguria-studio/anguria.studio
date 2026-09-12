@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { DockIcon } from "@/components/apps/dock-icon";
-import { appList } from "@/lib/apps";
+import { dockAppList } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";
 
@@ -44,7 +44,7 @@ export function AppDock({
         aria-label={dict.home.dockLabel}
         className="group/dock flex items-end justify-center gap-4 pt-8 desk:pt-20"
       >
-        {appList.map((meta) => (
+        {dockAppList.map((meta) => (
             <Link
               key={meta.slug}
               href={localePath(locale, meta.slug)}

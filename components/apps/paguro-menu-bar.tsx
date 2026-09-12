@@ -26,7 +26,7 @@ function subscribeToClock(update: () => void) {
 const readMinute = () => Math.floor(Date.now() / 60_000) * 60_000;
 const serverMinute = () => null;
 
-function MenuClock({ locale }: { locale: Locale }) {
+export function MenuClock({ locale }: { locale: Locale }) {
   // No build-time date or server timezone is sent in the static HTML.
   const minute = useSyncExternalStore(subscribeToClock, readMinute, serverMinute);
   const now = minute === null ? null : new Date(minute);
