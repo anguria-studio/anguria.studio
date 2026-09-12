@@ -76,7 +76,7 @@ export function PaguroActions({
           href={meta.appStore}
           tone="solid"
           label={copy.appStore}
-          icon={<AppleMark className={`size-5 ${SWAP}`} />}
+          icon={<AppleMark viewBox="2 2 20 20" className={`size-4 ${SWAP}`} />}
         />
       ) : (
         <Pill
@@ -84,7 +84,7 @@ export function PaguroActions({
           tone="solid"
           label={copy.download}
           download
-          icon={<AppleMark className={`size-5 ${SWAP}`} />}
+          icon={<AppleMark viewBox="2 2 20 20" className={`size-4 ${SWAP}`} />}
         />
       )}
       <Pill
