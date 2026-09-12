@@ -7,6 +7,51 @@ import type { Dictionary } from "./en";
  * Tuteo, como en it.ts — el tono de la marca es informal.
  */
 export const dictionary: Dictionary = {
+  paguroNotificationTest: {
+    title: "Prueba tus notificaciones.",
+    intro: "Envía notificaciones de ejemplo a través de Paguro. Prueba los banners de macOS o la isla de notificaciones, sin una cuenta de mensajería.",
+    setup: [
+      "Permite las notificaciones de Paguro en los Ajustes del Sistema de macOS. Mantén este servicio activo y sin silenciar, y desactiva No molestar o Concentración durante la prueba.",
+      "Elige una prueba abajo. Puedes quedarte aquí o cambiar a otro servicio u otra app. Mantén Paguro abierto y esta página cargada hasta que termine la prueba.",
+    ],
+    sendHeading: "Un pequeño saludo.",
+    timing: "La primera notificación se envía en cuanto se concede el permiso. La secuencia envía seis notificaciones diferentes, con 3 segundos entre ellas.",
+    single: "Enviar una notificación",
+    sequence: "Enviar seis notificaciones",
+    cancel: "Cancelar pendientes",
+    noJavaScript: "Activa JavaScript para probar las notificaciones.",
+    status: {
+      idle: "Todo listo. No se envía nada hasta que elijas una prueba.",
+      requesting: "Esperando permiso para las notificaciones…",
+      scheduled: "Prueba en curso. Ya puedes cambiar a otro servicio u otra app.",
+      complete: "Todas las solicitudes han terminado. Puedes repetir la prueba.",
+      cancelled: "Solicitudes pendientes canceladas. Las notificaciones ya mostradas permanecen hasta que las descartes.",
+      unsupported: "Las notificaciones no están disponibles en este navegador. Abre esta página como servicio en Paguro en tu Mac.",
+      denied: "No se ha concedido permiso para las notificaciones. Permítelas en los ajustes del navegador y vuelve a intentarlo. En Paguro, comprueba también los ajustes de notificaciones de macOS.",
+      error: "La página no ha podido completar una solicitud de notificación. Comprueba los permisos y vuelve a intentarlo.",
+    },
+    progress: "Solicitadas {count} de {total} notificaciones.",
+    history: "Solicitudes de notificación de esta prueba",
+    unread: "{count} sin leer",
+    markRead: "Marcar todas como leídas",
+    badgeNote: "El título de la página contiene el contador para los indicadores del servicio y del Dock de Paguro. Activa los indicadores para este servicio. En segundo plano, la actualización puede tardar hasta 30 segundos. Marcar todas como leídas reinicia el contador; descartar un aviso no marca su mensaje como leído. Recargar reinicia esta bandeja de ejemplo.",
+    deliveryNote: "Esta lista confirma las solicitudes de la página, no su entrega por macOS. Los ajustes de Paguro, Concentración y el bloqueo de la app pueden impedir los avisos. Cancelar detiene las solicitudes pendientes; recargar o salir de esta página también detiene la prueba.",
+    tryHeading: "Dos formas de estar al día.",
+    checks: [
+      { title: "Notificaciones de macOS", body: "En Paguro Settings → Notifications, activa Show macOS notifications y desactiva Show island alerts on notched displays. Activa también las notificaciones macOS para este servicio. Inicia la prueba de seis notificaciones y cambia a otra app para comprobar los siguientes banners." },
+      { title: "Isla de notificaciones", body: "En una pantalla compatible con notch, activa Show island alerts on notched displays y desactiva Show macOS notifications. Ejecuta la prueba de seis notificaciones. Pasa el cursor sobre la isla para expandirla, desplázate por la pila, descarta una tarjeta y haz clic en una notificación para volver a este servicio." },
+      { title: "Bloqueo de la app", body: "Inicia la prueba de seis notificaciones y bloquea Paguro después de la primera notificación. Los avisos restantes deberían suprimirse durante el bloqueo. Desbloquea explícitamente para volver a la app; las notificaciones suprimidas no se reproducen después." },
+    ],
+    scope: "Estos mensajes de ejemplo se crean en esta página mediante la API web estándar Notification. No se necesita ninguna cuenta, remitente ni servicio de mensajería. La prueba comprueba la gestión de notificaciones, no el inicio de sesión ni la entrega de mensajes de un servicio de terceros.",
+    samples: [
+      { title: "Prueba Paguro · Un pequeño saludo", body: "Tu primera notificación de ejemplo. Todo empieza aquí." },
+      { title: "Prueba Paguro · Pausa para un café", body: "Alex: ¿Un café en diez minutos? Busco una mesa." },
+      { title: "Prueba Paguro · Novedades del proyecto", body: "Las nuevas maquetas están listas para revisar." },
+      { title: "Prueba Paguro · Planes del fin de semana", body: "Sam: ¿El sábado junto al mar? Llevaré algo para picar." },
+      { title: "Prueba Paguro · Lecturas", body: "La selección de la semana: un poco de inspiración." },
+      { title: "Prueba Paguro · Todo al día", body: "Seis ejemplos, un solo lugar. Prueba a desplazarte y descartarlos." },
+    ],
+  },
   meta: {
     title: "Anguria Studio — Apps gratuitas y open source para macOS",
     description:

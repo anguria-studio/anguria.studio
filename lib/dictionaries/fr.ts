@@ -5,6 +5,51 @@ import type { Dictionary } from "./en";
  * `TODO(copy)` de en.ts résolus.
  */
 export const dictionary: Dictionary = {
+  paguroNotificationTest: {
+    title: "Essayez vos notifications.",
+    intro: "Envoyez des notifications d’exemple via Paguro. Essayez les bannières macOS ou l’îlot de notifications, sans compte de messagerie.",
+    setup: [
+      "Autorisez les notifications de Paguro dans les Réglages Système de macOS. Gardez ce service actif et non silencieux, et désactivez Ne pas déranger ou Concentration pendant le test.",
+      "Choisissez un test ci-dessous. Vous pouvez rester ici ou passer à un autre service ou une autre app. Laissez Paguro ouvert et cette page chargée jusqu’à la fin du test.",
+    ],
+    sendHeading: "Un petit bonjour.",
+    timing: "La première notification est envoyée dès que l’autorisation est accordée. La séquence envoie six notifications différentes, espacées de 3 secondes.",
+    single: "Envoyer une notification",
+    sequence: "Envoyer six notifications",
+    cancel: "Annuler les demandes en attente",
+    noJavaScript: "Activez JavaScript pour tester les notifications.",
+    status: {
+      idle: "Tout est prêt. Rien n’est envoyé avant de choisir un test.",
+      requesting: "En attente de l’autorisation des notifications…",
+      scheduled: "Test en cours. Vous pouvez maintenant passer à un autre service ou une autre app.",
+      complete: "Toutes les demandes sont terminées. Vous pouvez refaire un test.",
+      cancelled: "Demandes en attente annulées. Les notifications déjà affichées restent jusqu’à ce que vous les supprimiez.",
+      unsupported: "Les notifications ne sont pas disponibles dans ce navigateur. Ouvrez cette page comme service dans Paguro sur votre Mac.",
+      denied: "L’autorisation des notifications n’a pas été accordée. Autorisez-les dans les réglages du navigateur, puis réessayez. Dans Paguro, vérifiez aussi les réglages de notifications de macOS.",
+      error: "La page n’a pas pu terminer une demande de notification. Vérifiez les autorisations et réessayez.",
+    },
+    progress: "{count} notifications demandées sur {total}.",
+    history: "Demandes de notification de ce test",
+    unread: "{count} non lues",
+    markRead: "Tout marquer comme lu",
+    badgeNote: "Le titre de la page contient le compteur pour les pastilles du service et du Dock de Paguro. Activez les pastilles de ce service. En arrière-plan, la mise à jour peut prendre jusqu’à 30 secondes. Tout marquer comme lu remet le compteur à zéro ; supprimer une alerte ne marque pas son message comme lu. Recharger réinitialise cette boîte de réception d’exemple.",
+    deliveryNote: "Cette liste confirme les demandes de la page, pas leur affichage par macOS. Les réglages de Paguro, Concentration et le verrouillage de l’app peuvent bloquer les alertes. Annuler arrête les demandes en attente ; recharger ou quitter cette page arrête aussi le test.",
+    tryHeading: "Deux façons de rester au courant.",
+    checks: [
+      { title: "Notifications macOS", body: "Dans Paguro Settings → Notifications, activez Show macOS notifications et désactivez Show island alerts on notched displays. Activez aussi les notifications macOS pour ce service. Lancez le test de six notifications et passez à une autre app pour vérifier les bannières suivantes." },
+      { title: "Îlot de notifications", body: "Sur un écran compatible avec encoche, activez Show island alerts on notched displays et désactivez Show macOS notifications. Lancez le test de six notifications. Survolez l’îlot pour le développer, faites défiler la pile, supprimez une carte et cliquez sur une notification pour revenir à ce service." },
+      { title: "Verrouillage de l’app", body: "Lancez le test de six notifications, puis verrouillez Paguro après la première notification. Les alertes restantes devraient être bloquées pendant le verrouillage. Déverrouillez explicitement pour revenir à l’app ; les notifications bloquées ne sont pas rejouées." },
+    ],
+    scope: "Ces messages d’exemple sont créés par cette page avec l’API web standard Notification. Aucun compte, expéditeur ou service de messagerie n’est nécessaire. Le test vérifie la gestion des notifications, pas la connexion ni la livraison des messages d’un service tiers.",
+    samples: [
+      { title: "Test Paguro · Un petit bonjour", body: "Votre première notification d’exemple. Tout commence ici." },
+      { title: "Test Paguro · Pause café", body: "Alex : Un café dans dix minutes ? Je prends une table." },
+      { title: "Test Paguro · Avancée du projet", body: "Les nouvelles maquettes sont prêtes à être regardées." },
+      { title: "Test Paguro · Le week-end", body: "Sam : Samedi au bord de la mer ? J’apporte de quoi grignoter." },
+      { title: "Test Paguro · À lire", body: "La sélection de la semaine : un peu d’inspiration." },
+      { title: "Test Paguro · Tout est à jour", body: "Six exemples, un seul endroit. Essayez de les faire défiler et de les supprimer." },
+    ],
+  },
   meta: {
     title: "Anguria Studio — Des apps macOS gratuites et open source",
     description:

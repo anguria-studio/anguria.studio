@@ -24,6 +24,51 @@ export type AppCopy = {
  * unwritten: `grep -rn "TODO(copy)" lib/dictionaries`
  */
 export const dictionary = {
+  paguroNotificationTest: {
+    title: "Try your notifications.",
+    intro: "Send sample notifications through Paguro. Try macOS banners or the notification island, without a messaging account.",
+    setup: [
+      "Allow notifications for Paguro in macOS System Settings. Keep this service awake and unmuted, and turn off Do Not Disturb or Focus for the test.",
+      "Choose a test below. You can stay here or switch to another service or app. Keep Paguro running and this page loaded until the test ends.",
+    ],
+    sendHeading: "Send a little hello.",
+    timing: "The first notification is sent immediately once permission is granted. The sequence sends six different notifications, 3 seconds apart.",
+    single: "Send one",
+    sequence: "Send six notifications",
+    cancel: "Cancel pending",
+    noJavaScript: "Enable JavaScript to run the notification test.",
+    status: {
+      idle: "Ready when you are. Nothing is sent until you choose a test.",
+      requesting: "Waiting for notification permission…",
+      scheduled: "Test running. You can switch to another service or app now.",
+      complete: "All notification requests are complete. You can run another test.",
+      cancelled: "Pending requests cancelled. Notifications already shown remain until you dismiss them.",
+      unsupported: "Notifications are unavailable in this browser. Open this page as a service in Paguro on your Mac.",
+      denied: "Notification permission was not granted. Allow notifications in your browser settings, then try again. In Paguro, check macOS notification settings too.",
+      error: "The page could not complete a notification request. Check notification permissions and try again.",
+    },
+    progress: "Requested {count} of {total} notifications.",
+    history: "Notification requests from this test",
+    unread: "{count} unread",
+    markRead: "Mark all read",
+    badgeNote: "The page title carries the unread count for Paguro’s service and Dock badges. Enable badges for this service. Updates can take up to 30 seconds in the background. Mark all read resets the count; dismissing an alert does not mark its message as read. Reloading resets this sample inbox.",
+    deliveryNote: "This list confirms requests from the page, not delivery by macOS. Paguro’s settings, Focus, and app lock can suppress alerts. Cancel stops pending requests; reloading or leaving this page also stops the test.",
+    tryHeading: "Two ways to stay in the loop.",
+    checks: [
+      { title: "macOS notifications", body: "In Paguro Settings → Notifications, enable Show macOS notifications and disable Show island alerts on notched displays. Also enable macOS notifications for this service. Start the six-notification test and switch to another app to check subsequent banners." },
+      { title: "Notification island", body: "On a compatible notched display, enable Show island alerts on notched displays and disable Show macOS notifications. Run the six-notification test. Hover the island to expand it, scroll the stack, dismiss a card, and click a notification to return to this service." },
+      { title: "App lock", body: "Start the six-notification test, then lock Paguro after the first notification. Remaining alerts should be suppressed while locked. Unlock explicitly to return to the app; suppressed notifications are not replayed." },
+    ],
+    scope: "These are sample messages created by this page, using the standard web Notification API. No account, sender, or messaging service is needed. The test checks notification handling; it does not test a third-party service’s login or message delivery.",
+    samples: [
+      { title: "Paguro test · A little hello", body: "Your first sample notification. Everything starts here." },
+      { title: "Paguro test · Coffee break", body: "Alex: Coffee in ten minutes? I’ll grab a table." },
+      { title: "Paguro test · Project update", body: "The new mockups are ready for a look." },
+      { title: "Paguro test · Weekend plans", body: "Sam: Saturday by the sea? I’ll bring snacks." },
+      { title: "Paguro test · Reading list", body: "This week’s picks: a little inspiration." },
+      { title: "Paguro test · All caught up", body: "Six samples, one place. Try scrolling and dismissing them." },
+    ],
+  },
   meta: {
     title: "Anguria Studio — Free, open-source apps for macOS",
     description:

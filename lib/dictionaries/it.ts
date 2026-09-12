@@ -5,6 +5,51 @@ import type { Dictionary } from "./en";
  * `TODO(copy)` in en.ts saranno risolti.
  */
 export const dictionary: Dictionary = {
+  paguroNotificationTest: {
+    title: "Prova le tue notifiche.",
+    intro: "Invia notifiche di esempio tramite Paguro. Prova i banner di macOS o l’isola delle notifiche, senza un account di messaggistica.",
+    setup: [
+      "Consenti le notifiche per Paguro nelle Impostazioni di Sistema di macOS. Mantieni il servizio attivo e non silenziato e disattiva Non disturbare o Full immersion durante la prova.",
+      "Scegli una prova qui sotto. Puoi restare qui o passare a un altro servizio o a un’altra app. Lascia Paguro aperto e questa pagina caricata fino alla fine della prova.",
+    ],
+    sendHeading: "Un piccolo saluto.",
+    timing: "La prima notifica viene inviata subito dopo aver concesso il permesso. La sequenza invia sei notifiche diverse, a 3 secondi di distanza.",
+    single: "Invia una notifica",
+    sequence: "Invia sei notifiche",
+    cancel: "Annulla quelle in attesa",
+    noJavaScript: "Abilita JavaScript per provare le notifiche.",
+    status: {
+      idle: "Tutto pronto. Non viene inviato nulla finché non scegli una prova.",
+      requesting: "In attesa del permesso per le notifiche…",
+      scheduled: "Prova in corso. Ora puoi passare a un altro servizio o a un’altra app.",
+      complete: "Tutte le richieste sono state completate. Puoi ripetere la prova.",
+      cancelled: "Richieste in attesa annullate. Le notifiche già mostrate restano finché non le elimini.",
+      unsupported: "Le notifiche non sono disponibili in questo browser. Apri questa pagina come servizio in Paguro sul Mac.",
+      denied: "Il permesso per le notifiche non è stato concesso. Consenti le notifiche nelle impostazioni del browser e riprova. In Paguro, controlla anche le impostazioni delle notifiche di macOS.",
+      error: "La pagina non ha potuto completare una richiesta di notifica. Controlla i permessi e riprova.",
+    },
+    progress: "Richieste {count} notifiche su {total}.",
+    history: "Richieste di notifica di questa prova",
+    unread: "{count} non lette",
+    markRead: "Segna tutte come lette",
+    badgeNote: "Il titolo della pagina contiene il conteggio per i badge del servizio e del Dock di Paguro. Abilita i badge per questo servizio. In background, l’aggiornamento può richiedere fino a 30 secondi. Segna tutte come lette azzera il conteggio; eliminare un avviso non segna il messaggio come letto. Ricaricare azzera questa casella di esempio.",
+    deliveryNote: "Questo elenco conferma le richieste della pagina, non la consegna da parte di macOS. Le impostazioni di Paguro, Full immersion e il blocco dell’app possono impedire gli avvisi. Annulla ferma le richieste in attesa; anche ricaricare o lasciare questa pagina interrompe la prova.",
+    tryHeading: "Due modi per restare aggiornato.",
+    checks: [
+      { title: "Notifiche di macOS", body: "In Paguro Settings → Notifications, abilita Show macOS notifications e disabilita Show island alerts on notched displays. Abilita le notifiche macOS anche per questo servizio. Avvia la prova con sei notifiche e passa a un’altra app per controllare i banner successivi." },
+      { title: "Isola delle notifiche", body: "Su uno schermo compatibile con notch, abilita Show island alerts on notched displays e disabilita Show macOS notifications. Avvia la prova con sei notifiche. Passa il puntatore sull’isola per espanderla, scorri la pila, elimina una scheda e fai clic su una notifica per tornare a questo servizio." },
+      { title: "Blocco dell’app", body: "Avvia la prova con sei notifiche e blocca Paguro dopo la prima notifica. Gli avvisi rimanenti dovrebbero essere soppressi durante il blocco. Sblocca esplicitamente per tornare all’app; le notifiche soppresse non vengono riproposte." },
+    ],
+    scope: "Questi messaggi di esempio sono creati dalla pagina tramite l’API web standard Notification. Non servono account, mittenti o servizi di messaggistica. La prova verifica la gestione delle notifiche, non l’accesso o la consegna dei messaggi di un servizio di terze parti.",
+    samples: [
+      { title: "Test Paguro · Un piccolo saluto", body: "La tua prima notifica di esempio. Tutto comincia qui." },
+      { title: "Test Paguro · Pausa caffè", body: "Alex: Un caffè tra dieci minuti? Prendo un tavolo." },
+      { title: "Test Paguro · Novità sul progetto", body: "Le nuove bozze sono pronte da vedere." },
+      { title: "Test Paguro · Programmi del weekend", body: "Sam: Sabato al mare? Porto qualcosa da mangiare." },
+      { title: "Test Paguro · Letture", body: "Le proposte della settimana: un po’ di ispirazione." },
+      { title: "Test Paguro · Tutto aggiornato", body: "Sei esempi, un solo posto. Prova a scorrerli ed eliminarli." },
+    ],
+  },
   meta: {
     title: "Anguria Studio — App gratuite e open source per macOS",
     description:

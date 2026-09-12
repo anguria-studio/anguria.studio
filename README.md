@@ -41,6 +41,30 @@ through it.
 - `vercel.json` — temporary redirects sending `/`, `/obolo` and `/scolo` to the
   Paguro page while it is the only released app.
 
+## Notification test page
+
+Open `/paguro/test-notifications/` as a Custom URL service in Paguro to test
+real notification delivery without a messaging account. The first notification
+starts immediately once permission is granted. The sequence requests six
+notifications three seconds apart, starting immediately too.
+Cancel, reload, or leave the page to stop pending requests. The test uses the
+standard web Notification API, with no messaging backend or service worker.
+It does not start automatically, and its request log is kept only in page memory.
+
+On localhost, add `http://localhost:3000/paguro/test-notifications/` to Paguro.
+Keep the service awake and unmuted. Allow macOS notifications for Paguro and
+follow the page instructions to test macOS banners, the island, and app lock.
+The same page is available in all four site languages. It checks notification
+handling, not provider login or end-to-end message delivery.
+It is a standalone utility page without the marketing header, footer, or back link.
+
+Each request increments a page-title unread count, which Paguro reads for its
+service and Dock badges. Mark all read resets it; cancelling a sequence keeps
+the existing count. Reloading resets all test state. Background badge polling
+can take 30 seconds. The page includes Paguro favicon metadata and a notification
+icon. Native notifications use the service icon stored by Paguro. The page
+does not ask users to configure an icon separately.
+
 ## Contact
 
 hello@anguria.studio

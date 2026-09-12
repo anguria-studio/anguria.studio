@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { paguroPrivacyPath, site, type AppSlug, type PagePath } from "./apps";
+import { paguroNotificationTestPath, paguroPrivacyPath, site, type AppSlug, type PagePath } from "./apps";
 import {
   defaultLocale,
   getDictionary,
@@ -8,6 +8,7 @@ import {
   type Locale,
 } from "./i18n";
 import { getPaguroPrivacyPolicy } from "./privacy/paguro-policy";
+import { notificationTestIconPath } from "./paguro-notification-test";
 
 export const siteMetadata: Metadata = {
   manifest: "/site.webmanifest",
@@ -119,6 +120,22 @@ export async function paguroPrivacyMetadata(locale: Locale): Promise<Metadata> {
     description,
     alternates: alternates(locale, paguroPrivacyPath),
     openGraph: openGraph(locale, title, description, paguroPrivacyPath),
+  };
+}
+
+export async function paguroNotificationTestMetadata(locale: Locale): Promise<Metadata> {
+  const copy = (await getDictionary(locale)).paguroNotificationTest;
+  const title = `${copy.title} — Paguro`;
+  return {
+    title,
+    description: copy.intro,
+    icons: {
+      icon: [{ url: notificationTestIconPath, sizes: "256x256", type: "image/png" }],
+      apple: notificationTestIconPath,
+    },
+    manifest: null,
+    alternates: alternates(locale, paguroNotificationTestPath),
+    openGraph: openGraph(locale, title, copy.intro, paguroNotificationTestPath),
   };
 }
 
