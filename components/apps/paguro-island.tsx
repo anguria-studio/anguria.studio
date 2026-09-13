@@ -12,6 +12,7 @@ type Props = {
   notifications: DemoNotification[];
   phase: IslandPhase;
   dispatch: (action: IslandAction) => void;
+  openNotification: (notification: DemoNotification) => void;
   remove: (ids: number[], all: boolean) => void;
 };
 
@@ -57,7 +58,7 @@ function paintStack(scroller: HTMLDivElement) {
   });
 }
 
-export function PaguroIsland({ copy, notifications, phase, dispatch, remove }: Props) {
+export function PaguroIsland({ copy, notifications, phase, dispatch, remove, openNotification }: Props) {
   const shell = useRef<HTMLDivElement>(null);
   const scroll = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -277,9 +278,14 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove }: P
         }
       }}>
       <div className={styles.toolbar}>
-        <button ref={toggle} type="button" className={preview ? styles.preview : styles.counter} aria-expanded={expanded} aria-controls="paguro-notifications" aria-label={expanded ? copy.collapse : `${copy.open} (${notifications.length})`}
+        <button ref={toggle} type="button" className={preview ? styles.preview : styles.counter} aria-expanded={preview ? undefined : expanded} aria-controls={preview ? undefined : "paguro-notifications"} aria-label={preview && latest ? `${serviceNames[latest.service]}: ${latest.title}` : expanded ? copy.collapse : `${copy.open} (${notifications.length})`}
           aria-describedby={preview ? "paguro-latest-notification" : undefined}
-          onClick={(event) => { keyboard.current = event.detail === 0; if (expanded) collapse(); else dispatch({ type: "expand" }); }}>
+          onClick={(event) => {
+            keyboard.current = event.detail === 0;
+            if (preview && latest) openNotification(latest);
+            else if (expanded) collapse();
+            else dispatch({ type: "expand" });
+          }}>
           {preview && latest ? <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/paguro/services/${latest.service}.svg`} alt="" width="34" height="34" draggable="false" />
@@ -302,7 +308,7 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove }: P
                 <div data-card className={styles.card} onPointerDown={(event) => startDrag(event, notification.id)} onPointerMove={moveDrag}
                   onPointerUp={(event) => endDrag(event)} onPointerCancel={(event) => endDrag(event, true)}>
                   <button data-body type="button" className={styles.body} aria-label={`${serviceNames[notification.service]}, ${notification.title}. ${notification.message}`}
-                    onClick={(event) => { if (event.detail === 0 || !suppressClick.current) void dismiss([notification.id]); suppressClick.current = false; }}>
+                    onClick={(event) => { if (event.detail === 0 || !suppressClick.current) { toggle.current?.focus({ preventScroll: true }); openNotification(notification); } suppressClick.current = false; }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={`/paguro/services/${notification.service}.svg`} alt="" width="30" height="30" draggable="false" />
                     <span className={styles.content}>

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type RefObject } from "react";
 import { flushSync } from "react-dom";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { captureSize, dockTransforms, hasServicePreview, previewServices, serviceCapture, railDividerY, railServices, type PreviewService, type PreviewLayout, type PreviewTheme } from "@/lib/paguro-service-preview";
+import { captureSize, dockTransforms, hasServicePreview, previewServices, serviceCapture, railDividerY, railServices, type SelectableService, type PreviewLayout, type PreviewTheme } from "@/lib/paguro-service-preview";
 import styles from "./paguro-service-preview.module.css";
 import { usePaguroPreviewHints } from "./use-paguro-preview-hints";
 import type { PreviewHintHistory } from "@/lib/paguro-preview-hints";
@@ -24,7 +24,8 @@ function WorkspaceHeading({ name, y }: { name: string; y: number }) {
   </div>;
 }
 
-export function PaguroServicePreview({ layout: requestedLayout, onLayoutChange, theme: requestedTheme, copy, onUnavailable, hintHistory, notifications, onServiceSelect }: {
+export function PaguroServicePreview({ service: requestedService, layout: requestedLayout, onLayoutChange, theme: requestedTheme, copy, onUnavailable, hintHistory, notifications, onServiceSelect }: {
+  service: SelectableService;
   layout: PreviewLayout;
   onLayoutChange: (layout: PreviewLayout) => void;
   theme: PreviewTheme;
@@ -32,14 +33,13 @@ export function PaguroServicePreview({ layout: requestedLayout, onLayoutChange, 
   onUnavailable: () => void;
   hintHistory: RefObject<PreviewHintHistory>;
   notifications: readonly DemoNotification[];
-  onServiceSelect: (service: PreviewService) => void;
+  onServiceSelect: (service: SelectableService) => void;
 }) {
   const captureRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dockRef = useRef<HTMLDivElement>(null);
   const [pointerY, setPointerY] = useState<number | null>(null);
   const [keyboardFocused, setKeyboardFocused] = useState<number | null>(null);
-  const [requestedService, setRequestedService] = useState<PreviewService>("claude");
   const [displayed, setDisplayed] = useState({ service: requestedService, layout: requestedLayout, theme: requestedTheme });
   const { service: selectedService, layout, theme } = displayed;
 
@@ -63,7 +63,6 @@ export function PaguroServicePreview({ layout: requestedLayout, onLayoutChange, 
 
   function selectService(service: string) {
     if (!hasServicePreview(service)) return;
-    setRequestedService(service);
     onServiceSelect(service);
   }
   const { hint, demoPointerY } = usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history: hintHistory, layout });

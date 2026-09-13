@@ -107,3 +107,18 @@ test("dismiss requires a long or fast rightward drag; clicks and left drags surv
   assert.deepEqual(dragAppearance(-100, 400), { offset: -35, opacity: 0.9475 });
   assert.deepEqual(dragAppearance(-100, 400, true), { offset: 0, opacity: 1 });
 });
+
+test("opening a notification clears its service, preserves other services, and collapses", () => {
+  let state = receive(receive(initialIslandState, 1), 2);
+  state = islandReducer(state, { type: "receive", notification: { id: 3, service: "gmail", title: "Mail", message: "Hello" } });
+  state = islandReducer(state, { type: "hover", active: true });
+  state = islandReducer(state, { type: "keyboard-focus", active: true });
+  state = islandReducer(state, { type: "open", id: 2 });
+  assert.equal(state.phase, "collapsed");
+  assert.equal(state.keyboardFocused, false);
+  assert.deepEqual(state.notifications.map(({ id }) => id), [3]);
+  assert.equal(islandReducer(state, { type: "open", id: 2 }), state);
+  state = islandReducer(state, { type: "open", id: 3 });
+  assert.equal(state.phase, "collapsed");
+  assert.deepEqual(state.notifications, []);
+});

@@ -10,8 +10,8 @@ test("every selectable service has both themes and layouts on disk", () => {
       assert.ok(existsSync(new URL(`../public${serviceCapture(service, layout, theme)}`, import.meta.url)));
     }
   }
-  assert.equal(hasServicePreview("slack"), false);
-  assert.equal(hasServicePreview("notion"), false);
+  assert.equal(hasServicePreview("slack"), true);
+  assert.equal(hasServicePreview("notion"), true);
   assert.equal(hasServicePreview("unknown"), false);
 });
 

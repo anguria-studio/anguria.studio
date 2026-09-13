@@ -53,6 +53,7 @@ export type IslandAction =
   | { type: "expand" }
   | { type: "collapse"; latestID?: number }
   | { type: "expire"; id: number }
+  | { type: "open"; id: number }
   | { type: "remove"; ids: number[] };
 
 export const initialIslandState: IslandState = {
@@ -80,6 +81,11 @@ export function islandReducer(state: IslandState, action: IslandAction): IslandS
     case "expire":
       if (state.phase !== "preview" || state.keyboardFocused || action.id !== state.notifications[0]?.id) return state;
       return { ...state, phase: "collapsed" };
+    case "open": {
+      const opened = state.notifications.find(({ id }) => id === action.id);
+      if (!opened) return state;
+      return { ...state, notifications: state.notifications.filter(({ service }) => service !== opened.service), phase: "collapsed", keyboardFocused: false };
+    }
     case "remove": {
       const notifications = state.notifications.filter(({ id }) => !action.ids.includes(id));
       return { ...state, notifications, phase: notifications.length ? state.phase : "collapsed" };

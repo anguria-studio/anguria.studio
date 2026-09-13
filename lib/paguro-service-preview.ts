@@ -3,8 +3,9 @@ export type PreviewTheme = "dark" | "light";
 
 // Coordinates use the capture script's 1440 × 900-point desktop, not pixels.
 export const captureSize = { width: 1440, height: 900 };
-export const previewServices = ["whatsapp", "gmail", "chatgpt", "google-calendar", "claude"] as const;
+export const previewServices = ["whatsapp", "gmail", "chatgpt", "google-calendar", "claude", "slack", "notion"] as const;
 export type PreviewService = typeof previewServices[number];
+export type SelectableService = PreviewService;
 
 export function hasServicePreview(service: string): service is PreviewService {
   return previewServices.some((id) => id === service);

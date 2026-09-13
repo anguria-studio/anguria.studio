@@ -11,7 +11,8 @@ import { PaguroServicePreview } from "./paguro-service-preview";
 import desktopStyles from "./paguro-desktop.module.css";
 import type { Locale } from "@/lib/i18n";
 import { initialIslandState, islandReducer, serviceNames } from "@/lib/paguro-island";
-import type { DemoService as Service } from "@/lib/paguro-island";
+import type { SelectableService } from "@/lib/paguro-service-preview";
+import type { DemoNotification, DemoService as Service } from "@/lib/paguro-island";
 import { createPreviewHintHistory } from "@/lib/paguro-preview-hints";
 import { createSampleDecks, drawSample } from "@/lib/paguro-samples";
 
@@ -55,6 +56,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
   const [layout, setLayout] = useState<"sidebar" | "compact">("sidebar");
+  const [selectedService, setSelectedService] = useState<SelectableService>("claude");
   const [overlayAvailable, setOverlayAvailable] = useState(true);
   const [announcement, setAnnouncement] = useState({ id: 0, message: "" });
   const nextID = useRef(0);
@@ -87,7 +89,14 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
     announce(all ? copy.cleared : copy.removed);
   }
 
-  function clearServiceNotifications(service: string) {
+  function openNotification(notification: DemoNotification) {
+    setSelectedService(notification.service);
+    dispatch({ type: "open", id: notification.id });
+    announce(`${serviceNames[notification.service]}: ${notification.title}`);
+  }
+
+  function clearServiceNotifications(service: SelectableService) {
+    setSelectedService(service);
     const ids = island.notifications.filter((notification) => notification.service === service).map(({ id }) => id);
     if (ids.length > 0) remove(ids, ids.length === island.notifications.length);
   }
@@ -137,11 +146,11 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
-            <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} />
+            <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} openNotification={openNotification} />
           </div>
 
           {overlayAvailable ? (
-            <PaguroServicePreview layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
+            <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
           ) : (
             <div className={desktopStyles.legacyWindow}>
               <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">
