@@ -47,6 +47,7 @@
   .statusItems { gap: 6px; }
 }
 
-/* All capture layers share the script's 1440 × 900-point desktop. */
-.stage { aspect-ratio: 1440 / 900; }
+/* Crop the bottom while preserving the capture and interactive hit areas. */
+.stage { aspect-ratio: 1440 / 850; }
+.canvas { position: relative; width: 100%; aspect-ratio: 1440 / 900; }
 .legacyWindow { position: absolute; left: 11.8055556%; top: 11.1111111%; width: 76.3888889%; }

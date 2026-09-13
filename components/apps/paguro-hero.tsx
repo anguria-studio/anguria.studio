@@ -129,7 +129,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
         </div>
 
         <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${desktopStyles.stage} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block motion-safe:fade-3`}>
-          {showDesktopPreview && <>
+          {showDesktopPreview && <div className={desktopStyles.canvas}>
           {/* The full-screen dark captures preserve the app’s original glass. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/paguro/desktop.jpg" alt="" width={2560} height={1200} className="absolute inset-0 size-full object-cover" />
@@ -159,7 +159,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
               </div>
             </div>
           )}
-          </>}
+          </div>}
         </div>
 
         <div className="relative aspect-[2880/1740] overflow-hidden rounded-showcase bg-surface desk:hidden motion-safe:fade-3">
