@@ -48,7 +48,7 @@
 .heading { max-width: 1080px; margin-inline: auto; padding: 88px 24px 0; text-align: center; }
 .title { font-size: 80px; font-weight: 600; line-height: 1.05; letter-spacing: -.055em; }
 .subtitle { margin: 28px auto 0; font-size: 20px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
-.cta > a { border-radius: 14px; height: 44px; font-size: 16px; }
+.cta > a { height: 44px; font-size: 16px; }
 .cta > a:last-child { display: none; }
 .demo { max-width: 1129px; margin: 108px auto 0; padding-inline: 24px; }
 /* Keep the material outside the size-query container. Safari can isolate
@@ -71,6 +71,18 @@
   pointer-events: none;
 }
 .glassCanvas { position: relative; width: 100%; height: 100%; }
+/* Opacity on the stage would isolate the backdrop during its fade. Animate
+   the material itself, alongside the content, so blur is present throughout. */
+@media (prefers-reduced-motion: no-preference) {
+  .glassStage::before {
+    animation: glassFade calc(var(--stagger-step) * 4) ease-in-out backwards;
+    animation-delay: calc(var(--stagger-step) * 3);
+  }
+}
+@keyframes glassFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 /* Keep the original capture coordinates inside an app-local frame. Cropping
    removes the old wallpaper while preserving every interactive hit target. */
 .appFrame { position: absolute; width: calc(min(100vw - 48px, 1132px) * 1100 / 1440); aspect-ratio: 1100 / 700; left: 50%; top: 54%; transform: translate(-50%, -50%); overflow: hidden; border-radius: 14px; box-shadow: 0 16px 36px rgb(0 0 0 / .16); }

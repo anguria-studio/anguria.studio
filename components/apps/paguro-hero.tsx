@@ -130,8 +130,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>
         </div>
 
-        <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block motion-safe:fade-3`}>
-          {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas}`}>
+        <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block`}>
+          {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas} motion-safe:fade-3`}>
           <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
