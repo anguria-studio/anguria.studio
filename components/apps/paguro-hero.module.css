@@ -17,3 +17,71 @@
   to { opacity: 1; transform: translate(0, 0) rotate(0); }
 }
 
+
+.hero {
+  position: relative;
+  padding-bottom: 72px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+}
+/* Keep the complete abstract composition, including its pale top and bottom,
+   across the heading and demo rather than cropping the portrait artwork. */
+.hero::before {
+  --bottom-fade: 240px;
+  --landscape-mask: linear-gradient(to bottom,
+    transparent, #000 28%,
+    #000 calc(100% - var(--bottom-fade)),
+    rgb(0 0 0 / .9) calc(100% - var(--bottom-fade) * .75),
+    rgb(0 0 0 / .5) calc(100% - var(--bottom-fade) * .5),
+    rgb(0 0 0 / .1) calc(100% - var(--bottom-fade) * .25),
+    transparent);
+  content: "";
+  position: absolute;
+  inset: 60px 0 -100px;
+  background: url('/paguro/abstract-canyon-wallpaper.webp') center / 100% 100% no-repeat;
+  -webkit-mask-image: var(--landscape-mask);
+  mask-image: var(--landscape-mask);
+  pointer-events: none;
+}
+.heading, .demo { position: relative; }
+.heading { max-width: 1080px; margin-inline: auto; padding: 88px 24px 0; text-align: center; }
+.title { font-size: 80px; font-weight: 600; line-height: 1.05; letter-spacing: -.065em; }
+.subtitle { margin: 28px auto 0; font-size: 20px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
+.cta > a { border-radius: 14px; height: 44px; font-size: 16px; }
+.cta > a:last-child { display: none; }
+.demo { max-width: 1129px; margin: 108px auto 0; padding-inline: 24px; }
+/* Keep the material outside the size-query container. Safari can isolate
+   backdrop sampling when containment and blur share the same element. */
+.glassStage { aspect-ratio: 16 / 10; border: 1px solid transparent; border-radius: 20px; }
+.glassStage::before, .mobileGlass {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .85),
+    inset 0 0 0 1px rgb(255 255 255 / .3),
+    inset 0 8px 18px -10px rgb(255 255 255 / .65);
+}
+.glassStage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgb(255 255 255 / .22);
+  -webkit-backdrop-filter: blur(40px) saturate(1.3);
+  backdrop-filter: blur(40px) saturate(1.3);
+  pointer-events: none;
+}
+.glassCanvas { position: relative; width: 100%; height: 100%; }
+/* Keep the original capture coordinates inside an app-local frame. Cropping
+   removes the old wallpaper while preserving every interactive hit target. */
+.appFrame { position: absolute; width: calc(min(100vw - 48px, 1132px) * 1100 / 1440); aspect-ratio: 1100 / 700; left: 50%; top: 54%; transform: translate(-50%, -50%); overflow: hidden; border-radius: 14px; box-shadow: 0 16px 36px rgb(0 0 0 / .16); }
+.captureCanvas { position: absolute; width: 130.909091%; height: 128.571429%; left: -15.454545%; top: -14.285714%; }
+.mobileGlass { padding: 42px 16px 20px; border: 1px solid transparent; border-radius: 20px; background: rgb(255 255 255 / .2); backdrop-filter: blur(24px); }
+.mobileGlass img { border-radius: 9px; }
+@media (max-width: 767px) {
+  .hero { padding-bottom: 32px; }
+  .hero::before { --bottom-fade: 160px; }
+  .heading { padding-top: 48px; }
+  .title { font-size: clamp(38px, 8vw, 60px); letter-spacing: -.055em; }
+  .subtitle { font-size: 18px; margin-top: 20px; }
+  .demo { margin-top: 48px; padding-inline: 16px; }
+  .cta > a:last-child { display: inline-flex; }
+}
+@media (prefers-reduced-transparency: reduce) { .glassStage::before, .mobileGlass { background: #d9dce1; -webkit-backdrop-filter: none; backdrop-filter: none; } }

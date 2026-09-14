@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ScrollHeader } from "@/components/layout/scroll-header";
 import { PaguroHero } from "@/components/apps/paguro-hero";
 import { ContactLine } from "@/components/layout/contact-line";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -26,9 +27,9 @@ export function PaguroHeader({
    *  Paguro page. */
   subpage?: boolean;
 }) {
-  const wordmark = `inline-flex items-center gap-2 rounded-lg text-2xl font-bold tracking-tight ${linkStyle}`;
+  const wordmark = `inline-flex items-center gap-2 rounded-lg text-base font-semibold tracking-tight ${linkStyle}`;
   const icon = (
-    <span aria-hidden="true" className="size-9 shrink-0">
+    <span aria-hidden="true" className="size-[30px] shrink-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/paguro/app-icon-light.png" alt="" width={256} height={256} className="size-full [display:var(--icon-light-display)]" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -36,12 +37,12 @@ export function PaguroHeader({
     </span>
   );
   return (
-    <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
+    <ScrollHeader className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
       {/* The header's load animation sits on this inner row, not on <header>,
           because header-divide owns that element's animation — and it is an even
           fade on the hero title's beat rather than a rise of its own, for the
           reasons spelled out in components/layout/header.tsx. */}
-      <nav aria-label={dict.paguroPage.nav} className="mx-auto flex h-20 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
+      <nav aria-label={dict.paguroPage.nav} className="mx-auto flex h-16 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
         {subpage ? (
           <Link href={localePath(locale, "paguro")} className={wordmark}>
             {icon}
@@ -55,16 +56,16 @@ export function PaguroHeader({
         )}
         {/* No "All apps" link while `/` redirects to this page (see
             vercel.json): it would only bounce the visitor straight back here.
-            It returns with the redirects' removal. No pills on a phone: h-11
+            It returns with the redirects' removal. No pills on a phone: compact
             pills beside the wordmark do not fit that header. On the app page
-            the hero carries them below desk; on the privacy subpage the
+            the hero carries them below the subtitle; on the privacy subpage the
             wordmark leads to that hero. The wrapper owns the display so it
             cannot race the hardcoded `flex` inside PaguroActions. */}
         <div className="hidden sm:block">
-          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} />
+          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} className="[&>a]:h-8 [&>a]:text-xs [&>a]:rounded-xl [&>a:first-child]:order-2" />
         </div>
       </nav>
-    </header>
+    </ScrollHeader>
   );
 }
 

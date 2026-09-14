@@ -29,7 +29,8 @@
 .clock { display: flex; gap: 10px; font-variant-numeric: tabular-nums; min-width: 156px; justify-content: flex-end; }
 .compactDate { display: none; }
 .themeToggle { display: flex; align-items: center; gap: 2px; padding: 2px; border-radius: 9999px; background: rgb(255 255 255 / .05); color: white; }
-.themeToggle button { display: grid; place-items: center; padding: 6px; border-radius: 9999px; cursor: pointer; color: rgb(255 255 255 / .65); }
+.themeToggle button { display: grid; place-items: center; padding: 4px; border-radius: 9999px; cursor: pointer; color: rgb(255 255 255 / .65); }
+.themeToggle button svg { width: 14px; height: 14px; }
 .themeToggle button:hover { color: white; }
 .themeToggle button[aria-pressed="true"] { background: rgb(255 255 255 / .1); color: white; }
 .themeToggle button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }

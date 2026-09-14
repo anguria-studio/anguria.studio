@@ -55,7 +55,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const systemTheme = useSyncExternalStore(subscribeToSystemTheme, readSystemTheme, serverSystemTheme);
   const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
-  const [layout, setLayout] = useState<"sidebar" | "compact">("sidebar");
+  const [layout, setLayout] = useState<"sidebar" | "compact">("compact");
   const [selectedService, setSelectedService] = useState<SelectableService>("claude");
   const [overlayAvailable, setOverlayAvailable] = useState(true);
   const [announcement, setAnnouncement] = useState({ id: 0, message: "" });
@@ -102,22 +102,16 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   }
 
   return (
-    <section id="paguro" className="scroll-mt-24 pb-6 sm:pb-24">
-      <div className="mx-auto max-w-4xl px-6 pt-8 text-center sm:pt-24">
-        <h1 className="text-4xl leading-none font-bold tracking-tight text-balance sm:text-7xl motion-safe:enter-1">
-          {copy.title}{" "}<br className="lg:hidden" /><span className="text-melon-500">{copy.accent}</span>
+    <section id="paguro" className={`${styles.hero} scroll-mt-24`}>
+      <div className={styles.heading}>
+        <h1 className={`${styles.title} motion-safe:enter-1`}>
+          {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}<span className="text-melon-500">{copy.accent}</span>
         </h1>
-        {/* One paragraph, not two: both sentences are the same thought and the
-            user wants them to run on. max-w-2xl so the pair still balances onto
-            two lines rather than four. */}
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted text-balance motion-safe:enter-2">{copy.intro} {page.releaseBody}</p>
-        {/* Below desk the demo row does not render, so the pills are the hero's
-            only call to action. Above it the demo is the call to action, and the
-            sticky header still carries the pills. */}
-        <PaguroActions copy={page} meta={apps.paguro} className="mt-8 justify-center desk:hidden motion-safe:enter-3" />
+        <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.intro} {page.releaseBody}</p>
+        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} className={`${styles.cta} mt-8 justify-center motion-safe:enter-3`} />
       </div>
 
-      <div className="mx-auto mt-10 max-w-cards px-4 sm:mt-12 sm:px-6">
+      <div className={styles.demo}>
         <div className="mb-7 hidden items-center justify-center gap-8 desk:flex">
           <div className="text-center sm:text-right motion-safe:enter-3">
             <p className="text-base font-semibold">{copy.tryLabel}</p>
@@ -130,25 +124,21 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
                   <span className="flex size-14 items-center justify-center rounded-2xl border border-hairline bg-white shadow-sm motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:-rotate-6 motion-safe:group-active:scale-95 sm:size-16">
                     <ServiceIcon service={service} className="size-8 sm:size-10" />
                   </span>
-                  <span className="text-sm text-muted transition group-hover:text-foreground">{serviceNames[service]}</span>
                 </button>
               </div>
             ))}
           </div>
         </div>
 
-        <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${desktopStyles.stage} relative isolate hidden overflow-hidden rounded-showcase bg-surface desk:block motion-safe:fade-3`}>
-          {showDesktopPreview && <div className={desktopStyles.canvas}>
-          {/* The full-screen dark captures preserve the app’s original glass. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/desktop.jpg" alt="" width={2560} height={1200} className="absolute inset-0 size-full object-cover" />
-
+        <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block motion-safe:fade-3`}>
+          {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas}`}>
           <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} openNotification={openNotification} />
           </div>
 
+          <div className={styles.appFrame}><div className={styles.captureCanvas}>
           {overlayAvailable ? (
             <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
           ) : (
@@ -168,13 +158,13 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
               </div>
             </div>
           )}
+          </div></div>
           </div>}
         </div>
 
-        <div className="relative aspect-[2880/1740] overflow-hidden rounded-showcase bg-surface desk:hidden motion-safe:fade-3">
-          {/* Crop the top 60 source pixels to hide the macOS menu bar. */}
+        <div className={`${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/mobile-workspace.webp" alt={copy.mobileCaptureAlt} width={2880} height={1800} className="absolute inset-x-0 bottom-0 h-auto w-full" />
+          <img src="/paguro/claude-compact-cutout.webp" alt={copy.mobileCaptureAlt} width={2200} height={1400} className="h-auto w-full" />
         </div>
 
         <p role="status" aria-live="polite" aria-atomic="true" className="sr-only hidden desk:block"><span key={announcement.id}>{announcement.message}</span></p>
