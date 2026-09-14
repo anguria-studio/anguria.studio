@@ -37,7 +37,7 @@
   content: "";
   position: absolute;
   inset: 60px 0 -100px;
-  background: url('/paguro/abstract-canyon-wallpaper.webp') center / 100% 100% no-repeat;
+  background: var(--paguro-wallpaper) center / 100% 100% no-repeat;
   -webkit-mask-image: var(--landscape-mask);
   mask-image: var(--landscape-mask);
   pointer-events: none;

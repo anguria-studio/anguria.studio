@@ -10,6 +10,7 @@ export function Footer({
   dict,
   path,
   note,
+  className = "",
 }: {
   locale: Locale;
   dict: Dictionary;
@@ -20,9 +21,10 @@ export function Footer({
    *  so this stays a generic footer that knows nothing about any
    *  particular app. */
   note?: ReactNode;
+  className?: string;
 }) {
   return (
-    <footer className="mt-8 border-t border-hairline">
+    <footer className={`mt-8 border-t border-hairline ${className}`}>
       {/* One row: whatever the page has to credit on the left, the controls on
           the right. The note shares the row rather than sitting above it, so a
           page without one simply has a shorter row. */}

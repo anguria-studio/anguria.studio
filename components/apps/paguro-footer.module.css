@@ -1,0 +1,47 @@
+.art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-top: 0;
+  padding-top: 96px;
+}
+
+.art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--paguro-wallpaper) center top / 100% 300% no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%);
+  mask-image: linear-gradient(to bottom, transparent, #000 35%);
+  pointer-events: none;
+}
+
+.art > div {
+  position: relative;
+  isolation: isolate;
+}
+
+.art > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  border-top: 1px solid var(--hairline);
+  background: var(--header);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .art > div::before {
+    background: var(--background);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

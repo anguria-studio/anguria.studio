@@ -2,6 +2,7 @@ import { PaguroDetail, PaguroFooterNote, PaguroHeader } from "@/components/apps/
 import { AppDetail } from "@/components/apps/app-detail";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import footerStyles from "@/components/apps/paguro-footer.module.css";
 import { apps, site, type AppSlug } from "@/lib/apps";
 import { absoluteUrl } from "@/lib/metadata";
 import { getDictionary, type Locale } from "@/lib/i18n";
@@ -51,6 +52,7 @@ export async function AppPage({
         )}
       </main>
       <Footer
+        className={slug === "paguro" ? footerStyles.art : undefined}
         locale={locale}
         dict={dict}
         path={slug}
