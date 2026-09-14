@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ScrollHeader } from "@/components/layout/scroll-header";
 import { PaguroHero } from "@/components/apps/paguro-hero";
 import { ContactLine } from "@/components/layout/contact-line";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -37,7 +36,7 @@ export function PaguroHeader({
     </span>
   );
   return (
-    <ScrollHeader className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
+    <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
       {/* The header's load animation sits on this inner row, not on <header>,
           because header-divide owns that element's animation — and it is an even
           fade on the hero title's beat rather than a rise of its own, for the
@@ -65,7 +64,7 @@ export function PaguroHeader({
           <PaguroActions copy={dict.paguroPage} meta={apps.paguro} className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
         </div>
       </nav>
-    </ScrollHeader>
+    </header>
   );
 }
 
