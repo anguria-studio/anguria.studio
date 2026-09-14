@@ -1,0 +1,6 @@
+Paguro download test
+
+This is a sample text file from anguria.studio.
+If you can open this file from your Downloads folder, the download worked.
+
+You can delete this file after the test.

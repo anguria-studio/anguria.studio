@@ -6,8 +6,34 @@ import type { Dictionary } from "./en";
  */
 export const dictionary: Dictionary = {
   paguroNotificationTest: {
-    title: "Essayez vos notifications.",
-    intro: "Envoyez des notifications d’exemple via Paguro. Essayez les bannières macOS ou l’îlot de notifications, sans compte de messagerie.",
+    download: {
+      heading: "Téléchargez un petit exemple.",
+      description: "Téléchargez un petit fichier texte pour vérifier que Paguro peut enregistrer les fichiers de vos apps web.",
+      action: "Télécharger le fichier d’exemple",
+      check: "Dans Paguro, cherchez paguro-download-test.txt dans Téléchargements et dans l’indicateur de téléchargement en haut de l’app. Ouvrez le fichier pour vérifier son contenu. Téléchargez-le à nouveau pour vérifier que la première copie est conservée. D’autres navigateurs peuvent vous demander où l’enregistrer.",
+    },
+    camera: {
+      heading: "Testez votre caméra.",
+      description: "Lancez un aperçu en direct, puis autorisez l’accès à la caméra lorsque cela vous est demandé. Il utilise la même autorisation qu’un appel vidéo dans l’une de vos apps web.",
+      start: "Tester la caméra",
+      stop: "Arrêter la caméra",
+      cancel: "Annuler l’aperçu",
+      previewLabel: "Aperçu de la caméra en direct",
+      noJavaScript: "Activez JavaScript pour tester la caméra.",
+      privacy: "L’aperçu reste sur votre appareil. Rien n’est enregistré ni envoyé en ligne, et le microphone n’est pas demandé. Arrêtez la caméra avec le bouton ; elle s’arrête aussi quand vous quittez ou masquez cette page. Revenir à la page ne la redémarre pas.",
+      status: {
+        idle: "Votre caméra est éteinte. Elle démarre uniquement lorsque vous choisissez Tester la caméra.",
+        requesting: "En attente de l’accès à la caméra et de l’aperçu. Vous pouvez annuler pendant l’attente de l’autorisation.",
+        active: "L’aperçu est en direct. Choisissez Arrêter la caméra lorsque vous avez terminé.",
+        stopped: "Caméra arrêtée. Choisissez Tester la caméra pour lancer un nouvel aperçu.",
+        unsupported: "L’accès à la caméra est indisponible ici. Ouvrez cette page en HTTPS ou sur localhost dans un navigateur prenant en charge la caméra.",
+        denied: "L’accès à la caméra n’a pas été autorisé. Vérifiez le réglage de caméra de ce service dans Paguro et l’accès à la caméra pour Paguro dans les Réglages Système de macOS, puis réessayez.",
+        unavailable: "Aucune caméra n’est disponible ou elle n’a pas pu démarrer. Vérifiez qu’elle est connectée et disponible, puis réessayez.",
+        error: "L’aperçu n’a pas pu démarrer. La caméra a été arrêtée. Réessayez.",
+      },
+    },
+    title: "Essayez Paguro.",
+    intro: "Envoyez des notifications d’exemple, téléchargez un fichier et testez votre caméra. Découvrez les fonctions de Paguro sans compte.",
     setup: [
       "Autorisez les notifications de Paguro dans les Réglages Système de macOS. Gardez ce service actif et non silencieux, et désactivez Ne pas déranger ou Concentration pendant le test.",
       "Choisissez un test ci-dessous. Vous pouvez rester ici ou passer à un autre service ou une autre app. Laissez Paguro ouvert et cette page chargée jusqu’à la fin du test.",
@@ -40,7 +66,7 @@ export const dictionary: Dictionary = {
       { title: "Îlot de notifications", body: "Sur un écran compatible avec encoche, activez Show island alerts on notched displays et désactivez Show macOS notifications. Lancez le test de six notifications. Survolez l’îlot pour le développer, faites défiler la pile, supprimez une carte et cliquez sur une notification pour revenir à ce service." },
       { title: "Verrouillage de l’app", body: "Lancez le test de six notifications, puis verrouillez Paguro après la première notification. Les alertes restantes devraient être bloquées pendant le verrouillage. Déverrouillez explicitement pour revenir à l’app ; les notifications bloquées ne sont pas rejouées." },
     ],
-    scope: "Ces messages d’exemple sont créés par cette page avec l’API web standard Notification. Aucun compte, expéditeur ou service de messagerie n’est nécessaire. Le test vérifie la gestion des notifications, pas la connexion ni la livraison des messages d’un service tiers.",
+    scope: "Ces tests utilisent les fonctions standard du navigateur pour les notifications, les téléchargements et l’accès à la caméra. Aucun compte n’est nécessaire. Ils vérifient la gestion de ces fonctions par Paguro, pas la connexion, la livraison des messages ou les appels vidéo d’un service tiers.",
     samples: [
       { title: "Test Paguro · Un petit bonjour", body: "Votre première notification d’exemple. Tout commence ici." },
       { title: "Test Paguro · Pause café", body: "Alex : Un café dans dix minutes ? Je prends une table." },

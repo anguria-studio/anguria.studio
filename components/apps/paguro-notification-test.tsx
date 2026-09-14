@@ -48,6 +48,9 @@ export function PaguroNotificationTest({ copy }: { copy: Dictionary["paguroNotif
     <section aria-labelledby="send-heading" className="mt-10 rounded-card bg-surface p-6 sm:p-8">
       <h2 id="send-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">{copy.sendHeading}</h2>
       <p className="mt-3 text-base leading-relaxed text-muted">{copy.timing}</p>
+      <ol className="mt-6 list-decimal space-y-3 pl-5 text-base leading-relaxed text-muted">
+        {copy.setup.map((step) => <li key={step}>{step}</li>)}
+      </ol>
       <div className="mt-6 flex flex-wrap gap-3">
         <button type="button" disabled={busy} className={`${button} bg-foreground text-background`} onClick={() => void runner.current?.start("single", copy.samples)}>{copy.single}</button>
         <button type="button" disabled={busy} className={`${button} bg-foreground/5 text-foreground`} onClick={() => void runner.current?.start("sequence", copy.samples)}>{copy.sequence}</button>

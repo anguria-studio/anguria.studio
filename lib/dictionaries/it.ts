@@ -6,8 +6,34 @@ import type { Dictionary } from "./en";
  */
 export const dictionary: Dictionary = {
   paguroNotificationTest: {
-    title: "Prova le tue notifiche.",
-    intro: "Invia notifiche di esempio tramite Paguro. Prova i banner di macOS o l’isola delle notifiche, senza un account di messaggistica.",
+    download: {
+      heading: "Scarica un piccolo esempio.",
+      description: "Scarica un piccolo file di testo per verificare che Paguro possa salvare i file delle tue app web.",
+      action: "Scarica il file di esempio",
+      check: "In Paguro, cerca paguro-download-test.txt nella cartella Download e nell’indicatore dei download in alto nell’app. Apri il file per verificarne il contenuto. Scaricalo di nuovo per controllare che la prima copia venga conservata. Altri browser potrebbero chiederti dove salvarlo.",
+    },
+    camera: {
+      heading: "Prova la fotocamera.",
+      description: "Avvia un’anteprima dal vivo e consenti l’accesso alla fotocamera quando richiesto. Usa lo stesso permesso di una videochiamata in una delle tue app web.",
+      start: "Prova la fotocamera",
+      stop: "Ferma la fotocamera",
+      cancel: "Annulla l’anteprima",
+      previewLabel: "Anteprima dal vivo della fotocamera",
+      noJavaScript: "Abilita JavaScript per provare la fotocamera.",
+      privacy: "L’anteprima resta sul tuo dispositivo. Nulla viene registrato o caricato online e il microfono non viene richiesto. Ferma la fotocamera con il pulsante; si ferma anche quando lasci o nascondi questa pagina. Tornare alla pagina non la riavvia.",
+      status: {
+        idle: "La fotocamera è spenta. Si avvia solo quando scegli Prova la fotocamera.",
+        requesting: "In attesa dell’accesso alla fotocamera e dell’anteprima. Puoi annullare mentre il permesso è in attesa.",
+        active: "L’anteprima è attiva. Scegli Ferma la fotocamera quando hai finito.",
+        stopped: "Fotocamera fermata. Scegli Prova la fotocamera per avviare una nuova anteprima.",
+        unsupported: "L’accesso alla fotocamera non è disponibile. Apri questa pagina tramite HTTPS o su localhost in un browser che supporta la fotocamera.",
+        denied: "Accesso alla fotocamera non consentito. Controlla l’impostazione della fotocamera per questo servizio in Paguro e l’accesso alla fotocamera per Paguro nelle Impostazioni di Sistema di macOS, poi riprova.",
+        unavailable: "Nessuna fotocamera disponibile o impossibile avviarla. Controlla che sia collegata e disponibile, poi riprova.",
+        error: "Impossibile avviare l’anteprima. La fotocamera è stata fermata. Riprova.",
+      },
+    },
+    title: "Prova Paguro.",
+    intro: "Invia notifiche di esempio, scarica un file e visualizza l’anteprima della fotocamera. Prova le funzioni di Paguro senza un account.",
     setup: [
       "Consenti le notifiche per Paguro nelle Impostazioni di Sistema di macOS. Mantieni il servizio attivo e non silenziato e disattiva Non disturbare o Full immersion durante la prova.",
       "Scegli una prova qui sotto. Puoi restare qui o passare a un altro servizio o a un’altra app. Lascia Paguro aperto e questa pagina caricata fino alla fine della prova.",
@@ -40,7 +66,7 @@ export const dictionary: Dictionary = {
       { title: "Isola delle notifiche", body: "Su uno schermo compatibile con notch, abilita Show island alerts on notched displays e disabilita Show macOS notifications. Avvia la prova con sei notifiche. Passa il puntatore sull’isola per espanderla, scorri la pila, elimina una scheda e fai clic su una notifica per tornare a questo servizio." },
       { title: "Blocco dell’app", body: "Avvia la prova con sei notifiche e blocca Paguro dopo la prima notifica. Gli avvisi rimanenti dovrebbero essere soppressi durante il blocco. Sblocca esplicitamente per tornare all’app; le notifiche soppresse non vengono riproposte." },
     ],
-    scope: "Questi messaggi di esempio sono creati dalla pagina tramite l’API web standard Notification. Non servono account, mittenti o servizi di messaggistica. La prova verifica la gestione delle notifiche, non l’accesso o la consegna dei messaggi di un servizio di terze parti.",
+    scope: "Queste prove usano funzioni standard del browser per notifiche, download e accesso alla fotocamera. Non serve un account. Verificano la gestione di queste funzioni da parte di Paguro, non l’accesso, la consegna dei messaggi o le videochiamate di un servizio di terze parti.",
     samples: [
       { title: "Test Paguro · Un piccolo saluto", body: "La tua prima notifica di esempio. Tutto comincia qui." },
       { title: "Test Paguro · Pausa caffè", body: "Alex: Un caffè tra dieci minuti? Prendo un tavolo." },

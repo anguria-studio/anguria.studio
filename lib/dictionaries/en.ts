@@ -25,8 +25,34 @@ export type AppCopy = {
  */
 export const dictionary = {
   paguroNotificationTest: {
-    title: "Try your notifications.",
-    intro: "Send sample notifications through Paguro. Try macOS banners or the notification island, without a messaging account.",
+    download: {
+      heading: "Save a little sample.",
+      description: "Download a small text file to check that files from your web apps can be saved through Paguro.",
+      action: "Download sample file",
+      check: "In Paguro, look for paguro-download-test.txt in Downloads and in the download indicator at the top of the app. Open the file to check its contents. Download it again to check that the first copy is kept. Other browsers may ask where to save it.",
+    },
+    camera: {
+      heading: "Check your camera.",
+      description: "Start a live preview, then allow camera access when asked. This uses the same camera permission as a video call in one of your web apps.",
+      start: "Test camera",
+      stop: "Stop camera",
+      cancel: "Cancel preview",
+      previewLabel: "Live camera preview",
+      noJavaScript: "Enable JavaScript to test the camera.",
+      privacy: "The preview stays on your device. Nothing is recorded or uploaded, and the microphone is not requested. Stop the camera with the button; it also stops when you leave or hide this page. Returning does not restart it.",
+      status: {
+        idle: "Your camera is off. It starts only when you choose Test camera.",
+        requesting: "Waiting for camera access and the preview. You can cancel while permission is pending.",
+        active: "Camera preview is live. Choose Stop camera when you are done.",
+        stopped: "Camera stopped. Choose Test camera to start another preview.",
+        unsupported: "Camera access is unavailable here. Open this page over HTTPS or on localhost in a browser with camera support.",
+        denied: "Camera access was not allowed. Check this service’s camera setting in Paguro and camera access for Paguro in macOS System Settings, then try again.",
+        unavailable: "No camera is available, or it could not start. Check that it is connected and available, then try again.",
+        error: "The camera preview could not start. The camera has been stopped. Try again.",
+      },
+    },
+    title: "Try Paguro.",
+    intro: "Send sample notifications, download a file, and preview your camera. Try Paguro’s features without an account.",
     setup: [
       "Allow notifications for Paguro in macOS System Settings. Keep this service awake and unmuted, and turn off Do Not Disturb or Focus for the test.",
       "Choose a test below. You can stay here or switch to another service or app. Keep Paguro running and this page loaded until the test ends.",
@@ -59,7 +85,7 @@ export const dictionary = {
       { title: "Notification island", body: "On a compatible notched display, enable Show island alerts on notched displays and disable Show macOS notifications. Run the six-notification test. Hover the island to expand it, scroll the stack, dismiss a card, and click a notification to return to this service." },
       { title: "App lock", body: "Start the six-notification test, then lock Paguro after the first notification. Remaining alerts should be suppressed while locked. Unlock explicitly to return to the app; suppressed notifications are not replayed." },
     ],
-    scope: "These are sample messages created by this page, using the standard web Notification API. No account, sender, or messaging service is needed. The test checks notification handling; it does not test a third-party service’s login or message delivery.",
+    scope: "These tests use standard browser features for notifications, file downloads, and camera access. No account is needed. They check Paguro’s handling of those features, not a third-party service’s login, message delivery, or video calls.",
     samples: [
       { title: "Paguro test · A little hello", body: "Your first sample notification. Everything starts here." },
       { title: "Paguro test · Coffee break", body: "Alex: Coffee in ten minutes? I’ll grab a table." },

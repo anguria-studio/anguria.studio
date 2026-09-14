@@ -41,7 +41,7 @@ through it.
 - `vercel.json` — temporary redirects sending `/`, `/obolo` and `/scolo` to the
   Paguro page while it is the only released app.
 
-## Notification test page
+## Paguro test page
 
 Open `/paguro/test-notifications/` as a Custom URL service in Paguro to test
 real notification delivery without a messaging account. The first notification
@@ -57,6 +57,23 @@ follow the page instructions to test macOS banners, the island, and app lock.
 The same page is available in all four site languages. It checks notification
 handling, not provider login or end-to-end message delivery.
 It is a standalone utility page without the marketing header, footer, or back link.
+
+The same page includes **Download sample file** and **Test camera** controls.
+The download is a same-origin static text file with an HTML download attribute.
+In Paguro it exercises the normal WebKit download path and saves to Downloads.
+Open the file and download it again to verify contents and duplicate names;
+the page does not claim that a download succeeded merely because it was clicked.
+
+The camera test requests `getUserMedia({ video: true, audio: false })` only
+after a click and displays a muted inline preview. It does not record, upload,
+or request microphone access. Stop, page hiding, page exit, and component
+cleanup release the tracks. A late permission reply after cancellation also
+releases its stream. Returning to the page never starts capture automatically.
+Camera access needs HTTPS or localhost, browser support, and the relevant
+Paguro and macOS permissions. Denial and unavailable cameras have visible states.
+
+These controls exercise Paguro's existing camera and Downloads capabilities
+without a third-party account. They do not test an actual video-call connection.
 
 Each request increments a page-title unread count, which Paguro reads for its
 service and Dock badges. Mark all read resets it; cancelling a sequence keeps

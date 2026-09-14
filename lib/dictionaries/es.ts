@@ -8,8 +8,34 @@ import type { Dictionary } from "./en";
  */
 export const dictionary: Dictionary = {
   paguroNotificationTest: {
-    title: "Prueba tus notificaciones.",
-    intro: "Envía notificaciones de ejemplo a través de Paguro. Prueba los banners de macOS o la isla de notificaciones, sin una cuenta de mensajería.",
+    download: {
+      heading: "Descarga un pequeño ejemplo.",
+      description: "Descarga un pequeño archivo de texto para comprobar que Paguro puede guardar los archivos de tus apps web.",
+      action: "Descargar archivo de ejemplo",
+      check: "En Paguro, busca paguro-download-test.txt en Descargas y en el indicador de descargas de la parte superior de la app. Abre el archivo para comprobar su contenido. Descárgalo de nuevo para verificar que se conserva la primera copia. Otros navegadores pueden preguntarte dónde guardarlo.",
+    },
+    camera: {
+      heading: "Prueba tu cámara.",
+      description: "Inicia una vista previa en directo y permite el acceso a la cámara cuando se solicite. Usa el mismo permiso que una videollamada en una de tus apps web.",
+      start: "Probar cámara",
+      stop: "Detener cámara",
+      cancel: "Cancelar vista previa",
+      previewLabel: "Vista previa de la cámara en directo",
+      noJavaScript: "Activa JavaScript para probar la cámara.",
+      privacy: "La vista previa permanece en tu dispositivo. No se graba ni se sube nada, y no se solicita el micrófono. Detén la cámara con el botón; también se detiene al salir de esta página u ocultarla. Volver no la reinicia.",
+      status: {
+        idle: "Tu cámara está apagada. Solo se inicia cuando eliges Probar cámara.",
+        requesting: "Esperando el acceso a la cámara y la vista previa. Puedes cancelar mientras el permiso está pendiente.",
+        active: "La vista previa está en directo. Elige Detener cámara cuando termines.",
+        stopped: "Cámara detenida. Elige Probar cámara para iniciar otra vista previa.",
+        unsupported: "El acceso a la cámara no está disponible aquí. Abre esta página mediante HTTPS o en localhost en un navegador compatible con la cámara.",
+        denied: "No se permitió el acceso a la cámara. Comprueba el ajuste de cámara de este servicio en Paguro y el acceso a la cámara para Paguro en los Ajustes del Sistema de macOS, y vuelve a intentarlo.",
+        unavailable: "No hay ninguna cámara disponible o no se pudo iniciar. Comprueba que está conectada y disponible, y vuelve a intentarlo.",
+        error: "No se pudo iniciar la vista previa. La cámara se ha detenido. Vuelve a intentarlo.",
+      },
+    },
+    title: "Prueba Paguro.",
+    intro: "Envía notificaciones de ejemplo, descarga un archivo y prueba tu cámara. Descubre las funciones de Paguro sin una cuenta.",
     setup: [
       "Permite las notificaciones de Paguro en los Ajustes del Sistema de macOS. Mantén este servicio activo y sin silenciar, y desactiva No molestar o Concentración durante la prueba.",
       "Elige una prueba abajo. Puedes quedarte aquí o cambiar a otro servicio u otra app. Mantén Paguro abierto y esta página cargada hasta que termine la prueba.",
@@ -42,7 +68,7 @@ export const dictionary: Dictionary = {
       { title: "Isla de notificaciones", body: "En una pantalla compatible con notch, activa Show island alerts on notched displays y desactiva Show macOS notifications. Ejecuta la prueba de seis notificaciones. Pasa el cursor sobre la isla para expandirla, desplázate por la pila, descarta una tarjeta y haz clic en una notificación para volver a este servicio." },
       { title: "Bloqueo de la app", body: "Inicia la prueba de seis notificaciones y bloquea Paguro después de la primera notificación. Los avisos restantes deberían suprimirse durante el bloqueo. Desbloquea explícitamente para volver a la app; las notificaciones suprimidas no se reproducen después." },
     ],
-    scope: "Estos mensajes de ejemplo se crean en esta página mediante la API web estándar Notification. No se necesita ninguna cuenta, remitente ni servicio de mensajería. La prueba comprueba la gestión de notificaciones, no el inicio de sesión ni la entrega de mensajes de un servicio de terceros.",
+    scope: "Estas pruebas usan funciones estándar del navegador para notificaciones, descargas y acceso a la cámara. No se necesita una cuenta. Comprueban cómo Paguro gestiona estas funciones, no el inicio de sesión, la entrega de mensajes ni las videollamadas de un servicio de terceros.",
     samples: [
       { title: "Prueba Paguro · Un pequeño saludo", body: "Tu primera notificación de ejemplo. Todo empieza aquí." },
       { title: "Prueba Paguro · Pausa para un café", body: "Alex: ¿Un café en diez minutos? Busco una mesa." },
