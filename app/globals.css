@@ -22,7 +22,7 @@
 :root {
   color-scheme: light dark;
   --background: #faf7f5;
-  --paguro-wallpaper: url("/paguro/abstract-canyon-shallow.webp");
+  --paguro-wallpaper: url("/paguro/abstract-green-coral-blob.webp");
   --foreground: #1d1d1f;
   --muted: #6e6e73;
   /* Nine levels below the background, matching its warmth. Chosen to keep
@@ -70,7 +70,7 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
   --background: #171413;
-  --paguro-wallpaper: url("/paguro/abstract-canyon-shallow-dark.webp");
+  --paguro-wallpaper: url("/paguro/abstract-green-grain-dark.webp");
   --foreground: #f5f5f7;
   --muted: #86868b;
   --surface: #292625;
@@ -89,7 +89,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --background: #171413;
-  --paguro-wallpaper: url("/paguro/abstract-canyon-shallow-dark.webp");
+  --paguro-wallpaper: url("/paguro/abstract-green-grain-dark.webp");
     --foreground: #f5f5f7;
     --muted: #86868b;
     --surface: #292625;

@@ -45,3 +45,7 @@
 @media (prefers-reduced-transparency: reduce) {
   .tooltip { background: var(--color-background); backdrop-filter: none; }
 }
+
+/* This Claude capture includes its native sidebar labels and icons. */
+.nativeHotspot { position: absolute; cursor: pointer; border-radius: 6px; }
+.nativeHotspot:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }

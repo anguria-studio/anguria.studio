@@ -36,9 +36,9 @@ export function PaguroHeader({
     </span>
   );
   return (
-    <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
+    <header className="header-divide sticky top-0 z-50 border-b border-hairline bg-background/40 backdrop-blur-md backdrop-saturate-110">
       {/* The header's load animation sits on this inner row, not on <header>,
-          because header-divide owns that element's animation — and it is an even
+          keeping the sticky container stable — and it is an even
           fade on the hero title's beat rather than a rise of its own, for the
           reasons spelled out in components/layout/header.tsx. */}
       <nav aria-label={dict.paguroPage.nav} className="mx-auto flex h-16 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
@@ -61,7 +61,7 @@ export function PaguroHeader({
             wordmark leads to that hero. The wrapper owns the display so it
             cannot race the hardcoded `flex` inside PaguroActions. */}
         <div className="hidden sm:block">
-          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2 [&>a:last-child]:bg-surface" />
         </div>
       </nav>
     </header>

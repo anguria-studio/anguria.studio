@@ -1,5 +1,7 @@
 "use client";
 
+import { PaguroGradient } from "./paguro-gradient";
+
 import { useReducer, useRef, useState, useSyncExternalStore } from "react";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { PaguroActions } from "@/components/apps/paguro-actions";
@@ -105,14 +107,14 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
     <section id="paguro" className={`${styles.hero} scroll-mt-24`}>
       <div className={styles.heading}>
         <h1 className={`${styles.title} motion-safe:enter-1`}>
-          {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}<span className="text-melon-500">{copy.accent}</span>
+          {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}{copy.accent}
         </h1>
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.intro} {page.releaseBody}</p>
         <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} className={`${styles.cta} mt-8 justify-center motion-safe:enter-3`} />
       </div>
 
       <div className={styles.demo}>
-        <div className="mb-7 hidden items-center justify-center gap-8 desk:flex">
+        <div className="relative z-10 mb-7 hidden items-center justify-center gap-8 desk:flex">
           <div className="text-center sm:text-right motion-safe:enter-3">
             <p className="text-base font-semibold">{copy.tryLabel}</p>
             <p className="mt-1 text-sm text-muted">{copy.tryHint}</p>
@@ -130,6 +132,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>
         </div>
 
+        <div className={styles.screenSurround}>
+        <PaguroGradient />
         <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block`}>
           {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas} motion-safe:fade-3`}>
           <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
@@ -165,6 +169,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
         <div className={`${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/paguro/claude-compact-cutout.webp" alt={copy.mobileCaptureAlt} width={2200} height={1400} className="h-auto w-full" />
+        </div>
         </div>
 
         <p role="status" aria-live="polite" aria-atomic="true" className="sr-only hidden desk:block"><span key={announcement.id}>{announcement.message}</span></p>

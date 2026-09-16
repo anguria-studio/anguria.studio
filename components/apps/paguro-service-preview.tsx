@@ -67,6 +67,7 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
   }
   const { hint, demoPointerY } = usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history: hintHistory, layout });
   const compact = layout === "compact";
+  const nativeClaude = selectedService === "claude" && theme === "dark" && !compact;
   const transforms = dockTransforms(compact ? pointerY ?? (keyboardFocused === null ? demoPointerY : railServices[keyboardFocused].compactY) : null);
   const dividerOffset = transforms[3].offset + (transforms[3].scale - 1) * 11;
 
@@ -98,18 +99,27 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
 
       <button ref={toggleRef} type="button" className={styles.layoutToggle} style={frame(compact ? 270 : 360, 114, 24, 24)}
         aria-label={compact ? copy.expand : copy.collapse} onClick={() => { setPointerY(null); setKeyboardFocused(null); onLayoutChange(compact ? "sidebar" : "compact"); }}>
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="3" /><path d="M8 3v14M4.5 7h1M4.5 10h1M4.5 13h1" /></svg>
+        <svg style={nativeClaude ? { visibility: "hidden" } : undefined} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="3" /><path d="M8 3v14M4.5 7h1M4.5 10h1M4.5 13h1" /></svg>
       </button>
 
       <div ref={dockRef} className={styles.hintRegion} style={frame(178, 156, 72, 364)} aria-hidden="true" />
 
-      {!compact && <>
+      {!compact && !nativeClaude && <>
         <WorkspaceHeading name={copy.personal} y={170} />
         <WorkspaceHeading name={copy.work} y={348} />
       </>}
       {compact && <div className={styles.divider} style={{ ...frame(189, railDividerY, 22, 1), "--icon-offset": dividerOffset } as CSSProperties} />}
 
-      <ul aria-label={copy.services} className={styles.services}>
+      {nativeClaude && <div aria-label={copy.services}>
+        {([
+          ["whatsapp", "WhatsApp"], ["gmail", "Gmail"], ["telegram", "Telegram"],
+          ["google-calendar", "Google Calendar"], ["chatgpt", "ChatGPT"], ["claude", "Claude"],
+        ] as const).map(([id, name], index) => <button key={id} type="button"
+          className={styles.nativeHotspot} style={frame(188, 151 + index * 30, 196, 28)}
+          aria-label={name} aria-current={id === "claude" ? "true" : undefined}
+          onClick={() => hasServicePreview(id) ? selectService(id) : onUnavailable()} />)}
+      </div>}
+      <ul hidden={nativeClaude} aria-label={copy.services} className={styles.services}>
         {railServices.map((service, index) => {
           const { scale, offset } = transforms[index];
           const centerY = compact ? service.compactY : service.sidebarY;

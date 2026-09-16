@@ -20,30 +20,24 @@
 
 .hero {
   position: relative;
-  padding-bottom: 72px;
+  overflow-x: clip;
+  padding-bottom: 112px;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
 }
-/* Keep the complete abstract composition, including its pale top and bottom,
-   across the heading and demo rather than cropping the portrait artwork. */
-.hero::before {
-  --bottom-fade: 240px;
-  --landscape-mask: linear-gradient(to bottom,
-    transparent, #000 28%,
-    #000 calc(100% - var(--bottom-fade)),
-    rgb(0 0 0 / .9) calc(100% - var(--bottom-fade) * .75),
-    rgb(0 0 0 / .5) calc(100% - var(--bottom-fade) * .5),
-    rgb(0 0 0 / .1) calc(100% - var(--bottom-fade) * .25),
-    transparent);
-  content: "";
+.screenSurround { position: relative; }
+/* Keep the animated color behind the screen so the glass samples it. */
+.gradient {
   position: absolute;
-  inset: 212px 0 -252px;
-  transform: scaleY(.85);
-  transform-origin: center top;
-  background: var(--paguro-wallpaper) center / 100% 100% no-repeat;
-  -webkit-mask-image: var(--landscape-mask);
-  mask-image: var(--landscape-mask);
+  inset: -14%;
+  background: var(--paguro-wallpaper) center / contain no-repeat;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
   pointer-events: none;
 }
+.gradient[data-ready="true"] { background: none; }
+.gradient canvas { display: block; width: 100%; height: 100%; }
 .heading, .demo { position: relative; }
 .heading { max-width: 1080px; margin-inline: auto; padding: 88px 24px 0; text-align: center; }
 .title { font-size: 80px; font-weight: 600; line-height: 1.05; letter-spacing: -.055em; }
@@ -65,7 +59,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: rgb(255 255 255 / .22);
+  background: rgb(255 255 255 / .12);
   -webkit-backdrop-filter: blur(40px) saturate(1.3);
   backdrop-filter: blur(40px) saturate(1.3);
   pointer-events: none;
@@ -85,13 +79,13 @@
 }
 /* Keep the original capture coordinates inside an app-local frame. Cropping
    removes the old wallpaper while preserving every interactive hit target. */
-.appFrame { position: absolute; width: calc(min(100vw - 48px, 1132px) * 1100 / 1440); aspect-ratio: 1100 / 700; left: 50%; top: 54%; transform: translate(-50%, -50%); overflow: hidden; border-radius: 14px; box-shadow: 0 16px 36px rgb(0 0 0 / .16); }
+.appFrame { position: absolute; width: calc(min(100vw - 48px, 1132px) * 1100 / 1440); aspect-ratio: 1100 / 700; left: 50%; top: 54%; transform: translate(-50%, -50%); overflow: hidden; border-radius: 14px; box-shadow: 0 6px 14px rgb(0 0 0 / .12), 0 20px 44px rgb(0 0 0 / .22); }
 .captureCanvas { position: absolute; width: 130.909091%; height: 128.571429%; left: -15.454545%; top: -14.285714%; }
-.mobileGlass { padding: 42px 16px 20px; border: 1px solid transparent; border-radius: 20px; background: rgb(255 255 255 / .2); backdrop-filter: blur(24px); }
-.mobileGlass img { border-radius: 9px; }
+.mobileGlass { padding: 42px 16px 20px; border: 1px solid transparent; border-radius: 20px; background: rgb(255 255 255 / .12); backdrop-filter: blur(24px); }
+.mobileGlass img { border-radius: 9px; box-shadow: 0 4px 10px rgb(0 0 0 / .12), 0 12px 28px rgb(0 0 0 / .22); }
 @media (max-width: 767px) {
-  .hero { padding-bottom: 32px; }
-  .hero::before { --bottom-fade: 160px; }
+  .hero { padding-bottom: 92px; }
+  .gradient { inset: -10%; }
   .heading { padding-top: 48px; }
   .title { font-size: clamp(38px, 8vw, 60px); letter-spacing: -.045em; }
   .subtitle { font-size: 18px; margin-top: 20px; }
