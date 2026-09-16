@@ -81,7 +81,7 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
     <>
       <PaguroHero copy={dict.paguroHero} page={copy} locale={locale} />
 
-      <section id="features" className="mx-auto max-w-cards scroll-mt-24 px-6 pt-16 pb-20 sm:pt-24 sm:pb-32">
+      <section id="features" className="relative z-10 mx-auto max-w-cards scroll-mt-24 px-6 pt-16 pb-20 sm:pt-24 sm:pb-32">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-4xl">{copy.story.title}</h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted text-pretty">{copy.story.body}</p>

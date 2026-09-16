@@ -36,8 +36,8 @@
     transparent);
   content: "";
   position: absolute;
-  inset: 212px 0 -252px;
-  transform: scaleY(.85);
+  inset: 32px 0 -252px;
+  transform: scaleY(1.026);
   transform-origin: center top;
   background: var(--paguro-wallpaper) center / 100% 100% no-repeat;
   -webkit-mask-image: var(--landscape-mask);
