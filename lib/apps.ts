@@ -39,8 +39,9 @@ export const apps: Record<AppSlug, AppMeta> = {
   paguro: {
     slug: "paguro",
     github: "https://github.com/anguria-studio/Paguro",
-    // The release asset includes its version; update this URL with each release.
-    download: "https://github.com/anguria-studio/Paguro/releases/download/v1.0.4/Paguro-1.0.4-11.dmg",
+    // Each Paguro release carries a copy of its disk image under this fixed
+    // name, so this address always returns the newest version.
+    download: "https://github.com/anguria-studio/Paguro/releases/latest/download/Paguro.dmg",
     minMacOS: "15.0",
     shot: "atoll",
   },
