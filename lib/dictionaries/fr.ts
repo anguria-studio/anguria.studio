@@ -228,8 +228,8 @@ export const dictionary: Dictionary = {
     sidebar: "De la place pour organiser",
     compact: "De la place pour se concentrer",
     layoutLabel: "Comparer les dispositions",
-    captureAlt: "Paguro avec les espaces Personal et Work et ChatGPT ouvert, sans connexion.",
-    compactAlt: "Paguro avec sa barre de services compacte et ChatGPT ouvert, sans connexion.",
+    captureAlt: "Paguro avec les espaces Personal et Work et ChatGPT ouvert.",
+    compactAlt: "Paguro avec sa barre de services compacte et ChatGPT ouvert.",
     samples: {
       slack: [
         { title: "Studio", message: "Les maquettes sont prêtes." },

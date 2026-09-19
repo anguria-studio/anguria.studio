@@ -141,7 +141,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           <div className={styles.appFrame}><div className={styles.captureCanvas}>
           {overlayAvailable ? (
             <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
-          ) : (
+          ) : (<>
             <div className={desktopStyles.legacyWindow}>
               <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">
                 {([
@@ -157,7 +157,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
                 })}
               </div>
             </div>
-          )}
+            <PaguroStaticRail theme={previewTheme} layout={layout} copy={copy.serviceOverlay} />
+          </>)}
           </div></div>
           </div>}
         </div>
@@ -170,7 +171,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
             <div className={styles.captureCanvas}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/paguro/claude-compact-cutout.webp" alt={copy.mobileCaptureAlt} width={2200} height={1400} className={`${styles.mobileStill} h-auto`} />
-              <PaguroStaticRail theme="dark" />
+              <PaguroStaticRail theme="dark" layout="compact" copy={copy.serviceOverlay} />
             </div>
           </div>
         </div>

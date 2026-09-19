@@ -255,8 +255,8 @@ export const dictionary = {
     sidebar: "Room to organise",
     compact: "Room to focus",
     layoutLabel: "Compare app layouts",
-    captureAlt: "Paguro with Personal and Work workspaces and ChatGPT open, signed out.",
-    compactAlt: "Paguro with its compact service rail and ChatGPT open, signed out.",
+    captureAlt: "Paguro with Personal and Work workspaces and ChatGPT open.",
+    compactAlt: "Paguro with its compact service rail and ChatGPT open.",
     /** Twelve per service; the hero deals them from a shuffle bag, one per click. */
     samples: {
       slack: [
