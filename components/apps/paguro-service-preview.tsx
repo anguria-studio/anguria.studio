@@ -147,3 +147,33 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
     </div>
   );
 }
+
+/**
+ * The rail at rest, drawn over a still capture. The mobile hero shows a
+ * photograph instead of a working preview, and the photographed rail is empty
+ * — the icons have always been the site's, not the capture's — so without this
+ * the frame reads as an empty shell. Nothing here takes input, and the overlay
+ * is hidden from assistive tech because the capture's alt text already
+ * describes the workspace.
+ */
+export function PaguroStaticRail({ theme }: { theme: PreviewTheme }) {
+  const transforms = dockTransforms(null);
+  const dividerOffset = transforms[3].offset + (transforms[3].scale - 1) * 11;
+  return (
+    <div className={styles.capture} data-layout="compact" data-theme={theme} data-static="true" aria-hidden="true">
+      <div className={styles.divider} style={{ ...frame(189, railDividerY, 22, 1), "--icon-offset": dividerOffset } as CSSProperties} />
+      <ul className={styles.services}>
+        {railServices.map((service, index) => {
+          const { scale, offset } = transforms[index];
+          return <li key={service.id} className={styles.service} data-service={service.id}
+            style={{ ...frame(183, service.compactY - 18, 36, 36), "--icon-scale": scale, "--icon-offset": offset } as CSSProperties}>
+            <span className={styles.mark}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/paguro/services/${service.id}.svg`} alt="" width={22} height={22} draggable={false} />
+            </span>
+          </li>;
+        })}
+      </ul>
+    </div>
+  );
+}

@@ -87,8 +87,14 @@
    removes the old wallpaper while preserving every interactive hit target. */
 .appFrame { position: absolute; width: calc(min(100vw - 48px, 1132px) * 1100 / 1440); aspect-ratio: 1100 / 700; left: 50%; top: 54%; transform: translate(-50%, -50%); overflow: hidden; border-radius: 14px; box-shadow: 0 16px 36px rgb(0 0 0 / .16); }
 .captureCanvas { position: absolute; width: 130.909091%; height: 128.571429%; left: -15.454545%; top: -14.285714%; }
-.mobileGlass { padding: 42px 16px 20px; border: 1px solid transparent; border-radius: 20px; background: rgb(255 255 255 / .2); backdrop-filter: blur(24px); }
-.mobileGlass img { border-radius: 9px; }
+.mobileGlass { padding: 20px 16px; border: 1px solid transparent; border-radius: 20px; background: rgb(255 255 255 / .2); backdrop-filter: blur(24px); }
+/* The mobile still is the crop .appFrame shows, so the rail can keep the
+   capture's own coordinates: .mobileFrame clips to the window while
+   .captureCanvas restores the full 1440 x 900 space the overlay measures
+   against, and .mobileStill puts the cropped still back where it was cut
+   from — the same placement .legacyWindow uses. */
+.mobileFrame { position: relative; aspect-ratio: 1100 / 700; overflow: hidden; border-radius: 9px; }
+.mobileStill { position: absolute; left: 11.8055556%; top: 11.1111111%; width: 76.3888889%; }
 @media (max-width: 767px) {
   .hero { padding-bottom: 32px; }
   .hero::before { --bottom-fade: 160px; }

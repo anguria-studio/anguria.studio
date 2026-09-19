@@ -7,7 +7,7 @@ import { apps } from "@/lib/apps";
 import styles from "./paguro-hero.module.css";
 import { PaguroIsland } from "./paguro-island";
 import { PaguroMenuBar } from "./paguro-menu-bar";
-import { PaguroServicePreview } from "./paguro-service-preview";
+import { PaguroServicePreview, PaguroStaticRail } from "./paguro-service-preview";
 import desktopStyles from "./paguro-desktop.module.css";
 import type { Locale } from "@/lib/i18n";
 import { initialIslandState, islandReducer, serviceNames } from "@/lib/paguro-island";
@@ -162,9 +162,17 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>}
         </div>
 
-        <div className={`${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/claude-compact-cutout.webp" alt={copy.mobileCaptureAlt} width={2200} height={1400} className="h-auto w-full" />
+        {/* A still, not the working preview: no capture switching, no dock, no
+            hit targets. The rail is drawn over it all the same, because the
+            photographed rail is empty without it. */}
+        <div data-preview-theme="dark" className={`${desktopStyles.desktop} ${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
+          <div className={styles.mobileFrame}>
+            <div className={styles.captureCanvas}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/paguro/claude-compact-cutout.webp" alt={copy.mobileCaptureAlt} width={2200} height={1400} className={`${styles.mobileStill} h-auto`} />
+              <PaguroStaticRail theme="dark" />
+            </div>
+          </div>
         </div>
 
         <p role="status" aria-live="polite" aria-atomic="true" className="sr-only hidden desk:block"><span key={announcement.id}>{announcement.message}</span></p>
