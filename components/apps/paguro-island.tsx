@@ -164,17 +164,26 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
       const next = available.find((row) => rows.indexOf(row) > firstIndex) ?? available.at(-1);
       (next?.querySelector<HTMLButtonElement>("[data-body]") ?? toggle.current)?.focus({ preventScroll: true });
     }
+    const reduce = reducedMotion();
+    const viewport = scroll.current!.getBoundingClientRect();
+    let visibleIndex = 0;
+    let exitDuration = 180;
     const animations = leaving.map((row) => {
       row.inert = true;
       const card = row.querySelector<HTMLElement>("[data-card]")!;
-      const reduce = reducedMotion();
+      const bounds = row.getBoundingClientRect();
+      const visible = bounds.bottom > viewport.top && bounds.top < viewport.bottom
+        && Number(getComputedStyle(row).opacity) > 0;
+      // Stagger the visible stack, without waiting on a long offscreen history.
+      const delay = all && !reduce && visible ? Math.min(visibleIndex++, 4) * 65 : 0;
+      exitDuration = Math.max(exitDuration, delay + 180);
       const animation = card.animate([
         { transform: getComputedStyle(card).transform, opacity: getComputedStyle(card).opacity },
         { transform: reduce ? "none" : `translateX(${card.offsetWidth + 40}px) scale(.96)`, opacity: 0 },
-      ], { duration: 180, easing: "ease-out", fill: "forwards" });
+      ], { duration: 180, delay, easing: "ease-out", fill: "forwards" });
       return animation.finished;
     });
-    repaint(450);
+    repaint(exitDuration + 50);
     await Promise.allSettled(animations);
     if (!mounted.current) return;
     remove(fresh, all);
