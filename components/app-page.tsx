@@ -33,7 +33,7 @@ export async function AppPage({
           operatingSystem: `macOS ${apps.paguro.minMacOS} or later`,
           applicationCategory: "BusinessApplication",
           isAccessibleForFree: true,
-          downloadUrl: apps.paguro.download,
+          downloadUrl: apps.paguro.appStore ?? apps.paguro.download,
           offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
         },
       }).replace(/</g, "\\u003c") }} />}

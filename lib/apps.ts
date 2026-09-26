@@ -44,6 +44,8 @@ export const apps: Record<AppSlug, AppMeta> = {
     download: "https://github.com/anguria-studio/Paguro/releases/latest/download/Paguro.dmg",
     minMacOS: "15.0",
     shot: "atoll",
+    // Storefront-neutral: without a country segment Apple opens the visitor's own store.
+    appStore: "https://apps.apple.com/app/paguro/id6805463271?mt=12",
   },
 };
 
