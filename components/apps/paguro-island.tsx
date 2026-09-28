@@ -175,7 +175,7 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
       const visible = bounds.bottom > viewport.top && bounds.top < viewport.bottom
         && Number(getComputedStyle(row).opacity) > 0;
       // Stagger the visible stack, without waiting on a long offscreen history.
-      const delay = all && !reduce && visible ? Math.min(visibleIndex++, 4) * 65 : 0;
+      const delay = all && !reduce && visible ? Math.min(visibleIndex++, 4) * 30 : 0;
       exitDuration = Math.max(exitDuration, delay + 180);
       const animation = card.animate([
         { transform: getComputedStyle(card).transform, opacity: getComputedStyle(card).opacity },

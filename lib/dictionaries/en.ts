@@ -308,6 +308,7 @@ export const dictionary = {
     nav: "Explore Paguro",
     faqLabel: "Questions",
     appStore: "Get from App Store",
+    appStoreMobile: "View on Mac App Store",
     faqTitle: "A few things to know.",
     faq: [
       {
@@ -343,6 +344,8 @@ export const dictionary = {
     download: "Get the app",
     credits: "A free, open-source fork of Chorus by Nico Jan.",
     requirements: "macOS 15 or later · Apple silicon and Intel",
+    /** `{version}` comes from the app’s minimum macOS version. */
+    downloadRequirements: "macOS {version}+ · Apple silicon and Intel",
     requirementsQuestion: "Which Macs are supported?",
     story: {
       title: "Work. Life. Everything in between.",
@@ -351,16 +354,20 @@ export const dictionary = {
       serviceNote: "Pick from the catalog, or bring a website of your own.",
       features: [
         {
+          title: "Quiet when you need it.",
+          body: "Mute one app, a workspace, or everything. Set quiet hours for the moments that need your attention."
+        },
+        {
           title: "A place for every account.",
-          body: "Work Gmail. Personal Gmail. Keep both open without signing in and out. Group your services into workspaces that make sense to you."
+          body: "Keep work and personal accounts signed in side by side. Give each its own session, and group your apps into workspaces."
         },
         {
           title: "Step away. Close the door.",
-          body: "Lock Paguro with Touch ID or your Mac password. Your services and new notifications stay out of view until you return."
+          body: "Lock Paguro with Touch ID or your Mac password. Services and new notifications stay hidden until you return."
         },
         {
           title: "No extra account. No telemetry.",
-          body: "Your setup and login sessions stay on your Mac. No Paguro account, cloud sync, or app telemetry. The services you use connect directly to their providers."
+          body: "Your sessions stay on your Mac, with no Paguro account or app telemetry. Built-in blocking helps stop requests to known ad and tracking domains."
         }
       ]
     }
@@ -369,7 +376,7 @@ export const dictionary = {
   paguroPrivacy: {
     /** Link label wherever the policy is linked from: the Paguro page footer. */
     link: "Privacy policy",
-    /** The line under the Paguro page's three features; the third is the privacy claim, this is its receipt. */
+    /** Link copy for the full policy supporting the Paguro page’s privacy claims. */
     read: "Read the Paguro privacy policy",
     /** The back link at the top of the policy. */
     back: "Back to Paguro",

@@ -35,12 +35,14 @@ function Pill({
   href,
   tone,
   label,
+  mobileLabel,
   icon,
   download = false,
 }: {
   href: string;
   tone: "solid" | "subtle";
   label: string;
+  mobileLabel?: string;
   icon: React.ReactNode;
   download?: boolean;
 }) {
@@ -54,7 +56,14 @@ function Pill({
       className={`${PILL} ${download ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"}`}
     >
       {icon}
-      <span className={LABEL}>{label}</span>
+      <span className={LABEL}>
+        {mobileLabel ? (
+          <>
+            <span className="md:hidden">{mobileLabel}</span>
+            <span className="hidden md:inline">{label}</span>
+          </>
+        ) : label}
+      </span>
       <ArrowRight className={ARROW} />
     </a>
   );
@@ -63,10 +72,12 @@ function Pill({
 export function PaguroActions({
   copy,
   meta,
+  mobileAppStoreLabel,
   className = "",
 }: {
   copy: Dictionary["paguroPage"];
   meta: AppMeta;
+  mobileAppStoreLabel?: string;
   className?: string;
 }) {
   return (
@@ -76,6 +87,7 @@ export function PaguroActions({
           href={meta.appStore}
           tone="solid"
           label={copy.appStore}
+          mobileLabel={mobileAppStoreLabel}
           icon={<AppleMark viewBox="2 2 20 20" className={`size-4 ${SWAP}`} />}
         />
       ) : (

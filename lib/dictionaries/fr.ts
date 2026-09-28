@@ -280,6 +280,7 @@ export const dictionary: Dictionary = {
     nav: "Découvrir Paguro",
     faqLabel: "Questions",
     appStore: "Télécharger dans l’App Store",
+    appStoreMobile: "Voir sur le Mac App Store",
     faqTitle: "Quelques réponses utiles.",
     faq: [
       {
@@ -315,6 +316,7 @@ export const dictionary: Dictionary = {
     download: "Télécharger l’app",
     credits: "Un fork gratuit et open source de Chorus, créé par Nico Jan.",
     requirements: "macOS 15 ou ultérieur · Apple silicon et Intel",
+    downloadRequirements: "macOS {version}+ · Apple silicon et Intel",
     requirementsQuestion: "Quels Mac sont compatibles ?",
     story: {
       title: "Travail. Vie perso. Et tout le reste.",
@@ -323,16 +325,20 @@ export const dictionary: Dictionary = {
       serviceNote: "Choisissez dans le catalogue, ou ajoutez le site de votre choix.",
       features: [
         {
+          title: "Du calme quand il le faut.",
+          body: "Coupez les notifications d’une app, d’un espace ou de tous les services. Programmez des heures de tranquillité pour les moments qui demandent votre attention."
+        },
+        {
           title: "Une place pour chaque compte.",
-          body: "Gmail pro. Gmail perso. Gardez les deux ouverts sans vous déconnecter. Regroupez vos services dans des espaces qui vous ressemblent."
+          body: "Gardez vos comptes pro et perso connectés, chacun avec sa propre session. Regroupez vos apps dans vos espaces de travail."
         },
         {
           title: "Vous partez ? Fermez la porte.",
-          body: "Verrouillez Paguro avec Touch ID ou le mot de passe du Mac. Vos services et nouvelles notifications restent masqués jusqu’à votre retour."
+          body: "Verrouillez Paguro avec Touch ID ou le mot de passe du Mac. Services et notifications restent masqués jusqu’à votre retour."
         },
         {
           title: "Aucun compte en plus. Aucune télémétrie.",
-          body: "Votre configuration et vos sessions restent sur votre Mac. Aucun compte Paguro, aucune synchronisation cloud ni télémétrie de l’app. Vos services se connectent directement à leurs fournisseurs."
+          body: "Vos sessions restent sur votre Mac, sans compte Paguro ni télémétrie de l’app. Le blocage intégré aide à arrêter les requêtes vers les domaines publicitaires et de suivi connus."
         }
       ]
     }

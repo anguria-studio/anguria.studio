@@ -46,6 +46,9 @@
   .title { font-size: clamp(38px, 8vw, 60px); letter-spacing: -.045em; }
   .subtitle { font-size: 18px; margin-top: 20px; }
   .demo { margin-top: 48px; padding-inline: 16px; }
+  .cta { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 20rem; margin-inline: auto; }
+  .cta > a { width: 100%; justify-content: center; white-space: nowrap; }
+  .cta > a > svg { flex-shrink: 0; }
   .cta > a:last-child { display: inline-flex; }
 }
 
@@ -57,7 +60,11 @@
   backdrop-filter: blur(24px) saturate(1.5);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 0 0 1px rgb(255 255 255 / .18);
 }
-.appFrame[data-live-frame][data-theme="light"]::before { background: rgb(255 255 255 / .35); }
+.appFrame[data-live-frame][data-theme="light"]::before {
+  background: rgb(255 255 255 / .5);
+  -webkit-backdrop-filter: blur(32px) saturate(1.15);
+  backdrop-filter: blur(32px) saturate(1.15);
+}
 @media (prefers-reduced-transparency: reduce) {
   .appFrame[data-live-frame]::before { background: #303538; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .appFrame[data-live-frame][data-theme="light"]::before { background: #e7e9e8; }

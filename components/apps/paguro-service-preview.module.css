@@ -11,7 +11,9 @@
 .service { display: flex; align-items: center; gap: calc(8 * var(--point)); padding-inline: calc(8 * var(--point)); border-radius: calc(6 * var(--point)); outline: none; user-select: none; }
 .service[aria-current] { background: var(--island-card-focus); }
 .service[role="button"] { cursor: pointer; }
-.capture[data-theme="light"] .service[aria-current] { background: rgb(255 255 255 / .3); }
+.capture[data-theme="light"] .service[aria-current] { background: rgb(0 0 0 / .12); }
+.capture[data-theme="light"] .service:hover:not([aria-current]),
+.capture[data-theme="light"] .layoutToggle:hover { background: rgb(0 0 0 / .07); }
 .service:hover { background: var(--island-card-fill); z-index: 2; }
 .service:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; z-index: 3; }
 .mark { position: relative; display: block; flex: 0 0 auto; width: calc(22 * var(--point)); height: calc(22 * var(--point)); }
@@ -106,6 +108,8 @@
 .settingsButton .nativeIcon { width: calc(16 * var(--point)); height: calc(16 * var(--point)); }
 .sidebarFooter button:disabled, .windowTools button:disabled { cursor: not-allowed; }
 .sidebarFooter .addService:hover { background: rgb(255 255 255 / .1); }
+.capture[data-theme="light"] .sidebarFooter .addService,
+.capture[data-theme="light"] .settingsButton { background: rgb(0 0 0 / .1); }
 @media (prefers-reduced-motion: reduce) { .workspaceChevron .nativeIcon { transition: none; } }
 
 .nativeIcon { display: block; width: 100%; height: 100%; background: currentColor; mask-size: contain; mask-position: center; mask-repeat: no-repeat; -webkit-mask-size: contain; -webkit-mask-position: center; -webkit-mask-repeat: no-repeat; }

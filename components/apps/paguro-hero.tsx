@@ -109,7 +109,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}<span className="text-melon-500">{copy.accent}</span>
         </h1>
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.intro} {page.releaseBody}</p>
-        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} className={`${styles.cta} mt-8 justify-center motion-safe:enter-3`} />
+        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-3`} />
+        <p className="mt-3 text-sm text-muted motion-safe:enter-3">{page.downloadRequirements.replace("{version}", apps.paguro.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
 
       <div className={styles.demo}>
@@ -132,7 +133,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
         </div>
 
         <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block`}>
-          {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas} motion-safe:fade-3`}>
+          {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas}`}>
           <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
@@ -145,7 +146,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>}
         </div>
 
-        {!showDesktopPreview && <div data-preview-theme="dark" className={`${desktopStyles.desktop} ${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
+        {!showDesktopPreview && <div data-preview-theme="dark" className={`${desktopStyles.desktop} ${styles.mobileGlass} desk:hidden`}>
           <div className={`${styles.appFrame} ${styles.mobileFrame}`} data-live-frame="true" data-theme="dark" role="img" aria-label={copy.mobileCaptureAlt}>
             <div className={styles.captureCanvas} aria-hidden="true">
               <PaguroServicePreview interactive={false} service="claude" layout="sidebar" onLayoutChange={changeLayout} theme="dark" copy={copy.serviceOverlay} locale={locale} muted={false} onMuteChange={() => {}} hintHistory={previewHintHistory} notifications={[]} onServiceSelect={clearServiceNotifications} />

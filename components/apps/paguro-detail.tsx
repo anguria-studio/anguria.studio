@@ -8,9 +8,25 @@ import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
 import { apps, paguroPrivacyPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import type { FeatureId } from "@/lib/features";
 
-const featureIcons: FeatureId[] = ["custom", "privacy", "source"];
+// Balance the visible artwork inside the shared 32px slot. These viewBoxes
+// are specific to this grid; the larger homepage glyphs keep their own sizing.
+const featureIcons = [
+  {
+    viewBox: "-2 -2 28 28",
+    node: (
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 4.8A6 6 0 0 1 18 10v3l2 3M6 6.5A6 6 0 0 0 6 10v4l-2 3h13M10 21h4M3 3l18 18" />
+      </g>
+    ),
+  },
+  { ...FEATURE_ICONS.custom, viewBox: "23 28 64 64" },
+  FEATURE_ICONS.privacy,
+  { ...FEATURE_ICONS.source, viewBox: "-3 -3.2 22 22" },
+];
+// Workspaces, quiet hours, app lock, privacy. Copy and icons share dictionary
+// indices so the reading order stays consistent across locales and screen sizes.
+const featureOrder = [1, 0, 2, 3] as const;
 const linkStyle = "rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500";
 
 export function PaguroHeader({
@@ -70,8 +86,7 @@ export function PaguroHeader({
 
 export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const copy = dict.paguroPage;
-  // The system requirements read as one more question, so they join the
-  // translated list instead of sitting under it as a stray line.
+  // Keep the full system requirements in the FAQ as well as the short hero note.
   const faq = [
     ...copy.faq,
     { question: copy.requirementsQuestion, answer: copy.requirements },
@@ -87,18 +102,20 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted text-pretty">{copy.story.body}</p>
         </div>
 
-        <ul className="mt-16 grid gap-10 sm:mt-20 md:grid-cols-3">
-          {copy.story.features.map((feature, index) => {
-            const icon = FEATURE_ICONS[featureIcons[index]];
+        {/* Shared title/body rows keep descriptions aligned when translations wrap. */}
+        <ul className="mx-auto mt-12 grid max-w-4xl gap-x-12 gap-y-2 sm:mt-14 md:grid-cols-2">
+          {featureOrder.map((index) => {
+            const feature = copy.story.features[index];
+            const icon = featureIcons[index];
             // Same two-layer hover as the homepage grid: this file owns the
             // shared lift/scale/accent on the svg box, each icon's own gesture
-            // keys off group/feature from inside. None of these three is
+            // keys off group/feature from inside. None of these icons is
             // `glass`, so all take the accent shift.
             return (
-              <li key={feature.title} className="group/feature border-t border-hairline pt-8">
-                <svg viewBox={icon.viewBox} aria-hidden="true" className="mb-6 size-8 fill-current motion-safe:transition motion-safe:duration-300 motion-safe:group-hover/feature:-translate-y-1 motion-safe:group-hover/feature:scale-105 transition-colors group-hover/feature:text-melon-500">{icon.node}</svg>
-                <h3 className="text-2xl font-semibold tracking-tight text-balance">{feature.title}</h3>
-                <p className="mt-4 text-base leading-relaxed text-muted text-pretty">{feature.body}</p>
+              <li key={feature.title} className="group/feature row-span-2 grid grid-cols-[2rem_minmax(0,1fr)] grid-rows-subgrid gap-x-3 border-t border-hairline py-6">
+                <svg viewBox={icon.viewBox} aria-hidden="true" className="size-8 self-start fill-current motion-safe:transition motion-safe:duration-300 motion-safe:group-hover/feature:-translate-y-1 motion-safe:group-hover/feature:scale-105 transition-colors group-hover/feature:text-melon-500">{icon.node}</svg>
+                <h3 className="self-start pt-0.5 text-xl leading-snug font-semibold tracking-tight text-balance">{feature.title}</h3>
+                <p className="col-start-2 text-base leading-relaxed text-muted text-pretty">{feature.body}</p>
               </li>
             );
           })}

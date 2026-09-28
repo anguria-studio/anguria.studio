@@ -281,6 +281,7 @@ export const dictionary: Dictionary = {
     nav: "Descubre Paguro",
     faqLabel: "Preguntas",
     appStore: "Descárgalo en el App Store",
+    appStoreMobile: "Ver en el Mac App Store",
     faqTitle: "Algunas cosas que conviene saber.",
     faq: [
       {
@@ -316,6 +317,7 @@ export const dictionary: Dictionary = {
     download: "Consigue la app",
     credits: "Un fork gratuito y open source de Chorus, creado por Nico Jan.",
     requirements: "macOS 15 o posterior · Apple silicon e Intel",
+    downloadRequirements: "macOS {version}+ · Apple silicon e Intel",
     requirementsQuestion: "¿Qué Macs son compatibles?",
     story: {
       title: "Trabajo. Vida. Y todo lo demás.",
@@ -324,16 +326,20 @@ export const dictionary: Dictionary = {
       serviceNote: "Elige del catálogo, o añade tu propio sitio web.",
       features: [
         {
+          title: "Silencio cuando lo necesitas.",
+          body: "Silencia una app, un espacio o todo a la vez. Programa horas de silencio para los momentos que necesitan tu atención."
+        },
+        {
           title: "Un lugar para cada cuenta.",
-          body: "Gmail del trabajo. Gmail personal. Mantén los dos abiertos sin entrar y salir de tus cuentas. Agrupa tus servicios como prefieras."
+          body: "Mantén conectadas tus cuentas personales y de trabajo, cada una con su propia sesión. Agrupa tus apps en espacios de trabajo."
         },
         {
           title: "¿Te vas? Cierra la puerta.",
-          body: "Bloquea Paguro con Touch ID o la contraseña de tu Mac. Tus servicios y nuevas notificaciones permanecen ocultos hasta que vuelvas."
+          body: "Bloquea Paguro con Touch ID o la contraseña de tu Mac. Servicios y notificaciones permanecen ocultos hasta que vuelvas."
         },
         {
           title: "Sin otra cuenta. Sin telemetría.",
-          body: "Tu configuración y tus sesiones permanecen en tu Mac. Sin cuenta de Paguro, sincronización en la nube ni telemetría de la app. Los servicios que usas se conectan directamente con sus proveedores."
+          body: "Tus sesiones quedan en tu Mac, sin cuenta de Paguro ni telemetría de la app. El bloqueo integrado ayuda a detener solicitudes a dominios conocidos de publicidad y seguimiento."
         }
       ]
     }
