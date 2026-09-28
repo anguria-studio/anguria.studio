@@ -7,7 +7,7 @@ import { apps } from "@/lib/apps";
 import styles from "./paguro-hero.module.css";
 import { PaguroIsland } from "./paguro-island";
 import { PaguroMenuBar } from "./paguro-menu-bar";
-import { PaguroServicePreview, PaguroStaticRail } from "./paguro-service-preview";
+import { PaguroServicePreview } from "./paguro-service-preview";
 import desktopStyles from "./paguro-desktop.module.css";
 import type { Locale } from "@/lib/i18n";
 import { initialIslandState, islandReducer, serviceNames } from "@/lib/paguro-island";
@@ -55,7 +55,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const systemTheme = useSyncExternalStore(subscribeToSystemTheme, readSystemTheme, serverSystemTheme);
   const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
-  const [layout, setLayout] = useState<"sidebar" | "compact">("compact");
+  const [layout, setLayout] = useState<"sidebar" | "compact">("sidebar");
   const [muted, setMuted] = useState(false);
   const [selectedService, setSelectedService] = useState<SelectableService>("claude");
   const [announcement, setAnnouncement] = useState({ id: 0, message: "" });
@@ -145,18 +145,13 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           </div>}
         </div>
 
-        {/* A still, not the working preview: no capture switching, no dock, no
-            hit targets. The rail is drawn over it all the same, because the
-            photographed rail is empty without it. */}
-        <div data-preview-theme="dark" className={`${desktopStyles.desktop} ${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
-          <div className={styles.mobileFrame}>
-            <div className={styles.captureCanvas}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/paguro/claude-compact-cutout.webp" alt={copy.mobileCaptureAlt} width={2200} height={1400} className={`${styles.mobileStill} h-auto`} />
-              <PaguroStaticRail theme="dark" layout="compact" copy={copy.serviceOverlay} />
+        {!showDesktopPreview && <div data-preview-theme="dark" className={`${desktopStyles.desktop} ${styles.mobileGlass} desk:hidden motion-safe:fade-3`}>
+          <div className={`${styles.appFrame} ${styles.mobileFrame}`} data-live-frame="true" data-theme="dark" role="img" aria-label={copy.mobileCaptureAlt}>
+            <div className={styles.captureCanvas} aria-hidden="true">
+              <PaguroServicePreview interactive={false} service="claude" layout="sidebar" onLayoutChange={changeLayout} theme="dark" copy={copy.serviceOverlay} locale={locale} muted={false} onMuteChange={() => {}} hintHistory={previewHintHistory} notifications={[]} onServiceSelect={clearServiceNotifications} />
             </div>
           </div>
-        </div>
+        </div>}
 
         <p role="status" aria-live="polite" aria-atomic="true" className="sr-only hidden desk:block"><span key={announcement.id}>{announcement.message}</span></p>
       </div>

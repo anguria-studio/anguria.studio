@@ -5,7 +5,8 @@ import { previewServices, railServices, serviceCapture, type PreviewLayout, type
 import styles from "./paguro-service-preview.module.css";
 
 /** Keep the old crop stretched until the live sidebar has finished moving. */
-export function PaguroServiceCapture({ service, layout, theme, style }: {
+export function PaguroServiceCapture({ service, layout, theme, style, preload = true }: {
+  preload?: boolean;
   service: SelectableService;
   layout: PreviewLayout;
   theme: PreviewTheme;
@@ -48,6 +49,7 @@ export function PaguroServiceCapture({ service, layout, theme, style }: {
 
   return <div ref={viewport} className={styles.content} style={style} data-capture-layout={displayed.layout}>
     {previewServices.flatMap((id) => (["light", "dark"] as const).flatMap((scheme) => (["compact", "sidebar"] as const).map((arrangement) => {
+      if (!preload && (id !== service || scheme !== theme || arrangement !== layout)) return null;
       const active = id === displayed.service && scheme === displayed.theme && arrangement === displayed.layout;
       const x = arrangement === "compact" ? 232 : 404;
       const width = 1262 - x;

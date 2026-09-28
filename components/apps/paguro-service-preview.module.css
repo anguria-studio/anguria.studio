@@ -23,7 +23,7 @@
 .label { font-size: calc(13 * var(--point)); font-weight: 500; line-height: 1; white-space: nowrap; }
 .workspace { display: flex; align-items: center; gap: calc(8 * var(--point)); padding-inline: calc(8 * var(--point)); font-size: calc(12 * var(--point)); font-weight: 600; opacity: .7; }
 .workspaceChevron { display: grid; place-items: center; flex: 0 0 calc(22 * var(--point)); }
-.workspaceChevron svg { width: calc(12 * var(--point)); height: calc(12 * var(--point)); }
+.workspaceChevron .nativeIcon { width: calc(12 * var(--point)); height: calc(12 * var(--point)); }
 .layoutToggle { display: grid; place-items: center; padding: calc(3 * var(--point)); border-radius: calc(6 * var(--point)); opacity: .8; cursor: pointer; }
 .layoutToggle:hover { background: var(--island-card-fill); opacity: 1; }
 .layoutToggle:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
@@ -57,7 +57,7 @@
 .trafficLights i:nth-child(3) { background: #28c840; }
 .windowTitle { display: flex; align-items: center; font-size: calc(14 * var(--point)); font-weight: 600; }
 .windowTools { display: flex; gap: calc(5 * var(--point)); }
-.windowTools svg { width: 65%; height: 65%; }
+.windowTools .nativeIcon { width: 65%; height: 65%; }
 .addService { display: flex; align-items: center; justify-content: center; border-radius: calc(6 * var(--point)); background: rgb(255 255 255 / .1); font-size: calc(13 * var(--point)); font-weight: 500; }
 @media (prefers-reduced-transparency: reduce) { .capture[data-live-frame] { background: #303538; } .capture[data-live-frame][data-theme="light"] { background: #e7e9e8; } }
 
@@ -70,9 +70,12 @@
 .capture[data-live-frame] .label { overflow: hidden; opacity: 1; transition: opacity 150ms ease 80ms; }
 .capture[data-live-frame][data-layout="compact"] .label { opacity: 0; max-width: 0; transition-delay: 0ms; }
 .capture[data-live-frame][data-layout="sidebar"] .divider { opacity: 0; }
-.windowTools > button, .reloadDecoration { display: grid; place-items: center; width: calc(28 * var(--point)); height: calc(28 * var(--point)); border-radius: 50%; background: rgb(255 255 255 / .09); border: 1px solid rgb(255 255 255 / .1); font-size: calc(23 * var(--point)); line-height: 1; cursor: pointer; }
-.windowTools > button:disabled { opacity: .35; cursor: default; }
-.windowTools > button:hover:not(:disabled), .addService:hover { background: rgb(255 255 255 / .2); }
+.windowTools > button, .reloadDecoration { display: grid; place-items: center; width: calc(28 * var(--point)); height: calc(28 * var(--point)); border-radius: 50%; background: rgb(32 34 36 / .55); border: 1px solid rgb(255 255 255 / .24); box-shadow: 0 1px 2px rgb(0 0 0 / .12); font-size: calc(23 * var(--point)); line-height: 1; cursor: pointer; }
+.windowTools > button:disabled .nativeIcon { opacity: .4; }
+.windowTools > button:hover:not(:disabled) { background: rgb(60 63 65 / .75); }
+.capture[data-theme="light"] .windowTools > button, .capture[data-theme="light"] .reloadDecoration { background: rgb(255 255 255 / .65); border-color: rgb(0 0 0 / .14); }
+.capture[data-theme="light"] .windowTools > button:hover:not(:disabled) { background: rgb(255 255 255 / .85); }
+.addService:hover { background: rgb(255 255 255 / .2); }
 .windowTools > button:focus-visible, .addService:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .addService { gap: calc(6 * var(--point)); white-space: nowrap; cursor: pointer; overflow: hidden; }
 @media (prefers-reduced-motion: no-preference) {
@@ -88,19 +91,22 @@
 .workspace[type="button"] { cursor: pointer; text-align: left; }
 .workspace[type="button"]:hover { opacity: 1; }
 .workspace[type="button"]:focus-visible { outline: 2px solid currentColor; border-radius: calc(6 * var(--point)); }
-.workspace[aria-expanded="false"] .workspaceChevron svg { transform: rotate(-90deg); }
-.workspaceChevron svg { transition: transform 160ms ease; }
+.workspace[aria-expanded="false"] .workspaceChevron .nativeIcon { transform: rotate(-90deg); }
+.workspaceChevron .nativeIcon { transition: transform 160ms ease; }
 .workspaceMute { margin-left: auto; width: calc(12 * var(--point)); height: calc(12 * var(--point)); }
 .serviceStatus { display: flex; align-items: center; gap: calc(5 * var(--point)); margin-left: auto; flex-shrink: 0; }
 .notificationBadge { display: grid; place-items: center; min-width: calc(16 * var(--point)); height: calc(16 * var(--point)); padding-inline: calc(3 * var(--point)); border-radius: 999px; background: #ff3b30; color: white; font-size: calc(10 * var(--point)); font-weight: 650; line-height: 1; }
 .mark .notificationBadge { position: absolute; top: calc(-5 * var(--point)); right: calc(-6 * var(--point)); min-width: calc(13 * var(--point)); height: calc(13 * var(--point)); font-size: calc(9 * var(--point)); }
 .compactMute { position: absolute; top: calc(-4 * var(--point)); left: calc(-4 * var(--point)); width: calc(10 * var(--point)); height: calc(10 * var(--point)); }
 .rowMute { width: calc(12 * var(--point)); height: calc(12 * var(--point)); opacity: .65; }
-.reloadDecoration svg { width: 56%; height: 56%; }
+.reloadDecoration .nativeIcon { width: 56%; height: 56%; }
 .sidebarFooter { position: absolute; --point: calc(100cqw / 1440); display: flex; align-items: flex-end; gap: calc(6 * var(--point)); border-top: 1px solid rgb(255 255 255 / .12); }
 .sidebarFooter .addService { position: static; flex: 1; height: calc(22 * var(--point)); }
 .settingsButton { display: grid; place-items: center; width: calc(34 * var(--point)); height: calc(22 * var(--point)); background: rgb(255 255 255 / .1); border-radius: calc(6 * var(--point)); }
-.settingsButton svg { width: calc(16 * var(--point)); height: calc(16 * var(--point)); }
+.settingsButton .nativeIcon { width: calc(16 * var(--point)); height: calc(16 * var(--point)); }
 .sidebarFooter button:disabled, .windowTools button:disabled { cursor: not-allowed; }
 .sidebarFooter .addService:hover { background: rgb(255 255 255 / .1); }
-@media (prefers-reduced-motion: reduce) { .workspaceChevron svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .workspaceChevron .nativeIcon { transition: none; } }
+
+.nativeIcon { display: block; width: 100%; height: 100%; background: currentColor; mask-size: contain; mask-position: center; mask-repeat: no-repeat; -webkit-mask-size: contain; -webkit-mask-position: center; -webkit-mask-repeat: no-repeat; }
+.addIcon { width: calc(12 * var(--point)); height: calc(12 * var(--point)); }

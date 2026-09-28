@@ -4,17 +4,19 @@ import { useEffect, useState, type RefObject } from "react";
 import { dockHintDuration, dockHintPointer, hintIdleDelay, nextPreviewHint, type PreviewHint, type PreviewHintHistory } from "@/lib/paguro-preview-hints";
 import { railServices, type PreviewLayout } from "@/lib/paguro-service-preview";
 
-export function usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history, layout }: {
+export function usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history, layout, enabled = true }: {
   captureRef: RefObject<HTMLDivElement | null>;
   toggleRef: RefObject<HTMLButtonElement | null>;
   dockRef: RefObject<HTMLDivElement | null>;
   history: RefObject<PreviewHintHistory>;
   layout: PreviewLayout;
+  enabled?: boolean;
 }) {
   const [hint, setHint] = useState<PreviewHint | null>(null);
   const [demoPointerY, setDemoPointerY] = useState<number | null>(null);
 
   useEffect(() => {
+    if (!enabled) return;
     const capture = captureRef.current;
     const toggle = toggleRef.current;
     const dock = dockRef.current;
@@ -152,7 +154,7 @@ export function usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history,
       motion.removeEventListener("change", visibilityChanged);
       stop();
     };
-  }, [captureRef, toggleRef, dockRef, history, layout]);
+  }, [captureRef, toggleRef, dockRef, history, layout, enabled]);
 
   return { hint, demoPointerY };
 }

@@ -16,27 +16,30 @@ function frame(x: number, y: number, width: number, height: number): CSSProperti
   return { left: `${x / captureSize.width * 100}%`, top: `${y / captureSize.height * 100}%`, width: `${width / captureSize.width * 100}%`, height: `${height / captureSize.height * 100}%` };
 }
 
-function Bell({ muted = false }: { muted?: boolean }) {
-  return <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M5 8a5 5 0 0 1 10 0v4l2 3H3l2-3V8Zm3 9h4" />
-    {muted && <path d="m2 2 16 16" strokeWidth="2" />}
-  </svg>;
+// The same SF Symbols used by Paguro's WebToolbarView and UnifiedRailView.
+function NativeIcon({ name }: { name: string }) {
+  return <span className={styles.nativeIcon} style={{ maskImage: `url("/paguro/controls/${name}.png")`, WebkitMaskImage: `url("/paguro/controls/${name}.png")` }} aria-hidden="true" />;
+}
+
+function Bell({ muted = false, filled = false }: { muted?: boolean; filled?: boolean }) {
+  return <NativeIcon name={muted ? filled ? "bell.slash.fill" : "bell.slash" : "bell"} />;
 }
 
 function WorkspaceHeading({ name, y, expanded = true, onToggle, muted = false }: { name: string; y: number; expanded?: boolean; onToggle?: () => void; muted?: boolean }) {
   const contents = <>
     <span className={styles.workspaceChevron} aria-hidden="true">
-      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m3 4.5 3 3 3-3" /></svg>
+      <NativeIcon name="chevron.down" />
     </span>
     <span>{name}</span>
-    {muted && <span className={styles.workspaceMute}><Bell muted /></span>}
+    {muted && <span className={styles.workspaceMute}><Bell muted filled /></span>}
   </>;
   return onToggle
     ? <button type="button" className={styles.workspace} style={frame(188, y, 196, 24)} aria-expanded={expanded} onClick={onToggle}>{contents}</button>
     : <div className={styles.workspace} style={frame(188, y, 196, 24)}>{contents}</div>;
 }
 
-export function PaguroServicePreview({ service: requestedService, layout: requestedLayout, onLayoutChange, theme, copy, locale, muted, onMuteChange, hintHistory, notifications, onServiceSelect }: {
+export function PaguroServicePreview({ service: requestedService, layout: requestedLayout, onLayoutChange, theme, copy, locale, muted, onMuteChange, hintHistory, notifications, onServiceSelect, interactive = true }: {
+  interactive?: boolean;
   service: SelectableService;
   layout: PreviewLayout;
   onLayoutChange: (layout: PreviewLayout) => void;
@@ -66,9 +69,9 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
     if (!hasServicePreview(service)) return;
     onServiceSelect(service);
   }
-  const { hint, demoPointerY } = usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history: hintHistory, layout });
+  const { hint, demoPointerY } = usePaguroPreviewHints({ captureRef, toggleRef, dockRef, history: hintHistory, layout, enabled: interactive });
   const compact = layout === "compact";
-  const transforms = dockTransforms(compact ? pointerY ?? (keyboardFocused === null ? demoPointerY : railServices[keyboardFocused].compactY) : null);
+  const transforms = dockTransforms(interactive && compact ? pointerY ?? (keyboardFocused === null ? demoPointerY : railServices[keyboardFocused].compactY) : null);
   const dividerOffset = transforms[3].offset + (transforms[3].scale - 1) * 11;
 
   function trackPointer(event: PointerEvent<HTMLDivElement>) {
@@ -82,26 +85,26 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
   }
 
   return (
-    <div ref={captureRef} className={styles.capture} data-layout={layout} data-theme={theme} data-live-frame="true" data-hint={hint ?? undefined} onPointerMove={trackPointer} onPointerLeave={() => setPointerY(null)}>
+    <div ref={captureRef} inert={!interactive} className={styles.capture} data-layout={layout} data-theme={theme} data-live-frame="true" data-hint={hint ?? undefined} onPointerMove={interactive ? trackPointer : undefined} onPointerLeave={() => setPointerY(null)}>
       <div className={styles.liveRail} style={frame(178, compact ? 152 : 108, compact ? 44 : 216, compact ? 640 : 684)} aria-hidden="true" />
-      <PaguroServiceCapture service={selectedService} layout={layout} theme={theme}
+      <PaguroServiceCapture preload={interactive} service={selectedService} layout={layout} theme={theme}
         style={frame(compact ? 232 : 404, 152, compact ? 1030 : 858, 640)} />
       <div className={styles.trafficLights} style={frame(189, 119, 62, 14)} aria-hidden="true"><i /><i /><i /></div>
       <span className={styles.windowTitle} style={frame(compact ? 300 : 412, 115, 240, 24)}>{railServices.find((entry) => entry.id === selectedService)?.name}</span>
       <div className={styles.windowTools} style={frame(1130, 112, 124, 28)}>
-        <button type="button" aria-label={ui.back} title={ui.back} disabled>‹</button>
-        <button type="button" aria-label={ui.forward} title={ui.forward} disabled>›</button>
-        <span className={styles.reloadDecoration} aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M15.5 6a6 6 0 1 0 .5 7M12 2l4 4-5 1" /></svg></span>
+        <button type="button" aria-label={ui.back} title={ui.back} disabled><NativeIcon name="chevron.left" /></button>
+        <button type="button" aria-label={ui.forward} title={ui.forward} disabled><NativeIcon name="chevron.right" /></button>
+        <span className={styles.reloadDecoration} aria-hidden="true"><NativeIcon name="arrow.clockwise" /></span>
         <button type="button" aria-label={muted ? ui.unmute : ui.mute} title={muted ? ui.unmute : ui.mute} aria-pressed={muted} onClick={onMuteChange}><Bell muted={muted} /></button>
       </div>
       {!compact && <div className={styles.sidebarFooter} style={frame(188, 748, 196, 34)}>
-        <button type="button" disabled className={styles.addService}><span aria-hidden="true">＋</span>{ui.add}</button>
-        <button type="button" disabled className={styles.settingsButton} aria-label={ui.settings}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 3 1-1h4l1 3 3 1 3 1-1 4 1 3-3 2-1 3-4 1-3-2-3 1-2-3-2-2 1-4 2-2 1-3Z" /><circle cx="12" cy="12" r="3.5" /></svg></button>
+        <button type="button" disabled className={styles.addService}><span className={styles.addIcon}><NativeIcon name="plus" /></span>{ui.add}</button>
+        <button type="button" disabled className={styles.settingsButton} aria-label={ui.settings}><NativeIcon name="gearshape" /></button>
       </div>}
 
       <button ref={toggleRef} type="button" className={styles.layoutToggle} style={frame(compact ? 270 : 360, 114, 24, 24)}
         aria-label={compact ? copy.expand : copy.collapse} aria-expanded={!compact} onClick={() => { setPointerY(null); setKeyboardFocused(null); onLayoutChange(compact ? "sidebar" : "compact"); }}>
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="3" /><path d="M8 3v14M4.5 7h1M4.5 10h1M4.5 13h1" /></svg>
+        <NativeIcon name="sidebar.left" />
       </button>
 
       <div ref={dockRef} className={styles.hintRegion} style={frame(178, 156, 72, 364)} aria-hidden="true" />
@@ -143,10 +146,10 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/paguro/services/${service.id}.svg`} alt="" width={22} height={22} draggable={false} />
               {compact && count > 0 && <span className={styles.notificationBadge} aria-hidden="true">{count}</span>}
-              {compact && muted && <span className={styles.compactMute}><Bell muted /></span>}
+              {compact && muted && <span className={styles.compactMute}><Bell muted filled /></span>}
             </span>
             <span className={styles.label} aria-hidden="true">{service.name}</span>
-            {!compact && <span className={styles.serviceStatus} aria-hidden="true">{count > 0 && <span className={styles.notificationBadge}>{count}</span>}{muted && <span className={styles.rowMute}><Bell muted /></span>}</span>}
+            {!compact && <span className={styles.serviceStatus} aria-hidden="true">{count > 0 && <span className={styles.notificationBadge}>{count}</span>}{muted && <span className={styles.rowMute}><Bell muted filled /></span>}</span>}
             {compact && <span className={styles.tooltip} aria-hidden="true">{service.name}</span>}
           </li>;
         })}
