@@ -56,8 +56,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
   const [layout, setLayout] = useState<"sidebar" | "compact">("compact");
+  const [muted, setMuted] = useState(false);
   const [selectedService, setSelectedService] = useState<SelectableService>("claude");
-  const [overlayAvailable, setOverlayAvailable] = useState(true);
   const [announcement, setAnnouncement] = useState({ id: 0, message: "" });
   const nextID = useRef(0);
   const previewHintHistory = useRef(createPreviewHintHistory());
@@ -81,7 +81,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
     const { title, message } = copy.samples[service][index];
     const notification = { id: ++nextID.current, service, title, message };
     dispatch({ type: "receive", notification });
-    announce(copy.sent.replace("{service}", serviceNames[service]).replace("{message}", message));
+    if (muted) dispatch({ type: "collapse" });
+    if (!muted) announce(copy.sent.replace("{service}", serviceNames[service]).replace("{message}", message));
   }
 
   function remove(ids: number[], all: boolean) {
@@ -138,27 +139,8 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} openNotification={openNotification} />
           </div>
 
-          <div className={styles.appFrame}><div className={styles.captureCanvas}>
-          {overlayAvailable ? (
-            <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} onUnavailable={() => setOverlayAvailable(false)} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
-          ) : (<>
-            <div className={desktopStyles.legacyWindow}>
-              <div className="relative overflow-hidden rounded-xl bg-black shadow-2xl">
-                {([
-                  ["dark", "sidebar", "workspace.png"], ["dark", "compact", "compact.png"],
-                  ["light", "sidebar", "workspace-light.png"], ["light", "compact", "compact-light.png"],
-                ] as const).map(([theme, arrangement, file], index) => {
-                  const active = theme === previewTheme && arrangement === layout;
-                  return (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img key={file} src={`/paguro/${file}`} alt={active ? (layout === "sidebar" ? copy.captureAlt : copy.compactAlt) : ""} width={1100} height={700}
-                      className={`${index === 0 ? "" : "absolute inset-0"} h-auto w-full ${active ? "opacity-100" : "opacity-0"}`} />
-                  );
-                })}
-              </div>
-            </div>
-            <PaguroStaticRail theme={previewTheme} layout={layout} copy={copy.serviceOverlay} />
-          </>)}
+          <div className={styles.appFrame} data-live-frame="true" data-theme={previewTheme}><div className={styles.captureCanvas}>
+            <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} locale={locale} muted={muted} onMuteChange={() => { setMuted(!muted); dispatch({ type: "collapse" }); }} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
           </div></div>
           </div>}
         </div>

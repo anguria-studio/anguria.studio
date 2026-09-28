@@ -1,8 +1,6 @@
-/* Native screenshot geometry only. Every point scales with the same canvas;
-   the site's typography, colors, and spacing outside this preview are unchanged. */
+/* The live window and mobile still share a 1440 × 900 coordinate system. */
 .capture { position: absolute; inset: 0; container-type: inline-size; color: var(--color-foreground); }
 .capture[data-theme="light"] { color: #1d1d1f; }
-.screenshot { position: absolute; inset: 0; width: 100%; height: 100%; user-select: none; pointer-events: none; }
 /* The still hero draws the same rail as a picture, not a control: no hover
    state, and no stray touch lighting an icon up. */
 .capture[data-static] { pointer-events: none; }
@@ -17,7 +15,6 @@
 .service:hover { background: var(--island-card-fill); z-index: 2; }
 .service:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; z-index: 3; }
 .mark { position: relative; display: block; flex: 0 0 auto; width: calc(22 * var(--point)); height: calc(22 * var(--point)); }
-.notificationDot { position: absolute; top: calc(-2 * var(--point)); right: calc(-2 * var(--point)); width: calc(6 * var(--point)); height: calc(6 * var(--point)); border-radius: 50%; background: #ff453a; }
 .mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
 /* The ChatGPT mark is drawn in solid white for the dark rail it usually sits
    on, and would disappear against the light one. The art is monochrome, so
@@ -48,3 +45,62 @@
 @media (prefers-reduced-transparency: reduce) {
   .tooltip { background: var(--color-background); backdrop-filter: none; }
 }
+
+.capture[data-live-frame] { color: #f5f5f7; }
+.liveRail, .trafficLights, .windowTitle, .windowTools, .addService {
+  position: absolute; --point: calc(100cqw / 1440);
+}
+.liveRail { background: rgb(255 255 255 / .035); border: 1px solid rgb(255 255 255 / .12); border-radius: calc(14 * var(--point)); pointer-events: none; }
+.trafficLights { display: flex; gap: calc(8 * var(--point)); align-items: center; }
+.trafficLights i { width: calc(14 * var(--point)); height: calc(14 * var(--point)); border-radius: 50%; background: #ff5f57; box-shadow: inset 0 1px 1px rgb(255 255 255 / .3); }
+.trafficLights i:nth-child(2) { background: #febc2e; }
+.trafficLights i:nth-child(3) { background: #28c840; }
+.windowTitle { display: flex; align-items: center; font-size: calc(14 * var(--point)); font-weight: 600; }
+.windowTools { display: flex; gap: calc(5 * var(--point)); }
+.windowTools svg { width: 65%; height: 65%; }
+.addService { display: flex; align-items: center; justify-content: center; border-radius: calc(6 * var(--point)); background: rgb(255 255 255 / .1); font-size: calc(13 * var(--point)); font-weight: 500; }
+@media (prefers-reduced-transparency: reduce) { .capture[data-live-frame] { background: #303538; } .capture[data-live-frame][data-theme="light"] { background: #e7e9e8; } }
+
+/* All desktop views now share one live window; only its content reflows. */
+.content { position: absolute; overflow: hidden; border-radius: calc(12 * 100cqw / 1440); }
+.serviceScreenshot { position: absolute; max-width: none; user-select: none; pointer-events: none; }
+.capture[data-live-frame][data-theme="light"] { color: #252728; }
+.capture[data-live-frame] .workspace { transition: opacity 160ms ease; }
+.capture[data-live-frame][data-layout="compact"] .workspace { opacity: 0; pointer-events: none; }
+.capture[data-live-frame] .label { overflow: hidden; opacity: 1; transition: opacity 150ms ease 80ms; }
+.capture[data-live-frame][data-layout="compact"] .label { opacity: 0; max-width: 0; transition-delay: 0ms; }
+.capture[data-live-frame][data-layout="sidebar"] .divider { opacity: 0; }
+.windowTools > button, .reloadDecoration { display: grid; place-items: center; width: calc(28 * var(--point)); height: calc(28 * var(--point)); border-radius: 50%; background: rgb(255 255 255 / .09); border: 1px solid rgb(255 255 255 / .1); font-size: calc(23 * var(--point)); line-height: 1; cursor: pointer; }
+.windowTools > button:disabled { opacity: .35; cursor: default; }
+.windowTools > button:hover:not(:disabled), .addService:hover { background: rgb(255 255 255 / .2); }
+.windowTools > button:focus-visible, .addService:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.addService { gap: calc(6 * var(--point)); white-space: nowrap; cursor: pointer; overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .capture[data-live-frame] :is(.content,.liveRail,.windowTitle,.layoutToggle,.service,.addService) { transition: left 260ms cubic-bezier(.2,.8,.2,1), width 260ms cubic-bezier(.2,.8,.2,1), top 260ms cubic-bezier(.2,.8,.2,1), height 260ms cubic-bezier(.2,.8,.2,1), transform 160ms var(--ease-enter); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .capture[data-live-frame] :is(.workspace,.label) { transition: none; }
+}
+
+.reloadDecoration { cursor: default; }
+
+.service[hidden] { display: none; }
+.workspace[type="button"] { cursor: pointer; text-align: left; }
+.workspace[type="button"]:hover { opacity: 1; }
+.workspace[type="button"]:focus-visible { outline: 2px solid currentColor; border-radius: calc(6 * var(--point)); }
+.workspace[aria-expanded="false"] .workspaceChevron svg { transform: rotate(-90deg); }
+.workspaceChevron svg { transition: transform 160ms ease; }
+.workspaceMute { margin-left: auto; width: calc(12 * var(--point)); height: calc(12 * var(--point)); }
+.serviceStatus { display: flex; align-items: center; gap: calc(5 * var(--point)); margin-left: auto; flex-shrink: 0; }
+.notificationBadge { display: grid; place-items: center; min-width: calc(16 * var(--point)); height: calc(16 * var(--point)); padding-inline: calc(3 * var(--point)); border-radius: 999px; background: #ff3b30; color: white; font-size: calc(10 * var(--point)); font-weight: 650; line-height: 1; }
+.mark .notificationBadge { position: absolute; top: calc(-5 * var(--point)); right: calc(-6 * var(--point)); min-width: calc(13 * var(--point)); height: calc(13 * var(--point)); font-size: calc(9 * var(--point)); }
+.compactMute { position: absolute; top: calc(-4 * var(--point)); left: calc(-4 * var(--point)); width: calc(10 * var(--point)); height: calc(10 * var(--point)); }
+.rowMute { width: calc(12 * var(--point)); height: calc(12 * var(--point)); opacity: .65; }
+.reloadDecoration svg { width: 56%; height: 56%; }
+.sidebarFooter { position: absolute; --point: calc(100cqw / 1440); display: flex; align-items: flex-end; gap: calc(6 * var(--point)); border-top: 1px solid rgb(255 255 255 / .12); }
+.sidebarFooter .addService { position: static; flex: 1; height: calc(22 * var(--point)); }
+.settingsButton { display: grid; place-items: center; width: calc(34 * var(--point)); height: calc(22 * var(--point)); background: rgb(255 255 255 / .1); border-radius: calc(6 * var(--point)); }
+.settingsButton svg { width: calc(16 * var(--point)); height: calc(16 * var(--point)); }
+.sidebarFooter button:disabled, .windowTools button:disabled { cursor: not-allowed; }
+.sidebarFooter .addService:hover { background: rgb(255 255 255 / .1); }
+@media (prefers-reduced-motion: reduce) { .workspaceChevron svg { transition: none; } }
