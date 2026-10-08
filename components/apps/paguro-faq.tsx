@@ -106,7 +106,7 @@ export function PaguroFaq({ faq }: { faq: readonly { question: string; answer: s
           style={{ "--i": typeof state === "number" ? state : 0 } as CSSProperties}
           className={`${styles.row} faq-item group border-b border-hairline`}
         >
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-semibold transition-opacity active:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
             {item.question}<span aria-hidden="true" className="shrink-0 text-2xl font-normal text-muted group-open:rotate-45 motion-safe:transition-transform">+</span>
           </summary>
           <p className="pb-6 pr-6 text-base leading-relaxed text-muted">{item.answer}</p>

@@ -1,7 +1,7 @@
 /* Choreography only. Layout, type, colours, and surfaces use the site tokens. */
 
 /*
- * The FAQ rows drop into place as they come into view.
+ * The FAQ rows fade in as they come into view.
  *
  * Gated on no-preference as well as on the observer that sets `data-arrive`, so
  * both halves fail closed: a reduced-motion reader gets no declaration at all —
@@ -25,32 +25,20 @@
   }
 
   .row[data-arrive="arrived"] {
-    /* Five steps, the same 950ms as the page's own enter-* entrances: an 80px
-     * row travelling this far needs to be watchable, not flicked. */
-    animation: arrive calc(var(--stagger-step) * 5) var(--ease-enter) backwards;
+    /* Two steps, an opacity fade only. This is a reference list people come to
+     * read, so the arrival acknowledges the scroll and gets out of the way. */
+    animation: arrive calc(var(--stagger-step) * 2) ease-out backwards;
     /* --i is the row's place in the batch it arrived with, not its index in the
      * list, so a row that appears alone starts immediately. Half a step (95ms)
      * rather than the strip's --wave-step: 60ms is a ripple across eight small
      * tiles, and reads as a stutter across seven full-width rows. */
     animation-delay: calc(var(--stagger-step) / 2 * var(--i));
-    /* The pivot is the row's left end, so the gesture reads as a page settling
-     * onto a spine rather than a box spinning about its middle. */
-    transform-origin: left center;
   }
 }
 
-/*
- * A positive angle rotates clockwise (CSS y grows downward), and with the origin
- * on the left end that puts the RIGHT end low — the row starts tipped downwards
- * and swings level, which is the hero tiles' tilt turned upright.
- *
- * No `to`: the implicit one is the row's own computed style, so it lands exactly
- * on the resting design. `transform`, not the `translate`/`rotate` properties,
- * to stay out of the way of the utilities Tailwind compiles to those.
- */
+/* No `to`: the implicit one is the row's own computed style. */
 @keyframes arrive {
   from {
     opacity: 0;
-    transform: translateY(var(--rise-distance)) rotate(var(--faq-tilt));
   }
 }

@@ -30,8 +30,35 @@ export function shouldDismiss(dragX: number, velocityX: number, width: number) {
   return dragX > 0 && ((width > 0 && dragX >= width * 0.25) || (dragX > 8 && velocityX >= 400));
 }
 
+/** Progressive resistance past a boundary: the further the drag goes, the less
+ *  the card follows, so the edge reads as soft rather than as a wall. */
+export function rubberband(overshoot: number, dimension: number, constant = 0.55) {
+  if (dimension <= 0) return 0;
+  return (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot));
+}
+
+/** Release velocity in px/s, measured across the recent samples rather than the
+ *  last pair of events, which is too jittery to throw with. Samples older than
+ *  `window` ms before the newest are ignored. */
+export function releaseVelocity(samples: readonly { x: number; t: number }[], window = 100) {
+  const last = samples.at(-1);
+  if (!last) return 0;
+  const first = samples.find((sample) => last.t - sample.t <= window) ?? last;
+  const elapsed = last.t - first.t;
+  return elapsed > 0 ? (last.x - first.x) / elapsed * 1000 : 0;
+}
+
+/** The exit's start speed is twice its average speed on the easing
+ *  `exitEasing`, so this duration hands the card off at the speed it was
+ *  thrown, clamped so a slow drag still leaves briskly. */
+export const exitEasing = "cubic-bezier(0.3, 0.6, 0.6, 1)";
+export function exitDuration(remaining: number, velocity: number) {
+  if (velocity <= 0) return 180;
+  return Math.min(280, Math.max(120, 2 * remaining / velocity * 1000));
+}
+
 export function dragAppearance(x: number, width: number, reduceMotion = false) {
-  const offset = x < 0 ? (reduceMotion ? 0 : x * 0.35) : x;
+  const offset = x < 0 ? (reduceMotion ? 0 : rubberband(x, width)) : x;
   return { offset, opacity: reduceMotion || width <= 0 ? 1 : 1 - 0.6 * Math.min(1, Math.abs(offset) / width) };
 }
 

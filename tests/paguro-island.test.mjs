@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { islandHeight, foldPlacement, shouldDismiss, dragAppearance, initialIslandState, islandReducer } from "../lib/paguro-island.ts";
+import { islandHeight, foldPlacement, shouldDismiss, dragAppearance, rubberband, releaseVelocity, exitDuration, initialIslandState, islandReducer } from "../lib/paguro-island.ts";
 
 const receive = (state, id) => islandReducer(state, {
   type: "receive", notification: { id, service: "slack", title: `Message ${id}`, message: "Hello" },
@@ -104,8 +104,35 @@ test("dismiss requires a long or fast rightward drag; clicks and left drags surv
   assert.equal(shouldDismiss(8, 900, 400), false);
   assert.equal(shouldDismiss(-200, 900, 400), false);
   assert.equal(shouldDismiss(0, 900, 400), false);
-  assert.deepEqual(dragAppearance(-100, 400), { offset: -35, opacity: 0.9475 });
+  const left = dragAppearance(-100, 400);
+  assert.ok(Math.abs(left.offset - -22000 / 455) < 1e-9);
+  assert.ok(Math.abs(left.opacity - (1 - 0.6 * 22000 / 455 / 400)) < 1e-9);
   assert.deepEqual(dragAppearance(-100, 400, true), { offset: 0, opacity: 1 });
+});
+
+test("the left edge resists progressively instead of following linearly", () => {
+  const near = rubberband(-40, 400);
+  const far = rubberband(-400, 400);
+  assert.ok(near < 0 && far < near);
+  // The second 360px of drag buys far less travel than the first 40px ratio.
+  assert.ok((far - near) / -360 < near / -40);
+  assert.ok(Math.abs(rubberband(-1e9, 400)) < 400);
+  assert.equal(rubberband(-100, 0), 0);
+});
+
+test("release velocity spans the recent window and ignores stale samples", () => {
+  assert.equal(releaseVelocity([]), 0);
+  assert.equal(releaseVelocity([{ x: 0, t: 0 }]), 0);
+  assert.equal(releaseVelocity([{ x: 0, t: 0 }, { x: 10, t: 10 }, { x: 50, t: 50 }]), 1000);
+  // The sample at t=0 is outside the 100ms window before t=200.
+  assert.equal(releaseVelocity([{ x: 0, t: 0 }, { x: 100, t: 150 }, { x: 150, t: 200 }]), 1000);
+});
+
+test("a thrown card exits at the speed it was thrown, within bounds", () => {
+  assert.equal(exitDuration(400, 0), 180);
+  assert.equal(exitDuration(300, 3000), 200);
+  assert.equal(exitDuration(300, 100000), 120);
+  assert.equal(exitDuration(300, 500), 280);
 });
 
 test("opening a notification clears its service, preserves other services, and collapses", () => {

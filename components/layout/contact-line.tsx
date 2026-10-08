@@ -15,7 +15,7 @@ export function ContactLine({ dict, issuesUrl = site.github }: { dict: Dictionar
   // no way to round them. `inline-block` keeps the link from wrapping, which
   // would otherwise split the bar across two lines.
   const link =
-    "relative inline-block text-foreground transition hover:text-melon-500 " +
+    "relative inline-block text-foreground transition hover:text-melon-500 active:text-melon-600 active:duration-0 " +
     "after:absolute after:inset-x-0 after:-bottom-0.5 after:h-1 after:rounded-full " +
     "after:bg-melon-500";
 

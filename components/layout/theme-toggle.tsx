@@ -31,23 +31,33 @@ function subscribe(onChange: () => void) {
 }
 
 function setTheme(pref: ThemePref) {
-  // Suppress hover transitions for this frame, otherwise every card and link
-  // cross-fades through grey on the way to the new palette.
-  const el = document.documentElement;
-  el.dataset.themeSwitching = "";
-  // Written synchronously as well as in the effect below, so the colours change
-  // in the same frame as the click rather than one paint later.
-  applyToDocument(pref);
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => delete el.dataset.themeSwitching);
-  });
-  try {
-    if (pref === "system") localStorage.removeItem(KEY);
-    else localStorage.setItem(KEY, pref);
-  } catch {
-    /* storage blocked; the attribute still applies for this page view */
-  }
-  listeners.forEach((l) => l());
+  const commit = () => {
+    // Suppress hover transitions for this frame, otherwise every card and link
+    // cross-fades through grey on the way to the new palette.
+    const el = document.documentElement;
+    el.dataset.themeSwitching = "";
+    applyToDocument(pref);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => delete el.dataset.themeSwitching);
+    });
+    try {
+      if (pref === "system") localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, pref);
+    } catch {
+      /* storage blocked; the attribute still applies for this page view */
+    }
+    listeners.forEach((l) => l());
+  };
+
+  // One crossfade of the whole page rather than a hard cut, so flipping between
+  // light and dark is not a sudden brightness jump. Everything, the store
+  // notification included, happens inside the callback: the effect below
+  // re-applies the attribute, and doing that before the old page is captured
+  // would leave nothing to fade from. A crossfade is already the reduced-motion
+  // form of a transition, so it stays on for everyone. Without the API, the
+  // swap is instant, as it was.
+  if ("startViewTransition" in document) document.startViewTransition(commit);
+  else commit();
 }
 
 function applyToDocument(pref: ThemePref) {
@@ -143,7 +153,7 @@ function Tab({
       aria-label={label}
       title={label}
       suppressHydrationWarning
-      className={`cursor-pointer rounded-full p-1.5 text-muted transition hover:text-foreground ${lit}`}
+      className={`cursor-pointer rounded-full p-1.5 text-muted transition hover:text-foreground active:bg-foreground/15 active:text-foreground active:duration-0 ${lit}`}
     >
       {children}
     </button>

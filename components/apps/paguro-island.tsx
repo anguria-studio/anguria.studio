@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { dragAppearance, foldPlacement, islandHeight, islandLayout, serviceNames, shouldDismiss } from "@/lib/paguro-island";
+import { dragAppearance, exitDuration, exitEasing, foldPlacement, islandHeight, islandLayout, releaseVelocity, serviceNames, shouldDismiss } from "@/lib/paguro-island";
 import type { DemoNotification, IslandAction, IslandPhase } from "@/lib/paguro-island";
 import styles from "./paguro-island.module.css";
 
@@ -17,8 +17,8 @@ type Props = {
 };
 
 type Drag = {
-  id: number; pointer: number; x: number; y: number; lastX: number; lastTime: number;
-  velocity: number; horizontal?: boolean; element: HTMLElement; width: number;
+  id: number; pointer: number; x: number; y: number;
+  samples: { x: number; t: number }[]; horizontal?: boolean; element: HTMLElement; width: number;
 };
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -151,7 +151,7 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
     repaint();
   }
 
-  async function dismiss(ids: number[], all = false) {
+  async function dismiss(ids: number[], all = false, velocity = 0) {
     const fresh = ids.filter((id) => !pending.current.has(id));
     if (!fresh.length) return;
     fresh.forEach((id) => pending.current.add(id));
@@ -167,7 +167,7 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
     const reduce = reducedMotion();
     const viewport = scroll.current!.getBoundingClientRect();
     let visibleIndex = 0;
-    let exitDuration = 180;
+    let longest = 180;
     const animations = leaving.map((row) => {
       row.inert = true;
       const card = row.querySelector<HTMLElement>("[data-card]")!;
@@ -176,14 +176,19 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
         && Number(getComputedStyle(row).opacity) > 0;
       // Stagger the visible stack, without waiting on a long offscreen history.
       const delay = all && !reduce && visible ? Math.min(visibleIndex++, 4) * 30 : 0;
-      exitDuration = Math.max(exitDuration, delay + 180);
+      // A thrown card leaves at the speed it was thrown; a clicked one at 180ms.
+      const from = getComputedStyle(card).transform;
+      const target = card.offsetWidth + 40;
+      const remaining = target - (from === "none" ? 0 : new DOMMatrix(from).m41);
+      const duration = reduce ? 180 : exitDuration(remaining, velocity);
+      longest = Math.max(longest, delay + duration);
       const animation = card.animate([
-        { transform: getComputedStyle(card).transform, opacity: getComputedStyle(card).opacity },
-        { transform: reduce ? "none" : `translateX(${card.offsetWidth + 40}px) scale(.96)`, opacity: 0 },
-      ], { duration: 180, delay, easing: "ease-out", fill: "forwards" });
+        { transform: from, opacity: getComputedStyle(card).opacity },
+        { transform: reduce ? "none" : `translateX(${target}px) scale(.96)`, opacity: 0 },
+      ], { duration, delay, easing: velocity > 0 ? exitEasing : "ease-out", fill: "forwards" });
       return animation.finished;
     });
-    repaint(exitDuration + 50);
+    repaint(longest + 50);
     await Promise.allSettled(animations);
     if (!mounted.current) return;
     remove(fresh, all);
@@ -193,7 +198,7 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
   function startDrag(event: ReactPointerEvent<HTMLDivElement>, id: number) {
     if (event.button !== 0 || (event.target as HTMLElement).closest("[data-dismiss]") || pending.current.has(id)) return;
     suppressClick.current = false;
-    drag.current = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastTime: event.timeStamp, velocity: 0, element: event.currentTarget, width: event.currentTarget.offsetWidth };
+    drag.current = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, samples: [{ x: event.clientX, t: event.timeStamp }], element: event.currentTarget, width: event.currentTarget.offsetWidth };
   }
 
   function moveDrag(event: ReactPointerEvent<HTMLDivElement>) {
@@ -211,10 +216,8 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
     }
     if (!current.horizontal) return;
     event.preventDefault();
-    const elapsed = event.timeStamp - current.lastTime;
-    if (elapsed > 0) current.velocity = (event.clientX - current.lastX) / elapsed * 1000;
-    current.lastX = event.clientX;
-    current.lastTime = event.timeStamp;
+    current.samples.push({ x: event.clientX, t: event.timeStamp });
+    if (current.samples.length > 8) current.samples.shift();
     const appearance = dragAppearance(x, current.width, reducedMotion());
     current.element.style.transform = `translateX(${appearance.offset}px)`;
     current.element.style.opacity = String(appearance.opacity);
@@ -228,8 +231,10 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
     delete current.element.dataset.dragging;
     if (current.element.hasPointerCapture(event.pointerId)) current.element.releasePointerCapture(event.pointerId);
     const x = event.clientX - current.x;
-    const velocity = event.timeStamp - current.lastTime > 100 ? 0 : current.velocity;
-    if (current.horizontal && !cancelled && shouldDismiss(x, velocity, current.width)) void dismiss([current.id]);
+    // A pointer that stopped before letting go has no speed left to carry.
+    const held = event.timeStamp - (current.samples.at(-1)?.t ?? 0) > 100;
+    const velocity = held ? 0 : releaseVelocity(current.samples);
+    if (current.horizontal && !cancelled && shouldDismiss(x, velocity, current.width)) void dismiss([current.id], false, Math.max(0, velocity));
     else {
       current.element.style.transform = "";
       current.element.style.opacity = "";

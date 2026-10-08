@@ -104,7 +104,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .silhouette { transition: width 280ms var(--ease-enter); }
   .island { transition: height 280ms var(--ease-enter), background 180ms ease; }
-  .row { transition: top 400ms var(--ease-bounce); }
+  .row { transition: top 400ms var(--ease-enter); }
   .arrival { animation: arrive 280ms var(--ease-enter) backwards; }
   .previewContent { animation: fade 180ms ease backwards; }
   .card:not([data-dragging="true"]) { transition: transform 400ms var(--ease-bounce), opacity 180ms ease; }

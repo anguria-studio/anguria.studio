@@ -105,12 +105,12 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   return (
     <section id="paguro" className={`${styles.hero} scroll-mt-24`}>
       <div className={styles.heading}>
-        <h1 className={`${styles.title} motion-safe:enter-1`}>
+        <h1 className="text-display-sm font-semibold md:text-display motion-safe:enter-1">
           {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}<span className="text-melon-500">{copy.accent}</span>
         </h1>
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.intro} {page.releaseBody}</p>
-        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-3`} />
-        <p className="mt-3 text-sm text-muted motion-safe:enter-3">{page.downloadRequirements.replace("{version}", apps.paguro.minMacOS.replace(/\.0$/, ""))}</p>
+        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-2`} />
+        <p className="mt-3 text-sm text-muted motion-safe:enter-2">{page.downloadRequirements.replace("{version}", apps.paguro.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
 
       <div className={styles.demo}>

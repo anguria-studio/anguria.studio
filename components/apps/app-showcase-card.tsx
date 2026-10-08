@@ -50,7 +50,7 @@ export function AppShowcaseCard({
       className={
         "group relative desk:static block rounded-showcase ring-1 ring-black/10 " +
         "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 " +
-        "touch:aspect-[16/10] touch:overflow-hidden " +
+        "touch:aspect-[16/10] touch:overflow-hidden touch:active:brightness-90 " +
         "desk:h-full desk:basis-0 desk:grow desk:hover:grow-[7] desk:hover:delay-150 desk:group-hover/row:delay-150 desk:focus-visible:grow-[7] " +
         "motion-safe:transition-[flex-grow] motion-safe:duration-500 motion-safe:ease-out"
       }

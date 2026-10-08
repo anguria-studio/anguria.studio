@@ -21,6 +21,9 @@ import { localePath, type Locale } from "@/lib/i18n";
  * same gesture at 80px read as a pounce. The neighbour's shove is an accent,
  * not the event.
  *
+ * A press dims the icon the instant it lands, on every device: a colour change,
+ * so it is not gated on motion.
+ *
  * The transforms sit behind `motion-safe`, not merely their transitions: with
  * reduced motion a snap is worse than no magnification at all, so there is
  * none and the label alone carries the affordance.
@@ -51,7 +54,7 @@ export function AppDock({
               className="group relative flex flex-col items-center rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500"
             >
               {/* Only this wrapper scales, so the label above stays crisp. */}
-              <span className="block origin-bottom motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out motion-safe:group-hover:scale-125 motion-safe:group-hover:-translate-y-1 motion-safe:group-focus-visible:scale-125 motion-safe:group-focus-visible:-translate-y-1 motion-safe:dock-after:translate-x-1 motion-safe:dock-after:scale-110 motion-safe:dock-before:-translate-x-1 motion-safe:dock-before:scale-110">
+              <span className="block origin-bottom group-active:brightness-75 motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out motion-safe:group-hover:scale-125 motion-safe:group-hover:-translate-y-1 motion-safe:group-focus-visible:scale-125 motion-safe:group-focus-visible:-translate-y-1 motion-safe:dock-after:translate-x-1 motion-safe:dock-after:scale-110 motion-safe:dock-before:-translate-x-1 motion-safe:dock-before:scale-110">
                 <DockIcon slug={meta.slug} />
               </span>
 
@@ -76,7 +79,7 @@ export function AppDock({
                   "touch:mt-3 touch:text-muted " +
                   "desk:pointer-events-none desk:absolute desk:bottom-full desk:left-1/2 desk:mb-6 desk:-translate-x-1/2 " +
                   "desk:rounded-full desk:border desk:border-hairline desk:bg-glass desk:px-3 desk:py-1 desk:text-foreground desk:opacity-0 desk:shadow-lg " +
-                  "desk:backdrop-blur-xl desk:backdrop-saturate-150 " +
+                  "desk:backdrop-blur-xl desk:backdrop-saturate-150 desk:solid:bg-background desk:solid:backdrop-blur-none " +
                   "desk:motion-safe:transition-opacity desk:motion-safe:duration-150 " +
                   "desk:group-hover:opacity-100 desk:group-focus-visible:opacity-100"
                 }

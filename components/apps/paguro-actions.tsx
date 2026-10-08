@@ -18,6 +18,10 @@ import type { Dictionary } from "@/lib/dictionaries/en";
  * — at its 20px rest inset plus its own 16px width, anything less reads as a
  * fade rather than a slide.
  *
+ * The press is felt on pointer-down: the pill's fill shifts the instant it is
+ * pressed, with no transition, which is the only feedback a touch screen gets,
+ * since it never hovers.
+ *
  * Only the TRANSITIONS are motion-safe, not the translate: without the shift
  * the absolutely-positioned arrow would sit on top of the label, so reduced
  * motion gets an instant swap rather than no swap at all.
@@ -53,7 +57,7 @@ function Pill({
       href={href}
       download={download || undefined}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-      className={`${PILL} ${download ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background" : "bg-foreground/5 text-foreground"}`}
+      className={`${PILL} ${download ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background active:bg-foreground/80" : "bg-foreground/5 text-foreground active:bg-foreground/12"}`}
     >
       {icon}
       <span className={LABEL}>

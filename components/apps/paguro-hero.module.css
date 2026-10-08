@@ -20,16 +20,17 @@
 
 .hero {
   position: relative;
-  padding-bottom: 72px;
+  padding-bottom: calc(var(--spacing) * 18);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
 }
 .heading, .demo { position: relative; }
-.heading { max-width: 1080px; margin-inline: auto; padding: 88px 24px 0; text-align: center; }
-.title { font-size: 80px; font-weight: 600; line-height: 1.05; letter-spacing: -.055em; }
-.subtitle { margin: 28px auto 0; font-size: 20px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
-.cta > a { height: 44px; font-size: 16px; }
+/* Spacing and type in rem via the theme, so the hero grows with the reader's
+   text size. The title's size and tracking live in --text-display. */
+.heading { max-width: 1080px; margin-inline: auto; padding: calc(var(--spacing) * 22) calc(var(--spacing) * 6) 0; text-align: center; }
+.subtitle { margin: calc(var(--spacing) * 7) auto 0; font-size: var(--text-xl); line-height: 1.5; color: var(--muted); text-wrap: balance; }
+.cta > a { height: calc(var(--spacing) * 11); font-size: var(--text-base); }
 .cta > a:last-child { display: none; }
-.demo { max-width: 1129px; margin: 108px auto 0; padding-inline: 24px; }
+.demo { max-width: 1129px; margin: calc(var(--spacing) * 27) auto 0; padding-inline: calc(var(--spacing) * 6); }
 /* The wallpaper is contained in the desktop, without a frosted overlay. */
 .glassStage { aspect-ratio: 16 / 10; border-radius: 20px; }
 .glassStage, .mobileGlass { background: var(--paguro-wallpaper) center / cover no-repeat; }
@@ -41,11 +42,10 @@
 .mobileGlass { padding: 20px 16px; border-radius: 20px; }
 .mobileFrame { position: relative; width: 100%; left: auto; top: auto; transform: none; border-radius: 9px; }
 @media (max-width: 767px) {
-  .hero { padding-bottom: 32px; }
-  .heading { padding-top: 48px; }
-  .title { font-size: clamp(38px, 8vw, 60px); letter-spacing: -.045em; }
-  .subtitle { font-size: 18px; margin-top: 20px; }
-  .demo { margin-top: 48px; padding-inline: 16px; }
+  .hero { padding-bottom: calc(var(--spacing) * 8); }
+  .heading { padding-top: calc(var(--spacing) * 12); }
+  .subtitle { font-size: var(--text-lg); margin-top: calc(var(--spacing) * 5); }
+  .demo { margin-top: calc(var(--spacing) * 12); padding-inline: calc(var(--spacing) * 4); }
   .cta { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 20rem; margin-inline: auto; }
   .cta > a { width: 100%; justify-content: center; white-space: nowrap; }
   .cta > a > svg { flex-shrink: 0; }
