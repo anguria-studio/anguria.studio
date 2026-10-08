@@ -49,7 +49,7 @@ export function PaguroMenuBar({ copy, locale, theme, onThemeChange }: {
         <AppleMark className="size-4" /><strong>Paguro</strong>
       </div>
       <div className={styles.statusItems}>
-        <PreviewThemeToggle theme={theme} onChange={onThemeChange} copy={copy} />
+        {/* Preview theme toggle hidden for now: the hero only shows the dark theme. Cleanup to follow. */}
         <MenuClock locale={locale} />
       </div>
     </div>
