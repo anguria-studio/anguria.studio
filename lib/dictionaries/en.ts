@@ -98,7 +98,7 @@ export const dictionary = {
   meta: {
     title: "Anguria Studio — Free, open-source apps for macOS",
     description:
-      "Three small, free, open-source utilities for your Mac: Obolo, Scolo and Paguro.",
+      "Three small, free, open-source utilities for your Mac: Obolo, Moppo and Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -146,11 +146,11 @@ export const dictionary = {
         },
       ],
     },
-    scolo: {
-      name: "Scolo",
+    moppo: {
+      name: "Moppo",
       category: "Mac cleaner",
       shotAlt:
-        "The Scolo window on a Mac desktop, showing how much disk space can be reclaimed.",
+        "The Moppo window on a Mac desktop, showing how much disk space can be reclaimed.",
       tagline: "Mac Cleaner",
       description: "Remove files safely. Clearly tell useful and useless apart",
       features: [
@@ -312,26 +312,32 @@ export const dictionary = {
     faqTitle: "A few things to know.",
     faq: [
       {
+        id: "pricing",
         question: "Is Paguro really free?",
         answer: "Yes. Paguro is free and open source, with no paid feature tiers. The websites you use may require their own accounts or subscriptions."
       },
       {
+        id: "supported-services",
         question: "Which services can I use?",
         answer: "Choose from the service catalog or add a website by URL. Most web services work as they do in a browser, but some providers restrict embedded browsers. Passkey sign-in is not currently supported; use another sign-in method where available."
       },
       {
+        id: "notch",
         question: "Do I need a Mac with a notch?",
         answer: "No. Workspaces, services, and macOS notifications work without one. The notification island is an optional feature for compatible notched displays."
       },
       {
+        id: "login-sync",
         question: "Does it sync my logins between Macs?",
         answer: "No. Each account has its own local session. Configuration export moves your setup, not cookies or login sessions, so you sign in separately on each Mac."
       },
       {
+        id: "hibernation-notifications",
         question: "Do sleeping services still send notifications?",
         answer: "Fully hibernated services stop their live web activity, so new notifications may not arrive until you open them again. Keep messaging and email services awake if you need live notifications. You can set hibernation separately for each service."
       },
       {
+        id: "close-window",
         question: "What happens when I close the window?",
         answer: "Closing the window keeps Paguro available in the menu bar. Services can continue running and showing notifications. Command-Q quits the app and stops its activity."
       }

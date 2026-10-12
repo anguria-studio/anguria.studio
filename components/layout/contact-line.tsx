@@ -20,14 +20,14 @@ export function ContactLine({ dict, issuesUrl = site.github }: { dict: Dictionar
     "after:bg-melon-500";
 
   return (
-    <section className="mx-auto max-w-page px-6 pb-0 text-center text-sm text-muted">
+    <section data-analytics-location="contact" className="mx-auto max-w-page px-6 pb-0 text-center text-sm text-muted">
       <p>
         {issues.before}
-        <a href={issuesUrl} target="_blank" rel="noreferrer" className={link}>
+        <a href={issuesUrl} data-analytics-event="contact-click" data-analytics-label="github-issues" target="_blank" rel="noreferrer" className={link}>
           {issues.match}
         </a>
         {issues.after} {email.before}
-        <a href={`mailto:${site.email}`} className={link}>
+        <a href={`mailto:${site.email}`} data-analytics-label="email" className={link}>
           {site.email}
         </a>
         {email.after}

@@ -51,6 +51,8 @@ export function AppDock({
             <Link
               key={meta.slug}
               href={localePath(locale, meta.slug)}
+              data-analytics-label={meta.slug}
+              data-analytics-location="app-dock"
               className="group relative flex flex-col items-center rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500"
             >
               {/* Only this wrapper scales, so the label above stays crisp. */}

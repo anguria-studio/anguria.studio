@@ -81,7 +81,7 @@ export const dictionary: Dictionary = {
   meta: {
     title: "Anguria Studio — Apps gratuitas y open source para macOS",
     description:
-      "Tres pequeñas utilidades gratuitas y open source para tu Mac: Obolo, Scolo y Paguro.",
+      "Tres pequeñas utilidades gratuitas y open source para tu Mac: Obolo, Moppo y Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -125,11 +125,11 @@ export const dictionary: Dictionary = {
         },
       ],
     },
-    scolo: {
-      name: "Scolo",
+    moppo: {
+      name: "Moppo",
       category: "Limpieza del Mac",
       shotAlt:
-        "La ventana de Scolo en el escritorio de un Mac, con el espacio en disco que se puede recuperar.",
+        "La ventana de Moppo en el escritorio de un Mac, con el espacio en disco que se puede recuperar.",
       tagline: "Limpieza del Mac",
       description:
         "Elimina archivos sin riesgo. Distingue con claridad lo útil de lo inútil",
@@ -285,26 +285,32 @@ export const dictionary: Dictionary = {
     faqTitle: "Algunas cosas que conviene saber.",
     faq: [
       {
+        id: "pricing",
         question: "¿Paguro es realmente gratis?",
         answer: "Sí. Paguro es gratis y de código abierto, sin funciones de pago. Los sitios que utilices pueden requerir sus propias cuentas o suscripciones."
       },
       {
+        id: "supported-services",
         question: "¿Qué servicios puedo usar?",
         answer: "Elige del catálogo o añade una URL. La mayoría funciona como en un navegador, pero algunos proveedores limitan los navegadores integrados. Las claves de acceso aún no están disponibles: usa otro método cuando sea posible."
       },
       {
+        id: "notch",
         question: "¿Necesito un Mac con notch?",
         answer: "No. Los espacios, servicios y notificaciones de macOS funcionan sin él. La isla es opcional para pantallas compatibles con notch."
       },
       {
+        id: "login-sync",
         question: "¿Sincroniza las sesiones entre Macs?",
         answer: "No. Cada cuenta tiene su sesión local. La exportación transfiere la configuración, no las cookies ni las sesiones: inicia sesión en cada Mac."
       },
       {
+        id: "hibernation-notifications",
         question: "¿Los servicios hibernados siguen enviando notificaciones?",
         answer: "Los servicios completamente hibernados detienen su actividad web en directo, así que las nuevas notificaciones pueden no llegar hasta que los abras de nuevo. Mantén activos el correo y la mensajería si necesitas notificaciones en tiempo real. Puedes configurar la hibernación para cada servicio."
       },
       {
+        id: "close-window",
         question: "¿Qué pasa al cerrar la ventana?",
         answer: "Paguro sigue en la barra de menús. Los servicios pueden continuar activos y mostrar notificaciones. Comando-Q cierra la app y detiene su actividad."
       }

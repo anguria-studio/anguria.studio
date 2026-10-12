@@ -10,6 +10,7 @@ import { dockAppList, type AppSlug } from "@/lib/apps";
 import { localePath, type Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import styles from "./desktop-showcase.module.css";
+import { trackEvent } from "@/lib/analytics";
 
 const resting = dockAppList.map(() => ({ scale: 1, offset: 0 }));
 
@@ -41,7 +42,7 @@ export function DesktopShowcase({ locale, dict }: { locale: Locale; dict: Dictio
   const spread = transforms.reduce((sum, item) => sum + (item.scale - 1) * 48, 0) / 2;
 
   return (
-    <section className="mx-auto max-w-cards px-4 sm:px-6 motion-safe:fade-1" aria-label={dict.home.dockLabel}>
+    <section data-analytics-location="home-showcase" className="mx-auto max-w-cards px-4 sm:px-6 motion-safe:fade-1" aria-label={dict.home.dockLabel}>
       <div className={styles.desktop}>
         <div className={styles.scene}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -52,7 +53,7 @@ export function DesktopShowcase({ locale, dict }: { locale: Locale; dict: Dictio
             width={2560} height={1200} className={styles.preview} data-visible={selected === meta.slug} />
         ))}
         </div>
-        <Link href={localePath(locale, selected)} className={styles.copy}>
+        <Link href={localePath(locale, selected)} data-analytics-label={selected} className={styles.copy}>
           <h2>{copy.name}</h2>
           <p className={styles.tagline}>{copy.tagline}</p>
           <p className={styles.description}>{copy.description}</p>
@@ -80,7 +81,10 @@ export function DesktopShowcase({ locale, dict }: { locale: Locale; dict: Dictio
         }}>
           <nav ref={dockRef} aria-label={dict.home.dockLabel} className={styles.dock} style={{ "--dock-spread": `${spread}px` } as CSSProperties}>
             {dockAppList.map((meta, index) => (
-              <button key={meta.slug} type="button" onClick={() => setSelected(meta.slug)} aria-pressed={selected === meta.slug} aria-label={dict.apps[meta.slug].name}
+              <button key={meta.slug} type="button" onClick={() => {
+                trackEvent("product-select", { target_product: meta.slug, location: "home-showcase" });
+                setSelected(meta.slug);
+              }} aria-pressed={selected === meta.slug} aria-label={dict.apps[meta.slug].name}
                 className={styles.app} style={{ "--scale": transforms[index].scale, "--offset": `${transforms[index].offset}px` } as CSSProperties}
                 onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) magnify(event.currentTarget.offsetLeft + event.currentTarget.offsetWidth / 2); }}
                 onBlur={() => {

@@ -22,6 +22,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       <div className="mx-auto flex h-16 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
         <Link
           href={localePath(locale)}
+          data-analytics-label="home"
           className="inline-flex items-center gap-2 rounded-lg text-base font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500"
         >
           {/* Cropped tight to the fruit, so no tile and no background — it sits
@@ -51,6 +52,8 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             label, so reduced motion gets an instant swap rather than none. */}
         <a
           href={site.github}
+          data-analytics-event="source-click"
+          data-analytics-label="studio"
           target="_blank"
           rel="noreferrer"
           className="group relative inline-flex h-8 items-center gap-2 overflow-hidden rounded-full bg-foreground/5 px-5 text-xs font-semibold text-foreground active:bg-foreground/12 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40"

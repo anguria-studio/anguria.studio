@@ -28,7 +28,7 @@ export function AppDetail({
         </Link>
       </div>
 
-      <section className="mx-auto max-w-3xl px-6 pb-14 sm:pb-20">
+      <section data-analytics-location="hero" className="mx-auto max-w-3xl px-6 pb-14 sm:pb-20">
         <div className="mt-8 flex flex-col items-center text-center sm:mt-10">
           <AppIcon meta={meta} size="lg" />
           <h1 className="mt-7 text-4xl font-semibold tracking-tight sm:text-6xl">
@@ -44,12 +44,16 @@ export function AppDetail({
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
             <a
               href={meta.download}
+              data-analytics-event="download-click"
+              data-analytics-label={meta.slug}
               className="rounded-full bg-melon-500 px-6 py-2.5 text-[15px] font-medium text-white transition hover:bg-melon-600"
             >
               {dict.appPage.download}
             </a>
             <a
               href={meta.github}
+              data-analytics-event="source-click"
+              data-analytics-label={meta.slug}
               target="_blank"
               rel="noreferrer"
               className="text-[15px] font-medium text-muted transition hover:text-foreground"

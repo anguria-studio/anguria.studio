@@ -77,7 +77,7 @@ export function PaguroHeader({
             wordmark leads to that hero. The wrapper owns the display so it
             cannot race the hardcoded `flex` inside PaguroActions. */}
         <div className="hidden sm:block">
-          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
         </div>
       </nav>
     </header>
@@ -89,7 +89,7 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
   // Keep the full system requirements in the FAQ as well as the short hero note.
   const faq = [
     ...copy.faq,
-    { question: copy.requirementsQuestion, answer: copy.requirements },
+    { id: "system-requirements", question: copy.requirementsQuestion, answer: copy.requirements },
   ];
 
   return (

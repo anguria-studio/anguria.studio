@@ -2,6 +2,15 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
   "redirects": [
+    { "source": "/scolo", "destination": "/moppo/", "permanent": true },
+    { "source": "/scolo/", "destination": "/moppo/", "permanent": true },
+    { "source": "/it/scolo", "destination": "/it/moppo/", "permanent": true },
+    { "source": "/it/scolo/", "destination": "/it/moppo/", "permanent": true },
+    { "source": "/fr/scolo", "destination": "/fr/moppo/", "permanent": true },
+    { "source": "/fr/scolo/", "destination": "/fr/moppo/", "permanent": true },
+    { "source": "/es/scolo", "destination": "/es/moppo/", "permanent": true },
+    { "source": "/es/scolo/", "destination": "/es/moppo/", "permanent": true },
+
     { "source": "/", "destination": "/paguro/", "permanent": false },
 
     { "source": "/it", "destination": "/it/paguro/", "permanent": false },
@@ -13,22 +22,22 @@
 
     { "source": "/obolo", "destination": "/paguro/", "permanent": false },
     { "source": "/obolo/", "destination": "/paguro/", "permanent": false },
-    { "source": "/scolo", "destination": "/paguro/", "permanent": false },
-    { "source": "/scolo/", "destination": "/paguro/", "permanent": false },
+    { "source": "/moppo", "destination": "/paguro/", "permanent": false },
+    { "source": "/moppo/", "destination": "/paguro/", "permanent": false },
 
     { "source": "/it/obolo", "destination": "/it/paguro/", "permanent": false },
     { "source": "/it/obolo/", "destination": "/it/paguro/", "permanent": false },
-    { "source": "/it/scolo", "destination": "/it/paguro/", "permanent": false },
-    { "source": "/it/scolo/", "destination": "/it/paguro/", "permanent": false },
+    { "source": "/it/moppo", "destination": "/it/paguro/", "permanent": false },
+    { "source": "/it/moppo/", "destination": "/it/paguro/", "permanent": false },
 
     { "source": "/fr/obolo", "destination": "/fr/paguro/", "permanent": false },
     { "source": "/fr/obolo/", "destination": "/fr/paguro/", "permanent": false },
-    { "source": "/fr/scolo", "destination": "/fr/paguro/", "permanent": false },
-    { "source": "/fr/scolo/", "destination": "/fr/paguro/", "permanent": false },
+    { "source": "/fr/moppo", "destination": "/fr/paguro/", "permanent": false },
+    { "source": "/fr/moppo/", "destination": "/fr/paguro/", "permanent": false },
 
     { "source": "/es/obolo", "destination": "/es/paguro/", "permanent": false },
     { "source": "/es/obolo/", "destination": "/es/paguro/", "permanent": false },
-    { "source": "/es/scolo", "destination": "/es/paguro/", "permanent": false },
-    { "source": "/es/scolo/", "destination": "/es/paguro/", "permanent": false }
+    { "source": "/es/moppo", "destination": "/es/paguro/", "permanent": false },
+    { "source": "/es/moppo/", "destination": "/es/paguro/", "permanent": false }
   ]
 }

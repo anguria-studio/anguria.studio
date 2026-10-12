@@ -79,7 +79,7 @@ export const dictionary: Dictionary = {
   meta: {
     title: "Anguria Studio — App gratuite e open source per macOS",
     description:
-      "Tre piccole utility gratuite e open source per il tuo Mac: Obolo, Scolo e Paguro.",
+      "Tre piccole utility gratuite e open source per il tuo Mac: Obolo, Moppo e Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -122,16 +122,16 @@ export const dictionary: Dictionary = {
         },
       ],
     },
-    scolo: {
-      name: "Scolo",
+    moppo: {
+      name: "Moppo",
       category: "Pulizia del Mac",
       shotAlt:
-        "La finestra di Scolo sulla scrivania di un Mac, con lo spazio su disco recuperabile.",
+        "La finestra di Moppo sulla scrivania di un Mac, con lo spazio su disco recuperabile.",
       // TODO(copy): confirm against the shipping feature set.
       tagline: "Butta via quello che il tuo Mac accumula.",
       // TODO(copy)
       description:
-        "Scolo trova cache, avanzi e download dimenticati che riempiono il disco in silenzio, ti mostra esattamente cosa sono e li fa scorrere via in un clic.",
+        "Moppo trova cache, avanzi e download dimenticati che riempiono il disco in silenzio, ti mostra esattamente cosa sono e li fa scorrere via in un clic.",
       features: [
         // TODO(copy)
         {
@@ -284,26 +284,32 @@ export const dictionary: Dictionary = {
     faqTitle: "Qualche cosa da sapere.",
     faq: [
       {
+        id: "pricing",
         question: "Paguro è davvero gratuito?",
         answer: "Sì. Paguro è gratuito e open source, senza funzioni a pagamento. I siti che usi possono richiedere account o abbonamenti propri."
       },
       {
+        id: "supported-services",
         question: "Quali servizi posso usare?",
         answer: "Scegli dal catalogo o aggiungi un sito tramite URL. La maggior parte funziona come in un browser, ma alcuni fornitori limitano i browser integrati. Le passkey non sono ancora supportate: usa un altro metodo di accesso, se disponibile."
       },
       {
+        id: "notch",
         question: "Serve un Mac con il notch?",
         answer: "No. Spazi di lavoro, servizi e notifiche di macOS funzionano anche senza. L’isola è una funzione opzionale per gli schermi compatibili con notch."
       },
       {
+        id: "login-sync",
         question: "Sincronizza gli accessi tra Mac?",
         answer: "No. Ogni account ha una sessione locale. L’esportazione trasferisce la configurazione, non cookie o sessioni: accedi separatamente su ogni Mac."
       },
       {
+        id: "hibernation-notifications",
         question: "I servizi ibernati inviano ancora notifiche?",
         answer: "I servizi completamente ibernati interrompono l’attività web in tempo reale, quindi le nuove notifiche potrebbero non arrivare finché non li riapri. Tieni attivi messaggistica ed email se ti servono notifiche in tempo reale. Puoi configurare l’ibernazione per ogni servizio."
       },
       {
+        id: "close-window",
         question: "Cosa succede se chiudo la finestra?",
         answer: "Paguro resta nella barra dei menu. I servizi possono continuare a funzionare e mostrare notifiche. Comando-Q chiude l’app e interrompe ogni attività."
       }

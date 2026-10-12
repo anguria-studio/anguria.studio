@@ -47,6 +47,8 @@ export function AppShowcaseCard({
   return (
     <Link
       href={localePath(locale, meta.slug)}
+      data-analytics-label={meta.slug}
+      data-analytics-location="home-showcase"
       className={
         "group relative desk:static block rounded-showcase ring-1 ring-black/10 " +
         "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 " +

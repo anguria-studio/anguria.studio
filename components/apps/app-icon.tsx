@@ -22,7 +22,7 @@ const PATHS: Record<AppSlug, readonly string[]> = {
     "M69.0015 24.0229L81.117 37.4968L83.75 55.1438L76.0645 71.3612L60.5004 81H41.9996L26.4355 71.3612L18.75 55.1438L21.3829 37.4968L25.9219 32.4487L38.0447 42.5091L41.2147 38.9616L29.1034 28.9107L33.4985 24.0229L51.25 19L69.0015 24.0229Z",
     "M69.0015 24.0229L81.117 37.4968L83.75 55.1438L76.0645 71.3612L60.5004 81H41.9996L26.4355 71.3612L18.75 55.1438L21.3829 37.4968L25.9219 32.4487L38.0447 42.5091L41.2147 38.9616L29.1034 28.9107L33.4985 24.0229L51.25 19L69.0015 24.0229Z",
   ],
-  scolo: [
+  moppo: [
     "M75.1734 1.21289H21.8234C10.4395 1.21289 1.21094 10.4414 1.21094 21.8254V75.1754C1.21094 86.5594 10.4395 95.7879 21.8234 95.7879H75.1734C86.5574 95.7879 95.7859 86.5594 95.7859 75.1754V21.8254C95.7859 10.4414 86.5574 1.21289 75.1734 1.21289Z",
     "M63.1377 18.9658C71.3621 18.9662 78.0293 25.6339 78.0293 33.8584V63.1426C78.0289 71.3667 71.3619 78.0338 63.1377 78.0342H33.8535C25.6291 78.0342 18.9613 71.367 18.9609 63.1426V33.8584C18.9609 25.6337 25.6288 18.9658 33.8535 18.9658H63.1377ZM41.1797 50.5918C38.2916 50.5918 35.9502 52.9332 35.9502 55.8213C35.9504 58.7092 38.2918 61.0498 41.1797 61.0498C44.0674 61.0496 46.408 58.709 46.4082 55.8213C46.4082 52.9333 44.0676 50.592 41.1797 50.5918ZM55.8164 50.5918C52.9283 50.5918 50.5869 52.9332 50.5869 55.8213C50.5871 58.7092 52.9285 61.0498 55.8164 61.0498C58.7042 61.0496 61.0447 58.709 61.0449 55.8213C61.0449 52.9334 58.7043 50.592 55.8164 50.5918ZM41.1797 35.9502C38.2918 35.9502 35.9504 38.2908 35.9502 41.1787C35.9502 44.0668 38.2916 46.4082 41.1797 46.4082C44.0676 46.408 46.4082 44.0667 46.4082 41.1787C46.408 38.291 44.0674 35.9504 41.1797 35.9502ZM55.8164 35.9502C52.9285 35.9502 50.5871 38.2908 50.5869 41.1787C50.5869 44.0668 52.9283 46.4082 55.8164 46.4082C58.7043 46.408 61.0449 44.0666 61.0449 41.1787C61.0447 38.291 58.7042 35.9504 55.8164 35.9502Z",
     "M63.1377 18.9658C71.3621 18.9662 78.0293 25.6339 78.0293 33.8584V63.1426C78.0289 71.3667 71.3619 78.0338 63.1377 78.0342H33.8535C25.6291 78.0342 18.9613 71.367 18.9609 63.1426V33.8584C18.9609 25.6337 25.6288 18.9658 33.8535 18.9658H63.1377ZM41.1797 50.5918C38.2916 50.5918 35.9502 52.9332 35.9502 55.8213C35.9504 58.7092 38.2918 61.0498 41.1797 61.0498C44.0674 61.0496 46.408 58.709 46.4082 55.8213C46.4082 52.9333 44.0676 50.592 41.1797 50.5918ZM55.8164 50.5918C52.9283 50.5918 50.5869 52.9332 50.5869 55.8213C50.5871 58.7092 52.9285 61.0498 55.8164 61.0498C58.7042 61.0496 61.0447 58.709 61.0449 55.8213C61.0449 52.9334 58.7043 50.592 55.8164 50.5918ZM41.1797 35.9502C38.2918 35.9502 35.9504 38.2908 35.9502 41.1787C35.9502 44.0668 38.2916 46.4082 41.1797 46.4082C44.0676 46.408 46.4082 44.0667 46.4082 41.1787C46.408 38.291 44.0674 35.9504 41.1797 35.9502ZM55.8164 35.9502C52.9285 35.9502 50.5871 38.2908 50.5869 41.1787C50.5869 44.0668 52.9283 46.4082 55.8164 46.4082C58.7043 46.408 61.0449 44.0666 61.0449 41.1787C61.0447 38.291 58.7042 35.9504 55.8164 35.9502Z",
@@ -97,57 +97,57 @@ const ICONS: Record<
       </>
     ),
   },
-  scolo: {
+  moppo: {
     viewBox: "0 0 97 97",
     defs: (
       <>
-        <linearGradient id="scolo-light-g0" x1="7.27344" y1="4.85039" x2="92.1484" y2="94.5754" gradientUnits="userSpaceOnUse">
+        <linearGradient id="moppo-light-g0" x1="7.27344" y1="4.85039" x2="92.1484" y2="94.5754" gradientUnits="userSpaceOnUse">
         <stop stopColor="#4B978F"/>
         <stop offset="1" stopColor="#317179"/>
         </linearGradient>
-        <linearGradient id="scolo-light-g1" x1="1" y1="0.999999" x2="92.5" y2="102" gradientUnits="userSpaceOnUse">
+        <linearGradient id="moppo-light-g1" x1="1" y1="0.999999" x2="92.5" y2="102" gradientUnits="userSpaceOnUse">
         <stop stopColor="#9ADED8"/>
         <stop offset="1" stopColor="#409BA4"/>
         </linearGradient>
-        <clipPath id="scolo-light-clip">
+        <clipPath id="moppo-light-clip">
         <rect width="97" height="97" fill="white"/>
         </clipPath>
-        <linearGradient id="scolo-dark-g0" x1="14.2558" y1="4.59057" x2="85.7608" y2="93.3554" gradientUnits="userSpaceOnUse">
+        <linearGradient id="moppo-dark-g0" x1="14.2558" y1="4.59057" x2="85.7608" y2="93.3554" gradientUnits="userSpaceOnUse">
         <stop stopColor="#313131"/>
         <stop offset="1" stopColor="#141415"/>
         </linearGradient>
-        <linearGradient id="scolo-dark-g1" x1="6.30344" y1="3.39539" x2="86.3284" y2="98.4554" gradientUnits="userSpaceOnUse">
+        <linearGradient id="moppo-dark-g1" x1="6.30344" y1="3.39539" x2="86.3284" y2="98.4554" gradientUnits="userSpaceOnUse">
         <stop stopColor="#292929"/>
         <stop offset="1" stopColor="#101010"/>
         </linearGradient>
-        <linearGradient id="scolo-dark-g2" x1="25.4593" y1="21.2759" x2="71.5306" y2="77.818" gradientUnits="userSpaceOnUse">
+        <linearGradient id="moppo-dark-g2" x1="25.4593" y1="21.2759" x2="71.5306" y2="77.818" gradientUnits="userSpaceOnUse">
         <stop stopColor="#4D9990"/>
         <stop offset="1" stopColor="#2E6D76"/>
         </linearGradient>
-        <linearGradient id="scolo-dark-g3" x1="25.4593" y1="21.2759" x2="71.5306" y2="77.818" gradientUnits="userSpaceOnUse">
+        <linearGradient id="moppo-dark-g3" x1="25.4593" y1="21.2759" x2="71.5306" y2="77.818" gradientUnits="userSpaceOnUse">
         <stop stopColor="#4D9990"/>
         <stop offset="1" stopColor="#2E6D76"/>
         </linearGradient>
-        <clipPath id="scolo-dark-clip">
+        <clipPath id="moppo-dark-clip">
         <rect width="97" height="97" fill="white"/>
         </clipPath>
       </>
     ),
     light: (
       <>
-        <g clipPath="url(#scolo-light-clip)">
-        <path d={PATHS.scolo[0]} fill="url(#scolo-light-g0)" stroke="url(#scolo-light-g1)" strokeOpacity="0.72"/>
-        <path d={PATHS.scolo[1]} fill="#F8FDFC"/>
-        <path d={PATHS.scolo[1]} fill="#F8FDFC" fillOpacity="0.2"/>
+        <g clipPath="url(#moppo-light-clip)">
+        <path d={PATHS.moppo[0]} fill="url(#moppo-light-g0)" stroke="url(#moppo-light-g1)" strokeOpacity="0.72"/>
+        <path d={PATHS.moppo[1]} fill="#F8FDFC"/>
+        <path d={PATHS.moppo[1]} fill="#F8FDFC" fillOpacity="0.2"/>
         </g>
       </>
     ),
     dark: (
       <>
-        <g clipPath="url(#scolo-dark-clip)">
-        <path d={PATHS.scolo[0]} fill="url(#scolo-dark-g0)" stroke="url(#scolo-dark-g1)" strokeOpacity="0.7" strokeLinejoin="round"/>
-        <path d={PATHS.scolo[1]} fill="url(#scolo-dark-g2)"/>
-        <path d={PATHS.scolo[1]} fill="url(#scolo-dark-g3)" fillOpacity="0.2"/>
+        <g clipPath="url(#moppo-dark-clip)">
+        <path d={PATHS.moppo[0]} fill="url(#moppo-dark-g0)" stroke="url(#moppo-dark-g1)" strokeOpacity="0.7" strokeLinejoin="round"/>
+        <path d={PATHS.moppo[1]} fill="url(#moppo-dark-g2)"/>
+        <path d={PATHS.moppo[1]} fill="url(#moppo-dark-g3)" fillOpacity="0.2"/>
         </g>
       </>
     ),

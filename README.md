@@ -1,7 +1,7 @@
 # anguria.studio
 
 Source of [anguria.studio](https://anguria.studio), the website for Anguria
-Studio's macOS apps: **Obolo**, **Scolo** and **Paguro**.
+Studio's macOS apps: **Obolo**, **Moppo** and **Paguro**.
 
 ## Stack
 
@@ -38,8 +38,9 @@ through it.
 - `lib/apps.ts` — per-app URLs and the `site` constants (domain, email).
 - `components/` — markup, grouped by layer.
 - `tests/` — logic tests for the Paguro page's interactive pieces.
-- `vercel.json` — temporary redirects sending `/`, `/obolo` and `/scolo` to the
-  Paguro page while it is the only released app.
+- `vercel.json` — temporary redirects sending `/`, `/obolo` and `/moppo` to the
+  Paguro page while it is the only released app, plus permanent redirects from
+  the old `/scolo` URLs to `/moppo` in every language.
 
 ## Paguro test page
 
@@ -81,6 +82,11 @@ the existing count. Reloading resets all test state. Background badge polling
 can take 30 seconds. The page includes Paguro favicon metadata and a notification
 icon. Native notifications use the service icon stored by Paguro. The page
 does not ask users to configure an icon separately.
+
+## Website analytics
+
+See [Analytics](docs/analytics.md) for the Umami setup, tracked events, and
+product/route breakdowns.
 
 ## Contact
 

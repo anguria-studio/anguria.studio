@@ -79,7 +79,7 @@ export const dictionary: Dictionary = {
   meta: {
     title: "Anguria Studio — Des apps macOS gratuites et open source",
     description:
-      "Trois petits utilitaires gratuits et open source pour votre Mac : Obolo, Scolo et Paguro.",
+      "Trois petits utilitaires gratuits et open source pour votre Mac : Obolo, Moppo et Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -122,16 +122,16 @@ export const dictionary: Dictionary = {
         },
       ],
     },
-    scolo: {
-      name: "Scolo",
+    moppo: {
+      name: "Moppo",
       category: "Nettoyage du Mac",
       shotAlt:
-        "La fenêtre de Scolo sur un bureau Mac, avec l'espace disque récupérable.",
+        "La fenêtre de Moppo sur un bureau Mac, avec l'espace disque récupérable.",
       // TODO(copy): confirm against the shipping feature set.
       tagline: "Évacue ce que votre Mac accumule.",
       // TODO(copy)
       description:
-        "Scolo repère les caches, les restes et les téléchargements oubliés qui encombrent votre disque en silence, vous montre exactement ce que c'est, et les évacue en un clic.",
+        "Moppo repère les caches, les restes et les téléchargements oubliés qui encombrent votre disque en silence, vous montre exactement ce que c'est, et les évacue en un clic.",
       features: [
         // TODO(copy)
         {
@@ -284,26 +284,32 @@ export const dictionary: Dictionary = {
     faqTitle: "Quelques réponses utiles.",
     faq: [
       {
+        id: "pricing",
         question: "Paguro est-il vraiment gratuit ?",
         answer: "Oui. Paguro est gratuit et open source, sans fonctions payantes. Les sites utilisés peuvent demander leurs propres comptes ou abonnements."
       },
       {
+        id: "supported-services",
         question: "Quels services puis-je utiliser ?",
         answer: "Choisissez dans le catalogue ou ajoutez une URL. La plupart des services fonctionnent comme dans un navigateur, mais certains limitent les navigateurs intégrés. Les clés d’accès ne sont pas encore prises en charge : utilisez une autre méthode disponible."
       },
       {
+        id: "notch",
         question: "Faut-il un Mac avec encoche ?",
         answer: "Non. Espaces, services et notifications macOS fonctionnent sans encoche. L’îlot est une option pour les écrans compatibles avec encoche."
       },
       {
+        id: "login-sync",
         question: "Les connexions sont-elles synchronisées ?",
         answer: "Non. Chaque compte a sa session locale. L’export transfère la configuration, sans cookies ni sessions : connectez-vous sur chaque Mac."
       },
       {
+        id: "hibernation-notifications",
         question: "Les services en veille envoient-ils encore des notifications ?",
         answer: "Les services entièrement mis en veille arrêtent leur activité web en direct. Les nouvelles notifications peuvent donc attendre leur réouverture. Gardez vos messageries et e-mails actifs si vous avez besoin de notifications en temps réel. La mise en veille se règle pour chaque service."
       },
       {
+        id: "close-window",
         question: "Que se passe-t-il si je ferme la fenêtre ?",
         answer: "Paguro reste dans la barre des menus. Les services peuvent continuer à fonctionner et à envoyer des notifications. Commande-Q quitte l’app et arrête son activité."
       }

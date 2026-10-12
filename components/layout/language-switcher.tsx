@@ -26,6 +26,7 @@ export function LanguageSwitcher({
             key={l}
             href={localePath(l, path)}
             hrefLang={l}
+            data-analytics-label="language"
             aria-current={current ? "true" : undefined}
             className={`rounded-full px-2 py-1 text-xs font-medium tracking-wide transition active:bg-foreground/12 active:text-foreground active:duration-0 ${
               current

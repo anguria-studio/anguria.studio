@@ -4,7 +4,7 @@
  * All user-facing copy (name, tagline, description, features) lives in the
  * dictionaries so it can be translated — see lib/dictionaries/en.ts.
  */
-export const appSlugs = ["obolo", "scolo", "paguro"] as const;
+export const appSlugs = ["obolo", "moppo", "paguro"] as const;
 export type AppSlug = (typeof appSlugs)[number];
 
 export type AppMeta = {
@@ -29,10 +29,10 @@ export const apps: Record<AppSlug, AppMeta> = {
     minMacOS: "14.0",
     shot: "obolo",
   },
-  scolo: {
-    slug: "scolo",
-    github: "https://github.com/anguria-studio/scolo",
-    download: "https://github.com/anguria-studio/scolo/releases/latest",
+  moppo: {
+    slug: "moppo",
+    github: "https://github.com/anguria-studio/Moppo",
+    download: "https://github.com/anguria-studio/Moppo/releases/latest",
     minMacOS: "14.0",
     shot: "cleaner",
   },
@@ -50,7 +50,7 @@ export const apps: Record<AppSlug, AppMeta> = {
 };
 
 export const appList = appSlugs.map((slug) => apps[slug]);
-export const dockAppList = [apps.paguro, apps.obolo, apps.scolo];
+export const dockAppList = [apps.paguro, apps.obolo, apps.moppo];
 
 /** Locale-relative path of Paguro's privacy policy; nested under the app page it describes. */
 export const paguroPrivacyPath = "paguro/privacy" as const;

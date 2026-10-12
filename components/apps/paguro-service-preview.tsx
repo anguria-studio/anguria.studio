@@ -9,6 +9,7 @@ import styles from "./paguro-service-preview.module.css";
 import { usePaguroPreviewHints } from "./use-paguro-preview-hints";
 import type { PreviewHintHistory } from "@/lib/paguro-preview-hints";
 import type { DemoNotification } from "@/lib/paguro-island";
+import { trackEvent } from "@/lib/analytics";
 
 type PreviewCopy = Dictionary["paguroHero"]["serviceOverlay"];
 
@@ -65,6 +66,11 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
     : { back: "Back", forward: "Forward", mute: "Mute notifications", unmute: "Unmute notifications", add: "Add service", settings: "Settings", unread: "unread notifications", mutedStatus: "notifications muted" };
   const workOffset = expandedWorkspaces.personal ? 0 : 136;
 
+  function toggleWorkspace(workspace: "personal" | "work") {
+    trackEvent("hero-interaction", { action: "toggle-workspace", workspace, expanded: !expandedWorkspaces[workspace], location: "hero" });
+    setExpandedWorkspaces((current) => ({ ...current, [workspace]: !current[workspace] }));
+  }
+
   function selectService(service: string) {
     if (!hasServicePreview(service)) return;
     onServiceSelect(service);
@@ -110,8 +116,8 @@ export function PaguroServicePreview({ service: requestedService, layout: reques
       <div ref={dockRef} className={styles.hintRegion} style={frame(178, 156, 72, 364)} aria-hidden="true" />
 
       {!compact && <>
-        <WorkspaceHeading name={copy.personal} y={170} expanded={expandedWorkspaces.personal} muted={muted} onToggle={() => setExpandedWorkspaces((current) => ({ ...current, personal: !current.personal }))} />
-        <WorkspaceHeading name={copy.work} y={348 - workOffset} expanded={expandedWorkspaces.work} muted={muted} onToggle={() => setExpandedWorkspaces((current) => ({ ...current, work: !current.work }))} />
+        <WorkspaceHeading name={copy.personal} y={170} expanded={expandedWorkspaces.personal} muted={muted} onToggle={() => toggleWorkspace("personal")} />
+        <WorkspaceHeading name={copy.work} y={348 - workOffset} expanded={expandedWorkspaces.work} muted={muted} onToggle={() => toggleWorkspace("work")} />
       </>}
       <div className={styles.divider} style={{ ...frame(189, railDividerY, 22, 1), "--icon-offset": dividerOffset } as CSSProperties} />
 

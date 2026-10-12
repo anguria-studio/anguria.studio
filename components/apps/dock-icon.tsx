@@ -10,7 +10,7 @@ import type { AppSlug } from "@/lib/apps";
  * where it vanished. It takes the token like its siblings now.
  *
  * The three marks are normalised to a common size. Measured ink was 29 units
- * across for Obolo, 30 for Scolo and 26.85 for Paguro — so the first two are
+ * across for Obolo, 30 for Moppo and 26.85 for Paguro — so the first two are
  * scaled about their own centres to meet Paguro rather than the other way
  * round, which keeps the smallest mark unscaled and its 40/99 factor exact.
  *
@@ -30,7 +30,7 @@ const DOCK_MARKS: Record<AppSlug, ReactNode> = {
         </g>
     </>
   ),
-  scolo: (
+  moppo: (
     <>
         <rect width="40" height="40" rx="8" fill="var(--dock-tile)"/>
         {/* 26.85/30 = 0.895, about 20, 20. The 4-unit stroke scales with the
@@ -52,7 +52,7 @@ const DOCK_MARKS: Record<AppSlug, ReactNode> = {
         {/* Paguro's source is drawn in a 99-unit box, not the 40 the other two
             share, so the mark is scaled by 40/99. Measured after the fact, that
             puts its ink at x 6.46..33.31, y 6.46..33.26 — against Obolo's
-            6..35 / 6..34 and Scolo's 5..35. It reads a touch smaller than
+            6..35 / 6..34 and Moppo's 5..35. It reads a touch smaller than
             those, matching the mark it replaces, and needs no hand-fitting.
             Centre lands at 19.89, 19.86 rather than 20, 20; a tenth of a unit
             is a quarter-pixel at the rendered 40px, so it is left uncorrected. */}

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "./paguro-faq.module.css";
 import { arrivals, firstBatch } from "@/lib/paguro-faq";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * The FAQ rows, arriving in a cascade as they scroll into view.
@@ -22,7 +23,7 @@ import { arrivals, firstBatch } from "@/lib/paguro-faq";
  * reduced-motion and IntersectionObserver checks pass, so no JS, no observer or
  * a reduced-motion reader leaves every row at rest and visible.
  */
-export function PaguroFaq({ faq }: { faq: readonly { question: string; answer: string }[] }) {
+export function PaguroFaq({ faq }: { faq: readonly { id: string; question: string; answer: string }[] }) {
   const rows = useRef<(HTMLDetailsElement | null)[]>([]);
   // index -> "pending" while the row waits its turn, then its place in the batch
   // it arrived with. Empty on the server and on the first client render, so
@@ -97,7 +98,10 @@ export function PaguroFaq({ faq }: { faq: readonly { question: string; answer: s
       {faq.map((item, index) => {
         const state = played.get(index);
         return <details
-          key={item.question}
+          key={item.id}
+          onToggle={(event) => {
+            if (event.currentTarget.open) trackEvent("faq-expand", { question: item.id, location: "faq" });
+          }}
           ref={(node) => { rows.current[index] = node; }}
           // Two named states rather than one flag: "pending" is held blank,
           // "arrived" runs the cascade, and absent — server, first render, no

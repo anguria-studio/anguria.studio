@@ -15,6 +15,7 @@ import type { SelectableService } from "@/lib/paguro-service-preview";
 import type { DemoNotification, DemoService as Service } from "@/lib/paguro-island";
 import { createPreviewHintHistory } from "@/lib/paguro-preview-hints";
 import { createSampleDecks, drawSample } from "@/lib/paguro-samples";
+import { trackEvent } from "@/lib/analytics";
 
 import type { ThemePref } from "@/components/layout/theme-toggle";
 
@@ -64,6 +65,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   const decks = useRef(createSampleDecks());
 
   function changeLayout(next: "sidebar" | "compact") {
+    trackEvent("hero-interaction", { action: "change-layout", layout: next, location: "hero" });
     previewHintHistory.current.toggleUsed = true;
     setLayout(next);
   }
@@ -74,6 +76,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   }
 
   function send(service: Service) {
+    trackEvent("hero-interaction", { action: "send-notification", service, muted, location: "hero" });
     // One card per click, drawn from the service's shuffle bag so every sample
     // shows up before any of them comes round again.
     const { deck, index } = drawSample(decks.current[service], copy.samples[service].length);
@@ -91,25 +94,27 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
   }
 
   function openNotification(notification: DemoNotification) {
+    trackEvent("hero-interaction", { action: "open-notification", service: notification.service, location: "hero" });
     setSelectedService(notification.service);
     dispatch({ type: "open", id: notification.id });
     announce(`${serviceNames[notification.service]}: ${notification.title}`);
   }
 
   function clearServiceNotifications(service: SelectableService) {
+    trackEvent("hero-interaction", { action: "select-service", service, layout, location: "hero" });
     setSelectedService(service);
     const ids = island.notifications.filter((notification) => notification.service === service).map(({ id }) => id);
     if (ids.length > 0) remove(ids, ids.length === island.notifications.length);
   }
 
   return (
-    <section id="paguro" className={`${styles.hero} scroll-mt-24`}>
+    <section id="paguro" data-analytics-location="hero" className={`${styles.hero} scroll-mt-24`}>
       <div className={styles.heading}>
         <h1 className="text-display-sm font-semibold md:text-display motion-safe:enter-1">
           {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}<span className="text-melon-500">{copy.accent}</span>
         </h1>
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.intro} {page.releaseBody}</p>
-        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-2`} />
+        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} location="hero" mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-2`} />
         <p className="mt-3 text-sm text-muted motion-safe:enter-2">{page.downloadRequirements.replace("{version}", apps.paguro.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
 
@@ -134,14 +139,21 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
 
         <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block`}>
           {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas}`}>
-          <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={setPreviewThemePref} />
+          <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={(theme) => {
+            trackEvent("hero-interaction", { action: "change-theme", theme, location: "hero" });
+            setPreviewThemePref(theme);
+          }} />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} openNotification={openNotification} />
           </div>
 
           <div className={styles.appFrame} data-live-frame="true" data-theme={previewTheme}><div className={styles.captureCanvas}>
-            <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} locale={locale} muted={muted} onMuteChange={() => { setMuted(!muted); dispatch({ type: "collapse" }); }} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
+            <PaguroServicePreview service={selectedService} layout={layout} onLayoutChange={changeLayout} theme={previewTheme} copy={copy.serviceOverlay} locale={locale} muted={muted} onMuteChange={() => {
+              trackEvent("hero-interaction", { action: "toggle-mute", muted: !muted, location: "hero" });
+              setMuted(!muted);
+              dispatch({ type: "collapse" });
+            }} hintHistory={previewHintHistory} notifications={island.notifications} onServiceSelect={clearServiceNotifications} />
           </div></div>
           </div>}
         </div>

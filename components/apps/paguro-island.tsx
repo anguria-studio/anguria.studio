@@ -6,6 +6,7 @@ import type { Dictionary } from "@/lib/dictionaries/en";
 import { dragAppearance, exitDuration, exitEasing, foldPlacement, islandHeight, islandLayout, releaseVelocity, serviceNames, shouldDismiss } from "@/lib/paguro-island";
 import type { DemoNotification, IslandAction, IslandPhase } from "@/lib/paguro-island";
 import styles from "./paguro-island.module.css";
+import { trackEvent } from "@/lib/analytics";
 
 type Props = {
   copy: Dictionary["paguroHero"];
@@ -154,6 +155,7 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
   async function dismiss(ids: number[], all = false, velocity = 0) {
     const fresh = ids.filter((id) => !pending.current.has(id));
     if (!fresh.length) return;
+    trackEvent("hero-interaction", { action: all ? "clear-notifications" : "dismiss-notification", count: fresh.length, location: "hero" });
     fresh.forEach((id) => pending.current.add(id));
     const rows = Array.from(scroll.current!.querySelectorAll<HTMLElement>("[data-row]"));
     const leaving = rows.filter((row) => fresh.includes(Number(row.dataset.row)));
@@ -297,8 +299,11 @@ export function PaguroIsland({ copy, notifications, phase, dispatch, remove, ope
           onClick={(event) => {
             keyboard.current = event.detail === 0;
             if (preview && latest) openNotification(latest);
-            else if (expanded) collapse();
-            else dispatch({ type: "expand" });
+            else {
+              trackEvent("hero-interaction", { action: "toggle-island", expanded: !expanded, location: "hero" });
+              if (expanded) collapse();
+              else dispatch({ type: "expand" });
+            }
           }}>
           {preview && latest ? <>
             {/* eslint-disable-next-line @next/next/no-img-element */}

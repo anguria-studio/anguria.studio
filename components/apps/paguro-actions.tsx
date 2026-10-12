@@ -3,6 +3,7 @@ import { ArrowRight } from "@/components/ui/arrow-right";
 import { GitHubMark } from "@/components/ui/github-mark";
 import type { AppMeta } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
+import type { AnalyticsEvent } from "@/lib/analytics";
 
 /**
  * Shared header and hero actions: direct macOS download plus GitHub.
@@ -42,6 +43,8 @@ function Pill({
   mobileLabel,
   icon,
   download = false,
+  event,
+  analyticsLabel,
 }: {
   href: string;
   tone: "solid" | "subtle";
@@ -49,12 +52,16 @@ function Pill({
   mobileLabel?: string;
   icon: React.ReactNode;
   download?: boolean;
+  event: AnalyticsEvent;
+  analyticsLabel: string;
 }) {
   // Downloads use the current tab; external product/source pages open separately.
   const external = !download && href.startsWith("http");
   return (
     <a
       href={href}
+      data-analytics-event={event}
+      data-analytics-label={analyticsLabel}
       download={download || undefined}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
       className={`${PILL} ${download ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background active:bg-foreground/80" : "bg-foreground/5 text-foreground active:bg-foreground/12"}`}
@@ -78,17 +85,21 @@ export function PaguroActions({
   meta,
   mobileAppStoreLabel,
   className = "",
+  location,
 }: {
   copy: Dictionary["paguroPage"];
   meta: AppMeta;
   mobileAppStoreLabel?: string;
   className?: string;
+  location: "header" | "hero";
 }) {
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
+    <div data-analytics-location={location} className={`flex flex-wrap items-center gap-3 ${className}`}>
       {meta.appStore ? (
         <Pill
           href={meta.appStore}
+          event="app-store-click"
+          analyticsLabel={meta.slug}
           tone="solid"
           label={copy.appStore}
           mobileLabel={mobileAppStoreLabel}
@@ -97,6 +108,8 @@ export function PaguroActions({
       ) : (
         <Pill
           href={meta.download}
+          event="download-click"
+          analyticsLabel={meta.slug}
           tone="solid"
           label={copy.download}
           download
@@ -105,6 +118,8 @@ export function PaguroActions({
       )}
       <Pill
         href={meta.github}
+        event="source-click"
+        analyticsLabel={meta.slug}
         tone="subtle"
         label={copy.github}
         icon={<GitHubMark className={`size-4 ${SWAP}`} />}
