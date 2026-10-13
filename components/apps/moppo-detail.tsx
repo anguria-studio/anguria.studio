@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { PaguroActions } from "@/components/apps/paguro-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
-import { MoppoInstallCommand } from "@/components/apps/moppo-install-command";
+import { MenuClock } from "@/components/apps/paguro-menu-bar";
+import desktopStyles from "@/components/apps/paguro-desktop.module.css";
 import { MoppoMascot } from "@/components/apps/moppo-mascot";
 import { ContactLine } from "@/components/layout/contact-line";
 import { ArrowRight } from "@/components/ui/arrow-right";
+import { AppleMark } from "@/components/ui/apple-mark";
 import { GitHubMark } from "@/components/ui/github-mark";
 import { apps, moppoPrivacyPath, moppoTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
@@ -71,7 +73,6 @@ function ThemeScreenshot({ name, alt, priority = false, className = "" }: { name
 
 const featureGlyphs: Glyph[] = ["shield", "trash", "duplicates", "privacy"];
 const reviewGlyphs: Glyph[] = ["git", "lock", "history"];
-const toolSymbols = ["cleanup", "externaldrive", "xmark.app", "square.on.square"];
 
 export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const copy = dict.moppoPage;
@@ -82,10 +83,13 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.hero.body}</p>
         <PaguroActions copy={{ ...copy, download: copy.hero.download, appStore: "" }} meta={apps.moppo} location="hero" showGithub={false} showDownloadOnMobile className="mt-8 justify-center motion-safe:enter-2" />
         <p className="mt-3 text-sm text-muted motion-safe:enter-2">{copy.requirements.replace("{version}", apps.moppo.minMacOS.replace(/\.0$/, ""))}</p>
-        <div className="mt-3 motion-safe:enter-2"><MoppoInstallCommand copy={copy.install} /></div>
       </div>
       <div className={`${styles.demo} motion-safe:enter-3`}>
         <div className={styles.desktop}>
+          <div className={`${desktopStyles.menuBar} ${styles.menuBar}`}>
+            <div className={desktopStyles.appMenus} aria-hidden="true"><AppleMark className="size-4" /><strong>{dict.apps.moppo.name}</strong></div>
+            <div className={desktopStyles.statusItems}><MenuClock locale={locale} /></div>
+          </div>
           <ThemeScreenshot name="cleanup" alt={copy.hero.shotAlt} priority className={styles.appFrame} />
         </div>
       </div>
@@ -114,23 +118,12 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
       <div className={styles.reviewGrid}>
         <ThemeScreenshot name="worktree" alt={copy.review.shotAlt} className={styles.dialog} />
         <ul className={styles.reviewPoints}>
-          {copy.review.points.map((point, index) => <li key={point.title} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3 border-t border-hairline py-7">
+          {copy.review.points.map((point, index) => <li key={point.title} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3 border-t border-hairline py-7 first:border-t-0">
             <Glyph name={reviewGlyphs[index]} className="mt-0.5 size-6" />
             <div><h3 className="text-lg font-semibold tracking-tight">{point.title}</h3><p className="mt-2 text-base leading-relaxed text-muted text-pretty">{point.body}</p></div>
           </li>)}
         </ul>
       </div>
-    </section>
-
-    <section className="mx-auto max-w-4xl px-6 pb-20 text-center sm:pb-32">
-      <h2 className={styles.sectionTitle}>{copy.tools.title}</h2>
-      <ul className={styles.tools}>
-        {copy.tools.items.map((tool, index) => <li key={tool.title} className={styles.tool}>
-          <span aria-hidden="true" className={styles.toolIcon} style={{ "--tool-symbol": `url('/moppo/tools/${toolSymbols[index]}.png')` } as React.CSSProperties}><span /></span>
-          <h3 className="mt-4 text-base font-semibold tracking-tight">{tool.title}</h3>
-          <p className="mx-auto mt-1 max-w-40 text-sm leading-snug text-muted text-balance">{tool.body}</p>
-        </li>)}
-      </ul>
     </section>
 
     <section id="questions" className="mx-auto max-w-3xl scroll-mt-24 px-6 pb-20 sm:pb-32">

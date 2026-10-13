@@ -18,7 +18,6 @@ export const dictionary: Dictionary = {
       download: "Scarica per Mac",
       shotAlt: "La finestra Pulizia di Moppo su un desktop Mac, con le categorie di elementi sicuri da rimuovere e da controllare.",
     },
-    install: { copy: "Copia il comando Homebrew", copied: "Copiato negli appunti", failed: "Seleziona il comando per copiarlo manualmente." },
     story: {
       title: "Fai pulizia. Poi ricontrolla.",
       body: "Moppo trova ciò che occupa spazio e ti indica cosa puoi rimuovere con sicurezza. Decidi tu cosa eliminare, con la possibilità di ripristinare i file.",

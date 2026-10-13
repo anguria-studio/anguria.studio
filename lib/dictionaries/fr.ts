@@ -18,7 +18,6 @@ export const dictionary: Dictionary = {
       download: "Télécharger pour Mac",
       shotAlt: "La fenêtre de nettoyage de Moppo sur un bureau Mac, avec les catégories des éléments à supprimer et à vérifier.",
     },
-    install: { copy: "Copier la commande Homebrew", copied: "Copié dans le presse-papiers", failed: "Sélectionnez la commande pour la copier manuellement." },
     story: {
       title: "Nettoyez. Puis vérifiez.",
       body: "Moppo repère ce qui prend de la place et vous indique ce qui peut être supprimé sans risque. Vous choisissez, avec la possibilité de remettre les fichiers en place.",

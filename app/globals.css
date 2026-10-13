@@ -61,6 +61,10 @@
      artwork on a dark page. */
   --icon-light-display: block;
   --icon-dark-display: none;
+
+  /* The Moppo mascot's body. In the dark theme it is a dim grey, like the
+     tertiary label colour that the app uses, so it does not shine like text. */
+  --moppo-mascot: var(--foreground);
 }
 
 :root[data-theme="light"] {
@@ -83,6 +87,7 @@
   --dock-mark: #cfcfcf;
   --icon-light-display: none;
   --icon-dark-display: block;
+  --moppo-mascot: #575557;
 }
 
 /* Keep the values here in sync with :root[data-theme="dark"] above. */
@@ -102,6 +107,7 @@
     --dock-mark: #cfcfcf;
     --icon-light-display: none;
     --icon-dark-display: block;
+    --moppo-mascot: #575557;
   }
 }
 

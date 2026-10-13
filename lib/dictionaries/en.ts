@@ -37,11 +37,6 @@ export const dictionary = {
       download: "Download for Mac",
       shotAlt: "Moppo’s Cleanup window, showing Safe to Remove and Needs Review categories on a Mac desktop.",
     },
-    install: {
-      copy: "Copy Homebrew command",
-      copied: "Copied to clipboard",
-      failed: "Select the command to copy it manually.",
-    },
     story: {
       title: "Clean up. Then double-check.",
       body: "Moppo finds what’s taking space and tells you which parts are safe to remove. You decide what goes, with a chance to put files back.",

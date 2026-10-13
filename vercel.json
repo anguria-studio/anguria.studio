@@ -2,6 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
   "redirects": [
+    { "source": "/moppo/appcast.xml", "destination": "https://github.com/anguria-studio/Moppo/releases/latest/download/appcast.xml", "permanent": false },
+
     { "source": "/scolo", "destination": "/moppo/", "permanent": true },
     { "source": "/scolo/", "destination": "/moppo/", "permanent": true },
     { "source": "/it/scolo", "destination": "/it/moppo/", "permanent": true },

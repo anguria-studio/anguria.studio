@@ -49,9 +49,12 @@ through it.
 and a cropped worktree review dialog. Copy lives in `lib/dictionaries/` in
 all four languages. The hero uses static screenshots; a recorded demo loop can
 replace them when available. The mascot uses vector geometry from the app.
+It plays the app's scanning animation (`components/apps/moppo-mascot-motion.ts`)
+with poses from `public/moppo/mascot-poses.json`. The still image shows until the
+poses load, and when the visitor turns on reduced motion.
 
-The direct download URL and `brew install --cask moppo` command are launch
-placeholders. Replace or verify both when the release and cask are available.
+The direct download URL is a launch placeholder. Verify it when the packaged
+release is available.
 The footer links to `/moppo/privacy/` and `/moppo/terms/`, with translations in
 all four languages. Privacy content follows the app's `App/Resources/Privacy.md`
 and documented permissions; terms follow its MIT License and recovery limits.

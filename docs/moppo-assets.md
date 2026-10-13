@@ -36,6 +36,6 @@ as the edit target and a transparent output background:
 
 ## Launch placeholders
 
-The direct download URL and Homebrew command are placeholders requested for
-the page draft. Verify both before launch. The app's current minimum is macOS
+The direct download URL is a placeholder requested for the page draft.
+Verify it before launch. The app's current minimum is macOS
 15. The footer links to the site's localized Moppo privacy and terms pages.
