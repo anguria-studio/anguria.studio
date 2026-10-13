@@ -30,11 +30,12 @@ function Glyph({ name, className = "" }: { name: Glyph; className?: string }) {
 
 export function MoppoIcon({ className = "" }: { className?: string }) {
   return <span aria-hidden="true" className={`block shrink-0 ${className}`}>
-    {/* Native vector artwork from Moppo's AppIcon.icon. */}
+    {/* Native artwork from Moppo's AppIcon.icon. The rendered dark export
+        includes Icon Composer's lighting and beveled edge. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img src="/moppo/app-icon-light.svg" alt="" width={256} height={256} className="size-full [display:var(--icon-light-display)]" />
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src="/moppo/app-icon-dark.svg" alt="" width={256} height={256} className="size-full [display:var(--icon-dark-display)]" />
+    <img src="/moppo/app-icon-dark.png" alt="" width={256} height={256} className="size-full [display:var(--icon-dark-display)]" />
   </span>;
 }
 

@@ -4,8 +4,10 @@ The cleanup screenshots are the supplied light and dark captures, cropped to
 the app window and exported as WebP. The hero shares Paguro's coastal wallpaper
 family, with a different crop. It currently uses stills, not a recorded loop.
 
-App icons use the native `AppIcon.icon/Assets/Moppo.svg` artwork and its light
-and dark background colors. The section mascot uses the app's
+App icons use the native `AppIcon.icon/Assets/Moppo.svg` artwork. The light
+icon uses the app's background colors; the dark icon is the rendered export
+from the app's `docs/images/moppo-icon-dark.png`, including its lighting and
+beveled edge. The section mascot uses the app's
 `MoppoMascot.json` vector outline with amber eyes. Sidebar tool symbols are
 exported by `tools/export-moppo-symbols.swift`; Cleanup uses `MoppoFilled.svg`.
 
@@ -15,7 +17,7 @@ header uses demo project and branch names. No surrounding app content ships.
 
 Final assets are saved in `public/moppo/`: `cleanup-light.webp`,
 `cleanup-dark.webp`, `worktree-light.webp`, `worktree-dark.webp`,
-`app-icon-light.svg`, `app-icon-dark.svg`, and `og-image.jpg`. Sidebar symbol
+`app-icon-light.svg`, `app-icon-dark.png`, and `og-image.jpg`. Sidebar symbol
 exports are in `public/moppo/tools/`.
 
 ## Dialog edit prompt
