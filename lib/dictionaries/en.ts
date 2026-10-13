@@ -390,6 +390,11 @@ export const dictionary = {
     effective: "Effective {date}",
   },
 
+  paguroTerms: {
+    link: "Terms of use",
+    updated: "Last updated: {date}",
+  },
+
   appPage: {
     download: "Download for macOS",
     /** `{version}` is replaced with the app's `minMacOS` at render time. */

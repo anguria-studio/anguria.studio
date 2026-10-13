@@ -11,7 +11,8 @@ import { getPaguroPrivacyPolicy } from "@/lib/privacy/paguro-policy";
  * Paguro's header and footer, not the site's: this is a Paguro page. `subpage`
  * points the wordmark up to the app page instead of a hero that is not here;
  * the download pills stay, as on the app page. `privacyLink={false}` keeps the
- * footer from linking the policy to itself. The footer gets `path` so the
+ * footer from linking the policy to itself, while retaining the terms link.
+ * The footer gets `path` so the
  * language switcher stays on the policy.
  */
 export async function PaguroPrivacyPage({ locale }: { locale: Locale }) {

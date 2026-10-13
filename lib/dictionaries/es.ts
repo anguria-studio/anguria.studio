@@ -358,6 +358,11 @@ export const dictionary: Dictionary = {
     effective: "En vigor desde el {date}",
   },
 
+  paguroTerms: {
+    link: "Condiciones de uso",
+    updated: "Última actualización: {date}",
+  },
+
   appPage: {
     download: "Descargar para macOS",
     requirements:

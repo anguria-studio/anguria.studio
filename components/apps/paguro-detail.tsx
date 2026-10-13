@@ -6,7 +6,7 @@ import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { PaguroActions } from "@/components/apps/paguro-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
-import { apps, paguroPrivacyPath } from "@/lib/apps";
+import { apps, paguroPrivacyPath, paguroTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
 // Balance the visible artwork inside the shared 32px slot. These viewBoxes
@@ -36,7 +36,7 @@ export function PaguroHeader({
 }: {
   locale: Locale;
   dict: Dictionary;
-  /** True on a page below /paguro (the privacy policy). The wordmark then
+  /** True on a page below /paguro (privacy or terms). The wordmark then
    *  links up to the app page instead of to a hero that is not there. Nothing
    *  else changes: the pills stay, so the header reads the same on every
    *  Paguro page. */
@@ -73,7 +73,7 @@ export function PaguroHeader({
             vercel.json): it would only bounce the visitor straight back here.
             It returns with the redirects' removal. No pills on a phone: compact
             pills beside the wordmark do not fit that header. On the app page
-            the hero carries them below the subtitle; on the privacy subpage the
+            the hero carries them below the subtitle; on legal subpages the
             wordmark leads to that hero. The wrapper owns the display so it
             cannot race the hardcoded `flex` inside PaguroActions. */}
         <div className="hidden sm:block">
@@ -138,19 +138,18 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
   );
 }
 
-/** Paguro is a fork, and says so; its copyright and its privacy policy share the
- *  second row because the footer is generic and this is the only app that has
- *  either. The policy page itself passes `privacyLink={false}`: a footer link to
- *  the page it is on would go nowhere, so there the second row is the copyright
- *  alone. Two rows on both pages: the footer is where the fine print lives. */
+/** Credits on the first row; copyright and legal links on the second.
+ *  Each legal page omits its own link and keeps the other document reachable. */
 export function PaguroFooterNote({
   dict,
   locale,
   privacyLink = true,
+  termsLink = true,
 }: {
   dict: Dictionary;
   locale: Locale;
   privacyLink?: boolean;
+  termsLink?: boolean;
 }) {
   const link = "underline decoration-hairline underline-offset-4 transition hover:text-foreground";
   return (
@@ -164,6 +163,12 @@ export function PaguroFooterNote({
           <>
             <span aria-hidden="true"> · </span>
             <Link href={localePath(locale, paguroPrivacyPath)} className={link}>{dict.paguroPrivacy.link}</Link>
+          </>
+        ) : null}
+        {termsLink ? (
+          <>
+            <span aria-hidden="true"> · </span>
+            <Link href={localePath(locale, paguroTermsPath)} className={link}>{dict.paguroTerms.link}</Link>
           </>
         ) : null}
       </p>

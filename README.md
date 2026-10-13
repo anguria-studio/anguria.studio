@@ -35,6 +35,7 @@ through it.
   type; the other three are checked against it, so a missing translation is a
   compile error. Components contain no copy of their own.
 - `lib/privacy/` — Paguro's privacy policy as data, one file per language.
+- `lib/terms/` — Paguro's terms of use as data, one file per language.
 - `lib/apps.ts` — per-app URLs and the `site` constants (domain, email).
 - `components/` — markup, grouped by layer.
 - `tests/` — logic tests for the Paguro page's interactive pieces.
