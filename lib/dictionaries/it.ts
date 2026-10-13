@@ -5,6 +5,62 @@ import type { Dictionary } from "./en";
  * `TODO(copy)` in en.ts saranno risolti.
  */
 export const dictionary: Dictionary = {
+  moppoPage: {
+    seoTitle: "Moppo — Pulizia del Mac, con cura",
+    nav: "Esplora Moppo",
+    github: "Vedi su GitHub",
+    download: "Scarica",
+    requirements: "macOS {version}+ · Apple silicon e Intel",
+    hero: {
+      title: "Mac pulito.",
+      accent: "Niente di perso.",
+      body: "La pulizia del Mac, fatta con cura. Gratis e open source.",
+      download: "Scarica per Mac",
+      shotAlt: "La finestra Pulizia di Moppo su un desktop Mac, con le categorie di elementi sicuri da rimuovere e da controllare.",
+    },
+    install: { copy: "Copia il comando Homebrew", copied: "Copiato negli appunti", failed: "Seleziona il comando per copiarlo manualmente." },
+    story: {
+      title: "Fai pulizia. Poi ricontrolla.",
+      body: "Moppo trova ciò che occupa spazio e ti indica cosa puoi rimuovere con sicurezza. Decidi tu cosa eliminare, con la possibilità di ripristinare i file.",
+      features: [
+        { title: "Da rimuovere, o da controllare.", body: "Ogni elemento viene diviso tra ciò che Moppo può suggerire e ciò che merita un controllo: documenti, worktree con modifiche locali, app ancora in uso." },
+        { title: "I file vanno nel Cestino.", body: "I file rimossi vanno nel Cestino, con una registrazione nella Cronologia. Hai cambiato idea? Ripristinali finché sono ancora lì." },
+        { title: "Doppioni, verificati.", body: "I file vengono confrontati per contenuto, non solo per nome. Controlla le foto identiche e simili, poi scegli quale copia tenere." },
+        { title: "Nessun account. Nessuna telemetria.", body: "Le scansioni restano sul tuo Mac. Nessun accesso, nessun tracciamento, nessun caricamento dei tuoi file. Il codice è su GitHub, se vuoi controllare." },
+      ],
+    },
+    review: {
+      title: "Sa cosa non toccare.",
+      body: "Alcune cartelle sembrano inutili, ma contengono lavoro vero. Moppo le esamina prima di suggerire qualcosa, e ti spiega perché.",
+      shotAlt: "Il dialogo di controllo dei worktree di Moppo segnala file locali, modifiche non salvate in commit, commit non inviati, blocchi Git e worktree in uso.",
+      points: [
+        { title: "Conosce Git.", body: "I worktree con modifiche non salvate in commit, commit non inviati o file locali ignorati vengono segnalati per un controllo." },
+        { title: "In uso? Non si tocca.", body: "I file e i worktree usati da un’app o un processo attivo vengono segnalati, così puoi prima chiuderli." },
+        { title: "Una cronologia completa.", body: "Controlla cosa è stato rimosso, quando e le dimensioni registrate. Ripristina i file idonei dallo stesso posto." },
+      ],
+    },
+    tools: {
+      title: "Quattro strumenti. Una sola app.",
+      items: [
+        { title: "Pulizia", body: "Cache, log, file residui" },
+        { title: "Esplora spazio", body: "Cosa occupa il tuo disco" },
+        { title: "Disinstalla app", body: "App e ciò che lasciano" },
+        { title: "Duplicati", body: "File e foto duplicati" },
+      ],
+    },
+    faqTitle: "Qualche cosa da sapere.",
+    faq: [
+      { id: "pricing", question: "Moppo è davvero gratis?", answer: "Sì. Moppo è gratuito e open source, con licenza MIT. Nessun abbonamento, funzione a pagamento o account obbligatorio." },
+      { id: "automatic-removal", question: "Moppo elimina qualcosa da solo?", answer: "No. Le scansioni programmate possono trovare elementi da controllare, ma decidi tu cosa rimuovere. La categoria sicura da rimuovere è un suggerimento, non un’autorizzazione alla pulizia automatica. Svuotare il Cestino è un’azione separata che richiede conferma." },
+      { id: "undo", question: "Posso annullare una pulizia?", answer: "Usa il ripristino nella Cronologia per recuperare i file idonei finché sono ancora nel Cestino. Una volta svuotato il Cestino, Moppo non può più recuperarli. I pacchetti rimossi con Homebrew e le immagini Docker sono eccezioni: i loro strumenti di rimozione non supportano il ripristino." },
+      { id: "full-disk-access", question: "Perché Moppo chiede l’accesso completo al disco?", answer: "macOS protegge alcune cartelle dalle app. L’accesso completo al disco permette a Moppo di esaminare queste posizioni per una scansione più completa. Puoi continuare con accesso limitato: Moppo segnala ciò che non può leggere. Le scansioni programmate e le misurazioni automatiche richiedono l’accesso completo. Gestisci il permesso nelle Impostazioni di Sistema." },
+      { id: "app-store", question: "Perché non è sull’App Store?", answer: "Il Mac App Store richiede la sandbox di Apple, che limita l’accesso ai file esterni al contenitore dell’app. Moppo ha bisogno di un accesso più ampio per esaminare cache, file residui delle app e cartelle di sviluppo sul Mac, quindi viene distribuito come download diretto." },
+      { id: "privacy", question: "Raccoglie dati?", answer: "Moppo non raccoglie telemetria e non carica file, percorsi o foto delle scansioni. Impostazioni, misurazioni e cronologia restano sul Mac. I controlli facoltativi degli aggiornamenti contattano il server; le funzioni che usano Foto, iCloud o Homebrew seguono le impostazioni di quei servizi." },
+      { id: "system-requirements", question: "Quali Mac sono supportati?", answer: "Moppo funziona su macOS 15 o successivo, sia su Mac con Apple silicon sia su Mac Intel." },
+    ],
+    also: { label: "Sempre da Anguria Studio", body: "Una casa nativa per le tue app web." },
+    footerNote: "Un’app gratuita e open source per pulire il Mac.",
+  },
   paguroNotificationTest: {
     download: {
       heading: "Scarica un piccolo esempio.",
@@ -348,6 +404,16 @@ export const dictionary: Dictionary = {
         }
       ]
     }
+  },
+
+  moppoPrivacy: {
+    link: "Informativa sulla privacy",
+    back: "Torna a Moppo",
+    effective: "In vigore dal {date}",
+  },
+  moppoTerms: {
+    link: "Condizioni d’uso",
+    updated: "Ultimo aggiornamento: {date}",
   },
 
   paguroPrivacy: {

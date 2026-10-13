@@ -45,6 +45,7 @@ function Pill({
   download = false,
   event,
   analyticsLabel,
+  showDownloadOnMobile = false,
 }: {
   href: string;
   tone: "solid" | "subtle";
@@ -54,6 +55,7 @@ function Pill({
   download?: boolean;
   event: AnalyticsEvent;
   analyticsLabel: string;
+  showDownloadOnMobile?: boolean;
 }) {
   // Downloads use the current tab; external product/source pages open separately.
   const external = !download && href.startsWith("http");
@@ -64,7 +66,7 @@ function Pill({
       data-analytics-label={analyticsLabel}
       download={download || undefined}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-      className={`${PILL} ${download ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background active:bg-foreground/80" : "bg-foreground/5 text-foreground active:bg-foreground/12"}`}
+      className={`${PILL} ${download && !showDownloadOnMobile ? "hidden sm:inline-flex" : "inline-flex"} ${tone === "solid" ? "bg-foreground text-background active:bg-foreground/80" : "bg-foreground/5 text-foreground active:bg-foreground/12"}`}
     >
       {icon}
       <span className={LABEL}>
@@ -86,12 +88,16 @@ export function PaguroActions({
   mobileAppStoreLabel,
   className = "",
   location,
+  showGithub = true,
+  showDownloadOnMobile = false,
 }: {
-  copy: Dictionary["paguroPage"];
+  copy: Pick<Dictionary["paguroPage"], "download" | "github" | "appStore">;
   meta: AppMeta;
   mobileAppStoreLabel?: string;
   className?: string;
   location: "header" | "hero";
+  showGithub?: boolean;
+  showDownloadOnMobile?: boolean;
 }) {
   return (
     <div data-analytics-location={location} className={`flex flex-wrap items-center gap-3 ${className}`}>
@@ -113,17 +119,18 @@ export function PaguroActions({
           tone="solid"
           label={copy.download}
           download
+          showDownloadOnMobile={showDownloadOnMobile}
           icon={<AppleMark viewBox="2 2 20 20" className={`size-4 ${SWAP}`} />}
         />
       )}
-      <Pill
+      {showGithub && <Pill
         href={meta.github}
         event="source-click"
         analyticsLabel={meta.slug}
         tone="subtle"
         label={copy.github}
         icon={<GitHubMark className={`size-4 ${SWAP}`} />}
-      />
+      />}
     </div>
   );
 }

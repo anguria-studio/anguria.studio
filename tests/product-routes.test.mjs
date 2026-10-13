@@ -18,7 +18,7 @@ test("Moppo replaces Scolo while Obolo keeps its identity and links", async () =
   assert.ok(pagePaths.includes("moppo"));
   assert.ok(!pagePaths.includes("scolo"));
   assert.equal(apps.moppo.github, "https://github.com/anguria-studio/Moppo");
-  assert.equal(apps.moppo.download, "https://github.com/anguria-studio/Moppo/releases/latest");
+  assert.equal(apps.moppo.download, "https://github.com/anguria-studio/Moppo/releases/latest/download/Moppo.dmg");
   assert.equal(apps.obolo.slug, "obolo");
   assert.equal(apps.obolo.github, "https://github.com/anguria-studio/obolo");
   for (const locale of locales) {
@@ -48,6 +48,7 @@ test("old Scolo URLs permanently redirect to Moppo in the same language", async 
   for (const locale of locales) {
     const prefix = locale === "en" ? "" : `/${locale}`;
     for (const slash of ["", "/"]) {
+      assert.equal(redirects.find(({ source }) => source === `${prefix}/moppo${slash}`), undefined, "Moppo must serve its own landing page");
       assert.deepEqual(redirects.find(({ source }) => source === `${prefix}/scolo${slash}`), {
         source: `${prefix}/scolo${slash}`, destination: `${prefix}/moppo/`, permanent: true,
       });

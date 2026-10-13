@@ -24,6 +24,66 @@ export type AppCopy = {
  * unwritten: `grep -rn "TODO(copy)" lib/dictionaries`
  */
 export const dictionary = {
+  moppoPage: {
+    seoTitle: "Moppo — A Careful Mac Cleaner",
+    nav: "Explore Moppo",
+    github: "View on GitHub",
+    download: "Download",
+    requirements: "macOS {version}+ · Apple silicon and Intel",
+    hero: {
+      title: "A tidy Mac.",
+      accent: "Nothing lost.",
+      body: "A careful cleaner for your Mac. Free and open source.",
+      download: "Download for Mac",
+      shotAlt: "Moppo’s Cleanup window, showing Safe to Remove and Needs Review categories on a Mac desktop.",
+    },
+    install: {
+      copy: "Copy Homebrew command",
+      copied: "Copied to clipboard",
+      failed: "Select the command to copy it manually.",
+    },
+    story: {
+      title: "Clean up. Then double-check.",
+      body: "Moppo finds what’s taking space and tells you which parts are safe to remove. You decide what goes, with a chance to put files back.",
+      features: [
+        { title: "Safe to remove, or needs a look.", body: "Every item is sorted into what Moppo can safely suggest and what deserves a second look: your documents, worktrees with local changes, apps still in use." },
+        { title: "Files go to the Trash.", body: "Cleanup files go to the Trash, with a record in History. Changed your mind? Use Put Back while those files are still there." },
+        { title: "Duplicates, verified.", body: "Files are compared by content, not just by name. Review identical and similar photos, and choose which copy to keep." },
+        { title: "No account. No telemetry.", body: "Your scans stay on your Mac. No sign-in, no tracking, no uploads of your files. The source is on GitHub if you want to check." },
+      ],
+    },
+    review: {
+      title: "Knows what not to touch.",
+      body: "Some folders look like junk but hold real work. Moppo shines a light on them before it suggests anything, and explains why.",
+      shotAlt: "Moppo’s worktree review dialog flags local files and shows checks for uncommitted changes, unpushed commits, Git locks, and whether the worktree is in use.",
+      points: [
+        { title: "Git-aware.", body: "Worktrees with uncommitted changes, unpushed commits, or ignored local files are flagged for review." },
+        { title: "In use? Hands off.", body: "Files and worktrees used by a running app or process are flagged, so you can quit it first." },
+        { title: "A full history.", body: "Check what was removed, when it happened, and the recorded size. Put eligible files back from the same place." },
+      ],
+    },
+    tools: {
+      title: "Four tools. One app.",
+      items: [
+        { title: "Cleanup", body: "Caches, logs, leftovers" },
+        { title: "Storage Explorer", body: "What fills your disk" },
+        { title: "App Uninstaller", body: "Apps and what they leave" },
+        { title: "Duplicates", body: "Duplicate files and photos" },
+      ],
+    },
+    faqTitle: "A few things to know.",
+    faq: [
+      { id: "pricing", question: "Is Moppo really free?", answer: "Yes. Moppo is free and open source under the MIT license. No subscription, paid feature tiers, or account required." },
+      { id: "automatic-removal", question: "Does Moppo delete anything on its own?", answer: "No. Scheduled scans can find things to review, but you choose what to remove. Safe to Remove is a suggestion, not permission to clean up automatically. Emptying the Trash is a separate action that asks for confirmation." },
+      { id: "undo", question: "Can I undo a cleanup?", answer: "Use Put Back in History to restore eligible files while they are still in the Trash. Once the Trash is emptied, those files cannot be restored by Moppo. Packages removed through Homebrew and Docker images are exceptions: their removal tools do not support Put Back." },
+      { id: "full-disk-access", question: "Why does Moppo ask for Full Disk Access?", answer: "macOS protects some folders from apps. Full Disk Access lets Moppo inspect protected locations for a more complete scan. You can continue with limited access, and Moppo reports what it cannot read. Scheduled scans and automatic storage measurements require Full Disk Access. You control the permission in System Settings." },
+      { id: "app-store", question: "Why isn’t it on the App Store?", answer: "The Mac App Store requires apps to use Apple’s sandbox, which limits access to files outside an app’s own container. Moppo needs broader access to inspect caches, app leftovers, and developer folders across your Mac, so it is distributed as a direct download." },
+      { id: "privacy", question: "Does it collect any data?", answer: "Moppo does not collect telemetry or upload scanned files, paths, or photos. Settings, measurements, and cleanup history stay on your Mac. Optional update checks contact the update server, and features that use Photos, iCloud, or Homebrew follow those services’ own settings." },
+      { id: "system-requirements", question: "Which Macs are supported?", answer: "Moppo runs on macOS 15 or later, on both Apple silicon and Intel Macs." },
+    ],
+    also: { label: "Also from Anguria Studio", body: "A native home for your web apps." },
+    footerNote: "A free, open-source Mac cleaner.",
+  },
   paguroNotificationTest: {
     download: {
       heading: "Save a little sample.",
@@ -377,6 +437,16 @@ export const dictionary = {
         }
       ]
     }
+  },
+
+  moppoPrivacy: {
+    link: "Privacy policy",
+    back: "Back to Moppo",
+    effective: "Effective {date}",
+  },
+  moppoTerms: {
+    link: "Terms of use",
+    updated: "Last updated: {date}",
   },
 
   paguroPrivacy: {

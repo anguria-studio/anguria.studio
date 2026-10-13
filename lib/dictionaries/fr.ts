@@ -5,6 +5,62 @@ import type { Dictionary } from "./en";
  * `TODO(copy)` de en.ts résolus.
  */
 export const dictionary: Dictionary = {
+  moppoPage: {
+    seoTitle: "Moppo — Nettoyez votre Mac avec soin",
+    nav: "Découvrir Moppo",
+    github: "Voir sur GitHub",
+    download: "Télécharger",
+    requirements: "macOS {version}+ · Apple silicon et Intel",
+    hero: {
+      title: "Un Mac bien rangé.",
+      accent: "Rien de perdu.",
+      body: "Un nettoyage soigneux pour votre Mac. Gratuit et open source.",
+      download: "Télécharger pour Mac",
+      shotAlt: "La fenêtre de nettoyage de Moppo sur un bureau Mac, avec les catégories des éléments à supprimer et à vérifier.",
+    },
+    install: { copy: "Copier la commande Homebrew", copied: "Copié dans le presse-papiers", failed: "Sélectionnez la commande pour la copier manuellement." },
+    story: {
+      title: "Nettoyez. Puis vérifiez.",
+      body: "Moppo repère ce qui prend de la place et vous indique ce qui peut être supprimé sans risque. Vous choisissez, avec la possibilité de remettre les fichiers en place.",
+      features: [
+        { title: "À supprimer, ou à vérifier.", body: "Chaque élément est classé selon ce que Moppo peut suggérer et ce qui mérite un regard : documents, worktrees avec des modifications locales, apps encore utilisées." },
+        { title: "Les fichiers vont à la Corbeille.", body: "Les fichiers supprimés vont à la Corbeille, avec une trace dans l’historique. Vous changez d’avis ? Restaurez-les tant qu’ils y sont encore." },
+        { title: "Des doublons, vérifiés.", body: "Les fichiers sont comparés par leur contenu, pas seulement leur nom. Examinez les photos identiques ou similaires, puis choisissez la copie à conserver." },
+        { title: "Sans compte. Sans télémétrie.", body: "Vos analyses restent sur votre Mac. Aucune connexion, aucun suivi, aucun envoi de vos fichiers. Le code est sur GitHub pour le vérifier." },
+      ],
+    },
+    review: {
+      title: "Sait ce qu’il ne faut pas toucher.",
+      body: "Certains dossiers semblent inutiles mais contiennent du vrai travail. Moppo les éclaire avant de proposer quoi que ce soit, et explique pourquoi.",
+      shotAlt: "Le dialogue de vérification des worktrees de Moppo signale les fichiers locaux et vérifie les modifications, les commits non envoyés, les verrous Git et les worktrees utilisés.",
+      points: [
+        { title: "Comprend Git.", body: "Les worktrees avec des modifications non commitées, des commits non envoyés ou des fichiers locaux ignorés sont signalés pour vérification." },
+        { title: "En cours d’utilisation ? On attend.", body: "Les fichiers et worktrees utilisés par une app ou un processus actif sont signalés, pour que vous puissiez d’abord le quitter." },
+        { title: "Un historique complet.", body: "Vérifiez ce qui a été supprimé, quand et la taille enregistrée. Remettez les fichiers éligibles en place depuis le même endroit." },
+      ],
+    },
+    tools: {
+      title: "Quatre outils. Une seule app.",
+      items: [
+        { title: "Nettoyage", body: "Caches, journaux, résidus" },
+        { title: "Explorateur de stockage", body: "Ce qui remplit votre disque" },
+        { title: "Désinstallation", body: "Les apps et leurs résidus" },
+        { title: "Doublons", body: "Fichiers et photos en double" },
+      ],
+    },
+    faqTitle: "Quelques détails à connaître.",
+    faq: [
+      { id: "pricing", question: "Moppo est vraiment gratuit ?", answer: "Oui. Moppo est gratuit et open source sous licence MIT. Aucun abonnement, aucune fonction payante et aucun compte obligatoire." },
+      { id: "automatic-removal", question: "Moppo supprime des fichiers tout seul ?", answer: "Non. Les analyses programmées peuvent trouver des éléments à examiner, mais vous choisissez ce qui est supprimé. La catégorie sûre à supprimer est une suggestion, pas une autorisation de nettoyage automatique. Vider la Corbeille est une action séparée qui demande confirmation." },
+      { id: "undo", question: "Peut-on annuler un nettoyage ?", answer: "Utilisez la restauration dans l’historique pour récupérer les fichiers éligibles tant qu’ils sont encore dans la Corbeille. Une fois celle-ci vidée, Moppo ne peut plus les restaurer. Les paquets supprimés par Homebrew et les images Docker font exception : leurs outils de suppression ne permettent pas la restauration." },
+      { id: "full-disk-access", question: "Pourquoi demander l’accès complet au disque ?", answer: "macOS protège certains dossiers des apps. L’accès complet au disque permet à Moppo de les examiner pour une analyse plus complète. Vous pouvez continuer avec un accès limité ; Moppo signale ce qu’il ne peut pas lire. Les analyses programmées et les mesures automatiques nécessitent l’accès complet. Vous gérez cette autorisation dans Réglages Système." },
+      { id: "app-store", question: "Pourquoi pas sur l’App Store ?", answer: "Le Mac App Store impose la sandbox d’Apple, qui limite l’accès aux fichiers hors du conteneur de l’app. Moppo a besoin d’un accès plus large pour examiner les caches, les résidus d’apps et les dossiers de développement sur votre Mac. Il est donc proposé en téléchargement direct." },
+      { id: "privacy", question: "Est-ce que Moppo collecte des données ?", answer: "Moppo ne collecte pas de télémétrie et n’envoie pas les fichiers, chemins ou photos analysés. Réglages, mesures et historique restent sur votre Mac. Les vérifications facultatives des mises à jour contactent le serveur. Les fonctions utilisant Photos, iCloud ou Homebrew suivent les réglages de ces services." },
+      { id: "system-requirements", question: "Quels Mac sont compatibles ?", answer: "Moppo fonctionne sous macOS 15 ou version ultérieure, sur les Mac Apple silicon et Intel." },
+    ],
+    also: { label: "Également par Anguria Studio", body: "Un espace natif pour vos apps web." },
+    footerNote: "Un nettoyeur Mac gratuit et open source.",
+  },
   paguroNotificationTest: {
     download: {
       heading: "Téléchargez un petit exemple.",
@@ -348,6 +404,16 @@ export const dictionary: Dictionary = {
         }
       ]
     }
+  },
+
+  moppoPrivacy: {
+    link: "Politique de confidentialité",
+    back: "Retour à Moppo",
+    effective: "En vigueur depuis le {date}",
+  },
+  moppoTerms: {
+    link: "Conditions d’utilisation",
+    updated: "Dernière mise à jour : {date}",
   },
 
   paguroPrivacy: {

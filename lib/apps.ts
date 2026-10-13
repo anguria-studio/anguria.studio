@@ -32,8 +32,9 @@ export const apps: Record<AppSlug, AppMeta> = {
   moppo: {
     slug: "moppo",
     github: "https://github.com/anguria-studio/Moppo",
-    download: "https://github.com/anguria-studio/Moppo/releases/latest",
-    minMacOS: "14.0",
+    // Launch placeholder; the packaged release is still in preparation.
+    download: "https://github.com/anguria-studio/Moppo/releases/latest/download/Moppo.dmg",
+    minMacOS: "15.0",
     shot: "cleaner",
   },
   paguro: {
@@ -55,6 +56,8 @@ export const dockAppList = [apps.paguro, apps.obolo, apps.moppo];
 /** Locale-relative path of Paguro's privacy policy; nested under the app page it describes. */
 export const paguroPrivacyPath = "paguro/privacy" as const;
 export const paguroTermsPath = "paguro/terms" as const;
+export const moppoPrivacyPath = "moppo/privacy" as const;
+export const moppoTermsPath = "moppo/terms" as const;
 export const paguroNotificationTestPath = "paguro/test-notifications" as const;
 
 /**
@@ -62,7 +65,7 @@ export const paguroNotificationTestPath = "paguro/test-notifications" as const;
  * slash. Hrefs, canonical, hreflang and the sitemap are all typed against this,
  * so a page cannot be linked to without also being exported.
  */
-export const pagePaths = [...appSlugs, paguroPrivacyPath, paguroTermsPath, paguroNotificationTestPath] as const;
+export const pagePaths = [...appSlugs, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath] as const;
 export type PagePath = (typeof pagePaths)[number];
 
 export const site = {

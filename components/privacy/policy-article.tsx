@@ -8,7 +8,7 @@ import {
   formatEffectiveDate,
   paguroPrivacyEffective,
   paguroPrivacySections,
-  type PaguroPrivacyPolicy,
+  type PrivacyPolicy,
   type PolicyBlock,
   type PolicyRun,
 } from "@/lib/privacy/paguro-policy";
@@ -63,22 +63,29 @@ export function PolicyArticle({
   locale,
   dict,
   policy,
+  app = "paguro",
+  effectiveDate = paguroPrivacyEffective,
+  sectionIds = paguroPrivacySections,
 }: {
   locale: Locale;
   dict: Dictionary;
-  policy: PaguroPrivacyPolicy;
+  policy: PrivacyPolicy;
+  app?: "paguro" | "moppo";
+  effectiveDate?: string;
+  sectionIds?: readonly string[];
 }) {
   // Same `{placeholder}` split ContactLine uses for `{email}`: each locale puts
   // the date where its own grammar wants it.
-  const effective = splitAccent(dict.paguroPrivacy.effective, "{date}");
+  const copy = app === "moppo" ? dict.moppoPrivacy : dict.paguroPrivacy;
+  const effective = splitAccent(copy.effective, "{date}");
 
   return (
     <article className="mx-auto max-w-2xl px-6 pt-10 pb-20 sm:pt-14 sm:pb-32">
       <Link
-        href={localePath(locale, "paguro")}
+        href={localePath(locale, app)}
         className="text-sm font-medium text-muted transition hover:text-foreground"
       >
-        &larr; {dict.paguroPrivacy.back}
+        &larr; {copy.back}
       </Link>
 
       <h1 className="mt-8 text-3xl font-semibold tracking-tight text-balance sm:mt-10 sm:text-5xl">
@@ -87,8 +94,8 @@ export function PolicyArticle({
 
       <p className="mt-4 text-sm text-muted">
         {effective.before}
-        <time dateTime={paguroPrivacyEffective}>
-          {formatEffectiveDate(locale)}
+        <time dateTime={effectiveDate}>
+          {formatEffectiveDate(locale, effectiveDate)}
         </time>
         {effective.after}
       </p>
@@ -109,7 +116,7 @@ export function PolicyArticle({
       {/* Iterating the id list rather than Object.entries: the ids are the
           reading order, and they double as the <h2> anchors, so #contact is the
           same deep link in all four languages. */}
-      {paguroPrivacySections.map((id) => {
+      {sectionIds.map((id) => {
         const section = policy.sections[id];
         return (
           <section key={id} className="mt-12 sm:mt-16">

@@ -17,22 +17,24 @@ export type TermsRun =
   | { kind: "license" | "privacy"; text: string }
   | { kind: "email" };
 
-export type PaguroTerms = {
+export type TermsDocument<SectionId extends string = string> = {
   title: string;
   description: string;
   sections: Record<
-    (typeof paguroTermsSections)[number],
+    SectionId,
     { heading: string; paragraph: readonly TermsRun[] }
   >;
 };
 
+export type PaguroTerms = TermsDocument<(typeof paguroTermsSections)[number]>;
+
 /** Show the requested month and year, without depending on the build timezone. */
-export function formatTermsUpdated(locale: Locale): string {
+export function formatTermsUpdated(locale: Locale, iso = paguroTermsUpdated): string {
   return new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",
     timeZone: "UTC",
-  }).format(new Date(paguroTermsUpdated));
+  }).format(new Date(iso));
 }
 
 const terms: Record<Locale, () => Promise<{ terms: PaguroTerms }>> = {

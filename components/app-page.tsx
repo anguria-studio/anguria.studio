@@ -1,4 +1,5 @@
 import { PaguroDetail, PaguroFooterNote, PaguroHeader } from "@/components/apps/paguro-detail";
+import { MoppoDetail, MoppoFooterNote, MoppoHeader } from "@/components/apps/moppo-detail";
 import { AppDetail } from "@/components/apps/app-detail";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -17,30 +18,32 @@ export async function AppPage({
 
   return (
     <>
-      {slug === "paguro" && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+      {(slug === "paguro" || slug === "moppo") && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
         "@id": absoluteUrl(locale, slug),
         url: absoluteUrl(locale, slug),
-        name: dict.paguroPage.seoTitle,
-        description: dict.apps.paguro.description,
+        name: slug === "moppo" ? dict.moppoPage.seoTitle : dict.paguroPage.seoTitle,
+        description: slug === "moppo" ? dict.moppoPage.story.body : dict.apps.paguro.description,
         inLanguage: locale,
-        image: `${site.url}/paguro/og-image.jpg`,
+        image: `${site.url}/${slug}/og-image.jpg`,
         publisher: { "@type": "Organization", name: site.name, url: site.url },
         mainEntity: {
           "@type": "SoftwareApplication",
-          name: "Paguro",
-          operatingSystem: `macOS ${apps.paguro.minMacOS} or later`,
-          applicationCategory: "BusinessApplication",
+          name: dict.apps[slug].name,
+          operatingSystem: `macOS ${apps[slug].minMacOS} or later`,
+          applicationCategory: slug === "moppo" ? "UtilitiesApplication" : "BusinessApplication",
           isAccessibleForFree: true,
-          downloadUrl: apps.paguro.appStore ?? apps.paguro.download,
+          downloadUrl: apps[slug].appStore ?? apps[slug].download,
           offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
         },
       }).replace(/</g, "\\u003c") }} />}
-      {slug === "paguro" ? <PaguroHeader locale={locale} dict={dict} /> : <Header locale={locale} dict={dict} />}
+      {slug === "paguro" ? <PaguroHeader locale={locale} dict={dict} /> : slug === "moppo" ? <MoppoHeader locale={locale} dict={dict} /> : <Header locale={locale} dict={dict} />}
       <main>
         {slug === "paguro" ? (
           <PaguroDetail dict={dict} locale={locale} />
+        ) : slug === "moppo" ? (
+          <MoppoDetail dict={dict} locale={locale} />
         ) : (
           <AppDetail
             locale={locale}
@@ -54,7 +57,7 @@ export async function AppPage({
         locale={locale}
         dict={dict}
         path={slug}
-        note={slug === "paguro" ? <PaguroFooterNote dict={dict} locale={locale} /> : undefined}
+        note={slug === "paguro" ? <PaguroFooterNote dict={dict} locale={locale} /> : slug === "moppo" ? <MoppoFooterNote dict={dict} locale={locale} /> : undefined}
       />
     </>
   );

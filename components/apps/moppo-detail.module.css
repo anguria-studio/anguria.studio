@@ -1,0 +1,56 @@
+.page { --color-melon-500: #d99a00; --color-melon-600: #b68000; }
+.hero { padding-bottom: 2rem; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; }
+.heading { max-width: 1080px; margin-inline: auto; padding: 5.5rem 1.5rem 0; text-align: center; }
+.accent { color: #d99a00; }
+.subtitle { margin: 1.75rem auto 0; font-size: var(--text-xl); line-height: 1.5; color: var(--muted); text-wrap: balance; }
+.install { position: relative; display: inline-flex; justify-content: center; }
+.command { display: inline-flex; align-items: center; gap: .75rem; padding: .4rem .7rem; border-radius: .5rem; background: var(--surface); color: var(--muted); font-size: .75rem; cursor: pointer; }
+.command:hover { color: var(--foreground); }
+.command:focus-visible { outline: 2px solid #d99a00; outline-offset: 4px; }
+.copyStatus { position: absolute; top: calc(100% + .5rem); left: 50%; width: max-content; max-width: 85vw; transform: translateX(-50%); font-size: .75rem; color: var(--muted); }
+.demo { max-width: 1129px; margin: 5rem auto 0; padding-inline: 1.5rem; }
+.desktop { display: grid; place-items: center; aspect-ratio: 16 / 10; border-radius: 20px; background: var(--paguro-wallpaper) 68% 60% / cover no-repeat; overflow: hidden; }
+.appFrame { width: 78%; border-radius: 14px; overflow: hidden; box-shadow: 0 18px 42px rgb(0 0 0 / .23), 0 2px 8px rgb(0 0 0 / .1); }
+.screenshot { width: 100%; height: auto; }
+.sectionTitle { font-size: var(--text-4xl); line-height: 1.15; font-weight: 600; letter-spacing: -.025em; text-wrap: balance; }
+.sectionBody { max-width: 36rem; margin: 1.25rem auto 0; font-size: var(--text-lg); line-height: 1.65; color: var(--muted); text-wrap: pretty; }
+.mascot { display: block; width: 70px; height: 60px; margin: 0 auto 1.5rem; }
+.reviewGrid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem; max-width: 56rem; margin: 3.5rem auto 0; }
+.dialog { display: grid; place-items: center; width: 100%; max-width: 400px; aspect-ratio: 4 / 5; justify-self: center; }
+.dialogFrame { width: 100%; padding: 10px; border-radius: 23px; background: var(--surface); box-shadow: 0 6px 18px rgb(0 0 0 / .07); }
+.dialogCrop { position: relative; overflow: hidden; border-radius: 13px; }
+.dialogLight { aspect-ratio: 1024 / 1152; --dialog-offset: -5%; }
+.dialogDark { aspect-ratio: 1024 / 1224; --dialog-offset: -2.1875%; }
+.dialogCrop .screenshot { position: absolute; inset: 0 auto auto 0; width: 100%; height: auto; transform: translateY(var(--dialog-offset)); }
+.reviewPoints { align-self: center; }
+.tools { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; max-width: 46rem; margin: 3rem auto 0; }
+.toolIcon { display: grid; place-items: center; width: 64px; height: 64px; margin-inline: auto; border: 1px solid var(--hairline); border-radius: 16px; background: var(--background); box-shadow: 0 2px 4px rgb(0 0 0 / .03); }
+.toolIcon > span { display: block; width: 28px; height: 28px; background: currentColor; mask: var(--tool-symbol) center / contain no-repeat; }
+.tool:nth-child(1) { color: #219a64; }
+.tool:nth-child(2) { color: #4f8fff; }
+.tool:nth-child(3) { color: #ff4b6a; }
+.tool:nth-child(4) { color: #ee9227; }
+.tool h3 { color: var(--foreground); }
+.also { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border-radius: 18px; background: var(--surface); }
+.also:focus-visible { outline: 2px solid #d99a00; outline-offset: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .command { transition: color .2s, background .2s; }
+  .also { transition: transform .25s, box-shadow .25s; }
+  .also:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgb(0 0 0 / .05); }
+  .toolIcon { transition: transform .25s; }
+  .tool:hover .toolIcon { transform: translateY(-4px); }
+}
+@media (max-width: 767px) {
+  .heading { padding-top: 3rem; }
+  .subtitle { font-size: var(--text-lg); margin-top: 1.25rem; }
+  .demo { margin-top: 3.5rem; padding-inline: 1rem; }
+  .desktop { aspect-ratio: 1.45; border-radius: 16px; }
+  .appFrame { width: 91%; border-radius: 7px; }
+  .sectionTitle { font-size: var(--text-2xl); }
+  .sectionBody { font-size: var(--text-base); }
+  .reviewGrid { grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
+  .dialog { max-width: 350px; }
+  .reviewPoints { max-width: 30rem; margin-inline: auto; }
+  .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.25rem; }
+  .also { padding: 1rem; gap: .75rem; }
+}

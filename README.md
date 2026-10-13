@@ -34,14 +34,27 @@ through it.
 - `lib/dictionaries/` — all user-facing copy. `en.ts` is the source and the
   type; the other three are checked against it, so a missing translation is a
   compile error. Components contain no copy of their own.
-- `lib/privacy/` — Paguro's privacy policy as data, one file per language.
-- `lib/terms/` — Paguro's terms of use as data, one file per language.
+- `lib/privacy/` — Paguro and Moppo privacy policies as data, one file per language.
+- `lib/terms/` — Paguro and Moppo terms of use as data, one file per language.
 - `lib/apps.ts` — per-app URLs and the `site` constants (domain, email).
 - `components/` — markup, grouped by layer.
 - `tests/` — logic tests for the Paguro page's interactive pieces.
-- `vercel.json` — temporary redirects sending `/`, `/obolo` and `/moppo` to the
-  Paguro page while it is the only released app, plus permanent redirects from
+- `vercel.json` — temporary redirects sending `/` and `/obolo` to the
+  Paguro page, plus permanent redirects from
   the old `/scolo` URLs to `/moppo` in every language.
+
+## Moppo page
+
+`/moppo/` uses the Paguro layout with an amber accent, theme-specific screenshots,
+and a cropped worktree review dialog. Copy lives in `lib/dictionaries/` in
+all four languages. The hero uses static screenshots; a recorded demo loop can
+replace them when available. The mascot uses vector geometry from the app.
+
+The direct download URL and `brew install --cask moppo` command are launch
+placeholders. Replace or verify both when the release and cask are available.
+The footer links to `/moppo/privacy/` and `/moppo/terms/`, with translations in
+all four languages. Privacy content follows the app's `App/Resources/Privacy.md`
+and documented permissions; terms follow its MIT License and recovery limits.
 
 ## Paguro test page
 

@@ -30,15 +30,17 @@ export type PolicyBlock =
 
 export type PolicySection = { heading: string; blocks: readonly PolicyBlock[] };
 
-export type PaguroPrivacyPolicy = {
+export type PrivacyPolicy<SectionId extends string = string> = {
   /** The <h1>, and the first half of the <title>. */
   title: string;
   /** One sentence, ~150 characters: the meta description. */
   description: string;
   /** Paragraphs before the first heading. */
   intro: readonly PolicyBlock[];
-  sections: Record<PaguroPrivacySectionId, PolicySection>;
+  sections: Record<SectionId, PolicySection>;
 };
+
+export type PaguroPrivacyPolicy = PrivacyPolicy<PaguroPrivacySectionId>;
 
 const DATE_LOCALE: Record<Locale, string> = {
   en: "en-GB",

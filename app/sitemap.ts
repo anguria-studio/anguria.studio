@@ -1,24 +1,28 @@
 import type { MetadataRoute } from "next";
-import { paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
+import { moppoPrivacyPath, moppoTermsPath, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
 import { locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/metadata";
 import { paguroPrivacyEffective } from "@/lib/privacy/paguro-policy";
 import { paguroTermsUpdated } from "@/lib/terms/paguro-terms";
+import { moppoPrivacyEffective } from "@/lib/privacy/moppo-policy";
+import { moppoTermsUpdated } from "@/lib/terms/moppo-terms";
 
 export const dynamic = "force-static";
 
 /**
- * Only the pages that are actually served. Until Obolo and Moppo ship, the home
- * page and the two other app pages (in every locale) are host-level temporary
+ * Only the pages that are actually served. The home page and Obolo (in every
+ * locale) are host-level temporary
  * redirects to the Paguro page — see vercel.json — and a sitemap must not
  * advertise a URL that answers with a redirect. When the redirects go, this
  * returns to `[undefined, ...pagePaths]` with the home page at priority 1.
  */
-const served: PagePath[] = ["paguro", paguroPrivacyPath, paguroTermsPath];
+const served: PagePath[] = ["paguro", "moppo", paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath];
 
 const legalDates: Partial<Record<PagePath, string>> = {
   [paguroPrivacyPath]: paguroPrivacyEffective,
   [paguroTermsPath]: paguroTermsUpdated,
+  [moppoPrivacyPath]: moppoPrivacyEffective,
+  [moppoTermsPath]: moppoTermsUpdated,
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

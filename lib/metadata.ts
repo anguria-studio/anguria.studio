@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import { moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
 import {
   defaultLocale,
   getDictionary,
@@ -10,6 +10,8 @@ import {
 import { getPaguroPrivacyPolicy } from "./privacy/paguro-policy";
 import { notificationTestIconPath } from "./paguro-notification-test";
 import { getPaguroTerms } from "./terms/paguro-terms";
+import { getMoppoPrivacyPolicy } from "./privacy/moppo-policy";
+import { getMoppoTerms } from "./terms/moppo-terms";
 
 export const siteMetadata: Metadata = {
   manifest: "/site.webmanifest",
@@ -87,14 +89,14 @@ export async function appMetadata(
 ): Promise<Metadata> {
   const dict = await getDictionary(locale);
   const copy = dict.apps[slug];
-  const title = slug === "paguro" ? dict.paguroPage.seoTitle : `${copy.name} — ${copy.tagline}`;
-  const description = copy.description;
-  const images = slug === "paguro" ? [{
-    url: `${site.url}/paguro/og-image.jpg`,
+  const title = slug === "paguro" ? dict.paguroPage.seoTitle : slug === "moppo" ? dict.moppoPage.seoTitle : `${copy.name} — ${copy.tagline}`;
+  const description = slug === "moppo" ? dict.moppoPage.story.body : copy.description;
+  const images = slug === "paguro" || slug === "moppo" ? [{
+    url: `${site.url}/${slug}/og-image.jpg`,
     width: 1200,
     height: 630,
     type: "image/jpeg",
-    alt: copy.shotAlt,
+    alt: slug === "moppo" ? dict.moppoPage.hero.shotAlt : copy.shotAlt,
   }] : undefined;
 
   return {
@@ -134,6 +136,28 @@ export async function paguroTermsMetadata(locale: Locale): Promise<Metadata> {
     description,
     alternates: alternates(locale, paguroTermsPath),
     openGraph: openGraph(locale, title, description, paguroTermsPath),
+  };
+}
+
+export async function moppoPrivacyMetadata(locale: Locale): Promise<Metadata> {
+  const policy = await getMoppoPrivacyPolicy(locale);
+  const title = `${policy.title} — ${site.name}`;
+  return {
+    title,
+    description: policy.description,
+    alternates: alternates(locale, moppoPrivacyPath),
+    openGraph: openGraph(locale, title, policy.description, moppoPrivacyPath),
+  };
+}
+
+export async function moppoTermsMetadata(locale: Locale): Promise<Metadata> {
+  const terms = await getMoppoTerms(locale);
+  const title = `${terms.title} — ${site.name}`;
+  return {
+    title,
+    description: terms.description,
+    alternates: alternates(locale, moppoTermsPath),
+    openGraph: openGraph(locale, title, terms.description, moppoTermsPath),
   };
 }
 
