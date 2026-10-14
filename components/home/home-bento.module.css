@@ -1,4 +1,5 @@
 .section {
+  --bento-entrance-delay: 700ms;
   max-width: 62.5rem;
   container-type: inline-size;
   margin-inline: auto;
@@ -67,10 +68,10 @@ a.card:focus-visible {
 .cornerArrow { position: absolute; top: 1.375rem; right: 1.375rem; display: grid; width: 2.25rem; aspect-ratio: 1; place-items: center; overflow: hidden; border-radius: 50%; background: light-dark(rgb(255 255 255 / .85), rgb(20 20 24 / .72)); color: light-dark(#171413, #faf7f5); }
 .cornerArrow svg { width: 1rem; height: 1rem; }
 /* Swap surface and ink together to preserve contrast throughout inversion. */
-.product:focus-visible .cornerArrow { background: light-dark(#171413, #faf7f5); color: light-dark(#faf7f5, #171413); }
+.card:focus-visible .cornerArrow { background: light-dark(#171413, #faf7f5); color: light-dark(#faf7f5, #171413); }
 
 @media (hover: hover) {
-  .product:hover .cornerArrow { background: light-dark(#171413, #faf7f5); color: light-dark(#faf7f5, #171413); }
+  .card:hover .cornerArrow { background: light-dark(#171413, #faf7f5); color: light-dark(#faf7f5, #171413); }
 }
 
 .services { --service-row-height: 1.75rem; --service-cycle-height: calc(var(--service-row-height) * 4); flex: 1; min-width: 0; max-width: 15rem; padding: .625rem; border-radius: 1.125rem; color: light-dark(#303039, #f5f5f7); background: light-dark(rgb(255 255 255 / .94), rgb(25 23 30 / .9)); transform-origin: top left; box-shadow: 0 8px 24px rgb(0 0 0 / .08); }
@@ -81,35 +82,50 @@ a.card:focus-visible {
 .service { display: flex; align-items: center; gap: .625rem; height: var(--service-row-height); padding: .1875rem .5rem; border-radius: .5rem; font-size: .875rem; line-height: 1.4; }
 .service img { width: 1rem; height: 1rem; flex-shrink: 0; }
 
-.storageMap { display: grid; flex: 1; min-width: 0; height: clamp(7.5rem, 17cqw, 9.375rem); grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) minmax(0, 1fr); gap: .375rem; }
+.storageMap {
+  --storage-grow-duration: 450ms;
+  --storage-slide-duration: 1400ms;
+  --storage-gap: .375rem;
+  --storage-rest-width: calc((100cqw - var(--storage-gap) * 2) / 2.2);
+  display: grid; container-type: inline-size; flex: 1; min-width: 0; overflow: clip; height: clamp(7.5rem, 17cqw, 9.375rem); grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--storage-gap);
+}
 .storageMap > span, .storageStack > span { border-radius: .625rem; }
-.storageLarge { position: relative; z-index: 1; background: light-dark(#f7dc8e, #ad8538); }
+.storageLarge { position: relative; z-index: 1; width: 100%; background: light-dark(#f7dc8e, #ad8538); }
 .storageMedium { background: light-dark(#e9ad3b, #9c6829); }
 .storageStack { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: .375rem; }
+.storageStack > span { width: 100%; justify-self: unsafe end; }
 .storageStack > span:first-child { background: light-dark(#f6c653, #c99a3b); }
 .storageStack > span:last-child { background: light-dark(#ba861d, #77511d); }
 
 .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem; color: light-dark(#c9214f, #ff8bac); }
 .price > span:first-child { font-size: clamp(3.125rem, 5.65cqw, 3.5rem); font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: -.055em; }
 .priceTerm { font-size: .9375rem; color: light-dark(#ed4b73, #e59cb1); }
-.offSwitch { display: flex; align-items: center; width: 3rem; height: 1.75rem; padding: .1875rem; border-radius: 2rem; background: light-dark(#d6d6da, #535159); }
+.offSwitch { --switch-off: light-dark(#d6d6da, #535159); display: flex; align-items: center; width: 3rem; height: 1.75rem; padding: .1875rem; border-radius: 2rem; background: var(--switch-off); }
 .offSwitch > span { width: 1.375rem; height: 1.375rem; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .18); }
 .swiftIcon { --color-melon-300: light-dark(#eaf3ff, #fff); width: 2.5rem; height: 2.5rem; fill: currentColor; color: light-dark(#3165ad, #9fc1f5); }
 .nativeTitle { background: linear-gradient(100deg, var(--foreground) 40%, light-dark(#8b9db4, #edf4ff) 50%, var(--foreground) 60%); background-size: 300% 100%; background-position: 0% 0; -webkit-background-clip: text; background-clip: text; color: transparent; }
 .contributions {
+  --contribution-gap: .3125rem;
   --contribution-0: light-dark(#d2e6c9, #334b35);
   --contribution-1: light-dark(#a9d39c, #4d7145);
   --contribution-2: light-dark(#6bb357, #70a95e);
   --contribution-3: light-dark(#408e31, #5a994a);
   --contribution-4: light-dark(#2e6726, #8dbb7f);
-  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: .3125rem;
+  /* Keep the square sizes while clearing the last three columns for the link. */
+  display: grid; width: calc(75% - var(--contribution-gap) * .25); grid-template-columns: repeat(9, minmax(0, 1fr)); gap: var(--contribution-gap);
 }
-.contributions > span { aspect-ratio: 1; border-radius: .25rem; }
-.contribution0 { background: var(--contribution-0); }
-.contribution1 { background: var(--contribution-1); }
-.contribution2 { background: var(--contribution-2); }
-.contribution3 { background: var(--contribution-3); }
-.contribution4 { background: var(--contribution-4); }
+.contributions > span { aspect-ratio: 1; border-radius: .25rem; background: var(--contribution-rest); }
+.contribution0 { --contribution-rest: var(--contribution-0); }
+.contribution1 { --contribution-rest: var(--contribution-1); }
+.contribution2 { --contribution-rest: var(--contribution-2); }
+.contribution3 { --contribution-rest: var(--contribution-3); }
+.contribution4 { --contribution-rest: var(--contribution-4); }
+/* Five repeating colour sequences, staggered by the server-rendered column. */
+.contributions > span:nth-child(5n + 1) { --shade-a: var(--contribution-1); --shade-b: var(--contribution-2); --shade-c: var(--contribution-3); --shade-d: var(--contribution-4); }
+.contributions > span:nth-child(5n + 2) { --shade-a: var(--contribution-4); --shade-b: var(--contribution-3); --shade-c: var(--contribution-0); --shade-d: var(--contribution-0); }
+.contributions > span:nth-child(5n + 3) { --shade-a: var(--contribution-2); --shade-b: var(--contribution-4); --shade-c: var(--contribution-2); --shade-d: var(--contribution-1); }
+.contributions > span:nth-child(5n + 4) { --shade-a: var(--contribution-0); --shade-b: var(--contribution-0); --shade-c: var(--contribution-4); --shade-d: var(--contribution-2); }
+.contributions > span:nth-child(5n + 5) { --shade-a: var(--contribution-3); --shade-b: var(--contribution-1); --shade-c: var(--contribution-1); --shade-d: var(--contribution-3); }
 .studioMark { grid-column: 1; grid-row: 1; width: 2rem; height: 2rem; object-fit: contain; }
 .studioCopy { position: absolute; top: calc(100% - var(--card-padding)); right: var(--card-padding); left: calc(var(--card-padding) + 3rem); transform: translateY(-100%); }
 .studioIntro { grid-column: 1 / -1; grid-row: 2; align-self: end; max-width: 32rem; margin-left: auto; font-size: .9375rem; line-height: 1.6; text-align: right; color: color-mix(in srgb, var(--foreground) 88%, transparent); text-wrap: pretty; opacity: 0; visibility: hidden; }
@@ -134,6 +150,132 @@ a.card:focus-visible {
   @media (hover: hover) {
     .studio:hover .studioIntro { transition-delay: 200ms, 0s; }
   }
+}
+
+/* App-card entrances start at first paint, without waiting for hydration.
+   Lower feature cards get their entrance attribute when they enter view.
+   A short pause precedes entrances; hover stays immediate.
+   Reduced motion always shows the resting artwork. */
+@media (prefers-reduced-motion: no-preference) {
+  .paguro .services { animation: menuPop 280ms ease-out calc(var(--bento-entrance-delay) + 100ms) backwards; }
+  .paguro .serviceTrack { animation: serviceEntrance 660ms linear calc(var(--bento-entrance-delay) + 180ms) backwards; }
+  .private[data-bento-entering] .offSwitch { animation: switchOff 360ms ease-in-out calc(var(--bento-entrance-delay) + 1000ms) backwards; }
+  .private[data-bento-entering] .offSwitch > span { animation: switchThumb 360ms cubic-bezier(.25, .8, .25, 1) calc(var(--bento-entrance-delay) + 1000ms) backwards; }
+  /* The incoming tiles follow the yellow edge, sharing its timing and recoil. */
+  .moppo .storageLarge { transform-origin: right center; animation: storageGrow var(--storage-grow-duration) cubic-bezier(.22, .8, .3, 1) var(--bento-entrance-delay) backwards, storageEntrance var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
+  .moppo .storageMedium { animation: storageSlide var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
+  .moppo .storageStack > span { animation: storageExpand var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
+  .native[data-bento-entering] .nativeTitle { animation: nativeReflection 1250ms linear calc(var(--bento-entrance-delay) + 100ms) backwards; }
+  .native[data-bento-entering] .swiftIcon rect { animation: swiftReflection 1250ms linear calc(var(--bento-entrance-delay) + 100ms) backwards; }
+  .source[data-bento-entering] .contributions > span { animation: contributionShades 2000ms ease-in-out calc(var(--bento-entrance-delay) + var(--column) * 45ms) backwards; }
+
+  .card:focus-visible .cornerArrow svg { animation: arrowSpin 400ms ease-out; }
+  /* Retain the entrance in the list so hover-out never restarts the wheel. */
+  .paguro:focus-visible .serviceTrack { animation: serviceEntrance 660ms linear calc(var(--bento-entrance-delay) + 180ms) backwards, serviceSpin 620ms linear; }
+  .moppo:focus-visible .storageMap { animation: storageBreathe 1100ms ease-in-out; }
+  .source:not([data-bento-entering]):focus-visible .contributions > span { animation: contributionHover 750ms ease-in-out calc(var(--column) * 16ms) backwards; }
+
+  @media (hover: hover) {
+    .card:hover .cornerArrow svg { animation: arrowSpin 400ms ease-out; }
+    .paguro:hover .serviceTrack { animation: serviceEntrance 660ms linear calc(var(--bento-entrance-delay) + 180ms) backwards, serviceSpin 620ms linear; }
+    .moppo:hover .storageMap { animation: storageBreathe 1100ms ease-in-out; }
+    .source:not([data-bento-entering]):hover .contributions > span { animation: contributionHover 750ms ease-in-out calc(var(--column) * 16ms) backwards; }
+  }
+}
+
+@keyframes menuPop {
+  0% { opacity: 0; transform: translateY(-6px) scale(.86); }
+  70% { opacity: 1; transform: translateY(1px) scale(1.025); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes serviceEntrance {
+  0% { transform: translateY(calc(var(--service-row-height) * 2 - var(--service-cycle-height))); animation-timing-function: cubic-bezier(.12, .7, .2, 1); }
+  86% { transform: translateY(calc(var(--service-cycle-height) * -2 - 3px)); animation-timing-function: ease-out; }
+  100% { transform: translateY(calc(var(--service-cycle-height) * -2)); }
+}
+
+@keyframes serviceSpin {
+  0% { transform: translateY(0); animation-timing-function: cubic-bezier(.12, .7, .2, 1); }
+  86% { transform: translateY(calc(var(--service-cycle-height) * -2 - 3px)); animation-timing-function: ease-out; }
+  100% { transform: translateY(calc(var(--service-cycle-height) * -2)); }
+}
+
+@keyframes arrowSpin {
+  0% { transform: translate(0, 0); opacity: 1; }
+  40% { transform: translate(9px, -9px); opacity: 0; }
+  41% { transform: translate(-9px, 9px); opacity: 0; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes switchOff {
+  from { background-color: #007aff; }
+  to { background-color: var(--switch-off); }
+}
+
+@keyframes switchThumb {
+  from { transform: translateX(1.25rem); }
+  to { transform: translateX(0); }
+}
+
+@keyframes storageGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes storageEntrance {
+  0% { width: 100cqw; }
+  58% { width: calc(var(--storage-rest-width) * .88); }
+  80% { width: calc(var(--storage-rest-width) * 1.045); }
+  100% { width: var(--storage-rest-width); }
+}
+
+@keyframes storageSlide {
+  0% { transform: translateX(calc(100cqw - var(--storage-rest-width))); }
+  58% { transform: translateX(calc(var(--storage-rest-width) * -.12)); }
+  80% { transform: translateX(calc(var(--storage-rest-width) * .045)); }
+  100% { transform: translateX(0); }
+}
+
+/* Width grows leftward from the right edge, following the middle tile. */
+@keyframes storageExpand {
+  0% { width: calc(100% - 100cqw + var(--storage-rest-width)); }
+  58% { width: calc(100% + var(--storage-rest-width) * .12); }
+  80% { width: calc(100% - var(--storage-rest-width) * .045); }
+  100% { width: 100%; }
+}
+
+@keyframes storageBreathe {
+  0%, 100% { grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) minmax(0, 1fr); }
+  35% { grid-template-columns: minmax(0, 1.85fr) minmax(0, 1.58fr) minmax(0, .97fr); }
+  70% { grid-template-columns: minmax(0, 2.08fr) minmax(0, 1.30fr) minmax(0, 1.02fr); }
+}
+
+@keyframes nativeReflection {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+@keyframes swiftReflection {
+  from { transform: translateX(0); }
+  to { transform: translateX(130px); }
+}
+
+@keyframes contributionShades {
+  0%, 100% { background-color: var(--contribution-rest); }
+  20% { background-color: var(--shade-a); }
+  40% { background-color: var(--shade-b); }
+  60% { background-color: var(--shade-c); }
+  80% { background-color: var(--shade-d); }
+}
+
+/* A separate name lets hover start after the entrance, without replaying it. */
+@keyframes contributionHover {
+  0%, 100% { background-color: var(--contribution-rest); }
+  20% { background-color: var(--shade-a); }
+  40% { background-color: var(--shade-b); }
+  60% { background-color: var(--shade-c); }
+  80% { background-color: var(--shade-d); }
 }
 
 @media (forced-colors: active) {
@@ -163,9 +305,9 @@ a.card:focus-visible {
   .price > span:first-child { font-size: clamp(3rem, 9vw, 3.5rem); }
   .priceTerm { display: none; }
   .swiftIcon { width: 2rem; height: 2rem; }
-  .contributions { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .25rem; }
+  .contributions { --contribution-gap: .25rem; width: calc(50% - var(--contribution-gap) * .5); grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .contributions > span { border-radius: .25rem; }
-  .contributions > span:nth-child(n + 19) { display: none; }
+  .contributions > span:nth-child(n + 10) { display: none; }
   .studio { min-height: 13.5rem; }
   .studioMark { width: 1.875rem; height: 1.875rem; }
 }

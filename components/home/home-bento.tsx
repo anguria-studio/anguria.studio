@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { site } from "@/lib/apps";
@@ -10,9 +11,9 @@ import styles from "./home-bento.module.css";
 const services = ["whatsapp", "gmail", "claude", "slack"] as const;
 const serviceNames = { whatsapp: "WhatsApp", gmail: "Gmail", claude: "Claude", slack: "Slack" };
 const contributionLevels = [
-  0, 4, 2, 4, 2, 0, 2, 0, 4, 0, 3, 2,
-  3, 2, 0, 1, 0, 3, 0, 3, 1, 0, 1, 0,
-  1, 4, 1, 4, 0, 1, 2, 1, 4, 1, 4, 0,
+  0, 4, 2, 4, 2, 0, 2, 0, 4,
+  3, 2, 0, 1, 0, 3, 0, 3, 1,
+  1, 4, 1, 4, 0, 1, 2, 1, 4,
 ];
 
 function ProductIcon({ app }: { app: "paguro" | "moppo" }) {
@@ -44,7 +45,7 @@ export function HomeBento({ locale, dict }: { locale: Locale; dict: Dictionary }
 
   return <HomeBentoMotion className={styles.section} label={dict.home.dockLabel}>
     <div className={styles.appGrid}>
-      <Link href={localePath(locale, "paguro")} className={`${styles.card} ${styles.product} ${styles.paguro}`} data-analytics-label="paguro" data-bento-animation="paguro">
+      <Link href={localePath(locale, "paguro")} className={`${styles.card} ${styles.product} ${styles.paguro}`} data-analytics-label="paguro" data-bento-animation="paguro" data-bento-load>
         <div className={styles.productVisual} aria-hidden="true">
           <ProductIcon app="paguro" />
           <div className={styles.services} data-bento-part="services">
@@ -69,7 +70,7 @@ export function HomeBento({ locale, dict }: { locale: Locale; dict: Dictionary }
         </div>
       </Link>
 
-      <Link href={localePath(locale, "moppo")} className={`${styles.card} ${styles.product} ${styles.moppo}`} data-analytics-label="moppo" data-bento-animation="moppo">
+      <Link href={localePath(locale, "moppo")} className={`${styles.card} ${styles.product} ${styles.moppo}`} data-analytics-label="moppo" data-bento-animation="moppo" data-bento-load>
         <div className={styles.productVisual} aria-hidden="true">
           <ProductIcon app="moppo" />
           <div className={styles.storageMap} data-bento-part="storage-map">
@@ -96,29 +97,31 @@ export function HomeBento({ locale, dict }: { locale: Locale; dict: Dictionary }
 
       <article className={`${styles.card} ${styles.private}`} data-bento-animation="private">
         <div className={styles.privacyVisual} aria-hidden="true">
-          <span className={styles.offSwitch} data-bento-part="switch"><span data-bento-part="switch-thumb" /></span>
+          <span className={styles.offSwitch} data-bento-part="switch" data-bento-end><span data-bento-part="switch-thumb" /></span>
         </div>
         <div className={styles.copy}><h3>{copy.private.title}</h3><p><ResponsiveCopy desktop={copy.private.body} mobile={copy.private.mobileBody} /></p></div>
       </article>
 
       <article className={`${styles.card} ${styles.native}`} data-bento-animation="native">
         <svg viewBox={FEATURE_ICONS.swift.viewBox} className={styles.swiftIcon} aria-hidden="true">{FEATURE_ICONS.swift.node}</svg>
-        <div className={styles.copy}><h3><span className={styles.nativeTitle} data-bento-part="native-title">{copy.native.title}</span></h3><p><ResponsiveCopy desktop={copy.native.body} mobile={copy.native.mobileBody} /></p></div>
+        <div className={styles.copy}><h3><span className={styles.nativeTitle} data-bento-part="native-title" data-bento-end>{copy.native.title}</span></h3><p><ResponsiveCopy desktop={copy.native.body} mobile={copy.native.mobileBody} /></p></div>
       </article>
 
       <a href={site.github} className={`${styles.card} ${styles.source}`} target="_blank" rel="noreferrer" data-analytics-event="source-click" data-analytics-label="studio" data-bento-animation="source">
         <div className={styles.contributions} aria-hidden="true" data-bento-part="contributions">
-          {contributionLevels.map((level, index) => <span key={index} className={styles[`contribution${level}`]} data-contribution-level={level} />)}
+          {/* Tile 8 has the last stagger delay and stays visible on mobile. */}
+          {contributionLevels.map((level, index) => <span key={index} className={styles[`contribution${level}`]} data-contribution-level={level} style={{ "--column": index % 9 } as CSSProperties} data-bento-end={index === 8 ? true : undefined} />)}
         </div>
+        <CornerArrow />
         <div className={styles.copy}><h3>{copy.source.title}</h3><p><ResponsiveCopy desktop={copy.source.body} mobile={copy.source.mobileBody} /></p></div>
       </a>
 
-      <a href={`mailto:${site.email}`} className={`${styles.card} ${styles.studio}`} data-analytics-label="email">
+      <article className={`${styles.card} ${styles.studio}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/mark.png" alt="" width={40} height={40} className={styles.studioMark} />
         <div className={`${styles.copy} ${styles.studioCopy}`}><h3>{site.name}</h3><p>{site.email}</p></div>
         <p className={styles.studioIntro}>{copy.studioIntro}</p>
-      </a>
+      </article>
       </div>
     </section>
   </HomeBentoMotion>;
