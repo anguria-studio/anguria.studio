@@ -18,10 +18,28 @@
 
 ## Apps
 
-| App | What it does | Source |
-| --- | --- | --- |
-| [Paguro](https://anguria.studio/paguro/) | Your web apps, together in one native macOS window. | [GitHub](https://github.com/anguria-studio/Paguro) |
-| [Moppo](https://anguria.studio/moppo/) | A Mac cleaner for caches, duplicate files, and app leftovers. You choose what goes. | [GitHub](https://github.com/anguria-studio/Moppo) |
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://anguria.studio/paguro/">
+        <img src="https://raw.githubusercontent.com/anguria-studio/.github/main/profile/assets/paguro-card.png?v=2" width="440" alt="Paguro — Your web apps, together in one window.">
+      </a>
+      <p align="center">
+        <a href="https://anguria.studio/paguro/">Explore Paguro</a> &middot;
+        <a href="https://github.com/anguria-studio/Paguro">Source code</a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://anguria.studio/moppo/">
+        <img src="https://raw.githubusercontent.com/anguria-studio/.github/main/profile/assets/moppo-card.png?v=2" width="440" alt="Moppo — A tidy Mac. You choose what goes.">
+      </a>
+      <p align="center">
+        <a href="https://anguria.studio/moppo/">Explore Moppo</a> &middot;
+        <a href="https://github.com/anguria-studio/Moppo">Source code</a>
+      </p>
+    </td>
+  </tr>
+</table>
 
 ## Development
 
