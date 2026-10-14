@@ -1,10 +1,10 @@
 /**
- * Non-translatable data about each app: URLs and versions. The icon artwork
- * lives in components/app-icon.tsx.
+ * Non-translatable data about each app: URLs and versions. Native icon artwork
+ * lives in public/paguro/ and public/moppo/.
  * All user-facing copy (name, tagline, description, features) lives in the
  * dictionaries so it can be translated — see lib/dictionaries/en.ts.
  */
-export const appSlugs = ["obolo", "moppo", "paguro"] as const;
+export const appSlugs = ["moppo", "paguro"] as const;
 export type AppSlug = (typeof appSlugs)[number];
 
 export type AppMeta = {
@@ -13,29 +13,18 @@ export type AppMeta = {
   download: string;
   /** Minimum macOS version, shown on the app page. */
   minMacOS: string;
-  /** Basename in public/shots/. Named after the macOS app captured (Obolo,
-   *  MacCleaner, Atoll), which is not the product name — see tools/shot.sh. */
-  shot: string;
   /** App Store product page. Optional: an app that has not shipped yet has no
    *  listing. Setting this field replaces Paguro’s direct download action. */
   appStore?: string;
 };
 
 export const apps: Record<AppSlug, AppMeta> = {
-  obolo: {
-    slug: "obolo",
-    github: "https://github.com/anguria-studio/obolo",
-    download: "https://github.com/anguria-studio/obolo/releases/latest",
-    minMacOS: "14.0",
-    shot: "obolo",
-  },
   moppo: {
     slug: "moppo",
     github: "https://github.com/anguria-studio/Moppo",
     // Launch placeholder; the packaged release is still in preparation.
     download: "https://github.com/anguria-studio/Moppo/releases/latest/download/Moppo.dmg",
     minMacOS: "15.0",
-    shot: "cleaner",
   },
   paguro: {
     slug: "paguro",
@@ -44,14 +33,10 @@ export const apps: Record<AppSlug, AppMeta> = {
     // name, so this address always returns the newest version.
     download: "https://github.com/anguria-studio/Paguro/releases/latest/download/Paguro.dmg",
     minMacOS: "15.0",
-    shot: "atoll",
     // Storefront-neutral: without a country segment Apple opens the visitor's own store.
     appStore: "https://apps.apple.com/app/paguro/id6805463271?mt=12",
   },
 };
-
-export const appList = appSlugs.map((slug) => apps[slug]);
-export const dockAppList = [apps.paguro, apps.obolo, apps.moppo];
 
 /** Locale-relative path of Paguro's privacy policy; nested under the app page it describes. */
 export const paguroPrivacyPath = "paguro/privacy" as const;

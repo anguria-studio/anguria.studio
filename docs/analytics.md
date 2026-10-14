@@ -8,7 +8,7 @@ root layouts and the 404. Tracking runs only on `anguria.studio` and
 Umami automatically records the initial pageview and client navigations. Page
 URLs retain their language prefixes and campaign parameters; hash links do not
 create extra pageviews. Every pageview and event also gets a **tag** of `paguro`,
-`obolo`, `moppo`, or `studio`, computed from its source route. Filter the traffic
+`moppo`, or `studio`, computed from its source route. Filter the traffic
 dashboard by tag to compare a product across languages. Product tags include
 their subpages, so filter **Pages** to the landing-page URL when comparing just
 marketing traffic (e.g. `/paguro/` versus `/paguro/privacy/`).
@@ -37,7 +37,7 @@ action handler. Keep IDs independent of translated copy. New products registered
 in `appSlugs` automatically receive their own product tag. Tracking failures do
 not block interactions or change link navigation.
 
-The current `vercel.json` redirects `/`, `/obolo`, and `/moppo` (and translated
-equivalents) to Paguro. Analytics records the page actually reached; separate
-Obolo/Moppo page traffic begins when those existing redirects are removed.
+The current `vercel.json` redirects `/` and its translated equivalents to
+Paguro. Moppo serves its own landing page in every language. Analytics records
+the page actually reached.
 Old `/scolo` URLs permanently redirect to `/moppo/` in the same language.

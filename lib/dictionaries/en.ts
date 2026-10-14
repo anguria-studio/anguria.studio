@@ -153,7 +153,7 @@ export const dictionary = {
   meta: {
     title: "Anguria Studio — Free, open-source apps for macOS",
     description:
-      "Three small, free, open-source utilities for your Mac: Obolo, Moppo and Paguro.",
+      "Two small, free, open-source utilities for your Mac: Moppo and Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -176,31 +176,6 @@ export const dictionary = {
       "Three utilities that do one thing each, stay out of your way, and cost nothing. No accounts, no telemetry, no subscriptions — just open source.",
   },
   apps: {
-    obolo: {
-      name: "Obolo",
-      category: "Subscription tracker",
-      shotAlt:
-        "The Obolo window on a Mac desktop, showing a month of subscriptions and what they cost.",
-      tagline: "Subscription Tracking",
-      // TODO(copy)
-      description:
-        "Simple and intuitive way to keep an eye on your recurring expanses",
-      features: [
-        // TODO(copy): three real features.
-        {
-          title: "Native",
-          body: "Written in Swift. Fast, tiny, and gentle on your battery.",
-        },
-        {
-          title: "Private",
-          body: "Nothing leaves your Mac. No accounts, no analytics, no phoning home.",
-        },
-        {
-          title: "Open source",
-          body: "Every line is on GitHub. Read it, fork it, send a patch.",
-        },
-      ],
-    },
     moppo: {
       name: "Moppo",
       category: "Mac cleaner",
@@ -248,9 +223,19 @@ export const dictionary = {
   } satisfies Record<AppSlug, AppCopy>,
   home: {
     hero: {
-      title: "Free open source apps for your Mac",
-      /** Rendered in the accent colour, with the Apple glyph in front of it. */
-      titleAccent: "Mac",
+      title: "Free, open-source apps for your Mac.",
+      /** Rendered in the accent colour. */
+      titleAccent: "Mac.",
+    },
+    bento: {
+      paguro: "Give your web apps a home. Every account signed in, side by side, in one native window.",
+      moppo: "A tidy Mac, nothing lost. Finds what’s taking space and checks before anything goes.",
+      promisesTitle: "Every app, the same promises.",
+      studioIntro: "Hi, I’m Tommaso, a software engineer making the small Mac apps I want to use myself. Say hi or report an issue.",
+      free: { title: "Free", forever: "forever", body: "no subscriptions, ever", mobileBody: "no subscriptions" },
+      private: { title: "Private", off: "analytics · accounts · tracking", body: "nothing leaves your Mac", mobileBody: "stays on your Mac" },
+      native: { title: "Native", body: "built in Swift for macOS", mobileBody: "built in Swift" },
+      source: { title: "Open source", body: "read every line on GitHub", mobileBody: "on GitHub" },
     },
     statement: {
       line1: "Three utilities that do one thing each.",
@@ -460,14 +445,6 @@ export const dictionary = {
     updated: "Last updated: {date}",
   },
 
-  appPage: {
-    download: "Download for macOS",
-    /** `{version}` is replaced with the app's `minMacOS` at render time. */
-    requirements: "Requires macOS {version} or later. Free and open source.",
-    viewSource: "View source on GitHub",
-    back: "All apps",
-    featuresHeading: "What it does",
-  },
   contact: {
     issues: "Found a bug? Open an issue on GitHub.",
     /** Exact substring of `issues`, rendered as the link. */

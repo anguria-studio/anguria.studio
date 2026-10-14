@@ -4,6 +4,7 @@ import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { MenuClock } from "@/components/apps/paguro-menu-bar";
 import desktopStyles from "@/components/apps/paguro-desktop.module.css";
 import { MoppoMascot } from "@/components/apps/moppo-mascot";
+import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { ContactLine } from "@/components/layout/contact-line";
 import { ArrowRight } from "@/components/ui/arrow-right";
 import { AppleMark } from "@/components/ui/apple-mark";
@@ -28,28 +29,17 @@ function Glyph({ name, className = "" }: { name: Glyph; className?: string }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className}>{paths[name]}</svg>;
 }
 
-export function MoppoIcon({ className = "" }: { className?: string }) {
-  return <span aria-hidden="true" className={`block shrink-0 ${className}`}>
-    {/* Native artwork from Moppo's AppIcon.icon. The rendered dark export
-        includes Icon Composer's lighting and beveled edge. */}
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src="/moppo/app-icon-light.svg" alt="" width={256} height={256} className="size-full [display:var(--icon-light-display)]" />
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src="/moppo/app-icon-dark.png" alt="" width={256} height={256} className="size-full [display:var(--icon-dark-display)]" />
-  </span>;
-}
-
 export function MoppoHeader({ dict, locale, subpage = false }: { dict: Dictionary; locale: Locale; subpage?: boolean }) {
   const copy = dict.moppoPage;
-  return <header className="header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150">
+  return <header className={`${styles.page} header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150`}>
     <nav aria-label={copy.nav} className="mx-auto flex h-16 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
-      <Link href={subpage ? localePath(locale, "moppo") : "#moppo"} className="inline-flex items-center gap-2 rounded-lg text-base font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D99A00]">
+      <Link href={subpage ? localePath(locale, "moppo") : "#moppo"} className="inline-flex items-center gap-2 rounded-lg text-base font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
         <MoppoIcon className="size-[30px]" />{dict.apps.moppo.name}
       </Link>
       <div className="hidden sm:block">
         <PaguroActions copy={{ ...copy, appStore: "" }} meta={apps.moppo} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
       </div>
-      <a href={apps.moppo.github} aria-label={copy.github} data-analytics-event="source-click" data-analytics-label="moppo" data-analytics-location="header" target="_blank" rel="noreferrer" className="rounded-full bg-foreground/5 p-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D99A00] sm:hidden">
+      <a href={apps.moppo.github} aria-label={copy.github} data-analytics-event="source-click" data-analytics-label="moppo" data-analytics-location="header" target="_blank" rel="noreferrer" className="rounded-full bg-foreground/5 p-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 sm:hidden">
         <GitHubMark className="size-4" />
       </a>
     </nav>
@@ -103,7 +93,7 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
       </div>
       <ul className="mx-auto mt-12 grid max-w-4xl gap-x-12 gap-y-2 sm:mt-14 md:grid-cols-2">
         {copy.story.features.map((feature, index) => <li key={feature.title} className="group/feature row-span-2 grid grid-cols-[2rem_minmax(0,1fr)] grid-rows-subgrid gap-x-3 border-t border-hairline py-6">
-          <Glyph name={featureGlyphs[index]} className="size-7 self-start motion-safe:transition motion-safe:duration-300 motion-safe:group-hover/feature:-translate-y-1 group-hover/feature:text-[#D99A00]" />
+          <Glyph name={featureGlyphs[index]} className="size-7 self-start motion-safe:transition motion-safe:duration-300 motion-safe:group-hover/feature:-translate-y-1 group-hover/feature:text-melon-500" />
           <h3 className="self-start text-xl leading-snug font-semibold tracking-tight text-balance">{feature.title}</h3>
           <p className="col-start-2 text-base leading-relaxed text-muted text-pretty">{feature.body}</p>
         </li>)}

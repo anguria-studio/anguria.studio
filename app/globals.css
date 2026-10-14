@@ -31,27 +31,8 @@
   --surface: #f1eeec;
   --hairline: rgb(0 0 0 / 0.08);
   --header: rgb(250 247 245 / 0.72);
-  /* The Dock tooltip's material — the same vibrancy recipe as the header
-     (translucent tint + backdrop blur + saturate), tuned lighter and more
-     transparent because a tooltip is a smaller, more temporary surface.
-     Theme-matched rather than inverted, which is what macOS does for menus and
-     Dock labels: light glass on the light page, dark on the dark one. */
+  /* Shared glass material for preview menus, tooltips, and controls. */
   --glass: rgb(255 255 255 / 0.72);
-  /* The showcase glow is dark-theme only; a saturated blur over the warm
-     light background would read as a stain. */
-  --glow-opacity: 0;
-
-  /* The Dock marks are flat #CFCFCF tiles: correct against the light page, but
-     on the dark one a near-white tile is the brightest thing on the screen and
-     pulls rank on the app icons above it. Dimmed there rather than recoloured,
-     so the artwork stays one asset. */
-  --dock-icon-opacity: 1;
-
-  /* The Dock marks are two flat tones, swapped between themes: a light tile
-     with a dark mark on the light page, the reverse on the dark one. Tokens
-     rather than two copies of the artwork, since only the two fills differ. */
-  --dock-tile: #cfcfcf;
-  --dock-mark: #4d4d4d;
 
   /* Which of the two app-icon artworks is drawn. The icons ship as a light and
      a dark export per app — same geometry, different tile and mark — so both
@@ -81,10 +62,6 @@
   --hairline: rgb(255 255 255 / 0.12);
   --header: rgb(23 20 19 / 0.72);
   --glass: rgb(60 56 54 / 0.72);
-  --glow-opacity: 0.32;
-  --dock-icon-opacity: 0.55;
-  --dock-tile: #4d4d4d;
-  --dock-mark: #cfcfcf;
   --icon-light-display: none;
   --icon-dark-display: block;
   --moppo-mascot: #575557;
@@ -101,10 +78,6 @@
     --hairline: rgb(255 255 255 / 0.12);
     --header: rgb(23 20 19 / 0.72);
     --glass: rgb(60 56 54 / 0.72);
-    --glow-opacity: 0.32;
-    --dock-icon-opacity: 0.55;
-    --dock-tile: #4d4d4d;
-    --dock-mark: #cfcfcf;
     --icon-light-display: none;
     --icon-dark-display: block;
     --moppo-mascot: #575557;
@@ -151,10 +124,7 @@
 }
 
 /*
- * The expand-on-hover showcase only makes sense with a real pointer and room to
- * move. Everything else gets the stacked, always-visible layout. Both are
- * defined so every differing property can be explicitly gated — never leave a
- * conflicting value on a bare utility.
+ * Paguro's interactive desktop preview needs a fine pointer and room to move.
  */
 @custom-variant desk {
   @media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
@@ -162,57 +132,9 @@
   }
 }
 
-/* Block form with @slot, not the shorthand: a comma-separated media query in
-   `@custom-variant touch (...)` gets parsed as separate selectors and emits
-   `.touch\:flex-col (hover: none)`, which is not a selector at all. */
-/*
- * Dock magnification. The real Dock scales each icon by a continuous function
- * of the pointer's x-distance, but with THREE icons there are only ever three
- * states — the icon under the pointer, its neighbour, and the rest — which is
- * expressible in plain CSS, so it is.
- *
- * The links are direct siblings of each other on purpose: with a wrapper
- * element between them, "my NEXT sibling is hovered" would need a nested
- * :has(), which is invalid CSS and silently discards the rule.
- *
- * `dock-after` matches inside the icon whose PREVIOUS sibling is active,
- * `dock-before` inside the one whose NEXT sibling is. Two variants rather than
- * one, because the neighbour also has to slide AWAY from the pointer, and that
- * displacement is direction-dependent — it is most of what makes this read as
- * the Dock rather than as a plain hover-scale.
- *
- * The ancestor half sits in :where() so these stay at plain-class specificity
- * and never outrank the hovered icon's own group-hover rules — which matters
- * the moment one icon is focus-visible while its neighbour is hovered.
- */
-@custom-variant dock-after {
-  &:is(:where(.group\/dock > a:is(:hover, :focus-visible) + a) *) {
-    @slot;
-  }
-}
-
-@custom-variant dock-before {
-  &:is(:where(.group\/dock > a:has(+ a:is(:hover, :focus-visible))) *) {
-    @slot;
-  }
-}
-
-/*
- * "Another card in this row is being hovered/focused, and it isn't mine."
- * Drives the card text out of the way the instant a hover starts, rather than
- * waiting for the card to narrow — otherwise you watch the text re-wrap as it
- * collapses. The negation targets the card link (.group), not the text itself:
- * the text blocks are absolutely-positioned strips the pointer never enters.
- */
-@custom-variant sibling-active {
-  &:is(:where(.group\/row):has(a:is(:hover, :focus-visible)) *):is(:where(.group):not(:hover):not(:focus-visible) *) {
-    @slot;
-  }
-}
-
 /*
  * "Make glass solid": for readers who ask for less transparency or more
- * contrast. Block form for the same comma-query reason as `touch` below.
+ * contrast. Block form keeps the comma-separated media query in one variant.
  */
 @custom-variant solid {
   @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
@@ -220,33 +142,12 @@
   }
 }
 
-@custom-variant touch {
-  @media (max-width: 47.9375rem), (hover: none), (pointer: coarse) {
-    @slot;
-  }
-}
-
-/*
- * Height of the wallpaper layer behind the showcase row. It spans the full row
- * (gaps included) so the desktop is one continuous image that never moves; each
- * card just clips its own slice of it.
- *
- *   --wallpaper-h = row width / screenshot aspect ratio
- *
- * Only place the screenshot aspect appears in CSS. If the captures change shape,
- * change 2.1333 here and nowhere else. Current shots are 2560x1200.
- */
-:root {
-  --wallpaper-h: min(530.63px, calc((100vw - 48px) / 2.1333));
-}
-
 @theme {
   /* The page content width. Header, showcase, feature grid, footer and the app
      pages all sit in this, so it changes in one place. Generates `max-w-page`. */
   --container-page: 1400px;
 
-  /* The showcase row is narrower than the rest of the page. Drives
-     --wallpaper-h above: that is (this - 48px gutters) / the shot aspect. */
+  /* Align the app feature grids and review sections. */
   --container-cards: 1180px;
 
   /* The feature label's measure. Narrow on purpose: the three longer labels are
@@ -276,12 +177,6 @@
   --text-display-sm--letter-spacing: -0.02em;
 
   --radius-card: 1.5rem;
-  /* The showcase cards are larger than the feature tiles and want a softer
-     corner. Deliberately not merged with --radius-card. */
-  --radius-showcase: 1.75rem;
-
-  /* 0.22% letter spacing, from the SF Pro Display spec. */
-  --tracking-display: 0.0022em;
 
   /*
    * The load choreography's only real number. Stage N starts N steps in and
@@ -369,32 +264,6 @@
 [data-theme-switching] *::before,
 [data-theme-switching] *::after {
   transition: none !important;
-}
-
-/*
- * The mesh glow haloing the showcase row: four radial gradients anchored at the
- * element's CORNERS, melted together by a heavy blur. Corners rather than one
- * edge because the cards are opaque photographs — everything behind them is
- * hidden, so only the bleed around the outside and through the 12px gaps ever
- * shows, and a halo needs all four sides lit to read as one.
- *
- * The two melon stops are real tokens; the coral (used on the other diagonal,
- * twice) is melon-500 rotated ~25deg toward orange and appears nowhere else, so
- * it stays a literal here rather than becoming a token. Rind green was tried and rejected — melon and rind
- * side by side in a blur read as Christmas.
- *
- * 128px is a blur radius, not spacing: no scale equivalent exists, and this is
- * the one-off decorative geometry the no-arbitrary-values rule exempts.
- */
-.showcase-glow {
-  background-image:
-    radial-gradient(at 0% 0%, var(--color-melon-600) 0%, transparent 50%),
-    radial-gradient(at 100% 0%, #ff7a3d 0%, transparent 50%),
-    radial-gradient(at 100% 100%, var(--color-melon-500) 0%, transparent 50%),
-    radial-gradient(at 0% 100%, #ff7a3d 0%, transparent 50%);
-  filter: blur(128px);
-  opacity: var(--glow-opacity);
-  border-radius: 9999px;
 }
 
 /*

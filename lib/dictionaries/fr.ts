@@ -134,7 +134,7 @@ export const dictionary: Dictionary = {
   meta: {
     title: "Anguria Studio — Des apps macOS gratuites et open source",
     description:
-      "Trois petits utilitaires gratuits et open source pour votre Mac : Obolo, Moppo et Paguro.",
+      "Deux petits utilitaires gratuits et open source pour votre Mac : Moppo et Paguro.",
   },
   nav: {
     home: "Anguria Studio",
@@ -153,30 +153,6 @@ export const dictionary: Dictionary = {
       "Trois utilitaires qui font une seule chose, se font oublier et ne coûtent rien. Pas de compte, pas de télémétrie, pas d'abonnement — juste de l'open source.",
   },
   apps: {
-    obolo: {
-      name: "Obolo",
-      category: "Suivi des abonnements",
-      shotAlt:
-        "La fenêtre d'Obolo sur un bureau Mac, avec le récapitulatif mensuel des abonnements.",
-      tagline: "Un petit utilitaire pour votre Mac.",
-      description:
-        "Obolo est une app minimaliste qui vit discrètement dans votre barre de menus.",
-      features: [
-        // TODO(copy): three real features.
-        {
-          title: "Native",
-          body: "Écrite en Swift. Rapide, légère et douce pour la batterie.",
-        },
-        {
-          title: "Privée",
-          body: "Rien ne quitte votre Mac. Pas de compte, pas de statistiques, aucun appel au serveur.",
-        },
-        {
-          title: "Open source",
-          body: "Tout le code est sur GitHub. Lisez-le, forkez-le, proposez un patch.",
-        },
-      ],
-    },
     moppo: {
       name: "Moppo",
       category: "Nettoyage du Mac",
@@ -227,9 +203,19 @@ export const dictionary: Dictionary = {
   },
   home: {
     hero: {
-      title: "Des apps libres et gratuites pour votre Mac",
-      /** Rendered in the accent colour, with the Apple glyph in front of it. */
-      titleAccent: "Mac",
+      title: "Des apps libres et gratuites pour votre Mac.",
+      /** Rendered in the accent colour. */
+      titleAccent: "Mac.",
+    },
+    bento: {
+      paguro: "Offrez un chez-soi à vos apps web. Chaque compte connecté, côte à côte, dans une seule fenêtre native.",
+      moppo: "Un Mac en ordre, sans rien perdre. Repère ce qui prend de la place et vérifie avant toute suppression.",
+      promisesTitle: "Chaque app, les mêmes promesses.",
+      studioIntro: "Salut, moi c’est Tommaso, ingénieur logiciel. Je crée les petites apps Mac que j’ai envie d’utiliser. Dites bonjour ou signalez un problème.",
+      free: { title: "Gratuit", forever: "pour toujours", body: "sans abonnement, pour toujours", mobileBody: "sans abonnement" },
+      private: { title: "Privé", off: "analyses · comptes · suivi", body: "rien ne quitte votre Mac", mobileBody: "tout reste sur votre Mac" },
+      native: { title: "Natif", body: "écrit en Swift pour macOS", mobileBody: "écrit en Swift" },
+      source: { title: "Open source", body: "lisez chaque ligne sur GitHub", mobileBody: "sur GitHub" },
     },
     statement: {
       line1: "Trois utilitaires qui font chacun une seule chose.",
@@ -427,14 +413,6 @@ export const dictionary: Dictionary = {
     updated: "Dernière mise à jour : {date}",
   },
 
-  appPage: {
-    download: "Télécharger pour macOS",
-    requirements:
-      "Nécessite macOS {version} ou version ultérieure. Gratuit et open source.",
-    viewSource: "Voir le code sur GitHub",
-    back: "Toutes les apps",
-    featuresHeading: "Ce qu'elle fait",
-  },
   contact: {
     issues: "Un bug ? Ouvrez une issue sur GitHub.",
     issuesLink: "Ouvrez une issue sur GitHub",

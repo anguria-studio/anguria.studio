@@ -3,14 +3,14 @@
 # Capture a fixed screen region with one app's window placed at exact
 # coordinates — or the bare wallpaper, for the collapsed-card background.
 #
-#   ./tools/shot.sh obolo              capture Obolo
+#   ./tools/shot.sh cleaner            capture the cleaner app
 #   ./tools/shot.sh desktop            capture the wallpaper only, same region
-#   ./tools/shot.sh obolo --windows    list the app's windows, capture nothing
-#   ./tools/shot.sh obolo --hide-icons hide desktop icons for the capture
-#   ./tools/shot.sh obolo --quit       quit the app afterwards
-#   ./tools/shot.sh obolo --no-restore leave the other apps hidden
+#   ./tools/shot.sh cleaner --windows    list the app's windows, capture nothing
+#   ./tools/shot.sh cleaner --hide-icons hide desktop icons for the capture
+#   ./tools/shot.sh cleaner --quit       quit the app afterwards
+#   ./tools/shot.sh cleaner --no-restore leave the other apps hidden
 #
-# Every other app is hidden for the capture and un-hidden afterwards. All four
+# Every other app is hidden for the capture and un-hidden afterwards. All
 # shots MUST use the same REGION or the wallpaper won't line up between the
 # collapsed and expanded cards on the site.
 #
@@ -25,13 +25,12 @@ set -eo pipefail
 #   - The wallpaper is anchored to the row, so an EXPANDED card always covers
 #     a fixed 1949pt band of the frame — a DIFFERENT band per card. Each app's
 #     window is therefore centred in its own band: WIN_X is set per app below,
-#     not here. Using one value for all three clips two of them.
+#     not here. Using one value for every app can clip its window.
 #   - A 480px-tall card can show at most 1168pt of window height, whatever the
 #     region height (it depends only on the card height and row width).
 #   - y=40 clears the 30pt menu bar.
-# If the card height in components/app-showcase.tsx changes, or the display
-# resolution changes, these must be recomputed — and so must the image aspect
-# baked into the wrapper height in components/app-showcase-card.tsx.
+# Recompute the placement and crop when the target layout or display resolution
+# changes, matching each screenshot's aspect ratio to its intended placement.
 WIN_Y=240
 WIN_W=1400                    # window size, in points
 WIN_H=860
@@ -54,15 +53,13 @@ for arg in "$@"; do
 done
 
 # PREF_TITLE: exact window title to prefer. Empty means "pick the largest
-# window", which is what you want almost always — Obolo retitles its window to
-# the current section ("Overview", "Upcoming", …) so matching by name is
-# impossible, and an onboarding window is always smaller than the real one.
+# window", which handles apps whose title changes with the current section
+# and avoids selecting a smaller onboarding window.
 case "$KEY" in
-  obolo)   APP="Obolo";      PREF_TITLE=""; WIN_X=274 ;;   # leftmost card — Obolo
-  cleaner) APP="MacCleaner"; PREF_TITLE=""; WIN_X=580 ;;   # middle card — Moppo
-  atoll)   APP="Atoll";      PREF_TITLE=""; WIN_X=886 ;;   # rightmost card — Paguro
+  cleaner) APP="MacCleaner"; PREF_TITLE=""; WIN_X=580 ;;   # Moppo
+  atoll)   APP="Atoll";      PREF_TITLE=""; WIN_X=886 ;;   # Paguro
   desktop) APP="";           PREF_TITLE=""; WIN_X=0   ;;   # wallpaper only, no window
-  *) print -u2 "usage: ${0:t} {cleaner|obolo|atoll|desktop} [--windows] [--hide-icons] [--quit] [--no-restore]"; exit 1 ;;
+  *) print -u2 "usage: ${0:t} {cleaner|atoll|desktop} [--windows] [--hide-icons] [--quit] [--no-restore]"; exit 1 ;;
 esac
 
 if [[ -z "$APP" ]] && (( LIST_WINDOWS )); then

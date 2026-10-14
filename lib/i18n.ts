@@ -21,8 +21,8 @@ export function isLocale(value: string): value is Locale {
 }
 
 /**
- * The default locale is served unprefixed (`/`, `/obolo`, `/paguro/privacy`);
- * the others are prefixed (`/it`, `/it/obolo`, `/it/paguro/privacy`). Keep
+ * The default locale is served unprefixed (`/`, `/moppo`, `/paguro/privacy`);
+ * the others are prefixed (`/it`, `/it/moppo`, `/it/paguro/privacy`). Keep
  * every href in the site going through here.
  */
 export function localePath(locale: Locale, path?: PagePath): string {

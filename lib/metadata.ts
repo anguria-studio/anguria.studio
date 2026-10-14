@@ -36,7 +36,7 @@ const OG_LOCALE: Record<Locale, string> = {
 };
 
 /**
- * Absolute, trailing-slashed URL. `trailingSlash: true` means `/obolo/` is what
+ * Absolute, trailing-slashed URL. `trailingSlash: true` means `/moppo/` is what
  * the host actually serves, so canonical and hreflang have to match it — and
  * absolute URLs here mean no `metadataBase` is needed in either root layout.
  */
@@ -89,22 +89,22 @@ export async function appMetadata(
 ): Promise<Metadata> {
   const dict = await getDictionary(locale);
   const copy = dict.apps[slug];
-  const title = slug === "paguro" ? dict.paguroPage.seoTitle : slug === "moppo" ? dict.moppoPage.seoTitle : `${copy.name} — ${copy.tagline}`;
+  const title = slug === "paguro" ? dict.paguroPage.seoTitle : dict.moppoPage.seoTitle;
   const description = slug === "moppo" ? dict.moppoPage.story.body : copy.description;
-  const images = slug === "paguro" || slug === "moppo" ? [{
+  const images = [{
     url: `${site.url}/${slug}/og-image.jpg`,
     width: 1200,
     height: 630,
     type: "image/jpeg",
     alt: slug === "moppo" ? dict.moppoPage.hero.shotAlt : copy.shotAlt,
-  }] : undefined;
+  }];
 
   return {
     title,
     description,
     alternates: alternates(locale, slug),
-    openGraph: { ...openGraph(locale, title, description, slug), ...(images ? { images } : {}) },
-    ...(images ? { twitter: { card: "summary_large_image" as const, title, description, images: images.map(({ url, alt }) => ({ url, alt })) } } : {}),
+    openGraph: { ...openGraph(locale, title, description, slug), images },
+    twitter: { card: "summary_large_image", title, description, images: images.map(({ url, alt }) => ({ url, alt })) },
   };
 }
 

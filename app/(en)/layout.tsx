@@ -5,7 +5,7 @@ import { ThemeScript } from "@/components/layout/theme-script";
 import { WebAnalytics } from "@/components/layout/web-analytics";
 
 /**
- * Root layout #1 of 2. Serves the default locale, unprefixed: `/`, `/obolo`, …
+ * Root layout #1 of 2. Serves the default locale, unprefixed: `/`, `/moppo`, …
  * Its twin is app/(intl)/[locale]/layout.tsx. There is deliberately no
  * app/layout.tsx — two root layouts is what lets each locale ship a correct
  * `<html lang>` in its static HTML.

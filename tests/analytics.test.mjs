@@ -13,7 +13,7 @@ const { analyticsContext, beforeAnalyticsSend, isAnalyticsHost, trackEvent } = a
 test("product routes group across languages without merging their subpages", () => {
   for (const locale of ["en", "it", "fr", "es"]) {
     const prefix = locale === "en" ? "" : `/${locale}`;
-    for (const product of ["paguro", "obolo", "moppo"]) {
+    for (const product of ["paguro", "moppo"]) {
       assert.deepEqual(analyticsContext(`${prefix}/${product}/?utm_source=test#questions`), {
         product, locale, route: `/${product}`, page: "product",
       });

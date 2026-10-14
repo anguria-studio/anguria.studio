@@ -1,7 +1,7 @@
 # anguria.studio
 
 Source of [anguria.studio](https://anguria.studio), the website for Anguria
-Studio's macOS apps: **Obolo**, **Moppo** and **Paguro**.
+Studio's macOS apps: **Moppo** and **Paguro**.
 
 ## Stack
 
@@ -39,7 +39,7 @@ through it.
 - `lib/apps.ts` — per-app URLs and the `site` constants (domain, email).
 - `components/` — markup, grouped by layer.
 - `tests/` — logic tests for the Paguro page's interactive pieces.
-- `vercel.json` — temporary redirects sending `/` and `/obolo` to the
+- `vercel.json` — temporary redirects sending `/` and its translations to the
   Paguro page, plus permanent redirects from
   the old `/scolo` URLs to `/moppo` in every language.
 

@@ -10,9 +10,8 @@ import { moppoTermsUpdated } from "@/lib/terms/moppo-terms";
 export const dynamic = "force-static";
 
 /**
- * Only the pages that are actually served. The home page and Obolo (in every
- * locale) are host-level temporary
- * redirects to the Paguro page — see vercel.json — and a sitemap must not
+ * Only the pages that are actually served. The home page in every locale is a
+ * host-level temporary redirect to the Paguro page — see vercel.json — and a sitemap must not
  * advertise a URL that answers with a redirect. When the redirects go, this
  * returns to `[undefined, ...pagePaths]` with the home page at priority 1.
  */

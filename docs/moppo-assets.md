@@ -1,13 +1,19 @@
 # Moppo landing assets
 
 The cleanup screenshots are the supplied light and dark captures, cropped to
-the app window and exported as WebP. The hero shares Paguro's coastal wallpaper
-family, with a different crop. It currently uses stills, not a recorded loop.
+the app window and exported as WebP. The homepage card and hero use the supplied
+`Ventura squared.jpg` wallpaper in both light and dark themes. The homepage uses
+the full square image at 1024 × 1024 (`public/moppo/card-wallpaper.webp`). The hero
+uses a 16:10 crop at 2160 × 1350 (`public/moppo/hero-wallpaper.webp`), keeping the
+light blue along the top. The crop starts at (0, 200) and measures 6016 × 3760 in
+the 6016 × 6016 source. Both WebP exports use quality 82 with metadata removed;
+the square is about 16 KB and the landscape about 28 KB.
+The hero currently uses stills, not a recorded loop.
 
-App icons use the native `AppIcon.icon/Assets/Moppo.svg` artwork. The light
-icon uses the app's background colors; the dark icon is the rendered export
-from the app's `docs/images/moppo-icon-dark.png`, including its lighting and
-beveled edge. The section mascot uses the app's
+The app icon always uses the rendered dark export from the app's
+`docs/images/moppo-icon-dark.png`, including its lighting and beveled edge,
+in both page themes. `components/apps/moppo-icon.tsx` shares it across the
+homepage and app headers. The section mascot uses the app's
 `MoppoMascot.json` vector outline with amber eyes. Sidebar tool symbols are
 exported by `tools/export-moppo-symbols.swift`; Cleanup uses `MoppoFilled.svg`.
 
@@ -17,7 +23,8 @@ header uses demo project and branch names. No surrounding app content ships.
 
 Final assets are saved in `public/moppo/`: `cleanup-light.webp`,
 `cleanup-dark.webp`, `worktree-light.webp`, `worktree-dark.webp`,
-`app-icon-light.svg`, `app-icon-dark.png`, and `og-image.jpg`. Sidebar symbol
+`app-icon-light.svg`, `app-icon-dark.png`, `card-wallpaper.webp`,
+`hero-wallpaper.webp`, and `og-image.jpg`. Sidebar symbol
 exports are in `public/moppo/tools/`.
 
 ## Dialog edit prompt
