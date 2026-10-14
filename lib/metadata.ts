@@ -167,6 +167,7 @@ export async function paguroNotificationTestMetadata(locale: Locale): Promise<Me
   return {
     title,
     description: copy.intro,
+    robots: { index: false, follow: true },
     icons: {
       icon: [{ url: notificationTestIconPath, sizes: "256x256", type: "image/png" }],
       apple: notificationTestIconPath,
