@@ -8,7 +8,7 @@ import type { Dictionary } from "./en";
  */
 export const dictionary: Dictionary = {
   moppoPage: {
-    seoTitle: "Moppo — Limpia tu Mac con cuidado",
+    seoTitle: "Moppo — Limpiador de Mac gratis y de código abierto",
     nav: "Descubre Moppo",
     github: "Ver en GitHub",
     download: "Descargar",
@@ -16,12 +16,12 @@ export const dictionary: Dictionary = {
     hero: {
       title: "Un Mac ordenado.",
       accent: "Nada perdido.",
-      body: "Limpia tu Mac con cuidado. Gratis y de código abierto.",
+      body: "Un limpiador de Mac gratis y de código abierto para cachés, archivos duplicados y restos de apps. Tú revisas qué se elimina.",
       download: "Descargar para Mac",
       shotAlt: "La ventana de limpieza de Moppo en un escritorio Mac, con las categorías de elementos seguros para eliminar y pendientes de revisión.",
     },
     story: {
-      title: "Limpia. Luego comprueba.",
+      title: "Libera espacio. Tú eliges qué eliminar.",
       body: "Moppo encuentra lo que ocupa espacio y te indica qué puedes eliminar con seguridad. Tú decides, con la posibilidad de restaurar los archivos.",
       features: [
         { title: "Para eliminar, o para revisar.", body: "Cada elemento se clasifica entre lo que Moppo puede sugerir y lo que merece una revisión: documentos, worktrees con cambios locales y apps en uso." },
@@ -32,7 +32,7 @@ export const dictionary: Dictionary = {
     },
     review: {
       title: "Sabe qué no debe tocar.",
-      body: "Algunas carpetas parecen inútiles, pero contienen trabajo real. Moppo las examina antes de sugerir nada y te explica el motivo.",
+      body: "Los worktrees de Git con cambios sin commit, los archivos usados por apps en ejecución y tus documentos personales merecen una revisión. Moppo los señala para que los revises antes de eliminar nada.",
       shotAlt: "El diálogo de revisión de worktrees de Moppo señala archivos locales y comprueba cambios, commits sin enviar, bloqueos de Git y worktrees en uso.",
       points: [
         { title: "Entiende Git.", body: "Los worktrees con cambios sin commit, commits sin enviar o archivos locales ignorados se señalan para su revisión." },
@@ -250,7 +250,7 @@ export const dictionary: Dictionary = {
 
     title: "Dale a tus apps",
     accent: "un hogar.",
-    intro: "Un espacio nativo para tus apps web.",
+    intro: "Gmail, Slack, WhatsApp y otras apps en un espacio de trabajo nativo para Mac. Mantén tus cuentas de trabajo y personales una al lado de la otra.",
     eyebrow: "Paguro para macOS",
     tryLabel: "Vamos, mándate algo.",
     tryHint: "Elige una app. Mira el notch.",
@@ -366,7 +366,7 @@ export const dictionary: Dictionary = {
     downloadRequirements: "macOS {version}+ · Apple silicon e Intel",
     requirementsQuestion: "¿Qué Macs son compatibles?",
     story: {
-      title: "Trabajo. Vida. Y todo lo demás.",
+      title: "Mantén separadas tus cuentas de trabajo y personales.",
       body: "Dale a cada parte del día su propio espacio. Mantén todas tus cuentas conectadas, cada una con su propia sesión.",
       services: "Caras conocidas. Todas bienvenidas.",
       serviceNote: "Elige del catálogo, o añade tu propio sitio web.",

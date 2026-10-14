@@ -6,7 +6,7 @@ import type { Dictionary } from "./en";
  */
 export const dictionary: Dictionary = {
   moppoPage: {
-    seoTitle: "Moppo — Nettoyez votre Mac avec soin",
+    seoTitle: "Moppo — Nettoyeur Mac gratuit et open source",
     nav: "Découvrir Moppo",
     github: "Voir sur GitHub",
     download: "Télécharger",
@@ -14,12 +14,12 @@ export const dictionary: Dictionary = {
     hero: {
       title: "Un Mac bien rangé.",
       accent: "Rien de perdu.",
-      body: "Un nettoyage soigneux pour votre Mac. Gratuit et open source.",
+      body: "Un nettoyeur Mac gratuit et open source pour les caches, les fichiers en double et les résidus d’apps. Vous choisissez ce qui est supprimé.",
       download: "Télécharger pour Mac",
       shotAlt: "La fenêtre de nettoyage de Moppo sur un bureau Mac, avec les catégories des éléments à supprimer et à vérifier.",
     },
     story: {
-      title: "Nettoyez. Puis vérifiez.",
+      title: "Libérez de l’espace. Décidez quoi supprimer.",
       body: "Moppo repère ce qui prend de la place et vous indique ce qui peut être supprimé sans risque. Vous choisissez, avec la possibilité de remettre les fichiers en place.",
       features: [
         { title: "À supprimer, ou à vérifier.", body: "Chaque élément est classé selon ce que Moppo peut suggérer et ce qui mérite un regard : documents, worktrees avec des modifications locales, apps encore utilisées." },
@@ -30,7 +30,7 @@ export const dictionary: Dictionary = {
     },
     review: {
       title: "Sait ce qu’il ne faut pas toucher.",
-      body: "Certains dossiers semblent inutiles mais contiennent du vrai travail. Moppo les éclaire avant de proposer quoi que ce soit, et explique pourquoi.",
+      body: "Les worktrees Git avec des modifications non commitées, les fichiers utilisés par des apps en cours d’exécution et vos documents personnels méritent un examen attentif. Moppo les signale pour vérification avant toute suppression.",
       shotAlt: "Le dialogue de vérification des worktrees de Moppo signale les fichiers locaux et vérifie les modifications, les commits non envoyés, les verrous Git et les worktrees utilisés.",
       points: [
         { title: "Comprend Git.", body: "Les worktrees avec des modifications non commitées, des commits non envoyés ou des fichiers locaux ignorés sont signalés pour vérification." },
@@ -250,7 +250,7 @@ export const dictionary: Dictionary = {
 
     title: "Offrez à vos apps",
     accent: "un chez-soi.",
-    intro: "Un espace natif pour vos apps web.",
+    intro: "Gmail, Slack, WhatsApp et bien d’autres apps dans un espace de travail natif sur Mac. Gardez vos comptes professionnels et personnels côte à côte.",
     eyebrow: "Paguro pour macOS",
     tryLabel: "Allez, envoyez-vous quelque chose.",
     tryHint: "Choisissez une app. Regardez l’encoche.",
@@ -366,7 +366,7 @@ export const dictionary: Dictionary = {
     downloadRequirements: "macOS {version}+ · Apple silicon et Intel",
     requirementsQuestion: "Quels Mac sont compatibles ?",
     story: {
-      title: "Travail. Vie perso. Et tout le reste.",
+      title: "Séparez vos comptes professionnels et personnels.",
       body: "Offrez à chaque partie de votre journée son propre espace. Gardez tous vos comptes connectés, chacun avec sa propre session.",
       services: "Des visages familiers. Tous bienvenus.",
       serviceNote: "Choisissez dans le catalogue, ou ajoutez le site de votre choix.",

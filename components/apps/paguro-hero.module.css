@@ -27,7 +27,7 @@
 /* Spacing and type in rem via the theme, so the hero grows with the reader's
    text size. The title's size and tracking live in --text-display. */
 .heading { max-width: 1080px; margin-inline: auto; padding: calc(var(--spacing) * 22) calc(var(--spacing) * 6) 0; text-align: center; }
-.subtitle { margin: calc(var(--spacing) * 7) auto 0; font-size: var(--text-xl); line-height: 1.5; color: var(--muted); text-wrap: balance; }
+.subtitle { max-width: 50rem; margin: calc(var(--spacing) * 7) auto 0; font-size: var(--text-xl); line-height: 1.5; color: var(--muted); text-wrap: balance; }
 .cta > a { height: calc(var(--spacing) * 11); font-size: var(--text-base); }
 .cta > a:last-child { display: none; }
 .demo { max-width: 1129px; margin: calc(var(--spacing) * 27) auto 0; padding-inline: calc(var(--spacing) * 6); }

@@ -25,7 +25,7 @@ export type AppCopy = {
  */
 export const dictionary = {
   moppoPage: {
-    seoTitle: "Moppo — A Careful Mac Cleaner",
+    seoTitle: "Moppo — Free, Open-Source Mac Cleaner",
     nav: "Explore Moppo",
     github: "View on GitHub",
     download: "Download",
@@ -33,12 +33,12 @@ export const dictionary = {
     hero: {
       title: "A tidy Mac.",
       accent: "Nothing lost.",
-      body: "A careful cleaner for your Mac. Free and open source.",
+      body: "A free, open-source Mac cleaner for caches, duplicate files, and app leftovers. You review what goes.",
       download: "Download for Mac",
       shotAlt: "Moppo’s Cleanup window, showing Safe to Remove and Needs Review categories on a Mac desktop.",
     },
     story: {
-      title: "Clean up. Then double-check.",
+      title: "Free up space. You choose what goes.",
       body: "Moppo finds what’s taking space and tells you which parts are safe to remove. You decide what goes, with a chance to put files back.",
       features: [
         { title: "Safe to remove, or needs a look.", body: "Every item is sorted into what Moppo can safely suggest and what deserves a second look: your documents, worktrees with local changes, apps still in use." },
@@ -49,7 +49,7 @@ export const dictionary = {
     },
     review: {
       title: "Knows what not to touch.",
-      body: "Some folders look like junk but hold real work. Moppo shines a light on them before it suggests anything, and explains why.",
+      body: "Git worktrees with uncommitted changes, files used by running apps, and your personal documents deserve a closer look. Moppo flags them for review before you remove anything.",
       shotAlt: "Moppo’s worktree review dialog flags local files and shows checks for uncommitted changes, unpushed commits, Git locks, and whether the worktree is in use.",
       points: [
         { title: "Git-aware.", body: "Worktrees with uncommitted changes, unpushed commits, or ignored local files are flagged for review." },
@@ -276,7 +276,7 @@ export const dictionary = {
 
     title: "Give your apps",
     accent: "a home.",
-    intro: "A native workspace for your web apps.",
+    intro: "One native Mac workspace for Gmail, Slack, WhatsApp, and more. Keep work and personal accounts side by side.",
     eyebrow: "Paguro for macOS",
     tryLabel: "Go on. Send yourself something.",
     tryHint: "Pick an app. Watch the notch.",
@@ -394,7 +394,7 @@ export const dictionary = {
     downloadRequirements: "macOS {version}+ · Apple silicon and Intel",
     requirementsQuestion: "Which Macs are supported?",
     story: {
-      title: "Work. Life. Everything in between.",
+      title: "Keep work and personal accounts separate.",
       body: "Give each part of your day its own workspace. Keep all your accounts signed in, with a separate session for each one.",
       services: "Familiar faces. All welcome.",
       serviceNote: "Pick from the catalog, or bring a website of your own.",
