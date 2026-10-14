@@ -13,7 +13,7 @@
   <a href="https://anguria.studio">Website</a> &middot;
   <a href="#apps">Apps</a> &middot;
   <a href="#development">Development</a> &middot;
-  <a href="mailto:hello@anguria.studio">Contact</a>
+  <a href="#contact">Contact</a>
 </p>
 
 ## Apps
@@ -73,4 +73,6 @@ you try notifications, downloads, and camera access without a messaging account.
 
 ## License
 
-[MIT](LICENSE) · [hello@anguria.studio](mailto:hello@anguria.studio)
+<p id="contact">
+  <a href="LICENSE">MIT</a> &middot; hello@anguria.studio
+</p>
