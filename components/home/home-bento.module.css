@@ -1,5 +1,7 @@
 .section {
   --bento-entrance-delay: 700ms;
+  /* Feature cards start just before they scroll in, so they get no pause. */
+  --bento-feature-delay: 0ms;
   max-width: 62.5rem;
   container-type: inline-size;
   margin-inline: auto;
@@ -137,8 +139,8 @@ a.card:focus-visible {
   .studio:hover .studioIntro { opacity: 1; visibility: visible; }
 }
 
-/* Touch screens keep the revealed layout, with room for longer translations. */
-@media (hover: none) {
+/* Touch screens and phone widths keep the revealed layout, with room for longer translations. */
+@media (hover: none), (max-width: 44rem) {
   .studioCopy { position: static; grid-column: 2; grid-row: 1; transform: none; }
   .studioIntro { opacity: 1; visibility: visible; }
 }
@@ -159,15 +161,15 @@ a.card:focus-visible {
 @media (prefers-reduced-motion: no-preference) {
   .paguro .services { animation: menuPop 280ms ease-out calc(var(--bento-entrance-delay) + 100ms) backwards; }
   .paguro .serviceTrack { animation: serviceEntrance 660ms linear calc(var(--bento-entrance-delay) + 180ms) backwards; }
-  .private[data-bento-entering] .offSwitch { animation: switchOff 360ms ease-in-out calc(var(--bento-entrance-delay) + 1000ms) backwards; }
-  .private[data-bento-entering] .offSwitch > span { animation: switchThumb 360ms cubic-bezier(.25, .8, .25, 1) calc(var(--bento-entrance-delay) + 1000ms) backwards; }
+  .private[data-bento-entering] .offSwitch { animation: switchOff 320ms ease-in-out calc(var(--bento-feature-delay) + 250ms) backwards; }
+  .private[data-bento-entering] .offSwitch > span { animation: switchThumb 320ms cubic-bezier(.25, .8, .25, 1) calc(var(--bento-feature-delay) + 250ms) backwards; }
   /* The incoming tiles follow the yellow edge, sharing its timing and recoil. */
   .moppo .storageLarge { transform-origin: right center; animation: storageGrow var(--storage-grow-duration) cubic-bezier(.22, .8, .3, 1) var(--bento-entrance-delay) backwards, storageEntrance var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
   .moppo .storageMedium { animation: storageSlide var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
   .moppo .storageStack > span { animation: storageExpand var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
-  .native[data-bento-entering] .nativeTitle { animation: nativeReflection 1250ms linear calc(var(--bento-entrance-delay) + 100ms) backwards; }
-  .native[data-bento-entering] .swiftIcon rect { animation: swiftReflection 1250ms linear calc(var(--bento-entrance-delay) + 100ms) backwards; }
-  .source[data-bento-entering] .contributions > span { animation: contributionShades 2000ms ease-in-out calc(var(--bento-entrance-delay) + var(--column) * 45ms) backwards; }
+  .native[data-bento-entering] .nativeTitle { animation: nativeReflection 900ms linear var(--bento-feature-delay) backwards; }
+  .native[data-bento-entering] .swiftIcon rect { animation: swiftReflection 900ms linear var(--bento-feature-delay) backwards; }
+  .source[data-bento-entering] .contributions > span { animation: contributionShades 900ms ease-in-out calc(var(--bento-feature-delay) + var(--column) * 25ms) backwards; }
 
   .card:focus-visible .cornerArrow svg { animation: arrowSpin 400ms ease-out; }
   /* Retain the entrance in the list so hover-out never restarts the wheel. */
