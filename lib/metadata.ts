@@ -74,12 +74,21 @@ function openGraph(
 export async function homeMetadata(locale: Locale): Promise<Metadata> {
   const dict = await getDictionary(locale);
   const { title, description } = dict.meta;
+  // The artwork is English-only; the localized title stands in as its alt text.
+  const images = [{
+    url: `${site.url}/og-image.jpg`,
+    width: 1200,
+    height: 630,
+    type: "image/jpeg",
+    alt: title,
+  }];
 
   return {
     title,
     description,
     alternates: alternates(locale),
-    openGraph: openGraph(locale, title, description),
+    openGraph: { ...openGraph(locale, title, description), images },
+    twitter: { card: "summary_large_image", title, description, images: images.map(({ url, alt }) => ({ url, alt })) },
   };
 }
 
