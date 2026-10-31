@@ -6,7 +6,7 @@ import type { Dictionary } from "./en";
  */
 export const dictionary: Dictionary = {
   moppoPage: {
-    seoTitle: "Moppo — Nettoyeur Mac gratuit et open source",
+    seoTitle: "Moppo — Nettoyeur Mac gratuit et open source pour développeurs",
     nav: "Découvrir Moppo",
     github: "Voir sur GitHub",
     download: "Télécharger",
@@ -14,7 +14,7 @@ export const dictionary: Dictionary = {
     hero: {
       title: "Un Mac bien rangé.",
       accent: "Rien de perdu.",
-      body: "Un nettoyeur Mac gratuit et open source pour les caches, les fichiers en double et les résidus d’apps. Vous choisissez ce qui est supprimé.",
+      body: "Un nettoyeur Mac gratuit et open source qui connaît le désordre des développeurs : données Xcode, caches de paquets, images Docker et anciens worktrees Git. Vous choisissez ce qui est supprimé.",
       download: "Télécharger pour Mac",
       shotAlt: "La fenêtre de nettoyage de Moppo sur un bureau Mac, avec les catégories des éléments à supprimer et à vérifier.",
       shotsLabel: "Écrans de l’app",
@@ -27,12 +27,12 @@ export const dictionary: Dictionary = {
       },
     },
     story: {
-      title: "Libérez de l’espace. Décidez quoi supprimer.",
-      body: "Moppo repère ce qui prend de la place et vous indique ce qui peut être supprimé sans risque. Vous choisissez, avec la possibilité de remettre les fichiers en place.",
+      title: "Conçu pour le Mac sur lequel vous codez.",
+      body: "Moppo sait où vos outils rangent leurs caches, lesquels ils reconstruisent et quels fichiers comptent encore. Il nettoie aussi les résidus d’apps et les doublons. Vous décidez ce qui part, avec la possibilité de remettre les fichiers en place.",
       features: [
+        { title: "Connaît vos outils.", body: "Builds et simulateurs Xcode, npm, Cargo, Gradle, CocoaPods, Homebrew, Docker et outils de code IA comme Codex et Claude Code. Le tout trié et mesuré." },
         { title: "À supprimer, ou à vérifier.", body: "Chaque élément est classé selon ce que Moppo peut suggérer et ce qui mérite un regard : documents, worktrees avec des modifications locales, apps encore utilisées." },
         { title: "Les fichiers vont à la Corbeille.", body: "Les fichiers supprimés vont à la Corbeille, avec une trace dans l’historique. Vous changez d’avis ? Restaurez-les tant qu’ils y sont encore." },
-        { title: "Des doublons, vérifiés.", body: "Les fichiers sont comparés par leur contenu, pas seulement leur nom. Examinez les photos identiques ou similaires, puis choisissez la copie à conserver." },
         { title: "Sans compte. Sans télémétrie.", body: "Vos analyses restent sur votre Mac. Aucune connexion, aucun suivi, aucun envoi de vos fichiers. Le code est sur GitHub pour le vérifier." },
       ],
     },
@@ -58,6 +58,7 @@ export const dictionary: Dictionary = {
     faqTitle: "Quelques détails à connaître.",
     faq: [
       { id: "pricing", question: "Moppo est vraiment gratuit ?", answer: "Oui. Moppo est gratuit et open source sous licence MIT. Aucun abonnement, aucune fonction payante et aucun compte obligatoire." },
+      { id: "cli", question: "Puis-je l’utiliser depuis le Terminal ou un agent IA ?", answer: "Oui. Installez la commande moppo et la skill pour Claude Code, Codex ou Cursor depuis Réglages > Avancé. Un agent peut analyser et proposer un plan de nettoyage, mais rien n’est supprimé sans votre accord. Les suppressions définitives demandent aussi Touch ID ou votre mot de passe." },
       { id: "automatic-removal", question: "Moppo supprime des fichiers tout seul ?", answer: "Non. Les analyses programmées peuvent trouver des éléments à examiner, mais vous choisissez ce qui est supprimé. La catégorie sûre à supprimer est une suggestion, pas une autorisation de nettoyage automatique. Vider la Corbeille est une action séparée qui demande confirmation." },
       { id: "undo", question: "Peut-on annuler un nettoyage ?", answer: "Utilisez la restauration dans l’historique pour récupérer les fichiers éligibles tant qu’ils sont encore dans la Corbeille. Une fois celle-ci vidée, Moppo ne peut plus les restaurer. Les paquets supprimés par Homebrew et les images Docker font exception : leurs outils de suppression ne permettent pas la restauration." },
       { id: "full-disk-access", question: "Pourquoi demander l’accès complet au disque ?", answer: "macOS protège certains dossiers des apps. L’accès complet au disque permet à Moppo de les examiner pour une analyse plus complète. Vous pouvez continuer avec un accès limité ; Moppo signale ce qu’il ne peut pas lire. Les analyses programmées et les mesures automatiques nécessitent l’accès complet. Vous gérez cette autorisation dans Réglages Système." },
@@ -66,7 +67,7 @@ export const dictionary: Dictionary = {
       { id: "system-requirements", question: "Quels Mac sont compatibles ?", answer: "Moppo fonctionne sous macOS 15 ou version ultérieure, sur les Mac Apple silicon et Intel." },
     ],
     also: { label: "Également par Anguria Studio", body: "Un espace natif pour vos apps web." },
-    footerNote: "Un nettoyeur Mac gratuit et open source.",
+    footerNote: "Un nettoyeur Mac gratuit et open source pour développeurs.",
   },
   paguroNotificationTest: {
     download: {
