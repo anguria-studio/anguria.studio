@@ -25,7 +25,7 @@ export type AppCopy = {
  */
 export const dictionary = {
   moppoPage: {
-    seoTitle: "Moppo — Free, Open-Source Mac Cleaner",
+    seoTitle: "Moppo — Free, Open-Source Mac Cleaner for Developers",
     nav: "Explore Moppo",
     github: "View on GitHub",
     download: "Download",
@@ -33,7 +33,7 @@ export const dictionary = {
     hero: {
       title: "A tidy Mac.",
       accent: "Nothing lost.",
-      body: "A free, open-source Mac cleaner for caches, duplicate files, and app leftovers. You review what goes.",
+      body: "A free, open-source Mac cleaner that knows developer clutter: Xcode data, package caches, Docker images, and old Git worktrees. You review what goes.",
       download: "Download for Mac",
       shotAlt: "Moppo’s Cleanup window, showing Safe to Remove and Needs Review categories on a Mac desktop.",
       shotsLabel: "App screens",
@@ -46,12 +46,12 @@ export const dictionary = {
       },
     },
     story: {
-      title: "Free up space. You choose what goes.",
-      body: "Moppo finds what’s taking space and tells you which parts are safe to remove. You decide what goes, with a chance to put files back.",
+      title: "Built for the Mac you code on.",
+      body: "Moppo knows where your tools keep caches, which ones they rebuild, and which files still matter. It also clears app leftovers and duplicates. You decide what goes, with a chance to put files back.",
       features: [
+        { title: "Knows your toolchain.", body: "Xcode builds and simulators, npm, Cargo, Gradle, CocoaPods, Homebrew, Docker, and AI coding tools like Codex and Claude Code. All sorted and sized." },
         { title: "Safe to remove, or needs a look.", body: "Every item is sorted into what Moppo can safely suggest and what deserves a second look: your documents, worktrees with local changes, apps still in use." },
         { title: "Files go to the Trash.", body: "Cleanup files go to the Trash, with a record in History. Changed your mind? Use Put Back while those files are still there." },
-        { title: "Duplicates, verified.", body: "Files are compared by content, not just by name. Review identical and similar photos, and choose which copy to keep." },
         { title: "No account. No telemetry.", body: "Your scans stay on your Mac. No sign-in, no tracking, no uploads of your files. The source is on GitHub if you want to check." },
       ],
     },
@@ -77,6 +77,7 @@ export const dictionary = {
     faqTitle: "A few things to know.",
     faq: [
       { id: "pricing", question: "Is Moppo really free?", answer: "Yes. Moppo is free and open source under the MIT license. No subscription, paid feature tiers, or account required." },
+      { id: "cli", question: "Can I use it from Terminal or an AI agent?", answer: "Yes. Install the moppo command and the agent skill for Claude Code, Codex, or Cursor from Settings > Advanced. An agent can scan and propose a cleanup plan, but nothing is removed until you approve it. Permanent removals also need Touch ID or your login password." },
       { id: "automatic-removal", question: "Does Moppo delete anything on its own?", answer: "No. Scheduled scans can find things to review, but you choose what to remove. Safe to Remove is a suggestion, not permission to clean up automatically. Emptying the Trash is a separate action that asks for confirmation." },
       { id: "undo", question: "Can I undo a cleanup?", answer: "Use Put Back in History to restore eligible files while they are still in the Trash. Once the Trash is emptied, those files cannot be restored by Moppo. Packages removed through Homebrew and Docker images are exceptions: their removal tools do not support Put Back." },
       { id: "full-disk-access", question: "Why does Moppo ask for Full Disk Access?", answer: "macOS protects some folders from apps. Full Disk Access lets Moppo inspect protected locations for a more complete scan. You can continue with limited access, and Moppo reports what it cannot read. Scheduled scans and automatic storage measurements require Full Disk Access. You control the permission in System Settings." },
@@ -85,7 +86,7 @@ export const dictionary = {
       { id: "system-requirements", question: "Which Macs are supported?", answer: "Moppo runs on macOS 15 or later, on both Apple silicon and Intel Macs." },
     ],
     also: { label: "Also from Anguria Studio", body: "A native home for your web apps." },
-    footerNote: "A free, open-source Mac cleaner.",
+    footerNote: "A free, open-source Mac cleaner for developers.",
   },
   paguroNotificationTest: {
     download: {

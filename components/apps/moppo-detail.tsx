@@ -15,10 +15,11 @@ import type { Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./moppo-detail.module.css";
 
-type Glyph = "shield" | "trash" | "duplicates" | "privacy" | "git" | "lock" | "history";
+type Glyph = "terminal" | "shield" | "trash" | "duplicates" | "privacy" | "git" | "lock" | "history";
 
 function Glyph({ name, className = "" }: { name: Glyph; className?: string }) {
   const paths: Record<Glyph, React.ReactNode> = {
+    terminal: <><rect x="3" y="4" width="18" height="16" rx="2" /><path d="m7 9 3 3-3 3M13 15h4" /></>,
     shield: <><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z" /><path d="m8 12 3 3 5-6" /></>,
     trash: <><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7M14 10v7" /></>,
     duplicates: <><rect x="8" y="8" width="13" height="13" rx="2" /><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" /></>,
@@ -68,7 +69,7 @@ function WorktreeScreenshot({ alt, className = "" }: { alt: string; className?: 
   </div>;
 }
 
-const featureGlyphs: Glyph[] = ["shield", "trash", "duplicates", "privacy"];
+const featureGlyphs: Glyph[] = ["terminal", "shield", "trash", "privacy"];
 const reviewGlyphs: Glyph[] = ["git", "lock", "history"];
 
 export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale }) {
