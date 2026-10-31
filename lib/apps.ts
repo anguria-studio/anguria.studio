@@ -22,7 +22,7 @@ export const apps: Record<AppSlug, AppMeta> = {
   moppo: {
     slug: "moppo",
     github: "https://github.com/anguria-studio/Moppo",
-    // Launch placeholder; the packaged release is still in preparation.
+    // Stable asset name: this address always downloads the latest release.
     download: "https://github.com/anguria-studio/Moppo/releases/latest/download/Moppo.dmg",
     minMacOS: "15.0",
   },

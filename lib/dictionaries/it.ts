@@ -17,6 +17,14 @@ export const dictionary: Dictionary = {
       body: "Un’app gratuita e open source per pulire il Mac da cache, file duplicati e residui delle app. Decidi tu cosa rimuovere.",
       download: "Scarica per Mac",
       shotAlt: "La finestra Pulizia di Moppo su un desktop Mac, con le categorie di elementi sicuri da rimuovere e da controllare.",
+      shotsLabel: "Schermate dell’app",
+      shots: {
+        cleanup: { label: "Pulizia", alt: "La finestra Pulizia di Moppo, con strumenti IA, cache di sistema, cache dei gestori di pacchetti e dati di Xcode raccolti in gruppi selezionabili." },
+        storage: { label: "Esplora spazio", alt: "Esplora spazio di Moppo, che mostra le cartelle della cartella Inizio come una mappa in base allo spazio occupato." },
+        uninstaller: { label: "Disinstalla app", alt: "Disinstalla app di Moppo, con le app installate in una griglia e lo spazio occupato da ognuna." },
+        duplicates: { label: "Duplicati", alt: "La vista Duplicati di Moppo, che raggruppa le foto identiche e tiene l’originale mentre seleziona le copie." },
+        dashboard: { label: "Dashboard", alt: "La Dashboard di Moppo, con lo spazio su disco diviso per categoria e le modifiche recenti allo spazio." },
+      },
     },
     story: {
       title: "Libera spazio. Decidi tu cosa eliminare.",
@@ -138,6 +146,7 @@ export const dictionary: Dictionary = {
   },
   nav: {
     home: "Anguria Studio",
+    allApps: "Tutte le app",
     github: "Vedi su GitHub",
   },
   themeToggle: {
@@ -317,6 +326,7 @@ export const dictionary: Dictionary = {
     },
   },
   paguroPage: {
+    also: { label: "Sempre da Anguria Studio", body: "Un Mac in ordine. Scegli tu cosa eliminare." },
     seoTitle: "Paguro — Spazio di lavoro gratuito per app web su Mac",
     nav: "Esplora Paguro",
     faqLabel: "Domande",

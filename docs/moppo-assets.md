@@ -14,15 +14,17 @@ The app icon always uses the rendered dark export from the app's
 `docs/images/moppo-icon-dark.png`, including its lighting and beveled edge,
 in both page themes. `components/apps/moppo-icon.tsx` shares it across the
 homepage and app headers. The section mascot uses the app's
-`MoppoMascot.json` vector outline with amber eyes. Sidebar tool symbols are
+`MoppoMascot.json` vector outline with amber eyes. The hero screenshots are app window captures with the transparent shadow margin
+cropped off (2360×1560 at 112,76), resized to 1800px wide and saved as WebP.
+Sidebar tool symbols, also used as the hero tab icons, are
 exported by `tools/export-moppo-symbols.swift`; Cleanup uses `MoppoFilled.svg`.
 
 The two worktree dialog assets were edited with the built-in image generation
 tool, then cropped, given clean rounded edges, and exported as WebP. Their
 header uses demo project and branch names. No surrounding app content ships.
 
-Final assets are saved in `public/moppo/`: `cleanup-light.webp`,
-`cleanup-dark.webp`, `worktree-light.webp`, `worktree-dark.webp`,
+Final assets are saved in `public/moppo/`: the hero screenshots
+`{cleanup,storage,uninstaller,duplicates,dashboard}-{light,dark}.webp`, `worktree-light.webp`, `worktree-dark.webp`,
 `app-icon-light.svg`, `app-icon-dark.png`, `card-wallpaper.webp`,
 `hero-wallpaper.webp`, and `og-image.jpg`. Sidebar symbol
 exports are in `public/moppo/tools/`.

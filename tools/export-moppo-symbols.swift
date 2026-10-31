@@ -2,7 +2,7 @@
 // These are the SF Symbols used in Moppo's sidebar.
 import AppKit
 
-for name in ["externaldrive", "xmark.app", "square.on.square"] {
+for name in ["externaldrive", "xmark.app", "square.on.square", "gauge.with.needle"] {
     guard let source = NSImage(systemSymbolName: name, accessibilityDescription: nil)?.withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 32, weight: .regular)) else { fatalError(name) }
     let canvas = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 96, pixelsHigh: 96, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
     NSGraphicsContext.saveGraphicsState()

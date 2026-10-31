@@ -9,13 +9,8 @@ import { moppoTermsUpdated } from "@/lib/terms/moppo-terms";
 
 export const dynamic = "force-static";
 
-/**
- * Only the pages that are actually served. The home page in every locale is a
- * host-level temporary redirect to the Paguro page — see vercel.json — and a sitemap must not
- * advertise a URL that answers with a redirect. When the redirects go, this
- * returns to `[undefined, ...pagePaths]` with the home page at priority 1.
- */
-const served: PagePath[] = ["paguro", "moppo", paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath];
+/** Public, indexable pages; the notification test page stays out of the sitemap. */
+const served: (PagePath | undefined)[] = [undefined, "paguro", "moppo", paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath];
 
 const legalDates: Partial<Record<PagePath, string>> = {
   [paguroPrivacyPath]: paguroPrivacyEffective,
@@ -26,21 +21,20 @@ const legalDates: Partial<Record<PagePath, string>> = {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return locales.flatMap((locale: Locale) =>
-    served.map((path) => ({
-      url: absoluteUrl(locale, path),
-      // Legal documents have explicit dates and change less often than the app page.
-      changeFrequency:
-        legalDates[path] ? ("yearly" as const) : ("monthly" as const),
-      // Paguro is the effective front door while `/` redirects to it.
-      priority: legalDates[path] ? 0.3 : 1,
-      ...(legalDates[path]
-        ? { lastModified: legalDates[path] }
-        : {}),
-      alternates: {
-        languages: Object.fromEntries(
-          locales.map((l) => [l, absoluteUrl(l, path)]),
-        ),
-      },
-    })),
+    served.map((path) => {
+      const legalDate = path ? legalDates[path] : undefined;
+      return {
+        url: absoluteUrl(locale, path),
+        // Legal documents have explicit dates and change less often than the app page.
+        changeFrequency: legalDate ? ("yearly" as const) : ("monthly" as const),
+        priority: legalDate ? 0.3 : path ? 0.8 : 1,
+        ...(legalDate ? { lastModified: legalDate } : {}),
+        alternates: {
+          languages: Object.fromEntries(
+            locales.map((l) => [l, absoluteUrl(l, path)]),
+          ),
+        },
+      };
+    }),
   );
 }
