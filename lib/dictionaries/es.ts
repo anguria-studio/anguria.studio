@@ -19,6 +19,14 @@ export const dictionary: Dictionary = {
       body: "Un limpiador de Mac gratis y de código abierto para cachés, archivos duplicados y restos de apps. Tú revisas qué se elimina.",
       download: "Descargar para Mac",
       shotAlt: "La ventana de limpieza de Moppo en un escritorio Mac, con las categorías de elementos seguros para eliminar y pendientes de revisión.",
+      shotsLabel: "Pantallas de la app",
+      shots: {
+        cleanup: { label: "Limpieza", alt: "La ventana de limpieza de Moppo, con herramientas de IA, cachés del sistema, cachés de gestores de paquetes y datos de Xcode en grupos seleccionables." },
+        storage: { label: "Explorador de espacio", alt: "El explorador de espacio de Moppo, que muestra las carpetas de la carpeta personal como un mapa según lo que ocupan." },
+        uninstaller: { label: "Desinstalador", alt: "El desinstalador de Moppo, con las apps instaladas en una cuadrícula y lo que ocupa cada una." },
+        duplicates: { label: "Duplicados", alt: "La vista de duplicados de Moppo, que agrupa fotos idénticas y conserva el original mientras selecciona las copias." },
+        dashboard: { label: "Panel", alt: "El panel de Moppo, con el uso del disco por categoría y los cambios recientes de espacio." },
+      },
     },
     story: {
       title: "Libera espacio. Tú eliges qué eliminar.",
@@ -140,6 +148,7 @@ export const dictionary: Dictionary = {
   },
   nav: {
     home: "Anguria Studio",
+    allApps: "Todas las apps",
     github: "Ver en GitHub",
   },
   themeToggle: {
@@ -317,6 +326,7 @@ export const dictionary: Dictionary = {
     },
   },
   paguroPage: {
+    also: { label: "También de Anguria Studio", body: "Un Mac ordenado. Tú eliges qué eliminar." },
     seoTitle: "Paguro — Espacio de trabajo gratuito para apps web en Mac",
     nav: "Descubre Paguro",
     faqLabel: "Preguntas",

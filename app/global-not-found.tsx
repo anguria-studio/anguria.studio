@@ -29,11 +29,8 @@ export default function GlobalNotFound() {
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
           This page doesn&rsquo;t exist.
         </h1>
-        {/* Straight to the Paguro page rather than `/`, which currently
-            redirects there (vercel.json): no hop, and no dependency on host
-            rules. Back to `localePath("en")` when the home page returns. */}
         <Link
-          href={localePath("en", "paguro")}
+          href={localePath("en")}
           className="rounded-full bg-melon-500 px-6 py-2.5 text-[15px] font-medium text-white transition hover:bg-melon-600"
         >
           Back to {site.domain}

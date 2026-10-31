@@ -26,7 +26,7 @@ Use Umami's Events/Properties view to break them down:
 | `contact-click` | Email and GitHub support links. |
 | `language-switch` | Source language plus `target_locale`. |
 | `product-select` | Homepage showcase app selection with `target_product`. |
-| `hero-interaction` | `action`: send/open/dismiss/clear notifications, toggle island, select service, change layout/theme, toggle mute/workspace. Relevant service, state, or count accompanies it. |
+| `hero-interaction` | `action`: send/open/dismiss/clear notifications, toggle island, select service, change layout/theme, toggle mute/workspace, and Moppo's `select-screen` (with `screen`) for the hero screenshot tabs. Relevant service, state, or count accompanies it. |
 | `faq-expand` | Opening an answer, with a stable `question` topic ID shared by every translation. Closing does not count; reopening counts again. |
 
 Link tracking is delegated centrally, so links on future pages are covered too.
@@ -37,7 +37,6 @@ action handler. Keep IDs independent of translated copy. New products registered
 in `appSlugs` automatically receive their own product tag. Tracking failures do
 not block interactions or change link navigation.
 
-The current `vercel.json` redirects `/` and its translated equivalents to
-Paguro. Moppo serves its own landing page in every language. Analytics records
-the page actually reached.
+The homepage, Moppo, and Paguro each serve their own pages in every language.
+Analytics records the page actually reached.
 Old `/scolo` URLs permanently redirect to `/moppo/` in the same language.

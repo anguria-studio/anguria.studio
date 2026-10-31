@@ -11,15 +11,6 @@
     { "source": "/fr/scolo", "destination": "/fr/moppo/", "permanent": true },
     { "source": "/fr/scolo/", "destination": "/fr/moppo/", "permanent": true },
     { "source": "/es/scolo", "destination": "/es/moppo/", "permanent": true },
-    { "source": "/es/scolo/", "destination": "/es/moppo/", "permanent": true },
-
-    { "source": "/", "destination": "/paguro/", "permanent": false },
-
-    { "source": "/it", "destination": "/it/paguro/", "permanent": false },
-    { "source": "/it/", "destination": "/it/paguro/", "permanent": false },
-    { "source": "/fr", "destination": "/fr/paguro/", "permanent": false },
-    { "source": "/fr/", "destination": "/fr/paguro/", "permanent": false },
-    { "source": "/es", "destination": "/es/paguro/", "permanent": false },
-    { "source": "/es/", "destination": "/es/paguro/", "permanent": false }
+    { "source": "/es/scolo/", "destination": "/es/moppo/", "permanent": true }
   ]
 }

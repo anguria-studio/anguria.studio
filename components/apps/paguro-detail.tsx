@@ -6,6 +6,7 @@ import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { PaguroActions } from "@/components/apps/paguro-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
+import { AlsoFromStudio } from "@/components/apps/also-from-studio";
 import { apps, paguroPrivacyPath, paguroTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
@@ -69,15 +70,14 @@ export function PaguroHeader({
             {dict.apps.paguro.name}
           </a>
         )}
-        {/* No "All apps" link while `/` redirects to this page (see
-            vercel.json): it would only bounce the visitor straight back here.
-            It returns with the redirects' removal. No pills on a phone: compact
-            pills beside the wordmark do not fit that header. On the app page
-            the hero carries them below the subtitle; on legal subpages the
-            wordmark leads to that hero. The wrapper owns the display so it
-            cannot race the hardcoded `flex` inside PaguroActions. */}
-        <div className="hidden sm:block">
-          <PaguroActions copy={dict.paguroPage} meta={apps.paguro} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+        <div className="flex items-center gap-4">
+          <Link href={localePath(locale)} data-analytics-label="home" className={`shrink-0 text-xs font-medium text-muted transition hover:text-foreground ${linkStyle}`}>
+            {dict.nav.allApps}
+          </Link>
+          {/* The hero carries the download actions on narrow screens. */}
+          <div className="hidden sm:block">
+            <PaguroActions copy={dict.paguroPage} meta={apps.paguro} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+          </div>
         </div>
       </nav>
     </header>
@@ -133,6 +133,7 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
         <PaguroFaq faq={faq} />
       </section>
 
+      <AlsoFromStudio app="moppo" locale={locale} name={dict.apps.moppo.name} copy={copy.also} />
       <ContactLine dict={dict} issuesUrl={`${apps.paguro.github}/issues`} />
     </>
   );

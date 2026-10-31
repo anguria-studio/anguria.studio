@@ -4,9 +4,10 @@ import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { MenuClock } from "@/components/apps/paguro-menu-bar";
 import desktopStyles from "@/components/apps/paguro-desktop.module.css";
 import { MoppoMascot } from "@/components/apps/moppo-mascot";
+import { MoppoHeroShots } from "@/components/apps/moppo-hero-shots";
 import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { ContactLine } from "@/components/layout/contact-line";
-import { ArrowRight } from "@/components/ui/arrow-right";
+import { AlsoFromStudio } from "@/components/apps/also-from-studio";
 import { AppleMark } from "@/components/ui/apple-mark";
 import { GitHubMark } from "@/components/ui/github-mark";
 import { apps, moppoPrivacyPath, moppoTermsPath } from "@/lib/apps";
@@ -36,28 +37,33 @@ export function MoppoHeader({ dict, locale, subpage = false }: { dict: Dictionar
       <Link href={subpage ? localePath(locale, "moppo") : "#moppo"} className="inline-flex items-center gap-2 rounded-lg text-base font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
         <MoppoIcon className="size-[30px]" />{dict.apps.moppo.name}
       </Link>
-      <div className="hidden sm:block">
-        <PaguroActions copy={{ ...copy, appStore: "" }} meta={apps.moppo} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+      <div className="flex items-center gap-4">
+        <Link href={localePath(locale)} data-analytics-label="home" className="shrink-0 rounded-full text-xs font-medium text-muted transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
+          {dict.nav.allApps}
+        </Link>
+        <div className="hidden sm:block">
+          <PaguroActions copy={{ ...copy, appStore: "" }} meta={apps.moppo} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+        </div>
+        <a href={apps.moppo.github} aria-label={copy.github} data-analytics-event="source-click" data-analytics-label="moppo" data-analytics-location="header" target="_blank" rel="noreferrer" className="rounded-full bg-foreground/5 p-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 sm:hidden">
+          <GitHubMark className="size-4" />
+        </a>
       </div>
-      <a href={apps.moppo.github} aria-label={copy.github} data-analytics-event="source-click" data-analytics-label="moppo" data-analytics-location="header" target="_blank" rel="noreferrer" className="rounded-full bg-foreground/5 p-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 sm:hidden">
-        <GitHubMark className="size-4" />
-      </a>
     </nav>
   </header>;
 }
 
-function ThemeScreenshot({ name, alt, priority = false, className = "" }: { name: "cleanup" | "worktree"; alt: string; priority?: boolean; className?: string }) {
-  const dimensions = name === "cleanup" ? { width: 2156, height: 1436 } : { width: 1024, height: 1280 };
+function WorktreeScreenshot({ alt, className = "" }: { alt: string; className?: string }) {
   return <div className={className}>
     {(["light", "dark"] as const).map((theme) => {
       const themeDisplay = theme === "light" ? "[display:var(--icon-light-display)]" : "[display:var(--icon-dark-display)]";
-      // Both images follow the shared CSS theme tokens, including system mode.
-      // eslint-disable-next-line @next/next/no-img-element
-      const screenshot = <img src={`/moppo/${name}-${theme}.webp`} alt={alt} {...dimensions} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} decoding="async" className={styles.screenshot} />;
-      return name === "worktree" ? <div key={theme} className={`${styles.dialogFrame} ${themeDisplay}`}>
+      return <div key={theme} className={`${styles.dialogFrame} ${themeDisplay}`}>
         {/* Crop the transparent export margins so the frame has even padding. */}
-        <div className={`${styles.dialogCrop} ${theme === "light" ? styles.dialogLight : styles.dialogDark}`}>{screenshot}</div>
-      </div> : <div key={theme} className={themeDisplay}>{screenshot}</div>;
+        <div className={`${styles.dialogCrop} ${theme === "light" ? styles.dialogLight : styles.dialogDark}`}>
+          {/* Both images follow the shared CSS theme tokens, including system mode. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`/moppo/worktree-${theme}.webp`} alt={alt} width={1024} height={1280} loading="lazy" decoding="async" className={styles.screenshot} />
+        </div>
+      </div>;
     })}
   </div>;
 }
@@ -76,13 +82,12 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
         <p className="mt-3 text-sm text-muted motion-safe:enter-2">{copy.requirements.replace("{version}", apps.moppo.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
       <div className={`${styles.demo} motion-safe:enter-3`}>
-        <div className={styles.desktop}>
+        <MoppoHeroShots copy={copy.hero}>
           <div className={`${desktopStyles.menuBar} ${styles.menuBar}`}>
             <div className={desktopStyles.appMenus} aria-hidden="true"><AppleMark className="size-4" /><strong>{dict.apps.moppo.name}</strong></div>
             <div className={desktopStyles.statusItems}><MenuClock locale={locale} /></div>
           </div>
-          <ThemeScreenshot name="cleanup" alt={copy.hero.shotAlt} priority className={styles.appFrame} />
-        </div>
+        </MoppoHeroShots>
       </div>
     </section>
 
@@ -107,7 +112,7 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
         <p className={styles.sectionBody}>{copy.review.body}</p>
       </div>
       <div className={styles.reviewGrid}>
-        <ThemeScreenshot name="worktree" alt={copy.review.shotAlt} className={styles.dialog} />
+        <WorktreeScreenshot alt={copy.review.shotAlt} className={styles.dialog} />
         <ul className={styles.reviewPoints}>
           {copy.review.points.map((point, index) => <li key={point.title} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3 border-t border-hairline py-7 first:border-t-0">
             <Glyph name={reviewGlyphs[index]} className="mt-0.5 size-6" />
@@ -122,18 +127,7 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
       <PaguroFaq faq={copy.faq} />
     </section>
 
-    <aside data-analytics-location="also-from-studio" className="mx-auto max-w-3xl px-6 pb-16 sm:pb-20">
-      <Link href={localePath(locale, "paguro")} className={`${styles.also} group`}>
-        <span aria-hidden="true" className="size-12 shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/app-icon-light.png" alt="" width={256} height={256} className="size-full [display:var(--icon-light-display)]" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/paguro/app-icon-dark.png" alt="" width={256} height={256} className="size-full [display:var(--icon-dark-display)]" />
-        </span>
-        <div className="min-w-0 flex-1"><p className="text-xs text-muted">{copy.also.label}</p><p className="mt-1 text-sm leading-relaxed text-muted"><strong className="font-semibold text-foreground">Paguro</strong><span aria-hidden="true"> · </span>{copy.also.body}</p></div>
-        <ArrowRight className="size-4 shrink-0 text-muted motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
-      </Link>
-    </aside>
+    <AlsoFromStudio app="paguro" locale={locale} name={dict.apps.paguro.name} copy={copy.also} />
     <ContactLine dict={dict} issuesUrl={`${apps.moppo.github}/issues`} />
   </div>;
 }

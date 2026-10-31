@@ -1,0 +1,9 @@
+.card { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid transparent; border-radius: 18px; background: var(--surface); }
+.card:hover { border-color: var(--hairline); }
+.card:focus-visible { outline: 2px solid var(--color-melon-500); outline-offset: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { transition: border-color .2s; }
+}
+@media (max-width: 767px) {
+  .card { padding: 1rem; gap: .75rem; }
+}

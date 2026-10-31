@@ -36,6 +36,14 @@ export const dictionary = {
       body: "A free, open-source Mac cleaner for caches, duplicate files, and app leftovers. You review what goes.",
       download: "Download for Mac",
       shotAlt: "Moppo’s Cleanup window, showing Safe to Remove and Needs Review categories on a Mac desktop.",
+      shotsLabel: "App screens",
+      shots: {
+        cleanup: { label: "Cleanup", alt: "Moppo’s Cleanup window, sorting AI tools, system caches, package manager caches, and Xcode data into selectable groups." },
+        storage: { label: "Storage Explorer", alt: "Moppo’s Storage Explorer, showing the folders in a home directory as a map sized by disk usage." },
+        uninstaller: { label: "App Uninstaller", alt: "Moppo’s App Uninstaller, showing installed apps as a grid with the size of each one." },
+        duplicates: { label: "Duplicates", alt: "Moppo’s Duplicates view, grouping identical photos and keeping the original while the copies are selected." },
+        dashboard: { label: "Dashboard", alt: "Moppo’s Dashboard, breaking down disk usage by category and listing recent storage changes." },
+      },
     },
     story: {
       title: "Free up space. You choose what goes.",
@@ -157,6 +165,7 @@ export const dictionary = {
   },
   nav: {
     home: "Anguria Studio",
+    allApps: "All apps",
     github: "View on GitHub",
   },
   themeToggle: {
@@ -344,6 +353,7 @@ export const dictionary = {
     },
   },
   paguroPage: {
+    also: { label: "Also from Anguria Studio", body: "A tidy Mac. You choose what goes." },
     seoTitle: "Paguro — Free Web App Workspace for Mac",
     nav: "Explore Paguro",
     faqLabel: "Questions",
