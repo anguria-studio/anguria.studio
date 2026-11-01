@@ -22,6 +22,7 @@ const EMAIL_LINK =
 
 function Run({ run }: { run: PolicyRun }) {
   if (typeof run === "string") return <>{run}</>;
+  if (run.kind === "nowrap") return <span className="whitespace-nowrap">{run.text}</span>;
   // The address has one source; the policy text never spells it out.
   return (
     <a href={`mailto:${site.email}`} className={EMAIL_LINK}>

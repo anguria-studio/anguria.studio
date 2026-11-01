@@ -2,8 +2,8 @@ import type { MoppoPrivacyPolicy } from "../moppo-policy";
 
 export const policy: MoppoPrivacyPolicy = {
   title: "Politique de confidentialité de Moppo",
-  description: "Comment Moppo traite les fichiers, photos, historiques locaux, autorisations, vérifications facultatives des mises à jour et demandes d’aide.",
-  intro: ["Moppo est une app macOS gratuite et open source d’Anguria Studio. Elle vous aide à examiner l’espace disque, les éléments à nettoyer, les doublons et la suppression d’applications. Cette politique concerne l’app Moppo."],
+  description: "Comment Moppo traite les fichiers, photos, historiques locaux, usages en ligne de commande et par des agents d’IA, autorisations, vérifications facultatives des mises à jour et demandes d’aide.",
+  intro: ["Moppo est une app macOS gratuite et open source d’Anguria Studio. Elle vous aide à examiner l’espace disque, les éléments à nettoyer, les doublons et la suppression d’applications. Cette politique concerne l’app Moppo et son outil en ligne de commande moppo."],
   sections: {
     files: {
       heading: "Fichiers et photos",
@@ -14,6 +14,23 @@ export const policy: MoppoPrivacyPolicy = {
       blocks: [
         "Moppo conserve les réglages, caches d’analyse, mesures de stockage et reçus de suppression sur votre Mac. Ces reçus peuvent contenir les chemins d’origine et les emplacements dans la Corbeille. Moppo les utilise pour l’Historique et la fonction Put Back.",
         "Moppo n’a pas de service de comptes ni de télémétrie de l’app. Les données locales peuvent contenir des informations privées ; traitez-les comme des données sensibles si vous choisissez de les partager ou de les inclure dans une sauvegarde.",
+      ],
+    },
+    cli: {
+      heading: "Ligne de commande et agents d’IA",
+      blocks: [
+        "Vous ou un agent d’IA pouvez utiliser l’outil en ligne de commande moppo pour analyser le stockage, préparer des plans de nettoyage et supprimer les éléments prévus. L’outil enregistre trois types de données dans des dossiers privés sous ~/Library/Application Support/Moppo. Les autorisations de ces dossiers et fichiers limitent leur accès à votre compte utilisateur macOS.",
+        {
+          kind: "ul",
+          items: [
+            "Les rapports d’analyse contiennent les noms de fichiers, chemins, mesures, explications d’analyse et vérifications d’identité des fichiers pour la validation des plans. Ils restent dans ~/Library/Application Support/Moppo/cli-scans et expirent après sept jours. Moppo conserve les dix rapports les plus récents et ceux qu’utilisent les plans enregistrés.",
+            "Les plans de nettoyage enregistrés contiennent des identifiants. Un plan expire après un jour, ou plus tôt si son rapport d’analyse expire. Moppo conserve au plus vingt plans.",
+            "Les enregistrements des résultats de suppression contiennent des identifiants, codes d’état et décomptes, sans noms de fichiers ni chemins. Ils expirent après sept jours. Moppo conserve au plus 100 enregistrements.",
+          ],
+        },
+        "Moppo n’utilise pas les données expirées. Leurs fichiers peuvent rester jusqu’à un nettoyage ultérieur du dossier. Les fichiers non valides et les sauvegardes peuvent rester au-delà de ces limites.",
+        { kind: "p", runs: ["La sortie normale des commandes omet les noms de fichiers, chemins et explications détaillées. L’option ", { kind: "nowrap", text: "--include-paths" }, " les ajoute à la sortie d’une seule commande. La sortie réduite contient tout de même des métadonnées de stockage, comme les catégories, tailles et classifications de stockage. L’interface en ligne de commande prise en charge ne renvoie jamais le contenu des fichiers."] },
+        { kind: "p", runs: ["Un agent d’IA qui exécute l’outil peut envoyer sa sortie à un fournisseur de modèles externe. Les réglages et politiques propres à ce fournisseur s’appliquent à cette sortie. Moppo ne contrôle pas la conservation, les sauvegardes ou la divulgation ultérieure par le fournisseur. Moppo ne peut pas garantir que l’agent traite la sortie uniquement sur votre Mac. N’utilisez ", { kind: "nowrap", text: "--include-paths" }, " avec un agent que si vous acceptez que son fournisseur reçoive ces noms et chemins."] },
       ],
     },
     permissions: {
