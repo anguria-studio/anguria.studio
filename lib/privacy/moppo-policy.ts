@@ -1,8 +1,8 @@
 import type { Locale } from "../i18n";
 import type { PrivacyPolicy } from "./paguro-policy";
 
-export const moppoPrivacyEffective = "2026-10-13";
-export const moppoPrivacySections = ["files", "local", "permissions", "updates", "services", "support", "contact"] as const;
+export const moppoPrivacyEffective = "2026-11-01";
+export const moppoPrivacySections = ["files", "local", "cli", "permissions", "updates", "services", "support", "contact"] as const;
 export type MoppoPrivacyPolicy = PrivacyPolicy<(typeof moppoPrivacySections)[number]>;
 
 const policies: Record<Locale, () => Promise<{ policy: MoppoPrivacyPolicy }>> = {
