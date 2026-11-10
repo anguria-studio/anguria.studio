@@ -58,11 +58,10 @@ function WorktreeScreenshot({ alt, className = "" }: { alt: string; className?: 
     {(["light", "dark"] as const).map((theme) => {
       const themeDisplay = theme === "light" ? "[display:var(--icon-light-display)]" : "[display:var(--icon-dark-display)]";
       return <div key={theme} className={`${styles.dialogFrame} ${themeDisplay}`}>
-        {/* Crop the transparent export margins so the frame has even padding. */}
-        <div className={`${styles.dialogCrop} ${theme === "light" ? styles.dialogLight : styles.dialogDark}`}>
+        <div className={styles.dialogCrop}>
           {/* Both images follow the shared CSS theme tokens, including system mode. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`/moppo/worktree-${theme}.webp`} alt={alt} width={1024} height={1280} loading="lazy" decoding="async" className={styles.screenshot} />
+          <img src={`/moppo/worktree-${theme}.webp`} alt={alt} width={800} height={992} loading="lazy" decoding="async" className={styles.screenshot} />
         </div>
       </div>;
     })}

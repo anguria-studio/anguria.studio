@@ -41,7 +41,7 @@ export const dictionary: Dictionary = {
     review: {
       title: "Sabe qué no debe tocar.",
       body: "Los worktrees de Git con cambios sin commit, los archivos usados por apps en ejecución y tus documentos personales merecen una revisión. Moppo los señala para que los revises antes de eliminar nada.",
-      shotAlt: "El diálogo de revisión de worktrees de Moppo señala archivos locales y comprueba cambios, commits sin enviar, bloqueos de Git y worktrees en uso.",
+      shotAlt: "El diálogo de revisión de worktrees de Moppo señala dos commits sin enviar y comprueba la fusión, los cambios locales, los archivos ignorados, los bloqueos de Git y los worktrees en uso.",
       points: [
         { title: "Entiende Git.", body: "Los worktrees con cambios sin commit, commits sin enviar o archivos locales ignorados se señalan para su revisión." },
         { title: "¿En uso? No se toca.", body: "Los archivos y worktrees usados por una app o proceso activo se señalan para que puedas cerrarlo primero." },
