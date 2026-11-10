@@ -39,7 +39,7 @@ export const dictionary: Dictionary = {
     review: {
       title: "Sait ce qu’il ne faut pas toucher.",
       body: "Les worktrees Git avec des modifications non commitées, les fichiers utilisés par des apps en cours d’exécution et vos documents personnels méritent un examen attentif. Moppo les signale pour vérification avant toute suppression.",
-      shotAlt: "Le dialogue de vérification des worktrees de Moppo signale les fichiers locaux et vérifie les modifications, les commits non envoyés, les verrous Git et les worktrees utilisés.",
+      shotAlt: "Le dialogue de vérification des worktrees de Moppo signale deux commits non envoyés et vérifie la fusion, les modifications locales, les fichiers ignorés, les verrous Git et les worktrees utilisés.",
       points: [
         { title: "Comprend Git.", body: "Les worktrees avec des modifications non commitées, des commits non envoyés ou des fichiers locaux ignorés sont signalés pour vérification." },
         { title: "En cours d’utilisation ? On attend.", body: "Les fichiers et worktrees utilisés par une app ou un processus actif sont signalés, pour que vous puissiez d’abord le quitter." },

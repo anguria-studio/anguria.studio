@@ -39,7 +39,7 @@ export const dictionary: Dictionary = {
     review: {
       title: "Sa cosa non toccare.",
       body: "I worktree Git con modifiche non incluse in un commit, i file usati da app in esecuzione e i tuoi documenti personali meritano un controllo. Moppo li segnala per una verifica prima che tu elimini qualcosa.",
-      shotAlt: "Il dialogo di controllo dei worktree di Moppo segnala file locali, modifiche non salvate in commit, commit non inviati, blocchi Git e worktree in uso.",
+      shotAlt: "Il dialogo di controllo dei worktree di Moppo segnala due commit non inviati e mostra i controlli su merge, modifiche locali, file ignorati, blocchi Git e worktree in uso.",
       points: [
         { title: "Conosce Git.", body: "I worktree con modifiche non salvate in commit, commit non inviati o file locali ignorati vengono segnalati per un controllo." },
         { title: "In uso? Non si tocca.", body: "I file e i worktree usati da un’app o un processo attivo vengono segnalati, così puoi prima chiuderli." },

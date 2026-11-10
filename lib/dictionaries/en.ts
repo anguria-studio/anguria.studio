@@ -58,7 +58,7 @@ export const dictionary = {
     review: {
       title: "Knows what not to touch.",
       body: "Git worktrees with uncommitted changes, files used by running apps, and your personal documents deserve a closer look. Moppo flags them for review before you remove anything.",
-      shotAlt: "Moppo’s worktree review dialog flags local files and shows checks for uncommitted changes, unpushed commits, Git locks, and whether the worktree is in use.",
+      shotAlt: "Moppo’s worktree review dialog flags two unpushed commits and shows checks for merge status, local changes, ignored files, Git locks, and whether the worktree is in use.",
       points: [
         { title: "Git-aware.", body: "Worktrees with uncommitted changes, unpushed commits, or ignored local files are flagged for review." },
         { title: "In use? Hands off.", body: "Files and worktrees used by a running app or process are flagged, so you can quit it first." },

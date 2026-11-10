@@ -19,9 +19,9 @@ cropped off (2360×1560 at 112,76), resized to 1800px wide and saved as WebP.
 Sidebar tool symbols, also used as the hero tab icons, are
 exported by `tools/export-moppo-symbols.swift`; Cleanup uses `MoppoFilled.svg`.
 
-The two worktree dialog assets were edited with the built-in image generation
-tool, then cropped, given clean rounded edges, and exported as WebP. Their
-header uses demo project and branch names. No surrounding app content ships.
+The two worktree dialog assets are cropped directly from the supplied light and
+dark screenshots and exported as WebP. No surrounding app content ships. The
+page clips their rounded corners and adds a diagonal striped frame.
 
 Final assets are saved in `public/moppo/`: the hero screenshots
 `{cleanup,storage,uninstaller,duplicates,dashboard}-{light,dark}.webp`, `worktree-light.webp`, `worktree-dark.webp`,
@@ -29,21 +29,16 @@ Final assets are saved in `public/moppo/`: the hero screenshots
 `hero-wallpaper.webp`, and `og-image.jpg`. Sidebar symbol
 exports are in `public/moppo/tools/`.
 
-## Dialog edit prompt
+## Worktree crops
 
-The same prompt was used for each theme, with that theme's supplied screenshot
-as the edit target and a transparent output background:
+Both source screenshots measure 2584 × 1858. The dialog crop starts at (792, 272)
+and measures 1000 × 1240. The exports are 800 × 992, keeping enough resolution
+for the 380px-wide dialog at 2× pixel density. The dark version is about 35 KB
+and the light version about 41 KB. Both use the same crop and have no CSS offsets.
 
-> Use case: text-localization and background-extraction. Asset type: light/dark
-> theme Moppo worktree review dialog for a website. Extract only the centered
-> rounded dialog, tightly cropped with transparent outside its rounded corners.
-> Remove the app behind it and all black margins. Preserve the original
-> typeface, borders, warnings, rows, spacing, buttons, and theme. Replace
-> “MacCleanerNative · 2.4 MB” with “Moppo · 2.4 MB”, the branch with
-> “feature/sidebar-icons”, and the path with
-> “~/Projects/Moppo/worktrees/sidebar-icons”. Keep the folder icon and close
-> button. Keep all other text the same. Do not add, remove, or redesign UI.
-> Produce just the dialog, crisp and without an outside shadow.
+```sh
+cwebp -crop 792 272 1000 1240 -resize 800 992 -q 90 -m 6 -sharp_yuv -metadata none input.png -o public/moppo/worktree-THEME.webp
+```
 
 ## Launch placeholders
 
