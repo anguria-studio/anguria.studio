@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
 import type { Dictionary } from "@/lib/dictionaries/en";
+import type { Locale } from "@/lib/i18n";
 import styles from "./moppo-detail.module.css";
 
 type ShotId = keyof Dictionary["moppoPage"]["hero"]["shots"];
@@ -16,8 +17,16 @@ const shots: { id: ShotId; icon: string }[] = [
   { id: "dashboard", icon: "gauge.with.needle" },
 ];
 
+const screenshotSets: Record<Locale, { directory: string; height: number }> = {
+  en: { directory: "/moppo", height: 1190 },
+  it: { directory: "/moppo/it", height: 1216 },
+  fr: { directory: "/moppo/fr", height: 1216 },
+  es: { directory: "/moppo/es", height: 1216 },
+};
+
 /** The hero desktop with a tab bar below it that switches between app screenshots. */
-export function MoppoHeroShots({ copy, children }: { copy: Dictionary["moppoPage"]["hero"]; children: ReactNode }) {
+export function MoppoHeroShots({ copy, locale, children }: { copy: Dictionary["moppoPage"]["hero"]; locale: Locale; children: ReactNode }) {
+  const { directory, height } = screenshotSets[locale];
   const [active, setActive] = useState<ShotId>("cleanup");
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const list = useRef<HTMLDivElement>(null);
@@ -74,10 +83,10 @@ export function MoppoHeroShots({ copy, children }: { copy: Dictionary["moppoPage
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={theme}
-                src={`/moppo/${id}-${theme}.webp`}
+                src={`${directory}/${id}-${theme}.webp`}
                 alt={isActive ? copy.shots[id].alt : ""}
                 width={1800}
-                height={1190}
+                height={height}
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchPriority={index === 0 ? "high" : "low"}
                 decoding="async"

@@ -82,7 +82,7 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
         <p className="mt-3 text-sm text-muted motion-safe:enter-2">{copy.requirements.replace("{version}", apps.moppo.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
       <div className={`${styles.demo} motion-safe:enter-3`}>
-        <MoppoHeroShots copy={copy.hero}>
+        <MoppoHeroShots copy={copy.hero} locale={locale}>
           <div className={`${desktopStyles.menuBar} ${styles.menuBar}`}>
             <div className={desktopStyles.appMenus} aria-hidden="true"><AppleMark className="size-4" /><strong>{dict.apps.moppo.name}</strong></div>
             <div className={desktopStyles.statusItems}><MenuClock locale={locale} /></div>
