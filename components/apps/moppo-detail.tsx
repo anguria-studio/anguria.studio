@@ -53,7 +53,8 @@ export function MoppoHeader({ dict, locale, subpage = false }: { dict: Dictionar
   </header>;
 }
 
-function WorktreeScreenshot({ alt, className = "" }: { alt: string; className?: string }) {
+function WorktreeScreenshot({ alt, locale, className = "" }: { alt: string; locale: Locale; className?: string }) {
+  const directory = locale === "en" ? "/moppo" : `/moppo/${locale}`;
   return <div className={className}>
     {(["light", "dark"] as const).map((theme) => {
       const themeDisplay = theme === "light" ? "[display:var(--icon-light-display)]" : "[display:var(--icon-dark-display)]";
@@ -61,7 +62,7 @@ function WorktreeScreenshot({ alt, className = "" }: { alt: string; className?: 
         <div className={styles.dialogCrop}>
           {/* Both images follow the shared CSS theme tokens, including system mode. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`/moppo/worktree-${theme}.webp`} alt={alt} width={800} height={992} loading="lazy" decoding="async" className={styles.screenshot} />
+          <img src={`${directory}/worktree-${theme}.webp`} alt={alt} width={800} height={992} loading="lazy" decoding="async" className={styles.screenshot} />
         </div>
       </div>;
     })}
@@ -112,7 +113,7 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
         <p className={styles.sectionBody}>{copy.review.body}</p>
       </div>
       <div className={styles.reviewGrid}>
-        <WorktreeScreenshot alt={copy.review.shotAlt} className={styles.dialog} />
+        <WorktreeScreenshot alt={copy.review.shotAlt} locale={locale} className={styles.dialog} />
         <ul className={styles.reviewPoints}>
           {copy.review.points.map((point, index) => <li key={point.title} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3 border-t border-hairline py-7 first:border-t-0">
             <Glyph name={reviewGlyphs[index]} className="mt-0.5 size-6" />
