@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import { moppoPrivacyPath, moppoTermsPath, obolo, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import { oboloCopy } from "./dictionaries/obolo-en";
 import {
   defaultLocale,
   getDictionary,
@@ -114,6 +115,18 @@ export async function appMetadata(
     alternates: alternates(locale, slug),
     openGraph: { ...openGraph(locale, title, description, slug), images },
     twitter: { card: "summary_large_image", title, description, images: images.map(({ url, alt }) => ({ url, alt })) },
+  };
+}
+
+export function oboloMetadata(): Metadata {
+  const { seoTitle: title, description } = oboloCopy;
+  const image = { url: `${site.url}/obolo/og-image.jpg`, width: 1200, height: 630, alt: title };
+  return {
+    title,
+    description,
+    alternates: { canonical: abs(defaultLocale, obolo.slug) },
+    openGraph: { ...openGraph(defaultLocale, title, description, obolo.slug), images: [image] },
+    twitter: { card: "summary_large_image", title, description, images: [{ url: image.url, alt: image.alt }] },
   };
 }
 

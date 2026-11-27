@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { moppoPrivacyPath, moppoTermsPath, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
-import { locales, type Locale } from "@/lib/i18n";
+import { moppoPrivacyPath, moppoTermsPath, obolo, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
+import { defaultLocale, locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/metadata";
 import { paguroPrivacyEffective } from "@/lib/privacy/paguro-policy";
 import { paguroTermsUpdated } from "@/lib/terms/paguro-terms";
@@ -20,7 +20,7 @@ const legalDates: Partial<Record<PagePath, string>> = {
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return locales.flatMap((locale: Locale) =>
+  const localizedPages = locales.flatMap((locale: Locale) =>
     served.map((path) => {
       const legalDate = path ? legalDates[path] : undefined;
       return {
@@ -37,4 +37,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       };
     }),
   );
+  return [...localizedPages, {
+    url: absoluteUrl(defaultLocale, obolo.slug),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }];
 }

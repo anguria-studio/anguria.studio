@@ -7,10 +7,14 @@ export function HomeBentoMotion({ children, className, label }: { children: Reac
 
   useEffect(() => {
     const root = section.current;
-    if (!root || !("IntersectionObserver" in window)) return;
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // App cards start in CSS at first paint, before this effect can run.
+    if (!root) return;
+    // Cards marked data-bento-load start in CSS at first paint.
     const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-bento-animation]:not([data-bento-load])"));
+    if (!("IntersectionObserver" in window)) {
+      cards.forEach(card => card.removeAttribute("data-bento-pending"));
+      return;
+    }
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const price = root.querySelector<HTMLElement>("[data-bento-part='price']");
     let frame = 0;
     let disposed = false;
@@ -43,8 +47,9 @@ export function HomeBentoMotion({ children, className, label }: { children: Reac
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         observer.unobserve(entry.target);
-        if (motion.matches || document.hidden) return;
         const card = entry.target as HTMLElement;
+        card.removeAttribute("data-bento-pending");
+        if (motion.matches || document.hidden) return;
         card.setAttribute("data-bento-entering", "");
         if (card.dataset.bentoAnimation === "free") countdown(card);
       });

@@ -2,11 +2,11 @@
 
 import { useReducer, useRef, useState, useSyncExternalStore } from "react";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { PaguroActions } from "@/components/apps/paguro-actions";
+import { AppActions } from "@/components/apps/app-actions";
 import { apps } from "@/lib/apps";
 import styles from "./paguro-hero.module.css";
 import { PaguroIsland } from "./paguro-island";
-import { PaguroMenuBar } from "./paguro-menu-bar";
+import { DesktopMenuBar } from "./desktop-menu-bar";
 import { PaguroServicePreview } from "./paguro-service-preview";
 import desktopStyles from "./paguro-desktop.module.css";
 import type { Locale } from "@/lib/i18n";
@@ -16,17 +16,6 @@ import type { DemoNotification, DemoService as Service } from "@/lib/paguro-isla
 import { createPreviewHintHistory } from "@/lib/paguro-preview-hints";
 import { createSampleDecks, drawSample } from "@/lib/paguro-samples";
 import { trackEvent } from "@/lib/analytics";
-
-import type { ThemePref } from "@/components/layout/theme-toggle";
-
-function subscribeToSystemTheme(update: () => void) {
-  const media = window.matchMedia("(prefers-color-scheme: dark)");
-  media.addEventListener("change", update);
-  return () => media.removeEventListener("change", update);
-}
-
-const readSystemTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-const serverSystemTheme = () => "dark" as const;
 
 // Keep this in sync with the `desk` variant in app/globals.css. CSS hiding
 // alone does not prevent eager images from downloading on mobile.
@@ -52,9 +41,7 @@ function ServiceIcon({ service, className }: { service: Service; className: stri
 
 export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dictionary["paguroPage"]; locale: Locale }) {
   const showDesktopPreview = useSyncExternalStore(subscribeToDesktopPreview, readDesktopPreview, serverDesktopPreview);
-  const [previewThemePref, setPreviewThemePref] = useState<ThemePref>("dark");
-  const systemTheme = useSyncExternalStore(subscribeToSystemTheme, readSystemTheme, serverSystemTheme);
-  const previewTheme = previewThemePref === "system" ? systemTheme : previewThemePref;
+  const previewTheme = "dark";
   const [island, dispatch] = useReducer(islandReducer, initialIslandState);
   const [layout, setLayout] = useState<"sidebar" | "compact">("sidebar");
   const [muted, setMuted] = useState(false);
@@ -114,11 +101,11 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
           {locale === "en" ? <>Give your<br />web apps </> : <>{copy.title}{" "}</>}<span className="text-melon-500">{copy.accent}</span>
         </h1>
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.intro} {page.releaseBody}</p>
-        <PaguroActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} location="hero" mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-2`} />
+        <AppActions copy={{ ...page, download: locale === "en" ? "Download for macOS" : page.download }} meta={apps.paguro} location="hero" mobileAppStoreLabel={page.appStoreMobile} className={`${styles.cta} mt-8 justify-center motion-safe:enter-2`} />
         <p className="mt-3 text-sm text-muted motion-safe:enter-2">{page.downloadRequirements.replace("{version}", apps.paguro.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
 
-      <div className={styles.demo}>
+      <div className={`${styles.demo} showcase-width`}>
         <div className="mb-7 hidden items-center justify-center gap-8 desk:flex">
           <div className="text-center sm:text-right motion-safe:enter-3">
             <p className="text-base font-semibold">{copy.tryLabel}</p>
@@ -139,10 +126,7 @@ export function PaguroHero({ copy, page, locale }: { copy: HeroCopy; page: Dicti
 
         <div data-preview-theme={previewTheme} className={`${styles.glassStage} relative hidden overflow-hidden desk:block`}>
           {showDesktopPreview && <div data-preview-theme={previewTheme} className={`${desktopStyles.desktop} ${styles.glassCanvas}`}>
-          <PaguroMenuBar copy={copy} locale={locale} theme={previewThemePref} onThemeChange={(theme) => {
-            trackEvent("hero-interaction", { action: "change-theme", theme, location: "hero" });
-            setPreviewThemePref(theme);
-          }} />
+          <DesktopMenuBar appName="Paguro" locale={locale} reserveCenter />
 
           <div className="pointer-events-none absolute inset-x-4 top-0 z-20 flex justify-center">
             <PaguroIsland copy={copy} notifications={island.notifications} phase={island.phase} dispatch={dispatch} remove={remove} openNotification={openNotification} />

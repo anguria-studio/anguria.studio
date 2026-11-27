@@ -1,18 +1,15 @@
 import Link from "next/link";
-import { PaguroActions } from "@/components/apps/paguro-actions";
+import { AppActions, MobileGitHubLink } from "@/components/apps/app-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
-import { MenuClock } from "@/components/apps/paguro-menu-bar";
-import desktopStyles from "@/components/apps/paguro-desktop.module.css";
+import { DesktopMenuBar } from "@/components/apps/desktop-menu-bar";
 import { MoppoMascot } from "@/components/apps/moppo-mascot";
 import { MoppoHeroShots } from "@/components/apps/moppo-hero-shots";
 import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { ContactLine } from "@/components/layout/contact-line";
-import { AlsoFromStudio } from "@/components/apps/also-from-studio";
-import { AppleMark } from "@/components/ui/apple-mark";
-import { GitHubMark } from "@/components/ui/github-mark";
+import { AlsoFromStudio, oboloRelatedCard } from "@/components/apps/also-from-studio";
 import { apps, moppoPrivacyPath, moppoTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { localePath, type Locale } from "@/lib/i18n";
+import { defaultLocale, localePath, type Locale } from "@/lib/i18n";
 import styles from "./moppo-detail.module.css";
 
 type Glyph = "terminal" | "shield" | "trash" | "duplicates" | "privacy" | "git" | "lock" | "history";
@@ -43,11 +40,9 @@ export function MoppoHeader({ dict, locale, subpage = false }: { dict: Dictionar
           {dict.nav.allApps}
         </Link>
         <div className="hidden sm:block">
-          <PaguroActions copy={{ ...copy, appStore: "" }} meta={apps.moppo} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+          <AppActions copy={copy} meta={apps.moppo} location="header" className="[&>a:first-child]:order-2" />
         </div>
-        <a href={apps.moppo.github} aria-label={copy.github} data-analytics-event="source-click" data-analytics-label="moppo" data-analytics-location="header" target="_blank" rel="noreferrer" className="rounded-full bg-foreground/5 p-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500 sm:hidden">
-          <GitHubMark className="size-4" />
-        </a>
+        <MobileGitHubLink meta={apps.moppo} label={copy.github} />
       </div>
     </nav>
   </header>;
@@ -79,15 +74,12 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
       <div className={styles.heading}>
         <h1 className="text-display-sm font-semibold md:text-display motion-safe:enter-1">{copy.hero.title}<br /><span className={styles.accent}>{copy.hero.accent}</span></h1>
         <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.hero.body}</p>
-        <PaguroActions copy={{ ...copy, download: copy.hero.download, appStore: "" }} meta={apps.moppo} location="hero" showGithub={false} showDownloadOnMobile className="mt-8 justify-center motion-safe:enter-2" />
+        <AppActions copy={{ ...copy, download: copy.hero.download }} meta={apps.moppo} location="hero" showGithub={false} showDownloadOnMobile className="mt-8 justify-center motion-safe:enter-2" />
         <p className="mt-3 text-sm text-muted motion-safe:enter-2">{copy.requirements.replace("{version}", apps.moppo.minMacOS.replace(/\.0$/, ""))}</p>
       </div>
-      <div className={`${styles.demo} motion-safe:enter-3`}>
+      <div className={`${styles.demo} showcase-width motion-safe:enter-3`}>
         <MoppoHeroShots copy={copy.hero} locale={locale}>
-          <div className={`${desktopStyles.menuBar} ${styles.menuBar}`}>
-            <div className={desktopStyles.appMenus} aria-hidden="true"><AppleMark className="size-4" /><strong>{dict.apps.moppo.name}</strong></div>
-            <div className={desktopStyles.statusItems}><MenuClock locale={locale} /></div>
-          </div>
+          <DesktopMenuBar appName={dict.apps.moppo.name} locale={locale} />
         </MoppoHeroShots>
       </div>
     </section>
@@ -128,7 +120,10 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
       <PaguroFaq faq={copy.faq} />
     </section>
 
-    <AlsoFromStudio app="paguro" locale={locale} name={dict.apps.paguro.name} copy={copy.also} />
+    <AlsoFromStudio locale={locale} cards={[
+      { app: "paguro", name: dict.apps.paguro.name, copy: copy.also },
+      ...(locale === defaultLocale ? [oboloRelatedCard] : []),
+    ]} />
     <ContactLine dict={dict} issuesUrl={`${apps.moppo.github}/issues`} />
   </div>;
 }

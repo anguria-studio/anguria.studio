@@ -21,34 +21,6 @@
   --island-card-fill: rgb(255 255 255 / .10);
   --island-card-focus: rgb(255 255 255 / .22);
 }
-.menuBar { position: absolute; z-index: 10; inset: 0 0 auto; height: 38px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 15px; font-weight: 600; line-height: 1; user-select: none; }
-.appMenus, .statusItems { display: flex; align-items: center; gap: 16px; white-space: nowrap; }
-.appMenus > svg { width: 20px; height: 20px; flex-shrink: 0; }
-.appMenus { gap: 8px; }
-.appMenus strong { font-weight: 700; }
-.statusItems { gap: 12px; }
-.clock { display: flex; gap: 10px; font-variant-numeric: tabular-nums; min-width: 156px; justify-content: flex-end; }
-.compactDate { display: none; }
-.themeToggle { display: flex; align-items: center; gap: 2px; padding: 2px; border-radius: 9999px; background: rgb(0 0 0 / .12); color: white; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .15); }
-.themeToggle button { display: grid; place-items: center; padding: 4px; border-radius: 9999px; cursor: pointer; color: white; }
-.themeToggle button svg { width: 14px; height: 14px; stroke-width: 1.8; }
-.themeToggle button:hover { background: rgb(255 255 255 / .15); }
-.themeToggle button[aria-pressed="true"] { background: rgb(255 255 255 / .85); color: #252225; }
-.themeToggle button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
-@media (prefers-reduced-motion: no-preference) {
-  .themeToggle button { transition: color 150ms, background-color 150ms; }
-}
-
-/* Use a short numeric date on narrow desktops so the controls stay clear of the
-   expanded island. The complete local date remains in the clock's label. */
-@container (max-width: 1000px) {
-  .menuBar { padding-inline: 12px; }
-  .date { display: none; }
-  .compactDate { display: inline; }
-  .clock { min-width: 80px; gap: 6px; }
-  .statusItems { gap: 6px; }
-}
-
 /* Crop the bottom while preserving the capture and interactive hit areas. */
 .stage { aspect-ratio: 1440 / 850; }
 .canvas { position: relative; width: 100%; aspect-ratio: 1440 / 900; }
