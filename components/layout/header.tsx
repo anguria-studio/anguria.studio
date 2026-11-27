@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "@/components/ui/arrow-right";
+import { ActionLink } from "@/components/ui/action-link";
 import { GitHubMark } from "@/components/ui/github-mark";
 import { site } from "@/lib/apps";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -38,40 +38,14 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           {dict.nav.home}
         </Link>
 
-        {/* Foreground at 5% alpha rather than a fixed grey, so the same class
-            reads correctly on both the white and the black theme. */}
-        {/* Hover swaps the contents instead of tinting the pill: the row slides
-            left by exactly icon + gap (24px), which lands the label's left edge
-            on 20px — the same as px-5 — so the hovered pill mirrors the resting
-            one rather than looking cramped. The icon fades as it goes, because
-            overflow-hidden clips at the border box and would otherwise leave
-            ~12px of it showing inside the padding.
-
-            Only the TRANSITIONS are motion-safe, not the translate itself:
-            without the shift the absolutely-positioned arrow would overlap the
-            label, so reduced motion gets an instant swap rather than none. */}
-        <a
+        <ActionLink
           href={site.github}
-          data-analytics-event="source-click"
-          data-analytics-label="studio"
-          target="_blank"
-          rel="noreferrer"
-          className="group relative inline-flex h-8 items-center gap-2 overflow-hidden rounded-full bg-foreground/5 px-5 text-xs font-semibold text-foreground active:bg-foreground/12 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40"
-        >
-          <GitHubMark className="size-4 motion-safe:transition motion-safe:duration-200 motion-safe:ease-out group-hover:-translate-x-6 group-focus-visible:-translate-x-6 group-hover:opacity-0 group-focus-visible:opacity-0" />
-          <span className="motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out group-hover:-translate-x-6 group-focus-visible:-translate-x-6">
-            {dict.nav.github}
-          </span>
-          {/* Absolute, so the pill's width never changes between states — it
-              would otherwise twitch, and by a different amount per language.
-
-              Starts at translate-x-9 (36px), not less: the arrow's right edge
-              rests 20px in from the pill's edge, so anything under 36px leaves
-              part of it sitting inside the pill and the entrance reads as a
-              fade rather than a slide. At 36px it begins fully outside the
-              border box, clipped by overflow-hidden, and genuinely slides in. */}
-          <ArrowRight className="absolute inset-y-0 right-5 my-auto size-4 translate-x-9 opacity-0 motion-safe:transition motion-safe:duration-200 motion-safe:ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" />
-        </a>
+          event="source-click"
+          analyticsLabel="studio"
+          label={dict.nav.github}
+          icon={<GitHubMark />}
+          compact
+        />
       </div>
     </header>
   );

@@ -1,22 +1,26 @@
 import type { MetadataRoute } from "next";
-import { moppoPrivacyPath, moppoTermsPath, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
+import { appSlugs, moppoPrivacyPath, moppoTermsPath, oboloPrivacyPath, oboloTermsPath, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
 import { locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/metadata";
 import { paguroPrivacyEffective } from "@/lib/privacy/paguro-policy";
 import { paguroTermsUpdated } from "@/lib/terms/paguro-terms";
 import { moppoPrivacyEffective } from "@/lib/privacy/moppo-policy";
+import { oboloPrivacyUpdated } from "@/lib/privacy/obolo-policy";
 import { moppoTermsUpdated } from "@/lib/terms/moppo-terms";
+import { oboloTermsUpdated } from "@/lib/terms/obolo-terms";
 
 export const dynamic = "force-static";
 
 /** Public, indexable pages; the notification test page stays out of the sitemap. */
-const served: (PagePath | undefined)[] = [undefined, "paguro", "moppo", paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath];
+const served: (PagePath | undefined)[] = [undefined, ...appSlugs, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath, oboloPrivacyPath, oboloTermsPath];
 
 const legalDates: Partial<Record<PagePath, string>> = {
   [paguroPrivacyPath]: paguroPrivacyEffective,
   [paguroTermsPath]: paguroTermsUpdated,
   [moppoPrivacyPath]: moppoPrivacyEffective,
   [moppoTermsPath]: moppoTermsUpdated,
+  [oboloPrivacyPath]: oboloPrivacyUpdated,
+  [oboloTermsPath]: oboloTermsUpdated,
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

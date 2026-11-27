@@ -31,7 +31,7 @@ export function Footer({
       <div className="mx-auto flex max-w-page flex-col items-center gap-4 px-6 py-8 text-sm text-muted sm:flex-row sm:justify-between sm:gap-4">
         {/* Interactive first on mobile, last on desktop. */}
         <div className="flex items-center gap-3 sm:order-last">
-          <LanguageSwitcher locale={locale} path={path} />
+          <LanguageSwitcher locale={locale} path={path} label={dict.nav.language} />
           <span aria-hidden="true" className="h-4 w-px bg-hairline" />
           <ThemeToggle labels={dict.themeToggle} />
         </div>

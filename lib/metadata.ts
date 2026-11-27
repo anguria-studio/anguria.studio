@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import { moppoPrivacyPath, moppoTermsPath, oboloPrivacyPath, oboloTermsPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import type { Dictionary } from "./dictionaries/en";
 import {
   defaultLocale,
   getDictionary,
@@ -11,7 +12,9 @@ import { getPaguroPrivacyPolicy } from "./privacy/paguro-policy";
 import { notificationTestIconPath } from "./paguro-notification-test";
 import { getPaguroTerms } from "./terms/paguro-terms";
 import { getMoppoPrivacyPolicy } from "./privacy/moppo-policy";
+import { getOboloPrivacyPolicy } from "./privacy/obolo-policy";
 import { getMoppoTerms } from "./terms/moppo-terms";
+import { getOboloTerms } from "./terms/obolo-terms";
 
 export const siteMetadata: Metadata = {
   manifest: "/site.webmanifest",
@@ -92,20 +95,25 @@ export async function homeMetadata(locale: Locale): Promise<Metadata> {
   };
 }
 
-export async function appMetadata(
-  locale: Locale,
-  slug: AppSlug,
-): Promise<Metadata> {
-  const dict = await getDictionary(locale);
-  const copy = dict.apps[slug];
-  const title = slug === "paguro" ? dict.paguroPage.seoTitle : dict.moppoPage.seoTitle;
-  const description = slug === "moppo" ? dict.moppoPage.story.body : copy.description;
+export function appSeoCopy(dict: Dictionary, slug: AppSlug) {
+  switch (slug) {
+    case "moppo":
+      return { title: dict.moppoPage.seoTitle, description: dict.moppoPage.story.body, imageAlt: dict.moppoPage.hero.shotAlt };
+    case "paguro":
+      return { title: dict.paguroPage.seoTitle, description: dict.apps.paguro.description, imageAlt: dict.apps.paguro.shotAlt };
+    case "obolo":
+      return { title: dict.apps.obolo.seoTitle, description: dict.apps.obolo.description, imageAlt: dict.apps.obolo.hero.shots.dashboard.alt };
+  }
+}
+
+export async function appMetadata(locale: Locale, slug: AppSlug): Promise<Metadata> {
+  const { title, description, imageAlt } = appSeoCopy(await getDictionary(locale), slug);
   const images = [{
     url: `${site.url}/${slug}/og-image.jpg`,
     width: 1200,
     height: 630,
     type: "image/jpeg",
-    alt: slug === "moppo" ? dict.moppoPage.hero.shotAlt : copy.shotAlt,
+    alt: imageAlt,
   }];
 
   return {
@@ -167,6 +175,31 @@ export async function moppoTermsMetadata(locale: Locale): Promise<Metadata> {
     description: terms.description,
     alternates: alternates(locale, moppoTermsPath),
     openGraph: openGraph(locale, title, terms.description, moppoTermsPath),
+  };
+}
+
+export async function oboloPrivacyMetadata(locale: Locale): Promise<Metadata> {
+  const policy = await getOboloPrivacyPolicy(locale);
+  const title = `${policy.title} — ${site.name}`;
+  const description = policy.description;
+
+  return {
+    title,
+    description,
+    alternates: alternates(locale, oboloPrivacyPath),
+    openGraph: openGraph(locale, title, description, oboloPrivacyPath),
+  };
+}
+
+export async function oboloTermsMetadata(locale: Locale): Promise<Metadata> {
+  const terms = await getOboloTerms(locale);
+  const title = `${terms.title} — ${site.name}`;
+
+  return {
+    title,
+    description: terms.description,
+    alternates: alternates(locale, oboloTermsPath),
+    openGraph: openGraph(locale, title, terms.description, oboloTermsPath),
   };
 }
 

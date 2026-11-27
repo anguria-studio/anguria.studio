@@ -25,7 +25,7 @@ export async function PaguroPrivacyPage({ locale }: { locale: Locale }) {
     <>
       <PaguroHeader locale={locale} dict={dict} subpage />
       <main>
-        <PolicyArticle locale={locale} dict={dict} policy={policy} />
+        <PolicyArticle locale={locale} copy={dict.paguroPrivacy} policy={policy} />
       </main>
       <Footer
         locale={locale}

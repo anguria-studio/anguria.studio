@@ -1,8 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import { splitAccent } from "@/components/ui/accent";
-import { site } from "@/lib/apps";
-import type { Dictionary } from "@/lib/dictionaries/en";
+import { site, type AppSlug } from "@/lib/apps";
 import { localePath, type Locale } from "@/lib/i18n";
 import {
   formatEffectiveDate,
@@ -17,15 +16,18 @@ import {
  *  no typography plugin: the renderer owns the four rules a legal document uses. */
 const PARAGRAPH = "mt-4 text-base leading-relaxed text-pretty";
 const LIST = "mt-4 list-disc space-y-2 pl-6 text-base leading-relaxed";
-const EMAIL_LINK =
+const POLICY_LINK =
   "font-medium text-foreground underline decoration-melon-500 underline-offset-4 transition hover:text-melon-500";
 
 function Run({ run }: { run: PolicyRun }) {
   if (typeof run === "string") return <>{run}</>;
   if (run.kind === "nowrap") return <span className="whitespace-nowrap">{run.text}</span>;
+  if (run.kind === "strong") return <strong>{run.text}</strong>;
+  if (run.kind === "code") return <code>{run.text}</code>;
+  if (run.kind === "link") return <a href={run.href} className={POLICY_LINK}>{run.text}</a>;
   // The address has one source; the policy text never spells it out.
   return (
-    <a href={`mailto:${site.email}`} className={EMAIL_LINK}>
+    <a href={`mailto:${site.email}`} className={POLICY_LINK}>
       {site.email}
     </a>
   );
@@ -62,22 +64,23 @@ function Block({ block }: { block: PolicyBlock }) {
  */
 export function PolicyArticle({
   locale,
-  dict,
+  copy,
   policy,
   app = "paguro",
   effectiveDate = paguroPrivacyEffective,
+  displayDate = formatEffectiveDate(locale, effectiveDate),
   sectionIds = paguroPrivacySections,
 }: {
   locale: Locale;
-  dict: Dictionary;
+  copy: { back: string; effective: string };
   policy: PrivacyPolicy;
-  app?: "paguro" | "moppo";
+  app?: AppSlug;
   effectiveDate?: string;
+  displayDate?: string;
   sectionIds?: readonly string[];
 }) {
   // Same `{placeholder}` split ContactLine uses for `{email}`: each locale puts
   // the date where its own grammar wants it.
-  const copy = app === "moppo" ? dict.moppoPrivacy : dict.paguroPrivacy;
   const effective = splitAccent(copy.effective, "{date}");
 
   return (
@@ -96,7 +99,7 @@ export function PolicyArticle({
       <p className="mt-4 text-sm text-muted">
         {effective.before}
         <time dateTime={effectiveDate}>
-          {formatEffectiveDate(locale, effectiveDate)}
+          {displayDate}
         </time>
         {effective.after}
       </p>

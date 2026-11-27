@@ -13,12 +13,14 @@ import { locales, localePath, type Locale } from "@/lib/i18n";
 export function LanguageSwitcher({
   locale,
   path,
+  label,
 }: {
   locale: Locale;
   path?: PagePath;
+  label: string;
 }) {
   return (
-    <nav aria-label="Language" className="flex items-center gap-0.5">
+    <nav aria-label={label} className="flex items-center gap-0.5">
       {locales.map((l) => {
         const current = l === locale;
         return (

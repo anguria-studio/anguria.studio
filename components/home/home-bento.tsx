@@ -1,11 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { FEATURE_ICONS } from "@/components/home/feature-icons";
-import { site } from "@/lib/apps";
+import { site, type AppSlug } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";
 import { HomeBentoMotion } from "./home-bento-motion";
+import { OboloStack } from "./obolo-stack";
 import styles from "./home-bento.module.css";
 
 const services = ["whatsapp", "gmail", "claude", "slack"] as const;
@@ -16,8 +18,13 @@ const contributionLevels = [
   1, 4, 1, 4, 0, 1, 2, 1, 4,
 ];
 
-function ProductIcon({ app }: { app: "paguro" | "moppo" }) {
+function ProductIcon({ app }: { app: AppSlug }) {
   if (app === "moppo") return <MoppoIcon className={styles.productIcon} />;
+  if (app === "obolo") {
+    return <span className={styles.productIcon} aria-hidden="true">
+      <Image src="/obolo/app-icon.svg" width={64} height={64} alt="" />
+    </span>;
+  }
 
   return <span className={styles.productIcon} aria-hidden="true">
     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -42,8 +49,9 @@ function ResponsiveCopy({ desktop, mobile }: { desktop: string; mobile: string }
 /** Grid areas change the layout without duplicating cards or their animations. */
 export function HomeBento({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const copy = dict.home.bento;
+  const { obolo } = dict.apps;
 
-  return <HomeBentoMotion className={styles.section} label={dict.home.dockLabel}>
+  return <HomeBentoMotion className={`${styles.section} showcase-width`} label={dict.home.dockLabel}>
     <div className={styles.appGrid}>
       <Link href={localePath(locale, "paguro")} className={`${styles.card} ${styles.product} ${styles.paguro}`} data-analytics-label="paguro" data-bento-animation="paguro" data-bento-load>
         <div className={styles.productVisual} aria-hidden="true">
@@ -83,6 +91,18 @@ export function HomeBento({ locale, dict }: { locale: Locale; dict: Dictionary }
         <div className={`${styles.copy} ${styles.productCopy}`}>
           <div className={styles.productHeading}><h2>{dict.apps.moppo.name}</h2><span>{dict.apps.moppo.category}</span></div>
           <p>{copy.moppo}</p>
+        </div>
+      </Link>
+
+      <Link href={localePath(locale, "obolo")} className={`${styles.card} ${styles.product} ${styles.obolo}`} data-analytics-label="obolo" data-bento-animation="obolo" data-bento-pending>
+        <div className={styles.productVisual} aria-hidden="true">
+          <ProductIcon app="obolo" />
+          <OboloStack />
+        </div>
+        <CornerArrow />
+        <div className={`${styles.copy} ${styles.productCopy}`}>
+          <div className={styles.productHeading}><h2>{obolo.name}</h2><span>{obolo.category}</span></div>
+          <p>{obolo.tagline}</p>
         </div>
       </Link>
     </div>

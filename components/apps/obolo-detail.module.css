@@ -1,0 +1,68 @@
+.page {
+  --obolo-orange: #f3713b;
+  --color-melon-500: var(--obolo-orange);
+  --color-melon-600: light-dark(#8c351b, #ffa17c);
+}
+
+.heading {
+  max-width: 68rem;
+  margin-inline: auto;
+  padding: clamp(3rem, 8vw, 5.5rem) 1.5rem 0;
+  text-align: center;
+}
+
+@media (max-width: 30rem) {
+  .heading h1:is(:lang(it), :lang(fr), :lang(es)) {
+    font-size: clamp(1.625rem, 8vw, 2.375rem);
+  }
+}
+
+.accent { color: var(--obolo-orange); }
+
+.subtitle {
+  max-width: 36rem;
+  margin: 1.5rem auto 0;
+  color: var(--muted);
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.demo { margin-top: clamp(3.5rem, 7vw, 5rem); }
+
+.backdrop {
+  --stage-padding: clamp(1rem, 5vw, 3.75rem);
+  --desktop-menu-bar-color: light-dark(#1d1d1f, #fff);
+  container-type: inline-size;
+  display: grid;
+  justify-items: center;
+  gap: clamp(.75rem, 2vw, 1.375rem);
+  padding-bottom: var(--stage-padding);
+  border: 1px solid light-dark(#d6d6d9, #323234);
+  border-radius: clamp(1rem, 2vw, 1.5rem);
+  background: light-dark(#ebebed, #1d1d1f) var(--obolo-wallpaper) center / cover no-repeat;
+}
+
+.appFrame {
+  width: min(calc(100% - 2 * var(--stage-padding)), 34rem);
+  border-radius: clamp(.5rem, 1.5vw, .875rem);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgb(0 0 0 / .32), 0 3px 10px rgb(0 0 0 / .24);
+}
+
+.sectionTitle {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.sectionBody {
+  max-width: 35rem;
+  margin: 1.25rem auto 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}

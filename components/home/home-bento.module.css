@@ -2,13 +2,11 @@
   --bento-entrance-delay: 700ms;
   /* Feature cards start just before they scroll in, so they get no pause. */
   --bento-feature-delay: 0ms;
-  max-width: 62.5rem;
   container-type: inline-size;
-  margin-inline: auto;
-  padding: 0 1.5rem 4rem;
+  padding-bottom: 4rem;
 }
 
-.appGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.appGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .featureSection { margin-top: clamp(3.5rem, 9cqw, 5.75rem); }
 .featureHeading { margin: 0 .375rem 1rem; font-size: clamp(1.25rem, 2.3cqw, 1.375rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.3; text-wrap: balance; }
 
@@ -46,6 +44,20 @@ a.card:focus-visible {
 .product::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, transparent 30%, rgb(9 19 28 / .08) 50%, rgb(9 19 28 / .65) 100%); }
 .paguro { background: #32778d url("/paguro/coastal-forest.webp") 43% center / cover no-repeat; }
 .moppo { background: #e4a435 url("/moppo/card-wallpaper.webp") center / cover no-repeat; }
+.obolo {
+  background: light-dark(#ebebed, #1d1d1f) var(--obolo-wallpaper) center / cover no-repeat;
+  color: var(--foreground);
+}
+.obolo::before { content: none; }
+.oboloChart { width: 100%; min-width: 0; height: auto; margin-top: clamp(1.75rem, 5cqw, 3.5rem); overflow: visible; }
+.oboloChartGrid { stroke: light-dark(rgb(29 29 31 / .3), rgb(255 255 255 / .32)); }
+.oboloTier, .oboloLayer { transform-box: view-box; }
+.oboloTier { translate: 0 var(--obolo-upper-lift, 0%); opacity: var(--obolo-upper-opacity, 1); }
+.oboloTier[data-stack-base] { translate: 0 var(--obolo-base-lift, 0%); opacity: 1; }
+.obolo:focus-visible { --obolo-upper-lift: -9%; --obolo-upper-opacity: .45; --obolo-base-lift: -3%; }
+@media (hover: hover) {
+  .obolo:hover { --obolo-upper-lift: -9%; --obolo-upper-opacity: .45; --obolo-base-lift: -3%; }
+}
 .free { grid-area: free; background: light-dark(#f8e1e6, #3b232c); }
 .private { grid-area: private; background: light-dark(#ecebed, #2b292d); }
 .native { grid-area: native; background: light-dark(#e1eaf8, #242e3d); }
@@ -61,8 +73,15 @@ a.card:focus-visible {
 .productHeading h2 { font-size: clamp(1.75rem, 3cqw, 2rem); }
 .productHeading > span { font-size: .875rem; line-height: 1.4; color: rgb(255 255 255 / .95); }
 .productCopy p { margin-top: .375rem; font-size: 1rem; line-height: 1.5; color: #fff; text-wrap: pretty; }
+.obolo .productCopy { text-shadow: none; }
+.obolo .productHeading > span, .obolo .productCopy p { color: inherit; }
 
 .productVisual { display: flex; align-items: flex-start; gap: .875rem; padding-right: 3rem; }
+.obolo .productVisual {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 13rem) minmax(0, 1fr);
+  padding-right: 0;
+}
 .productIcon { display: block; width: clamp(3.5rem, 6.5cqw, 4rem); aspect-ratio: 1; flex-shrink: 0; }
 .productIcon img { width: 100%; height: 100%; }
 .lightIcon { display: var(--icon-light-display); }
@@ -154,9 +173,13 @@ a.card:focus-visible {
   }
 }
 
-/* App-card entrances start at first paint, without waiting for hydration.
-   Lower feature cards get their entrance attribute when they enter view.
-   A short pause precedes entrances; hover stays immediate.
+/* Hide the layers before hydration so the settled stack never flashes before the drop. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .obolo[data-bento-pending] .oboloLayer { opacity: 0; }
+}
+
+/* Paguro and Moppo start at first paint, without waiting for hydration.
+   Obolo and the lower feature cards get their entrance attribute as they enter view.
    Reduced motion always shows the resting artwork. */
 @media (prefers-reduced-motion: no-preference) {
   .paguro .services { animation: menuPop 280ms ease-out calc(var(--bento-entrance-delay) + 100ms) backwards; }
@@ -167,6 +190,8 @@ a.card:focus-visible {
   .moppo .storageLarge { transform-origin: right center; animation: storageGrow var(--storage-grow-duration) cubic-bezier(.22, .8, .3, 1) var(--bento-entrance-delay) backwards, storageEntrance var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
   .moppo .storageMedium { animation: storageSlide var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
   .moppo .storageStack > span { animation: storageExpand var(--storage-slide-duration) cubic-bezier(.22, .8, .3, 1) calc(var(--bento-entrance-delay) + var(--storage-grow-duration)) backwards; }
+  .obolo[data-bento-entering] .oboloLayer { animation: stackDrop 500ms cubic-bezier(.32, .04, .24, 1) calc(var(--layer-index) * 140ms) backwards; }
+  .oboloTier { transition: translate 280ms cubic-bezier(.22, .68, .35, 1), opacity 280ms ease; }
   .native[data-bento-entering] .nativeTitle { animation: nativeReflection 900ms linear var(--bento-feature-delay) backwards; }
   .native[data-bento-entering] .swiftIcon rect { animation: swiftReflection 900ms linear var(--bento-feature-delay) backwards; }
   .source[data-bento-entering] .contributions > span { animation: contributionShades 900ms ease-in-out calc(var(--bento-feature-delay) + var(--column) * 25ms) backwards; }
@@ -183,6 +208,12 @@ a.card:focus-visible {
     .moppo:hover .storageMap { animation: storageBreathe 1100ms ease-in-out; }
     .source:not([data-bento-entering]):hover .contributions > span { animation: contributionHover 750ms ease-in-out calc(var(--column) * 16ms) backwards; }
   }
+}
+
+@keyframes stackDrop {
+  0% { opacity: 0; transform: translateY(-28%); }
+  24% { opacity: 1; }
+  100% { transform: translateY(0); }
 }
 
 @keyframes menuPop {
@@ -285,10 +316,12 @@ a.card:focus-visible {
 }
 
 @media (max-width: 56rem) {
-  .section { padding: 0 1rem 3rem; }
+  .section { padding-bottom: 3rem; }
+  .appGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "free private" "native source" "studio studio"; gap: .625rem; padding: .625rem; border-radius: 2rem; }
   .card { --card-padding: clamp(1rem, 3.5vw, 1.25rem); min-height: clamp(10.5rem, 34vw, 12rem); gap: 1.25rem; border-radius: 1.5rem; }
   .product { min-height: clamp(20rem, 42cqw, 24rem); padding: var(--card-padding); }
+  .obolo { grid-column: 1 / -1; min-height: 17rem; }
   .copy h2, .copy h3 { font-size: clamp(1.25rem, 4.8vw, 1.5rem); }
   .copy p { font-size: clamp(.875rem, 3.3vw, 1rem); }
   .productCopy p { font-size: .9375rem; line-height: 1.5; }
@@ -317,6 +350,7 @@ a.card:focus-visible {
 @media (max-width: 44rem) {
   .appGrid { grid-template-columns: minmax(0, 1fr); gap: .875rem; }
   .product { min-height: 0; justify-content: flex-start; gap: 1rem; padding: 1.5rem; border-radius: 1.75rem; }
+  .obolo { min-height: 0; }
   .productHeading h2 { font-size: 1.75rem; }
   .productVisual { padding-right: 2.5rem; }
   .featureSection { margin-top: 3rem; }

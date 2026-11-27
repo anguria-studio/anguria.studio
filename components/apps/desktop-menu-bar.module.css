@@ -1,0 +1,37 @@
+.menuBar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: 38px;
+  padding-inline: 18px;
+  color: var(--desktop-menu-bar-color, white);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.appMenus { display: flex; align-items: center; gap: 8px; }
+.appMenus > svg { width: 20px; height: 20px; flex-shrink: 0; }
+.appMenus strong { font-weight: 700; }
+.clock { display: flex; justify-content: flex-end; gap: 10px; font-variant-numeric: tabular-nums; }
+.compactDate { display: none; }
+
+@container (max-width: 1000px) {
+  .menuBar { padding-inline: 12px; }
+  /* Paguro's expanded notification island needs the middle of the bar. */
+  .menuBar[data-reserve-center] .date { display: none; }
+  .menuBar[data-reserve-center] .compactDate { display: inline; }
+  .menuBar[data-reserve-center] .clock { gap: 6px; }
+}
+
+@media (max-width: 767px) {
+  .menuBar { height: 30px; font-size: 11px; }
+  .appMenus > svg { width: 16px; height: 16px; }
+}

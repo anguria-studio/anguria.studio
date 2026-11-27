@@ -3,7 +3,7 @@ import { PaguroHero } from "@/components/apps/paguro-hero";
 import { ContactLine } from "@/components/layout/contact-line";
 import { localePath, type Locale } from "@/lib/i18n";
 import { FEATURE_ICONS } from "@/components/home/feature-icons";
-import { PaguroActions } from "@/components/apps/paguro-actions";
+import { AppActions } from "@/components/apps/app-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
 import { AlsoFromStudio } from "@/components/apps/also-from-studio";
@@ -76,7 +76,7 @@ export function PaguroHeader({
           </Link>
           {/* The hero carries the download actions on narrow screens. */}
           <div className="hidden sm:block">
-            <PaguroActions copy={dict.paguroPage} meta={apps.paguro} location="header" className="[&>a]:h-8 [&>a]:text-xs [&>a:first-child]:order-2" />
+            <AppActions copy={dict.paguroPage} meta={apps.paguro} location="header" className="[&>a:first-child]:order-2" />
           </div>
         </div>
       </nav>
@@ -133,7 +133,10 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
         <PaguroFaq faq={faq} />
       </section>
 
-      <AlsoFromStudio app="moppo" locale={locale} name={dict.apps.moppo.name} copy={copy.also} />
+      <AlsoFromStudio locale={locale} cards={[
+        { app: "moppo", name: dict.apps.moppo.name, copy: copy.also },
+        { app: "obolo", name: dict.apps.obolo.name, copy: { label: copy.also.label, body: dict.apps.obolo.tagline } },
+      ]} />
       <ContactLine dict={dict} issuesUrl={`${apps.paguro.github}/issues`} />
     </>
   );

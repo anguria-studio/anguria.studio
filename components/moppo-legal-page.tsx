@@ -28,13 +28,13 @@ function MoppoLegalLayout({ locale, dict, document, children }: {
 export async function MoppoPrivacyPage({ locale }: { locale: Locale }) {
   const [dict, policy] = await Promise.all([getDictionary(locale), getMoppoPrivacyPolicy(locale)]);
   return <MoppoLegalLayout locale={locale} dict={dict} document="privacy">
-    <PolicyArticle locale={locale} dict={dict} policy={policy} app="moppo" effectiveDate={moppoPrivacyEffective} sectionIds={moppoPrivacySections} />
+    <PolicyArticle locale={locale} copy={dict.moppoPrivacy} policy={policy} app="moppo" effectiveDate={moppoPrivacyEffective} sectionIds={moppoPrivacySections} />
   </MoppoLegalLayout>;
 }
 
 export async function MoppoTermsPage({ locale }: { locale: Locale }) {
   const [dict, terms] = await Promise.all([getDictionary(locale), getMoppoTerms(locale)]);
   return <MoppoLegalLayout locale={locale} dict={dict} document="terms">
-    <TermsArticle locale={locale} dict={dict} terms={terms} app="moppo" updatedDate={moppoTermsUpdated} sectionIds={moppoTermsSections} />
+    <TermsArticle locale={locale} copy={{ back: dict.moppoPrivacy.back, updated: dict.moppoTerms.updated }} terms={terms} app="moppo" updatedDate={moppoTermsUpdated} sectionIds={moppoTermsSections} />
   </MoppoLegalLayout>;
 }

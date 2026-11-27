@@ -1,17 +1,17 @@
 import type { AppSlug } from "../apps";
 import type { FeatureId } from "../features";
+import { oboloCopy } from "./obolo-en";
 
 export type AppCopy = {
   name: string;
   /** Two or three words. The line under the app name on the home showcase. */
   category: string;
-  /** Alt text for the home-page screenshot. */
-  shotAlt: string;
+  /** Alt text when the screenshot is defined outside the hero gallery. */
+  shotAlt?: string;
   /** One short line. Used on the home card and as the app-page subtitle. */
   tagline: string;
   /** One paragraph. App page only. */
   description: string;
-  /** Exactly three, for layout balance. */
   features: { title: string; body: string }[];
 };
 
@@ -162,12 +162,13 @@ export const dictionary = {
   meta: {
     title: "Anguria Studio — Free, open-source apps for macOS",
     description:
-      "Two small, free, open-source utilities for your Mac: Moppo and Paguro.",
+      "Moppo, Paguro, and Obolo are small, free, open-source apps for your Mac.",
   },
   nav: {
     home: "Anguria Studio",
     allApps: "All apps",
     github: "View on GitHub",
+    language: "Language",
   },
   themeToggle: {
     /** Prefix for the button's accessible label, e.g. "Theme: System". */
@@ -230,6 +231,7 @@ export const dictionary = {
         }
       ]
     },
+    obolo: oboloCopy,
   } satisfies Record<AppSlug, AppCopy>,
   home: {
     hero: {

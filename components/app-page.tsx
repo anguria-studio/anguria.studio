@@ -1,9 +1,16 @@
 import { PaguroDetail, PaguroFooterNote, PaguroHeader } from "@/components/apps/paguro-detail";
 import { MoppoDetail, MoppoFooterNote, MoppoHeader } from "@/components/apps/moppo-detail";
+import { OboloDetail, OboloFooterNote, OboloHeader } from "@/components/apps/obolo-detail";
 import { Footer } from "@/components/layout/footer";
 import { apps, site, type AppSlug } from "@/lib/apps";
-import { absoluteUrl } from "@/lib/metadata";
+import { absoluteUrl, appSeoCopy } from "@/lib/metadata";
 import { getDictionary, type Locale } from "@/lib/i18n";
+
+const appPages = {
+  moppo: { Header: MoppoHeader, Detail: MoppoDetail, applicationCategory: "UtilitiesApplication" },
+  paguro: { Header: PaguroHeader, Detail: PaguroDetail, applicationCategory: "BusinessApplication" },
+  obolo: { Header: OboloHeader, Detail: OboloDetail, applicationCategory: "FinanceApplication" },
+};
 
 export async function AppPage({
   locale,
@@ -13,6 +20,14 @@ export async function AppPage({
   slug: AppSlug;
 }) {
   const dict = await getDictionary(locale);
+  const { Header, Detail, applicationCategory } = appPages[slug];
+  const { title, description } = appSeoCopy(dict, slug);
+  const app = apps[slug];
+  const notes = {
+    moppo: <MoppoFooterNote dict={dict} locale={locale} />,
+    paguro: <PaguroFooterNote dict={dict} locale={locale} />,
+    obolo: <OboloFooterNote dict={dict} locale={locale} />,
+  };
 
   return (
     <>
@@ -21,34 +36,30 @@ export async function AppPage({
         "@type": "WebPage",
         "@id": absoluteUrl(locale, slug),
         url: absoluteUrl(locale, slug),
-        name: slug === "moppo" ? dict.moppoPage.seoTitle : dict.paguroPage.seoTitle,
-        description: slug === "moppo" ? dict.moppoPage.story.body : dict.apps.paguro.description,
+        name: title,
+        description,
         inLanguage: locale,
         image: `${site.url}/${slug}/og-image.jpg`,
         publisher: { "@type": "Organization", name: site.name, url: site.url },
         mainEntity: {
           "@type": "SoftwareApplication",
           name: dict.apps[slug].name,
-          operatingSystem: `macOS ${apps[slug].minMacOS} or later`,
-          applicationCategory: slug === "moppo" ? "UtilitiesApplication" : "BusinessApplication",
+          operatingSystem: `macOS ${app.minMacOS} or later`,
+          applicationCategory,
           isAccessibleForFree: true,
-          downloadUrl: apps[slug].appStore ?? apps[slug].download,
+          downloadUrl: app.appStore ?? app.download,
           offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
         },
       }).replace(/</g, "\\u003c") }} />
-      {slug === "paguro" ? <PaguroHeader locale={locale} dict={dict} /> : <MoppoHeader locale={locale} dict={dict} />}
+      <Header locale={locale} dict={dict} />
       <main>
-        {slug === "paguro" ? (
-          <PaguroDetail dict={dict} locale={locale} />
-        ) : (
-          <MoppoDetail dict={dict} locale={locale} />
-        )}
+        <Detail dict={dict} locale={locale} />
       </main>
       <Footer
         locale={locale}
         dict={dict}
         path={slug}
-        note={slug === "paguro" ? <PaguroFooterNote dict={dict} locale={locale} /> : <MoppoFooterNote dict={dict} locale={locale} />}
+        note={notes[slug]}
       />
     </>
   );
