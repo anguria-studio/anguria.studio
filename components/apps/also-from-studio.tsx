@@ -2,21 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { ArrowRight } from "@/components/ui/arrow-right";
-import { obolo, type AppSlug } from "@/lib/apps";
-import { oboloCopy } from "@/lib/dictionaries/obolo-en";
-import { defaultLocale, localePath, type Locale } from "@/lib/i18n";
+import type { AppSlug } from "@/lib/apps";
+import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./also-from-studio.module.css";
 
 type RelatedAppCard = {
-  app: AppSlug | typeof obolo.slug;
+  app: AppSlug;
   name: string;
   copy: { label: string; body: string };
-};
-
-export const oboloRelatedCard: RelatedAppCard = {
-  app: obolo.slug,
-  name: oboloCopy.name,
-  copy: { label: "Also from Anguria Studio", body: oboloCopy.tagline },
 };
 
 function RelatedAppIcon({ app }: { app: RelatedAppCard["app"] }) {
@@ -41,7 +34,7 @@ export function AlsoFromStudio({ locale, cards }: { locale: Locale; cards: reado
   return (
     <aside data-analytics-location="also-from-studio" className="mx-auto grid max-w-3xl gap-3 px-6 pb-16 sm:pb-20">
       {cards.map(({ app, name, copy }) => (
-        <Link key={app} href={localePath(app === obolo.slug ? defaultLocale : locale, app)} className={`${styles.card} group`}>
+        <Link key={app} href={localePath(locale, app)} className={`${styles.card} group`}>
           <RelatedAppIcon app={app} />
           <div className="min-w-0 flex-1">
             <p className="text-xs text-muted">{copy.label}</p>

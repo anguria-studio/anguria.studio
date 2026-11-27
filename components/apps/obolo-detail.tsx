@@ -5,10 +5,9 @@ import { AppActions, MobileGitHubLink } from "@/components/apps/app-actions";
 import { DesktopMenuBar } from "@/components/apps/desktop-menu-bar";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { ContactLine } from "@/components/layout/contact-line";
-import { obolo } from "@/lib/apps";
+import { apps } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { oboloCopy as copy } from "@/lib/dictionaries/obolo-en";
-import { localePath } from "@/lib/i18n";
+import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./obolo-detail.module.css";
 
 const featureIcons: Record<string, React.ReactNode> = {
@@ -18,7 +17,9 @@ const featureIcons: Record<string, React.ReactNode> = {
   currencies: <path d="M4 8h16l-4-4M20 16H4l4 4" />,
 };
 
-export function OboloHeader({ dict }: { dict: Dictionary }) {
+export function OboloHeader({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+  const copy = dict.apps.obolo;
+
   return (
     <header className={`${styles.page} header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150`}>
       <nav aria-label={copy.nav} className="mx-auto flex h-16 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
@@ -27,20 +28,22 @@ export function OboloHeader({ dict }: { dict: Dictionary }) {
           {copy.name}
         </Link>
         <div className="flex items-center gap-4">
-          <Link href={localePath("en")} data-analytics-label="home" className="shrink-0 rounded-full text-xs font-medium text-muted transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
+          <Link href={localePath(locale)} data-analytics-label="home" className="shrink-0 rounded-full text-xs font-medium text-muted transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
             {dict.nav.allApps}
           </Link>
           <div className="hidden sm:block">
-            <AppActions copy={{ download: copy.download, github: dict.nav.github }} meta={obolo} location="header" className="[&>a:first-child]:order-2" />
+            <AppActions copy={{ download: copy.download, github: dict.nav.github }} meta={apps.obolo} location="header" className="[&>a:first-child]:order-2" />
           </div>
-          <MobileGitHubLink meta={obolo} label={dict.nav.github} />
+          <MobileGitHubLink meta={apps.obolo} label={dict.nav.github} />
         </div>
       </nav>
     </header>
   );
 }
 
-export function OboloDetail({ dict }: { dict: Dictionary }) {
+export function OboloDetail({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+  const copy = dict.apps.obolo;
+
   return (
     <div className={styles.page}>
       <section id="obolo" aria-labelledby="obolo-title" data-analytics-location="hero" className="scroll-mt-24">
@@ -50,26 +53,26 @@ export function OboloDetail({ dict }: { dict: Dictionary }) {
           </h1>
           <p className={`${styles.subtitle} motion-safe:enter-2`}>{copy.hero.body}</p>
           <div className="mt-8 motion-safe:enter-2">
-            <AppActions copy={{ download: copy.hero.download, github: dict.nav.github }} meta={obolo} location="hero" showGithub={false} showDownloadOnMobile className="justify-center" />
-            <p className="mt-3 text-sm text-muted">{copy.requirements.replace("{version}", obolo.minMacOS)}</p>
+            <AppActions copy={{ download: copy.hero.download, github: dict.nav.github }} meta={apps.obolo} location="hero" showGithub={false} showDownloadOnMobile className="justify-center" />
+            <p className="mt-3 text-sm text-muted">{copy.requirements.replace("{version}", apps.obolo.minMacOS)}</p>
           </div>
         </div>
         <div className={`${styles.demo} showcase-width motion-safe:enter-3`}>
           <div className={styles.backdrop}>
-            <DesktopMenuBar appName={copy.name} locale="en" />
-            <Image src="/obolo/dashboard-light.webp" width={1280} height={1280} alt={copy.hero.shotAlt} className={`${styles.screenshot} [display:var(--icon-light-display)]`} />
-            <Image src="/obolo/dashboard-dark.webp" width={1280} height={1280} alt={copy.hero.shotAlt} className={`${styles.screenshot} [display:var(--icon-dark-display)]`} />
+            <DesktopMenuBar appName={copy.name} locale={locale} />
+            <Image src="/obolo/dashboard-light.webp" width={1280} height={1280} alt={copy.shotAlt} className={`${styles.screenshot} [display:var(--icon-light-display)]`} />
+            <Image src="/obolo/dashboard-dark.webp" width={1280} height={1280} alt={copy.shotAlt} className={`${styles.screenshot} [display:var(--icon-dark-display)]`} />
           </div>
         </div>
       </section>
 
       <section aria-labelledby="obolo-features" className="mx-auto max-w-cards px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 id="obolo-features" className={styles.sectionTitle}>{copy.features.title}</h2>
-          <p className={styles.sectionBody}>{copy.features.body}</p>
+          <h2 id="obolo-features" className={styles.sectionTitle}>{copy.story.title}</h2>
+          <p className={styles.sectionBody}>{copy.story.body}</p>
         </div>
         <ul className="mx-auto mt-10 grid max-w-4xl gap-x-12 md:grid-cols-2">
-          {copy.features.items.map(({ id, title, body }) => (
+          {copy.features.map(({ id, title, body }) => (
             <li key={id} className="grid grid-cols-[2rem_minmax(0,1fr)] content-start gap-x-3 gap-y-1 border-t border-hairline py-6">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 size-6 text-foreground">
                 {featureIcons[id]}
@@ -86,11 +89,11 @@ export function OboloDetail({ dict }: { dict: Dictionary }) {
         <PaguroFaq faq={copy.faq} />
       </section>
 
-      <AlsoFromStudio locale="en" cards={[
-        { app: "paguro", name: dict.apps.paguro.name, copy: copy.related.paguro },
-        { app: "moppo", name: dict.apps.moppo.name, copy: copy.related.moppo },
+      <AlsoFromStudio locale={locale} cards={[
+        { app: "paguro", name: dict.apps.paguro.name, copy: { label: copy.related.label, body: copy.related.paguro } },
+        { app: "moppo", name: dict.apps.moppo.name, copy: { label: copy.related.label, body: copy.related.moppo } },
       ]} />
-      <ContactLine dict={dict} issuesUrl={`${obolo.github}/issues`} />
+      <ContactLine dict={dict} issuesUrl={`${apps.obolo.github}/issues`} />
     </div>
   );
 }

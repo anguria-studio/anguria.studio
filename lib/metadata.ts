@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { moppoPrivacyPath, moppoTermsPath, obolo, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
-import { oboloCopy } from "./dictionaries/obolo-en";
+import { moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import type { Dictionary } from "./dictionaries/en";
 import {
   defaultLocale,
   getDictionary,
@@ -93,20 +93,25 @@ export async function homeMetadata(locale: Locale): Promise<Metadata> {
   };
 }
 
-export async function appMetadata(
-  locale: Locale,
-  slug: AppSlug,
-): Promise<Metadata> {
-  const dict = await getDictionary(locale);
-  const copy = dict.apps[slug];
-  const title = slug === "paguro" ? dict.paguroPage.seoTitle : dict.moppoPage.seoTitle;
-  const description = slug === "moppo" ? dict.moppoPage.story.body : copy.description;
+export function appSeoCopy(dict: Dictionary, slug: AppSlug) {
+  switch (slug) {
+    case "moppo":
+      return { title: dict.moppoPage.seoTitle, description: dict.moppoPage.story.body, imageAlt: dict.moppoPage.hero.shotAlt };
+    case "paguro":
+      return { title: dict.paguroPage.seoTitle, description: dict.apps.paguro.description, imageAlt: dict.apps.paguro.shotAlt };
+    case "obolo":
+      return { title: dict.apps.obolo.seoTitle, description: dict.apps.obolo.description, imageAlt: dict.apps.obolo.shotAlt };
+  }
+}
+
+export async function appMetadata(locale: Locale, slug: AppSlug): Promise<Metadata> {
+  const { title, description, imageAlt } = appSeoCopy(await getDictionary(locale), slug);
   const images = [{
     url: `${site.url}/${slug}/og-image.jpg`,
     width: 1200,
     height: 630,
     type: "image/jpeg",
-    alt: slug === "moppo" ? dict.moppoPage.hero.shotAlt : copy.shotAlt,
+    alt: imageAlt,
   }];
 
   return {
@@ -115,18 +120,6 @@ export async function appMetadata(
     alternates: alternates(locale, slug),
     openGraph: { ...openGraph(locale, title, description, slug), images },
     twitter: { card: "summary_large_image", title, description, images: images.map(({ url, alt }) => ({ url, alt })) },
-  };
-}
-
-export function oboloMetadata(): Metadata {
-  const { seoTitle: title, description } = oboloCopy;
-  const image = { url: `${site.url}/obolo/og-image.jpg`, width: 1200, height: 630, alt: title };
-  return {
-    title,
-    description,
-    alternates: { canonical: abs(defaultLocale, obolo.slug) },
-    openGraph: { ...openGraph(defaultLocale, title, description, obolo.slug), images: [image] },
-    twitter: { card: "summary_large_image", title, description, images: [{ url: image.url, alt: image.alt }] },
   };
 }
 

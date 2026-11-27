@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { moppoPrivacyPath, moppoTermsPath, obolo, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
-import { defaultLocale, locales, type Locale } from "@/lib/i18n";
+import { appSlugs, moppoPrivacyPath, moppoTermsPath, paguroPrivacyPath, paguroTermsPath, type PagePath } from "@/lib/apps";
+import { locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/metadata";
 import { paguroPrivacyEffective } from "@/lib/privacy/paguro-policy";
 import { paguroTermsUpdated } from "@/lib/terms/paguro-terms";
@@ -10,7 +10,7 @@ import { moppoTermsUpdated } from "@/lib/terms/moppo-terms";
 export const dynamic = "force-static";
 
 /** Public, indexable pages; the notification test page stays out of the sitemap. */
-const served: (PagePath | undefined)[] = [undefined, "paguro", "moppo", paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath];
+const served: (PagePath | undefined)[] = [undefined, ...appSlugs, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath];
 
 const legalDates: Partial<Record<PagePath, string>> = {
   [paguroPrivacyPath]: paguroPrivacyEffective,
@@ -20,7 +20,7 @@ const legalDates: Partial<Record<PagePath, string>> = {
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const localizedPages = locales.flatMap((locale: Locale) =>
+  return locales.flatMap((locale: Locale) =>
     served.map((path) => {
       const legalDate = path ? legalDates[path] : undefined;
       return {
@@ -37,9 +37,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
       };
     }),
   );
-  return [...localizedPages, {
-    url: absoluteUrl(defaultLocale, obolo.slug),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }];
 }

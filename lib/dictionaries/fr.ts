@@ -1,4 +1,5 @@
 import type { Dictionary } from "./en";
+import { oboloCopy } from "./obolo-fr";
 
 /**
  * Traduit depuis les textes provisoires anglais. À retraduire une fois les
@@ -143,12 +144,13 @@ export const dictionary: Dictionary = {
   meta: {
     title: "Anguria Studio — Des apps macOS gratuites et open source",
     description:
-      "Deux petits utilitaires gratuits et open source pour votre Mac : Moppo et Paguro.",
+      "Moppo, Paguro et Obolo sont trois petites apps gratuites et open source pour votre Mac.",
   },
   nav: {
     home: "Anguria Studio",
     allApps: "Toutes les apps",
     github: "Voir sur GitHub",
+    language: "Langue",
   },
   themeToggle: {
     label: "Thème",
@@ -210,6 +212,7 @@ export const dictionary: Dictionary = {
         }
       ]
     },
+    obolo: oboloCopy,
   },
   home: {
     hero: {

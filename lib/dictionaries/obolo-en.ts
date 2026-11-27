@@ -4,6 +4,7 @@ export const oboloCopy = {
   tagline: "See what you spend each month and which payment comes next.",
   seoTitle: "Obolo — Subscription Tracker for macOS",
   description: "Obolo is an open-source subscription tracker for Mac. See monthly and yearly spending, plan for upcoming renewals, and keep a history of price changes.",
+  shotAlt: "Obolo’s dashboard with sample subscriptions, showing €129.41 in monthly spending, a category breakdown, and €23.40 left to pay in August.",
   nav: "Explore Obolo",
   download: "Download",
   requirements: "macOS {version}+ · Apple silicon and Intel",
@@ -12,18 +13,17 @@ export const oboloCopy = {
     accent: "stacked and sorted.",
     download: "Download for Mac",
     body: "Obolo is a simple subscription tracker for Mac with pretty charts. See where your money goes and how prices change over time.",
-    shotAlt: "Obolo’s dashboard with sample subscriptions, showing €129.41 in monthly spending, a category breakdown, and €23.40 left to pay in August.",
   },
-  features: {
+  story: {
     title: "See where your money goes",
     body: "Compare recurring costs across months, categories, and individual subscriptions. The monthly view shows when annual renewals make a month more expensive.",
-    items: [
-      { id: "spending", title: "Monthly and yearly totals", body: "See how much goes to software, streaming, or any category you track. Switch to Subscriptions to see what each service contributes." },
-      { id: "calendar", title: "Renewals on your calendar", body: "Pick a day to see what’s due, set a reminder, or add payments to Apple Calendar. Keep the next payment in your Mac’s menu bar." },
-      { id: "history", title: "A record of price changes", body: "Log a price change when it takes effect. Your payment history keeps the original amount and currency." },
-      { id: "currencies", title: "Multiple currencies, one total", body: "Keep each subscription in its original currency and compare spending in the currency you choose. Obolo shows you when an exchange rate is missing." },
-    ],
   },
+  features: [
+    { id: "spending", title: "Monthly and yearly totals", body: "See how much goes to software, streaming, or any category you track. Switch to Subscriptions to see what each service contributes." },
+    { id: "calendar", title: "Renewals on your calendar", body: "Pick a day to see what’s due, set a reminder, or add payments to Apple Calendar. Keep the next payment in your Mac’s menu bar." },
+    { id: "history", title: "A record of price changes", body: "Log a price change when it takes effect. Your payment history keeps the original amount and currency." },
+    { id: "currencies", title: "Multiple currencies, one total", body: "Keep each subscription in its original currency and compare spending in the currency you choose. Obolo shows you when an exchange rate is missing." },
+  ],
   faqTitle: "A few things to know",
   faq: [
     { id: "availability", question: "How do I install Obolo?", answer: "Download Obolo using the button above, open the disk image, and drag Obolo into Applications. It runs on Apple silicon and Intel Macs with macOS 15 Sequoia or later." },
@@ -33,7 +33,10 @@ export const oboloCopy = {
     { id: "shortcuts", question: "Does Obolo work with Apple Shortcuts?", answer: "Yes. Use Shortcuts to show your next renewal, open upcoming subscriptions, or add a subscription." },
   ],
   related: {
-    paguro: { label: "Also from Anguria Studio", body: "A native home for your web apps." },
-    moppo: { label: "Also from Anguria Studio", body: "A Mac cleaner built for developers." },
+    label: "Also from Anguria Studio",
+    paguro: "A native home for your web apps.",
+    moppo: "A Mac cleaner built for developers.",
   },
 };
+
+export type OboloCopy = typeof oboloCopy;

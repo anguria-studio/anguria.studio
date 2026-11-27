@@ -6,10 +6,10 @@ import { MoppoMascot } from "@/components/apps/moppo-mascot";
 import { MoppoHeroShots } from "@/components/apps/moppo-hero-shots";
 import { MoppoIcon } from "@/components/apps/moppo-icon";
 import { ContactLine } from "@/components/layout/contact-line";
-import { AlsoFromStudio, oboloRelatedCard } from "@/components/apps/also-from-studio";
+import { AlsoFromStudio } from "@/components/apps/also-from-studio";
 import { apps, moppoPrivacyPath, moppoTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
-import { defaultLocale, localePath, type Locale } from "@/lib/i18n";
+import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./moppo-detail.module.css";
 
 type Glyph = "terminal" | "shield" | "trash" | "duplicates" | "privacy" | "git" | "lock" | "history";
@@ -122,7 +122,7 @@ export function MoppoDetail({ dict, locale }: { dict: Dictionary; locale: Locale
 
     <AlsoFromStudio locale={locale} cards={[
       { app: "paguro", name: dict.apps.paguro.name, copy: copy.also },
-      ...(locale === defaultLocale ? [oboloRelatedCard] : []),
+      { app: "obolo", name: dict.apps.obolo.name, copy: { label: copy.also.label, body: dict.apps.obolo.tagline } },
     ]} />
     <ContactLine dict={dict} issuesUrl={`${apps.moppo.github}/issues`} />
   </div>;

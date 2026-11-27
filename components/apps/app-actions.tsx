@@ -5,7 +5,7 @@ import { AppleMark } from "@/components/ui/apple-mark";
 import { GitHubMark } from "@/components/ui/github-mark";
 import type { AppMeta } from "@/lib/apps";
 
-type ActionMeta = Pick<AppMeta, "download" | "github" | "appStore"> & { slug: string; latestReleaseApi?: string };
+type ActionMeta = Pick<AppMeta, "slug" | "download" | "github" | "appStore" | "latestReleaseApi">;
 
 export function AppActions({
   copy,

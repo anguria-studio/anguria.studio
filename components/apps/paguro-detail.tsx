@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { PaguroHero } from "@/components/apps/paguro-hero";
 import { ContactLine } from "@/components/layout/contact-line";
-import { defaultLocale, localePath, type Locale } from "@/lib/i18n";
+import { localePath, type Locale } from "@/lib/i18n";
 import { FEATURE_ICONS } from "@/components/home/feature-icons";
 import { AppActions } from "@/components/apps/app-actions";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { PaguroServiceStrip } from "@/components/apps/paguro-service-strip";
-import { AlsoFromStudio, oboloRelatedCard } from "@/components/apps/also-from-studio";
+import { AlsoFromStudio } from "@/components/apps/also-from-studio";
 import { apps, paguroPrivacyPath, paguroTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 
@@ -135,7 +135,7 @@ export function PaguroDetail({ dict, locale }: { dict: Dictionary; locale: Local
 
       <AlsoFromStudio locale={locale} cards={[
         { app: "moppo", name: dict.apps.moppo.name, copy: copy.also },
-        ...(locale === defaultLocale ? [oboloRelatedCard] : []),
+        { app: "obolo", name: dict.apps.obolo.name, copy: { label: copy.also.label, body: dict.apps.obolo.tagline } },
       ]} />
       <ContactLine dict={dict} issuesUrl={`${apps.paguro.github}/issues`} />
     </>

@@ -1,16 +1,18 @@
 /**
  * Non-translatable data about each app: URLs and versions. Native icon artwork
- * lives in public/paguro/ and public/moppo/.
+ * lives under public/ in each app's directory.
  * All user-facing copy (name, tagline, description, features) lives in the
  * dictionaries so it can be translated — see lib/dictionaries/en.ts.
  */
-export const appSlugs = ["moppo", "paguro"] as const;
+export const appSlugs = ["moppo", "paguro", "obolo"] as const;
 export type AppSlug = (typeof appSlugs)[number];
 
 export type AppMeta = {
   slug: AppSlug;
   github: string;
   download: string;
+  /** Public release endpoint for apps that publish versioned DMG filenames. */
+  latestReleaseApi?: string;
   /** Minimum macOS version, shown on the app page. */
   minMacOS: string;
   /** App Store product page. Optional: an app that has not shipped yet has no
@@ -36,16 +38,15 @@ export const apps: Record<AppSlug, AppMeta> = {
     // Storefront-neutral: without a country segment Apple opens the visitor's own store.
     appStore: "https://apps.apple.com/app/paguro/id6805463271?mt=12",
   },
+  obolo: {
+    slug: "obolo",
+    github: "https://github.com/anguria-studio/Obolo",
+    // The latest release page also works when the browser cannot resolve the DMG.
+    download: "https://github.com/anguria-studio/Obolo/releases/latest",
+    latestReleaseApi: "https://api.github.com/repos/anguria-studio/Obolo/releases/latest",
+    minMacOS: "15",
+  },
 };
-
-export const obolo = {
-  slug: "obolo",
-  github: "https://github.com/anguria-studio/Obolo",
-  // The latest release page also works when the browser cannot resolve the DMG.
-  download: "https://github.com/anguria-studio/Obolo/releases/latest",
-  latestReleaseApi: "https://api.github.com/repos/anguria-studio/Obolo/releases/latest",
-  minMacOS: "15",
-} as const;
 
 /** Locale-relative path of Paguro's privacy policy; nested under the app page it describes. */
 export const paguroPrivacyPath = "paguro/privacy" as const;
@@ -59,7 +60,7 @@ export const paguroNotificationTestPath = "paguro/test-notifications" as const;
  * slash. Hrefs, canonical, hreflang and the sitemap are all typed against this,
  * so a page cannot be linked to without also being exported.
  */
-export const pagePaths = [...appSlugs, obolo.slug, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath] as const;
+export const pagePaths = [...appSlugs, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath] as const;
 export type PagePath = (typeof pagePaths)[number];
 
 export const site = {
