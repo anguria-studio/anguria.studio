@@ -53,6 +53,7 @@ export const paguroPrivacyPath = "paguro/privacy" as const;
 export const paguroTermsPath = "paguro/terms" as const;
 export const moppoPrivacyPath = "moppo/privacy" as const;
 export const moppoTermsPath = "moppo/terms" as const;
+export const oboloPrivacyPath = "obolo/privacy" as const;
 export const paguroNotificationTestPath = "paguro/test-notifications" as const;
 
 /**
@@ -60,7 +61,7 @@ export const paguroNotificationTestPath = "paguro/test-notifications" as const;
  * slash. Hrefs, canonical, hreflang and the sitemap are all typed against this,
  * so a page cannot be linked to without also being exported.
  */
-export const pagePaths = [...appSlugs, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath] as const;
+export const pagePaths = [...appSlugs, paguroPrivacyPath, paguroTermsPath, moppoPrivacyPath, moppoTermsPath, oboloPrivacyPath, paguroNotificationTestPath] as const;
 export type PagePath = (typeof pagePaths)[number];
 
 export const site = {

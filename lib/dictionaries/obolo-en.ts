@@ -6,6 +6,11 @@ export const oboloCopy = {
   description: "Obolo is an open-source subscription tracker for Mac. See monthly and yearly spending, plan for upcoming renewals, and keep a history of price changes.",
   shotAlt: "Obolo’s dashboard with sample subscriptions, showing €129.41 in monthly spending, a category breakdown, and €23.40 left to pay in August.",
   nav: "Explore Obolo",
+  privacy: {
+    link: "Privacy policy",
+    back: "Back to Obolo",
+    effective: "Last updated {date}.",
+  },
   download: "Download",
   requirements: "macOS {version}+ · Apple silicon and Intel",
   hero: {

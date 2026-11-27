@@ -8,6 +8,11 @@ export const oboloCopy: OboloCopy = {
   description: "Obolo è un’app open source per tenere traccia degli abbonamenti su Mac. Controlla le spese mensili e annuali, preparati ai prossimi rinnovi e consulta lo storico dei prezzi.",
   shotAlt: "Il riepilogo di Obolo con abbonamenti di esempio mostra 129,41 € di spesa mensile, il dettaglio per categoria e 23,40 € ancora da pagare ad agosto.",
   nav: "Esplora Obolo",
+  privacy: {
+    link: "Informativa sulla privacy",
+    back: "Torna a Obolo",
+    effective: "Ultimo aggiornamento il {date}.",
+  },
   download: "Scarica",
   requirements: "macOS {version}+ · Apple silicon e Intel",
   hero: {

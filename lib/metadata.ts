@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { moppoPrivacyPath, moppoTermsPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
+import { moppoPrivacyPath, moppoTermsPath, oboloPrivacyPath, paguroNotificationTestPath, paguroPrivacyPath, paguroTermsPath, site, type AppSlug, type PagePath } from "./apps";
 import type { Dictionary } from "./dictionaries/en";
 import {
   defaultLocale,
@@ -12,6 +12,7 @@ import { getPaguroPrivacyPolicy } from "./privacy/paguro-policy";
 import { notificationTestIconPath } from "./paguro-notification-test";
 import { getPaguroTerms } from "./terms/paguro-terms";
 import { getMoppoPrivacyPolicy } from "./privacy/moppo-policy";
+import { getOboloPrivacyPolicy } from "./privacy/obolo-policy";
 import { getMoppoTerms } from "./terms/moppo-terms";
 
 export const siteMetadata: Metadata = {
@@ -173,6 +174,19 @@ export async function moppoTermsMetadata(locale: Locale): Promise<Metadata> {
     description: terms.description,
     alternates: alternates(locale, moppoTermsPath),
     openGraph: openGraph(locale, title, terms.description, moppoTermsPath),
+  };
+}
+
+export async function oboloPrivacyMetadata(locale: Locale): Promise<Metadata> {
+  const policy = await getOboloPrivacyPolicy(locale);
+  const title = `${policy.title} — ${site.name}`;
+  const description = policy.description;
+
+  return {
+    title,
+    description,
+    alternates: alternates(locale, oboloPrivacyPath),
+    openGraph: openGraph(locale, title, description, oboloPrivacyPath),
   };
 }
 

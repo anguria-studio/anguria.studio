@@ -5,7 +5,7 @@ import { AppActions, MobileGitHubLink } from "@/components/apps/app-actions";
 import { DesktopMenuBar } from "@/components/apps/desktop-menu-bar";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { ContactLine } from "@/components/layout/contact-line";
-import { apps } from "@/lib/apps";
+import { apps, oboloPrivacyPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./obolo-detail.module.css";
@@ -17,13 +17,13 @@ const featureIcons: Record<string, React.ReactNode> = {
   currencies: <path d="M4 8h16l-4-4M20 16H4l4 4" />,
 };
 
-export function OboloHeader({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+export function OboloHeader({ dict, locale, subpage = false }: { dict: Dictionary; locale: Locale; subpage?: boolean }) {
   const copy = dict.apps.obolo;
 
   return (
     <header className={`${styles.page} header-divide sticky top-0 z-50 border-b bg-header backdrop-blur-xl backdrop-saturate-150`}>
       <nav aria-label={copy.nav} className="mx-auto flex h-16 max-w-page items-center justify-between gap-4 px-6 motion-safe:fade-1">
-        <Link href="#obolo" className="inline-flex shrink-0 items-center gap-2 rounded-lg text-base font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
+        <Link href={subpage ? localePath(locale, "obolo") : "#obolo"} className="inline-flex shrink-0 items-center gap-2 rounded-lg text-base font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-melon-500">
           <Image src="/obolo/app-icon.svg" width={30} height={30} alt="" />
           {copy.name}
         </Link>
@@ -38,6 +38,21 @@ export function OboloHeader({ dict, locale }: { dict: Dictionary; locale: Locale
         </div>
       </nav>
     </header>
+  );
+}
+
+export function OboloFooterNote({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+  return (
+    <p>
+      {dict.footer.copyright}
+      <span aria-hidden="true"> · </span>
+      <Link
+        href={localePath(locale, oboloPrivacyPath)}
+        className="underline decoration-hairline underline-offset-4 transition hover:text-foreground"
+      >
+        {dict.apps.obolo.privacy.link}
+      </Link>
+    </p>
   );
 }
 

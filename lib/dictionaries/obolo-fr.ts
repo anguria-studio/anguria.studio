@@ -8,6 +8,11 @@ export const oboloCopy: OboloCopy = {
   description: "Obolo est une app open source pour suivre vos abonnements sur Mac. Consultez vos dépenses mensuelles et annuelles, anticipez les renouvellements et gardez un historique des tarifs.",
   shotAlt: "Le tableau de bord d’Obolo présente des abonnements d’exemple, avec 129,41 € de dépenses mensuelles, le détail par catégorie et 23,40 € restant à payer en août.",
   nav: "Découvrir Obolo",
+  privacy: {
+    link: "Politique de confidentialité",
+    back: "Retour à Obolo",
+    effective: "Dernière mise à jour le {date}.",
+  },
   download: "Télécharger",
   requirements: "macOS {version}+ · Apple silicon et Intel",
   hero: {

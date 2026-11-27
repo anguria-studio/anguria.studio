@@ -1,6 +1,6 @@
 import { PaguroDetail, PaguroFooterNote, PaguroHeader } from "@/components/apps/paguro-detail";
 import { MoppoDetail, MoppoFooterNote, MoppoHeader } from "@/components/apps/moppo-detail";
-import { OboloDetail, OboloHeader } from "@/components/apps/obolo-detail";
+import { OboloDetail, OboloFooterNote, OboloHeader } from "@/components/apps/obolo-detail";
 import { Footer } from "@/components/layout/footer";
 import { apps, site, type AppSlug } from "@/lib/apps";
 import { absoluteUrl, appSeoCopy } from "@/lib/metadata";
@@ -26,7 +26,7 @@ export async function AppPage({
   const notes = {
     moppo: <MoppoFooterNote dict={dict} locale={locale} />,
     paguro: <PaguroFooterNote dict={dict} locale={locale} />,
-    obolo: dict.footer.copyright,
+    obolo: <OboloFooterNote dict={dict} locale={locale} />,
   };
 
   return (

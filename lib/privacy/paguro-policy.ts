@@ -24,7 +24,11 @@ export type PaguroPrivacySectionId = (typeof paguroPrivacySections)[number];
  * A run of inline text. `email` renders site.email as a mailto link, so the address has one source.
  * `nowrap` keeps a command option such as `--include-paths` on one line.
  */
-export type PolicyRun = string | { kind: "email" } | { kind: "nowrap"; text: string };
+export type PolicyRun =
+  | string
+  | { kind: "email" }
+  | { kind: "nowrap" | "strong" | "code"; text: string }
+  | { kind: "link"; text: string; href: string };
 
 export type PolicyBlock =
   | string // a plain paragraph

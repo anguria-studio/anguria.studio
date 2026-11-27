@@ -28,7 +28,7 @@ function MoppoLegalLayout({ locale, dict, document, children }: {
 export async function MoppoPrivacyPage({ locale }: { locale: Locale }) {
   const [dict, policy] = await Promise.all([getDictionary(locale), getMoppoPrivacyPolicy(locale)]);
   return <MoppoLegalLayout locale={locale} dict={dict} document="privacy">
-    <PolicyArticle locale={locale} dict={dict} policy={policy} app="moppo" effectiveDate={moppoPrivacyEffective} sectionIds={moppoPrivacySections} />
+    <PolicyArticle locale={locale} copy={dict.moppoPrivacy} policy={policy} app="moppo" effectiveDate={moppoPrivacyEffective} sectionIds={moppoPrivacySections} />
   </MoppoLegalLayout>;
 }
 
