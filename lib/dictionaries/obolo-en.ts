@@ -4,7 +4,6 @@ export const oboloCopy = {
   tagline: "See what you spend each month and which payment comes next.",
   seoTitle: "Obolo — Subscription Tracker for macOS",
   description: "Obolo is an open-source subscription tracker for Mac. See monthly and yearly spending, plan for upcoming renewals, and keep a history of price changes.",
-  shotAlt: "Obolo’s dashboard with sample subscriptions, showing €129.41 in monthly spending, a category breakdown, and €23.40 left to pay in August.",
   nav: "Explore Obolo",
   privacy: {
     link: "Privacy policy",
@@ -18,6 +17,15 @@ export const oboloCopy = {
   download: "Download",
   requirements: "macOS {version}+ · Apple silicon and Intel",
   hero: {
+    shotsLabel: "Obolo screenshots",
+    shots: {
+      dashboard: { label: "Overview", alt: "Obolo’s dashboard with sample subscriptions, showing €129.41 in monthly spending, a category breakdown, and €23.40 left to pay in August." },
+      months: { label: "Months", alt: "Obolo’s month-by-month spending chart, with August 2026 selected and €35.39 in charges." },
+      subscriptions: { label: "Subscriptions", alt: "A ring chart and spending breakdown for nine active subscriptions in Obolo." },
+      calendar: { label: "Calendar", alt: "Obolo’s August 2026 calendar showing renewal dates for Dropbox, Netflix, and Spotify." },
+      list: { label: "List", alt: "Obolo’s list of nine active subscriptions with renewal dates, billing amounts, and monthly costs." },
+      detail: { label: "Detail", alt: "A subscription in Obolo showing the next payment, total spent, and a chart of payments and price changes." },
+    },
     title: "Subscriptions,",
     accent: "stacked and sorted.",
     download: "Download for Mac",

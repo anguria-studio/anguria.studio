@@ -1,0 +1,41 @@
+.frame { display: grid; }
+.screenshot { width: 100%; height: auto; }
+
+/* The new screen fades in on top; the old one stays opaque underneath until it is covered, so the wallpaper never shows through. */
+.shot { --shot-fade: 480ms; grid-area: 1 / 1; opacity: 0; pointer-events: none; transition: opacity 0s var(--shot-fade); }
+.shot[data-active="true"] { z-index: 1; opacity: 1; pointer-events: auto; transition: opacity var(--shot-fade) cubic-bezier(.25, .1, .25, 1); }
+/* Tabs sit below the desktop; a rounded bracket runs from its bottom edge into the tab bar. */
+.shotTabs { --tab-line: color-mix(in srgb, var(--foreground) 14%, transparent); --tab-gap: calc(var(--spacing) * 10); --tab-height: calc(var(--spacing) * 12); --tab-ease: cubic-bezier(.32, .72, 0, 1); position: relative; display: flex; justify-content: center; padding-top: var(--tab-gap); }
+.connector { position: absolute; top: 0; inset-inline: 14%; height: calc(var(--tab-gap) + var(--tab-height) / 2); border: 1px solid var(--tab-line); border-top: 0; border-radius: 0 0 var(--radius-card) var(--radius-card); pointer-events: none; }
+.tabList { position: relative; display: flex; gap: var(--spacing); max-width: 100%; height: var(--tab-height); padding: var(--spacing); border: 1px solid var(--tab-line); border-radius: 9999px; background: var(--background); }
+/* One pill slides between tabs; its position comes from the selected tab's box. */
+.tabIndicator { position: absolute; top: var(--spacing); bottom: var(--spacing); left: 0; width: 0; border: 1px solid var(--tab-line); border-radius: 9999px; background: var(--glass); box-shadow: 0 1px 3px rgb(0 0 0 / .08); opacity: 0; pointer-events: none; }
+.tabList[data-ready] .tabIndicator { opacity: 1; }
+.tabList[data-animate] .tabIndicator { transition: transform 460ms var(--tab-ease), width 460ms var(--tab-ease); }
+.tab { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; padding-inline: calc(var(--spacing) * 4); border: 1px solid transparent; border-radius: 9999px; font-size: var(--text-sm); font-weight: 500; color: var(--muted); white-space: nowrap; cursor: pointer; transition: color 250ms; }
+.tab:hover, .tab[aria-selected="true"] { color: var(--foreground); }
+.tab[aria-selected="true"] { flex-shrink: 1; min-width: 0; }
+/* Before the indicator is measured, the selected tab draws its own pill. */
+.tabList:not([data-ready]) .tab[aria-selected="true"] { background: var(--glass); border-color: var(--tab-line); box-shadow: 0 1px 3px rgb(0 0 0 / .08); }
+.tab:focus-visible { outline: 2px solid var(--color-melon-500); outline-offset: 2px; }
+.tabLabel { display: grid; grid-template-columns: 1fr; min-width: 0; }
+.tabLabel > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* Spacing lives inside the clipped span so a collapsed label takes no room. */
+.tabLabel > span::before { content: ""; padding-left: calc(var(--spacing) * 2); }
+.tabIcon { flex-shrink: 0; display: grid; place-items: center; width: calc(var(--spacing) * 4); height: calc(var(--spacing) * 4); }
+.tabIcon > svg, .tabIcon > span { width: 100%; height: 100%; }
+.tabIcon > span { background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+
+@media (max-width: 767px) {
+  .tab[data-desktop-only], .shot[data-desktop-only] { display: none; }
+  .shotTabs { --tab-gap: calc(var(--spacing) * 6); }
+  .connector { inset-inline: 6%; border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
+  .tab { padding-inline: calc(var(--spacing) * 3); }
+  /* Only the selected tab shows its name; the label opens and closes with the pill. */
+  .tabLabel { grid-template-columns: 0fr; transition: grid-template-columns 460ms var(--tab-ease); }
+  .tab[aria-selected="true"] .tabLabel { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot, .shot[data-active="true"], .tab, .tabLabel, .tabList[data-animate] .tabIndicator { transition: none; }
+}

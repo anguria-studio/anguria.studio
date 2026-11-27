@@ -43,10 +43,10 @@
   background: light-dark(#ebebed, #1d1d1f) var(--obolo-wallpaper) center / cover no-repeat;
 }
 
-.screenshot {
+.appFrame {
   width: min(calc(100% - 2 * var(--stage-padding)), 34rem);
-  height: auto;
   border-radius: clamp(.5rem, 1.5vw, .875rem);
+  overflow: hidden;
   box-shadow: 0 24px 60px rgb(0 0 0 / .32), 0 3px 10px rgb(0 0 0 / .24);
 }
 

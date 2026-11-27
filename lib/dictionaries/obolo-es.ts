@@ -6,7 +6,6 @@ export const oboloCopy: OboloCopy = {
   tagline: "Consulta cuánto gastas cada mes y cuándo toca el próximo pago.",
   seoTitle: "Obolo — Gestión de suscripciones para macOS",
   description: "Obolo es una app de código abierto para controlar tus suscripciones en el Mac. Consulta los gastos mensuales y anuales, anticípate a las renovaciones y guarda el historial de precios.",
-  shotAlt: "El panel de Obolo muestra suscripciones de ejemplo, con 129,41 € de gasto mensual, un desglose por categorías y 23,40 € pendientes de pago en agosto.",
   nav: "Explorar Obolo",
   privacy: {
     link: "Política de privacidad",
@@ -20,6 +19,15 @@ export const oboloCopy: OboloCopy = {
   download: "Descargar",
   requirements: "macOS {version}+ · Apple silicon e Intel",
   hero: {
+    shotsLabel: "Capturas de Obolo",
+    shots: {
+      dashboard: { label: "Resumen", alt: "El panel de Obolo muestra suscripciones de ejemplo, con 129,41 € de gasto mensual, un desglose por categorías y 23,40 € pendientes de pago en agosto." },
+      months: { label: "Meses", alt: "Gráfico de gastos por mes en Obolo, con agosto de 2026 seleccionado y 35,39 € en cargos." },
+      subscriptions: { label: "Suscripciones", alt: "Gráfico de anillo y desglose de gastos de nueve suscripciones activas en Obolo." },
+      calendar: { label: "Calendario", alt: "Calendario de agosto de 2026 en Obolo con las fechas de renovación de Dropbox, Netflix y Spotify." },
+      list: { label: "Lista", alt: "Lista de nueve suscripciones activas en Obolo con fechas de renovación, importes facturados y costes mensuales." },
+      detail: { label: "Detalle", alt: "Detalle de una suscripción en Obolo con el próximo pago, el gasto total y un gráfico de los pagos y los cambios de precio." },
+    },
     title: "Suscripciones,",
     accent: "registradas y apiladas",
     download: "Descargar para Mac",

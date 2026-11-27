@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AlsoFromStudio } from "@/components/apps/also-from-studio";
 import { AppActions, MobileGitHubLink } from "@/components/apps/app-actions";
 import { DesktopMenuBar } from "@/components/apps/desktop-menu-bar";
+import { HeroShots } from "@/components/apps/hero-shots";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { ContactLine } from "@/components/layout/contact-line";
 import { apps, oboloPrivacyPath, oboloTermsPath } from "@/lib/apps";
@@ -16,6 +17,16 @@ const featureIcons: Record<string, React.ReactNode> = {
   history: <><path d="M3 12a9 9 0 1 1 2.6 6.4M3 6v6h6m3-5v5l3 2" /></>,
   currencies: <path d="M4 8h16l-4-4M20 16H4l4 4" />,
 };
+
+type OboloShotId = keyof Dictionary["apps"]["obolo"]["hero"]["shots"];
+const heroShots: readonly { id: OboloShotId; icon: React.ReactNode; desktopOnly?: boolean }[] = [
+  { id: "dashboard", icon: <path d="m12 2 10 6-10 6L2 8l10-6ZM2 12l10 6 10-6M2 16l10 6 10-6" /> },
+  { id: "months", icon: featureIcons.spending },
+  { id: "subscriptions", icon: <path d="M12 2v10h10a10 10 0 1 1-10-10Zm4 1a10 10 0 0 1 5 5h-5V3Z" /> },
+  { id: "calendar", icon: featureIcons.calendar },
+  { id: "detail", icon: <path d="M6 3h9l3 3v15H6zM9 10h6m-6 4h6m-6 4h3" /> },
+  { id: "list", icon: <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />, desktopOnly: true },
+];
 
 export function OboloHeader({ dict, locale, subpage = false }: { dict: Dictionary; locale: Locale; subpage?: boolean }) {
   const copy = dict.apps.obolo;
@@ -84,11 +95,27 @@ export function OboloDetail({ dict, locale }: { dict: Dictionary; locale: Locale
           </div>
         </div>
         <div className={`${styles.demo} showcase-width motion-safe:enter-3`}>
-          <div className={styles.backdrop}>
+          <HeroShots
+            app="obolo"
+            label={copy.hero.shotsLabel}
+            shots={heroShots.map(({ id, icon, desktopOnly }) => ({
+              id,
+              src: `/obolo/${id}`,
+              desktopOnly,
+              ...copy.hero.shots[id],
+              icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  {icon}
+                </svg>
+              ),
+            }))}
+            width={1280}
+            height={1280}
+            desktopClassName={styles.backdrop}
+            frameClassName={styles.appFrame}
+          >
             <DesktopMenuBar appName={copy.name} locale={locale} />
-            <Image src="/obolo/dashboard-light.webp" width={1280} height={1280} alt={copy.shotAlt} className={`${styles.screenshot} [display:var(--icon-light-display)]`} />
-            <Image src="/obolo/dashboard-dark.webp" width={1280} height={1280} alt={copy.shotAlt} className={`${styles.screenshot} [display:var(--icon-dark-display)]`} />
-          </div>
+          </HeroShots>
         </div>
       </section>
 

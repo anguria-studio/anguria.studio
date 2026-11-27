@@ -6,8 +6,8 @@ export type AppCopy = {
   name: string;
   /** Two or three words. The line under the app name on the home showcase. */
   category: string;
-  /** Alt text for the home-page screenshot. */
-  shotAlt: string;
+  /** Alt text when the screenshot is defined outside the hero gallery. */
+  shotAlt?: string;
   /** One short line. Used on the home card and as the app-page subtitle. */
   tagline: string;
   /** One paragraph. App page only. */

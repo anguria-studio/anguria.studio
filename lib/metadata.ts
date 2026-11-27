@@ -102,7 +102,7 @@ export function appSeoCopy(dict: Dictionary, slug: AppSlug) {
     case "paguro":
       return { title: dict.paguroPage.seoTitle, description: dict.apps.paguro.description, imageAlt: dict.apps.paguro.shotAlt };
     case "obolo":
-      return { title: dict.apps.obolo.seoTitle, description: dict.apps.obolo.description, imageAlt: dict.apps.obolo.shotAlt };
+      return { title: dict.apps.obolo.seoTitle, description: dict.apps.obolo.description, imageAlt: dict.apps.obolo.hero.shots.dashboard.alt };
   }
 }
 
