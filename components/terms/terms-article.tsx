@@ -1,8 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import { splitAccent } from "@/components/ui/accent";
-import { apps, moppoPrivacyPath, paguroPrivacyPath, site } from "@/lib/apps";
-import type { Dictionary } from "@/lib/dictionaries/en";
+import { apps, moppoPrivacyPath, oboloPrivacyPath, paguroPrivacyPath, site, type AppSlug } from "@/lib/apps";
 import { localePath, type Locale } from "@/lib/i18n";
 import {
   formatTermsUpdated,
@@ -13,11 +12,12 @@ import {
 } from "@/lib/terms/paguro-terms";
 
 const LINK = "font-medium text-foreground underline decoration-melon-500 underline-offset-4 transition hover:text-melon-500";
+const privacyPaths = { moppo: moppoPrivacyPath, obolo: oboloPrivacyPath, paguro: paguroPrivacyPath };
 
-function Run({ run, locale, app }: { run: TermsRun; locale: Locale; app: "paguro" | "moppo" }) {
+function Run({ run, locale, app }: { run: TermsRun; locale: Locale; app: AppSlug }) {
   if (typeof run === "string") return <>{run}</>;
   if (run.kind === "privacy") {
-    return <Link href={localePath(locale, app === "moppo" ? moppoPrivacyPath : paguroPrivacyPath)} className={LINK}>{run.text}</Link>;
+    return <Link href={localePath(locale, privacyPaths[app])} className={LINK}>{run.text}</Link>;
   }
   if (run.kind === "license") {
     return <a href={`${apps[app].github}/blob/main/LICENSE`} className={LINK}>{run.text}</a>;
@@ -28,21 +28,19 @@ function Run({ run, locale, app }: { run: TermsRun; locale: Locale; app: "paguro
 /** Match the privacy document's width, spacing and typography. */
 export function TermsArticle({
   locale,
-  dict,
+  copy,
   terms,
   app = "paguro",
   updatedDate = paguroTermsUpdated,
   sectionIds = paguroTermsSections,
 }: {
   locale: Locale;
-  dict: Dictionary;
+  copy: { back: string; updated: string };
   terms: TermsDocument;
-  app?: "paguro" | "moppo";
+  app?: AppSlug;
   updatedDate?: string;
   sectionIds?: readonly string[];
 }) {
-  const copy = app === "moppo" ? dict.moppoTerms : dict.paguroTerms;
-  const back = app === "moppo" ? dict.moppoPrivacy.back : dict.paguroPrivacy.back;
   const updated = splitAccent(copy.updated, "{date}");
 
   return (
@@ -51,7 +49,7 @@ export function TermsArticle({
         href={localePath(locale, app)}
         className="text-sm font-medium text-muted transition hover:text-foreground"
       >
-        &larr; {back}
+        &larr; {copy.back}
       </Link>
 
       <h1 className="mt-8 text-3xl font-semibold tracking-tight text-balance sm:mt-10 sm:text-5xl">

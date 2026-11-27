@@ -1,4 +1,4 @@
-import { OboloPrivacyPage } from "@/components/obolo-privacy-page";
+import { OboloPrivacyPage } from "@/components/obolo-legal-page";
 import type { Locale } from "@/lib/i18n";
 import { oboloPrivacyMetadata } from "@/lib/metadata";
 

@@ -5,7 +5,7 @@ import { AppActions, MobileGitHubLink } from "@/components/apps/app-actions";
 import { DesktopMenuBar } from "@/components/apps/desktop-menu-bar";
 import { PaguroFaq } from "@/components/apps/paguro-faq";
 import { ContactLine } from "@/components/layout/contact-line";
-import { apps, oboloPrivacyPath } from "@/lib/apps";
+import { apps, oboloPrivacyPath, oboloTermsPath } from "@/lib/apps";
 import type { Dictionary } from "@/lib/dictionaries/en";
 import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./obolo-detail.module.css";
@@ -41,17 +41,28 @@ export function OboloHeader({ dict, locale, subpage = false }: { dict: Dictionar
   );
 }
 
-export function OboloFooterNote({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+export function OboloFooterNote({ dict, locale, privacyLink = true, termsLink = true }: {
+  dict: Dictionary;
+  locale: Locale;
+  privacyLink?: boolean;
+  termsLink?: boolean;
+}) {
+  const link = "underline decoration-hairline underline-offset-4 transition hover:text-foreground";
   return (
     <p>
       {dict.footer.copyright}
-      <span aria-hidden="true"> · </span>
-      <Link
-        href={localePath(locale, oboloPrivacyPath)}
-        className="underline decoration-hairline underline-offset-4 transition hover:text-foreground"
-      >
-        {dict.apps.obolo.privacy.link}
-      </Link>
+      {privacyLink && (
+        <>
+          <span aria-hidden="true"> · </span>
+          <Link href={localePath(locale, oboloPrivacyPath)} className={link}>{dict.apps.obolo.privacy.link}</Link>
+        </>
+      )}
+      {termsLink && (
+        <>
+          <span aria-hidden="true"> · </span>
+          <Link href={localePath(locale, oboloTermsPath)} className={link}>{dict.apps.obolo.terms.link}</Link>
+        </>
+      )}
     </p>
   );
 }

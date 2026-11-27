@@ -1,4 +1,4 @@
-import { OboloPrivacyPage } from "@/components/obolo-privacy-page";
+import { OboloPrivacyPage } from "@/components/obolo-legal-page";
 import { oboloPrivacyMetadata } from "@/lib/metadata";
 
 export const generateMetadata = () => oboloPrivacyMetadata("en");

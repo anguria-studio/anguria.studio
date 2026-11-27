@@ -13,6 +13,10 @@ export const oboloCopy: OboloCopy = {
     back: "Torna a Obolo",
     effective: "Ultimo aggiornamento il {date}.",
   },
+  terms: {
+    link: "Condizioni d’uso",
+    updated: "Ultimo aggiornamento: {date}",
+  },
   download: "Scarica",
   requirements: "macOS {version}+ · Apple silicon e Intel",
   hero: {

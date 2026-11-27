@@ -15,7 +15,7 @@ export async function PaguroTermsPage({ locale }: { locale: Locale }) {
     <>
       <PaguroHeader locale={locale} dict={dict} subpage />
       <main>
-        <TermsArticle locale={locale} dict={dict} terms={terms} />
+        <TermsArticle locale={locale} copy={{ back: dict.paguroPrivacy.back, updated: dict.paguroTerms.updated }} terms={terms} />
       </main>
       <Footer
         locale={locale}

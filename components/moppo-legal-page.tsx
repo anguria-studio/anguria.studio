@@ -35,6 +35,6 @@ export async function MoppoPrivacyPage({ locale }: { locale: Locale }) {
 export async function MoppoTermsPage({ locale }: { locale: Locale }) {
   const [dict, terms] = await Promise.all([getDictionary(locale), getMoppoTerms(locale)]);
   return <MoppoLegalLayout locale={locale} dict={dict} document="terms">
-    <TermsArticle locale={locale} dict={dict} terms={terms} app="moppo" updatedDate={moppoTermsUpdated} sectionIds={moppoTermsSections} />
+    <TermsArticle locale={locale} copy={{ back: dict.moppoPrivacy.back, updated: dict.moppoTerms.updated }} terms={terms} app="moppo" updatedDate={moppoTermsUpdated} sectionIds={moppoTermsSections} />
   </MoppoLegalLayout>;
 }
